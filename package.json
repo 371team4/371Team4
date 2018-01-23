@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ert485/371Team4/issues"
   },
-  "homepage": "https://github.com/ert485/371Team4#readme"
+  "homepage": "https://github.com/ert485/371Team4#readme",
+  "devDependencies": {
+    "vue-cli": "^2.9.2"
+  }
 }
