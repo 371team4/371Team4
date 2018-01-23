@@ -1,0 +1,19 @@
+{
+  "name": "eventmaster",
+  "version": "1.0.0",
+  "description": "Event management and creation system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ert485/371Team4.git"
+  },
+  "author": "CMPT 371 Team 4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ert485/371Team4/issues"
+  },
+  "homepage": "https://github.com/ert485/371Team4#readme"
+}
