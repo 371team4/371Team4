@@ -18,5 +18,11 @@
   "homepage": "https://github.com/ert485/371Team4#readme",
   "devDependencies": {
     "vue-cli": "^2.9.2"
+  },
+  "dependencies": {
+    "firebase": "^4.9.0",
+    "vuefire": "^1.4.5",
+    "vuetify": "^0.17.6",
+    "vuex": "^3.0.1"
   }
 }
