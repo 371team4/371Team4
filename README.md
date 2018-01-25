@@ -7,6 +7,7 @@
 1. Install NodeJS from here https://nodejs.org/en/. Go with the LTS version
 2. Install VSCode fro here https://code.visualstudio.com/Download
 3. Install the extensions from the extensions section below
+   * Install Vue dev tools from https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en
 4. Clone the repo into your desired folder
 5. While you are in VSCode, open the folder where you cloned the repo
 6. Hit CTRL+\` and the embedded terminal will come up
