@@ -24,5 +24,4 @@ npm run test
 npm run deploy
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-and https://vuejs-templates.github.io/webpack/structure.html
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader) and https://vuejs-templates.github.io/webpack/structure.html .
