@@ -12,16 +12,16 @@ npm install
 npm start
 
 # build for production with minification
-npm build
+npm run build
 
 # build for production and view the bundle analyzer report
-npm build --report
+npm run build --report
 
 # run unit tests
-npm test
+npm run test
 
 # deploy prodcution to firebase server, this will build before deploying 
-npm deploy 
+npm run deploy 
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
