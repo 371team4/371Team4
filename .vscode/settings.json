@@ -1,3 +1,32 @@
 {
-  "git.enableSmartCommit": true
-}
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "editor.insertSpaces": true,
+  "sml.ignoreMissingSmlDotJson": true,
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "vetur.format.scriptInitialIndent": true,
+  "vetur.format.styleInitialIndent": true,
+  "auto-close-tag.fullMode": true,
+  "problems.decorations.enabled": true,
+  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.cursorStyle": "block",
+  "extensions.ignoreRecommendations": true,
+  "markdown.preview.breaks": true,
+  "html.format.indentInnerHtml": true,
+  "html.format.indentHandlebars": true,
+  "files.eol": "\n",
+  "files.hotExit": "onExitAndWindowClose",
+  "files.trimTrailingWhitespace": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "One Dark Pro Vivid",
+    "editor.scrollBeyondLastLine": false,
+    "editor.smoothScrolling": true,
+    "eslint.nodePath": "./node_modules/eslint"
+  }
