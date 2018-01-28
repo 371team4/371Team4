@@ -40,16 +40,19 @@ npm run deploy
 ## Extensions for VS Code
 Just run these commands from the command line and you should be good to go
 ```
-code --install-extension EditorConfig.editorconfig
 code --install-extension christian-kohler.npm-intellisense
 code --install-extension christian-kohler.path-intellisense
 code --install-extension dariofuzinato.vue-peek
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension donjayamanne.githistory
+code --install-extension EditorConfig.EditorConfig
 code --install-extension eg2.vscode-npm-script
+code --install-extension esbenp.prettier-vscode
 code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
 code --install-extension octref.vetur
 code --install-extension robertohuertasm.vscode-icons
-code --install-extension xabikos.javascriptsnippets
-code --install-extension zhuangtongfa.material-theme
+code --install-extension xabikos.JavaScriptSnippets
+code --install-extension zhuangtongfa.Material-theme
 ```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader) and https://vuejs-templates.github.io/webpack/structure.html .
