@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --colors --progress --config build/webpack.dev.conf.js",
-    "start": "node run dev",
+    "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
+    "e2e": "npm test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e",
     "build": "node build/build.js",
@@ -95,6 +95,7 @@
     "webpack": "^2.6.1",
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
+    "webpack-dev-server": "^2.11.1",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^4.1.0",
     "workbox-webpack-plugin": "^2.1.2"
