@@ -28,5 +28,25 @@
     "workbench.colorTheme": "One Dark Pro Vivid",
     "editor.scrollBeyondLastLine": false,
     "editor.smoothScrolling": true,
-    "eslint.nodePath": "./node_modules/eslint"
+    "eslint.nodePath": ".\\node_modules\\eslint",
+
+    "eslint.trace.server": "verbose",
+    "editor.fontSize": 14,
+    "window.zoomLevel": 0,
+    "git.confirmSync": false,
+    //"emmet.triggerExpansionOnTab":true,
+    "emmet.includeLanguages": {
+        "javascript": "html",
+        "vue": "html",
+        "vue-html": "html",
+        "javascriptreact":"html",
+        "typescript":"html"
+    },
+    "editor.multiCursorModifier": "ctrlCmd",
+    "vetur.format.defaultFormatterOptions":{
+      "js-beautify-html": {}
+    },
+    "prettier.eslintIntegration": true,
+    "prettier.semi": false,
+    "prettier.singleQuote": true
   }
