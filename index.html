@@ -34,7 +34,9 @@
     </noscript>
     <div id="app"></div>
     <!-- Todo: only include in production -->
-    <!--<script src="/serviceWorkerLoader.js" />-->
+    <% if (!!htmlWebpackPlugin.options.isBuild){ %>
+      <script src="/serviceWorkerLoader.js" />
+    <% }  %>
     <!-- built files will be auto injected -->
   </body>
 
