@@ -8,16 +8,11 @@
     }],
     "stage-2"
   ],
-  "plugins": ["transform-vue-jsx", "transform-runtime", ["transform-imports", {
-    "vuetify": {
-      "transform": "vuetify/es5/components/${member}",
-      "preventFullImport": true
-    }
-  }]],
+  "plugins": ["transform-runtime"],
   "env": {
     "test": {
       "presets": ["env", "stage-2"],
-      "plugins": ["transform-vue-jsx", "istanbul"]
+      "plugins": [ "istanbul" ]
     }
   }
 }
