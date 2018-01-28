@@ -42,7 +42,7 @@
         "javascriptreact":"html",
         "typescript":"html"
     },
-    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.multiCursorModifier": "alt",
     "vetur.format.defaultFormatterOptions":{
       "js-beautify-html": {}
     },
