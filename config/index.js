@@ -42,7 +42,6 @@ module.exports = {
 
     cssSourceMap: true
   },
-
   build: {
     env: require('./prod.env'),
     // Template for index.html
