@@ -15,6 +15,7 @@
     "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
+    "firebase": "^4.9.0",
     "vue": "^2.5.2",
     "vue-i18n": "^7.4.1",
     "vue-router": "^3.0.1",
