@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import { initializeApp } from 'firebase'
 
 // Initialize Firebase
 const config = {
@@ -10,9 +10,8 @@ const config = {
   messagingSenderId: '205921360328'
 }
 
-firebase.initializeApp(config)
-export default {
-  db: firebase.database(),
-  dbRef: firebase.database().ref('/repartyed'),
-  auth: firebase.auth()
-}
+const app = initializeApp(config)
+const db = app.database()
+
+export const eventsDB = db.ref('/events')
+export const authService = app.auth()
