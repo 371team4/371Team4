@@ -1,4 +1,3 @@
-//https://www.youtube.com/watch?v=niPgyv53x8c
 import Vuex from 'vuex'
 
 export const store = new Vuex.Store({
