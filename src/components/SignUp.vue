@@ -20,7 +20,7 @@
               v-model="password"
               required/>
             <v-btn
-              @click="submit"
+              @click="signUserUp({userid: userid, password: password})"
               :disabled="!valid">
               submit
             </v-btn>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -45,9 +46,9 @@ export default {
     }
   },
   methods: {
-    submit () {
-      console.log('we did submit!')
-    }
+    ...mapActions([
+      'signUserUp'
+    ])
   }
 }
 </script>
