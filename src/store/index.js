@@ -48,6 +48,15 @@ export const store = new Vuex.Store({
         }
       )
   },
+  signOut () {
+    authService.signOut().then(function () {
+      alert('Logged out')
+    }).catch(
+      error => {
+        console.log(error)
+      }
+    )
+  },
   mutations: {
     setUser (state, payload) {
       state.user = payload.user
