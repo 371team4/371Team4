@@ -24,9 +24,6 @@
               :disabled="!valid">
               submit
             </v-btn>
-            <v-btn :to="{name: 'SignUp'}">
-              Sign up
-            </v-btn>
           </v-form>
         </v-container>
       </v-card>
