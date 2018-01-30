@@ -83,6 +83,16 @@ export default {
       tabs: []
     }
   },
+  computed: {
+    title: {
+      get () {
+        return this.$route.name || 'Projects'
+      },
+      set (newTabName) {
+        this.tabName = newTabName
+      }
+    }
+  },
   created () {
     this.title = this.$route.name || 'Projects'
     this.$router.options.routes.forEach(route => {
