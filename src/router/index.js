@@ -5,7 +5,6 @@ import Projects from '@/components/Projects'
 import Designer from '@/components/Designer'
 import Calendar from '@/components/Calendar'
 import Login from '@/components/Login'
-import SignUp from '@/components/SignUp'
 
 Vue.use(Router)
 
@@ -14,38 +13,32 @@ export default new Router({
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'Sign in',
       icon: 'person',
       component: Login
     },
     {
-      path: '/signup',
-      name: 'SignUp',
-      icon: 'error',
-      component: SignUp
-    },
-    {
       path: '/view',
-      name: 'ShowView',
-      icon: 'error',
+      name: 'Show View',
+      icon: 'live_tv',
       component: ShowView
     },
     {
       path: '/projects',
       name: 'Projects',
-      icon: 'error',
+      icon: 'perm_media',
       component: Projects
     },
     {
       path: '/designer',
       name: 'Designer',
-      icon: 'error',
+      icon: 'format_shapes',
       component: Designer
     },
     {
       path: '/calendar',
       name: 'Calendar',
-      icon: 'error',
+      icon: 'event',
       component: Calendar
     }
   ]

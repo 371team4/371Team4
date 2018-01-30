@@ -5,16 +5,20 @@
       v-model="drawerVis"
       v-show="drawerVis"
       clipped
-      floating
       fixed
+      floating
+      dark
       persistent
       hide-overlay>
       <v-list
+        two-line
         dense
         class="pt-0">
         <v-list-tile
+          @click="1"
           v-for="tab in tabs"
-          :key="tab.name">
+          :key="tab.name"
+          :to="{ name:tab.name }">
           <v-list-tile-action>
             <v-icon>{{ tab.icon }}</v-icon>
           </v-list-tile-action>
@@ -29,8 +33,17 @@
       color="indigo"
       dark
       fixed
-      app>
-      <v-toolbar-side-icon @click="drawerVis = !drawerVis"/>
+      app
+      clipped-left>
+      <v-toolbar-side-icon
+        v-show="!drawerVis"
+        @click="drawerVis = !drawerVis"/>
+      <v-btn
+        icon
+        v-show="drawerVis"
+        @click="drawerVis = !drawerVis">
+        <v-icon>keyboard_arrow_left</v-icon>
+      </v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-toolbar>
     <v-content>
@@ -40,7 +53,13 @@
         <v-layout
           justify-center
           align-center>
-          <router-view/>
+          <transition
+            transition="scale-transition"
+            origin="center center">
+            <keep-alive>
+              <router-view/>
+            </keep-alive>
+          </transition>
         </v-layout>
       </v-container>
     </v-content>
@@ -59,13 +78,13 @@ export default {
   data () {
     return {
       drawerVis: false,
-      title: 'Projects',
       source: 'hello',
       drawer: false,
       tabs: []
     }
   },
   created () {
+    this.title = this.$route.name || 'Projects'
     this.$router.options.routes.forEach(route => {
       this.tabs.push({ name: route.name, icon: route.icon })
     })
