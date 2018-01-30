@@ -30,8 +30,7 @@
       dark
       fixed
       app>
-      <v-toolbar-side-icon
-        @click="drawerVis = !drawerVis"/>
+      <v-toolbar-side-icon @click="drawerVis = !drawerVis"/>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-toolbar>
     <v-content>
