@@ -15,31 +15,37 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
+      icon: 'person',
       component: Login
     },
     {
       path: '/signup',
       name: 'SignUp',
+      icon: 'error',
       component: SignUp
     },
     {
       path: '/view',
       name: 'ShowView',
+      icon: 'error',
       component: ShowView
     },
     {
       path: '/projects',
       name: 'Projects',
+      icon: 'error',
       component: Projects
     },
     {
       path: '/designer',
       name: 'Designer',
+      icon: 'error',
       component: Designer
     },
     {
       path: '/calendar',
       name: 'Calendar',
+      icon: 'error',
       component: Calendar
     }
   ]
