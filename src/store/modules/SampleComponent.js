@@ -5,7 +5,7 @@ const state = {
 }
 
 const getters = {
-  getMenuItems: state =>  state.menuItems
+  getPageItems: state => state.PageItems
 }
 
 const mutations = {
@@ -13,8 +13,8 @@ const mutations = {
 }
 
 const actions = {
-  setMenuRef: firebaseAction(({ bindFirebaseRef }, { ref }) => {
-    bindFirebaseRef('simplePageItems', ref)
+  setPageRef: firebaseAction(({ bindFirebaseRef }, { ref }) => {
+    bindFirebaseRef('PageItems', ref)
   })
 }
 
