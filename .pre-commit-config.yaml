@@ -1,0 +1,19 @@
+# This is where pre-commit plugins will be added
+
+exclude: '^$'
+fail_fast: false
+
+repos:
+- repo: git://github.com/pre-commit/pre-commit-hooks
+  sha: v1.2.0
+  hooks:
+  - id: check-docstring-first
+  - id: check-merge-conflict
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+  - id: trailing-whitespace
+- repo: git://github.com/Lucas-C/pre-commit-hooks
+  sha: v1.1.4
+  hooks:
+  - id: forbid-tabs
+  - id: remove-tabs
