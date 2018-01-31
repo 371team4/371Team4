@@ -11,6 +11,7 @@
       persistent
       hide-overlay>
       <v-list
+        transition="slide-x-transition"
         two-line
         dense
         class="pt-0">
@@ -53,9 +54,7 @@
         <v-layout
           justify-center
           align-center>
-          <transition
-            transition="scale-transition"
-            origin="center center">
+          <transition>
             <keep-alive>
               <router-view/>
             </keep-alive>
@@ -88,13 +87,10 @@ export default {
       get () {
         return this.$route.name || 'Projects'
       },
-      set (newTabName) {
-        this.tabName = newTabName
-      }
+      set (newTabName) { }
     }
   },
   created () {
-    this.title = this.$route.name || 'Projects'
     this.$router.options.routes.forEach(route => {
       this.tabs.push({ name: route.name, icon: route.icon })
     })
