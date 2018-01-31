@@ -22,7 +22,8 @@
     "vuefire": "^1.4.5",
     "vuejs-logger": "^1.3.3",
     "vuetify": "^0.17.6",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuexfire": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
