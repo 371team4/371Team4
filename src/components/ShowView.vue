@@ -1,22 +1,18 @@
 <template>
   <div>
-    <div v-for="page in getPageItems">
-      <h1>Show View</h1>
-      <p>{{ page.name }}</p>
-      <p>{{ page.description }}</p>
-      <p>{{ page.image1 }}</p>
-    </div>
-    <!--
     <h1>Show View</h1>
     <p>{{ newEvent.name }}</p>
     <p>{{ newEvent.description }}</p>
     <p>{{ newEvent.image1 }}</p>
+    <!--
+    <img v-bind:src="newEvent.image1" >
+    <img v-bind:src="newEvent.image1" >
+    <img v-bind:src="newEvent.image1" >
     -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { eventsDB } from '../services/firebase.conf'
 export default {
   data () {
@@ -29,11 +25,6 @@ export default {
         image3: '../assets/2019_3.jpg'
       }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'getPageItems'
-    ])
   },
   methods: {
     addMenuItem: function () {
