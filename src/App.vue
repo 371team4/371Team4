@@ -1,5 +1,4 @@
 <template>
-
   <v-app light>
     <v-navigation-drawer
       app
