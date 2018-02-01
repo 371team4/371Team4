@@ -67,7 +67,7 @@
       color="indigo"
       app>
       <v-spacer/>
-      <span class="white--text bold">ReParty &copy; 2017</span>
+      <span class="white--text bold">ReParty &copy; 2018</span>
     </v-footer>
   </v-app>
 </template>
