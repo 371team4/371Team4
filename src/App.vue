@@ -1,5 +1,4 @@
 <template>
-
   <v-app light>
     <v-navigation-drawer
       app
@@ -71,27 +70,9 @@
       <span class="white--text bold">ReParty &copy; 2017</span>
     </v-footer>
   </v-app>
-  <!--
-    <pp-showview/>
-    <pp-createview/>
-  -->
-  </template>
-
-  <script>
-  export default {
-
-  }
-  </script>
-
-  <style>
-
-  </style>
-
 </template>
 
 <script>
-import ShowView from './components/ShowView.vue'
-import CreateView from './components/CreateView.vue'
 export default {
   data () {
     return {
