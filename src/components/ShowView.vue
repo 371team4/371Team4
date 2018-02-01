@@ -1,17 +1,13 @@
 <template>
   <div>
-    <div v-for="page in getPageItems">
+    <div
+      v-for="page in getPageItems"
+      :key="page._id">
       <h1>Show View</h1>
       <p>{{ page.name }}</p>
       <p>{{ page.description }}</p>
       <p>{{ page.image1 }}</p>
     </div>
-    <!--
-    <h1>Show View</h1>
-    <p>{{ newEvent.name }}</p>
-    <p>{{ newEvent.description }}</p>
-    <p>{{ newEvent.image1 }}</p>
-    -->
   </div>
 </template>
 

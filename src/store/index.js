@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import { firebaseMutations } from 'vuexfire'
 import { authService } from '../services/firebase.conf'
 import SampleComponent from './modules/SampleComponent'
-import users from './modules/Users'
+import Users from './modules/users'
 
 Vue.use(Vuex)
 
@@ -12,8 +12,8 @@ export const store = new Vuex.Store({
     user: null
   },
   actions: {
-    signUserUp ({ commit }, payload) {
-      authService.createUserWithEmailAndPassword(payload.userid, payload.password)
+    signUserIn ({ commit }, payload) {
+      authService.signInWithEmailAndPassword(payload.userid, payload.password)
         .then(
           user => {
             const newUser = {
@@ -30,35 +30,16 @@ export const store = new Vuex.Store({
             console.log(error)
           }
         )
-    }
-  },
-  signUserIn ({ commit }, payload) {
-    authService.signInWithEmailAndPassword(payload.userid, payload.password)
-      .then(
-        user => {
-          const newUser = {
-            id: user.uid,
-            name: user.email,
-            userid: user.id
-          }
-          debugger
-          commit('setUser', { 'user': newUser })
-        }
-      )
-      .catch(
+    },
+    signOut () {
+      authService.signOut().then(function () {
+        alert('Logged out')
+      }).catch(
         error => {
           console.log(error)
         }
       )
-  },
-  signOut () {
-    authService.signOut().then(function () {
-      alert('Logged out')
-    }).catch(
-      error => {
-        console.log(error)
-      }
-    )
+    }
   },
   mutations: {
     setUser (state, payload) {
@@ -68,7 +49,7 @@ export const store = new Vuex.Store({
   },
   modules: {
     SampleComponent,
-    users
+    Users
   },
   getters: {
     user (state) {

@@ -1,5 +1,4 @@
 <template>
-
   <v-app light>
     <v-navigation-drawer
       app
@@ -68,30 +67,12 @@
       color="indigo"
       app>
       <v-spacer/>
-      <span class="white--text bold">ReParty &copy; 2017</span>
+      <span class="white--text bold">ReParty &copy; 2018</span>
     </v-footer>
   </v-app>
-  <!--
-    <pp-showview/>
-    <pp-createview/>
-  -->
-  </template>
-
-  <script>
-  export default {
-
-  }
-  </script>
-
-  <style>
-
-  </style>
-
 </template>
 
 <script>
-import ShowView from './components/ShowView.vue'
-import CreateView from './components/CreateView.vue'
 import { eventsDB } from './services/firebase.conf'
 export default {
   data () {
@@ -113,7 +94,7 @@ export default {
   created () {
     this.$router.options.routes.forEach(route => {
       this.tabs.push({ name: route.name, icon: route.icon })
-    }),
+    })
     this.$store.dispatch('setPageRef', eventsDB)
   }
 }
