@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import { eventsDB } from './services/firebase.conf'
 export default {
   data () {
     return {
@@ -95,7 +94,6 @@ export default {
     this.$router.options.routes.forEach(route => {
       this.tabs.push({ name: route.name, icon: route.icon })
     })
-    this.$store.dispatch('setPageRef', eventsDB)
   }
 }
 </script>
