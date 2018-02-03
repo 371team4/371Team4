@@ -1,17 +1,16 @@
 pipeline {
-    agent { docker 'python:3.5.1' }
+    agent any
     
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
+                bat 'Building...'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                sh 'python --version'
-                sh '''
+                bat 'Testing...'
+                bat '''
                     echo 'Multiline shell steps work too'
                     ls -lah
                 '''
@@ -19,7 +18,7 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                echo 'Deploying...'
+                bat 'Deploying...'
             }
         }
     }
