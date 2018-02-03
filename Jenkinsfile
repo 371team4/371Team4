@@ -9,16 +9,16 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'Testing...'
+                bat 'echo Testing...'
                 bat '''
-                    echo 'Multiline shell steps work too'
-                    ls -lah
+                    'echo Multiline shell steps work too'
+                    'echo This is another line'
                 '''
             }
         }
         stage ('Deploy') {
             steps {
-                bat 'Deploying...'
+                bat 'echo Deploying...'
             }
         }
     }
