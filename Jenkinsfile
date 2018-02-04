@@ -11,6 +11,7 @@ pipeline {
             steps {
                 bat 'echo Testing...'
                 bat 'echo Multiline shell steps work too'
+                bat 'echo This is another line'
             }
         }
         stage ('Deploy') {
