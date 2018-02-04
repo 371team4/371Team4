@@ -17,7 +17,6 @@ pipeline {
         stage ('Deploy') {
             steps {
                 bat 'echo Deploying...'
-                bat 'This will fail because there is no echo'
             }
         }
     }
