@@ -1,28 +1,37 @@
 <template>
   <v-container fluid>
-    <v-layout row>
-      <v-flex xs3>
-        <v-card class="card--flex-toolbar">
-          <v-toolbar
-            card
-            color="white"
-            prominent>
-            <v-toolbar-title class="body-2 grey--text">Title</v-toolbar-title>
-            <v-spacer/>
-            <v-btn icon>
-              <v-icon>search</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>apps</v-icon>
-            </v-btn>
-            <v-btn icon>
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-          </v-toolbar>
-          <v-divider/>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-container>
+      <v-layout row>
+        <v-flex
+          xs8
+          offset-xs2>
+          <v-card class="card--flex-toolbar">
+            <v-toolbar
+              card
+              color="white"
+              prominent>
+              <v-text-field
+                prepend-icon="search"
+                hide-details
+                single-line
+                @keyup.enter="searchForSlide"
+                v-model="searchString"/>
+              <v-btn
+                dark
+                color="pink"
+                ripple
+                round>
+                <v-icon>add</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-divider/>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-layout
       row
       wrap>
@@ -44,6 +53,7 @@ export default {
   components: { EventCard },
   data () {
     return {
+      searchString: '',
       events: [
         {
           _id: '5a700ee29c61ea4f72cd23e2',
@@ -130,6 +140,11 @@ export default {
           isOnRotation: true
         }
       ]
+    }
+  },
+  methods: {
+    searchForSlide () {
+      console.log('Pressed search')
     }
   }
 }

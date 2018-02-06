@@ -69,3 +69,10 @@ export default {
   }
 }
 </script>
+
+<!-- we need to override the scroll bar behaviour set by default by vuetify -->
+<style>
+  html {
+    overflow-y: auto
+  }
+</style>
