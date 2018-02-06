@@ -12,11 +12,19 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e",
     "build": "node build/build.js",
-    "deploy": "npm run build && firebase deploy"
+    "deploy": "npm run build && firebase deploy",
+    "functions-lint": "eslint --ext .js functions",
+    "functions-serve": "firebase serve --only functions",
+    "functions-shell": "firebase experimental:functions:shell",
+    "functions-start": "npm run shell",
+    "functions-deploy": "firebase deploy --only functions",
+    "functions-logs": "firebase functions:log"
   },
   "dependencies": {
     "axios": "^0.17.1",
     "firebase": "^4.9.0",
+    "firebase-admin": "^5.8.2",
+    "firebase-functions": "^0.8.1",
     "vue": "^2.5.2",
     "vue-i18n": "^7.4.1",
     "vue-router": "^3.0.1",
