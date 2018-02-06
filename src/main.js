@@ -8,6 +8,9 @@ import App from './App'
 import router from './router'
 import { store } from './store'
 
+// force firebase to init * why you so smart*
+import './services/firebase.conf'
+
 Vue.use(Vuetify)
 Vue.config.silent = false
 Vue.config.performance = true
@@ -16,8 +19,8 @@ Vue.config.productionTip = true
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   components: { App },
   template: '<App/>'
 })
