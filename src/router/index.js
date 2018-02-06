@@ -69,8 +69,6 @@ router.beforeEach((to, from, next) => {
   store.commit('setLoading', { loading: true })
   // this route requires auth, check if logged in
   // if not, redirect to login page
-  // this is not clean what so ever, the store is refusing to ineract with the router
-  //    so force the router from a top level object
   let user = authService.currentUser
   if (to.matched.some(record => record.meta.requiresAuth) && !user) {
     store.commit('setLoading', { loading: false })
