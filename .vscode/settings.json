@@ -27,7 +27,6 @@
     "terminal.integrated.cursorStyle": "block",
     "extensions.ignoreRecommendations": true,
     "emmet.includeLanguages": {
-        "javascript": "html",
         "vue": "html",
         "vue-html": "html",
         "javascriptreact": "html",

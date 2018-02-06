@@ -18,13 +18,18 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    'camelcase': ['error',
+      {
+        properties: 'always'
+      }
+    ],
     // don"t require comma in the last line of an object/dictionary declaration
     'comma-dangle': ['error', 'never'],
     // ignore max-len for comments
     'max-len': [
       'error',
       {
-        code: 100,
+        code: 120,
         ignoreComments: true,
         ignoreTrailingComments: true,
         ignoreUrls: true,
