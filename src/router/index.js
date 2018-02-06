@@ -69,6 +69,7 @@ router.beforeEach((to, from, next) => {
   store.commit('setLoading', { loading: true })
   // this route requires auth, check if logged in
   // if not, redirect to login page
+  //
   let user = authService.currentUser
   if (to.matched.some(record => record.meta.requiresAuth) && !user) {
     store.commit('setLoading', { loading: false })
