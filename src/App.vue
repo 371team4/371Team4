@@ -2,8 +2,7 @@
   <v-app light>
     <nav-drawer
       :is-visible="drawerVis"
-      :tabs="tabs"
-      @updateVisFromNav="changeVisibilty"/>
+      :tabs="tabs"/>
     <main-header
       :is-visible="drawerVis"
       :title="title"

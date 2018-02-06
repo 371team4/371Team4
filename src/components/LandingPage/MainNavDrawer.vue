@@ -16,7 +16,6 @@
       dense
       class="pt-0">
       <v-list-tile
-        @click="updateVisibility"
         v-for="tab in tabs"
         :key="tab.name"
         :to="{ name:tab.name }">
@@ -44,11 +43,6 @@ export default {
       default () {
         return []
       }
-    }
-  },
-  methods: {
-    updateVisibility () {
-      this.$emit('updateVisFromNav')
     }
   }
 }
