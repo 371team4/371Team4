@@ -4,11 +4,20 @@
 
 ## Build Setup
 
-1. Install NodeJS from here https://nodejs.org/en/. Go with the LTS version
-2. Install VSCode fro here https://code.visualstudio.com/Download
+1. Install NodeJS from here https://nodejs.org/en/download/. Go with the LTS version
+   * If you are on Linux you will need to use these commands to get NodeJS installed
+      ```
+      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+      ```
+2. Install VSCode from here https://code.visualstudio.com/Download
+   * If you are using a MacOS machine, you will need to follow the instructions on the this page before installing the VSCode extensions
+   https://code.visualstudio.com/docs/setup/mac
 3. Install the extensions from the extensions section below
-   * Install Vue dev tools from https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en
+   * Install Vue dev tools from
+   https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en
 4. Clone the repo into your desired folder
+   * Make sure to switch to the development branch and create your own branch from there
 5. While you are in VSCode, open the folder where you cloned the repo
 6. Hit CTRL+\` and the embedded terminal will come up
 7. Type `npm install`, go get a drink...
@@ -31,6 +40,12 @@ npm run build
 npm run build --report
 
 # run unit tests
+npm run unit
+
+# run end-2-end tests
+npm run e2e
+
+# run all tests
 npm run test
 
 # deploy prodcution to firebase server, this will build before deploying
@@ -50,8 +65,10 @@ code --install-extension eg2.vscode-npm-script
 code --install-extension esbenp.prettier-vscode
 code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
+code --install-extension lukehoban.Go
 code --install-extension octref.vetur
 code --install-extension robertohuertasm.vscode-icons
+code --install-extension sandeepthukral.nightwatch-js-snippets
 code --install-extension xabikos.JavaScriptSnippets
 code --install-extension zhuangtongfa.Material-theme
 ```
