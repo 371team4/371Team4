@@ -19,16 +19,6 @@
       </v-container>
     </v-card-media>
     <v-card-actions class="white">
-      <v-layout
-        flex
-        class="mpr-0 mpl-0"
-        v-for="(tag, i) in event.tags"
-        :key="tag"
-        v-if="i < 3">
-        <v-chip
-          color="primary"
-          text-color="white">{{ tag }}</v-chip>
-      </v-layout>
       <v-spacer/>
       <v-btn icon>
         <v-icon>info</v-icon>

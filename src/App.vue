@@ -1,53 +1,19 @@
 <template>
   <v-app light>
-    <v-navigation-drawer
-      app
-      v-model="drawerVis"
-      v-show="drawerVis"
-      clipped
-      fixed
-      floating
-      dark
-      persistent
-      hide-overlay>
-      <v-list
-        transition="slide-x-transition"
-        two-line
-        dense
-        class="pt-0">
-        <v-list-tile
-          @click="1"
-          v-for="tab in tabs"
-          :key="tab.name"
-          :to="{ name:tab.name }">
-          <v-list-tile-action>
-            <v-icon>{{ tab.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ tab.name }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-divider/>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar
-      color="indigo"
-      dark
-      fixed
-      app
-      clipped-left>
-      <v-toolbar-side-icon
-        v-show="!drawerVis"
-        @click="drawerVis = !drawerVis"/>
-      <v-btn
-        icon
-        v-show="drawerVis"
-        @click="drawerVis = !drawerVis">
-        <v-icon>keyboard_arrow_left</v-icon>
-      </v-btn>
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
-    </v-toolbar>
+    <nav-drawer
+      :is-visible="drawerVis"
+      :tabs="tabs"
+      @updateVisFromNav="changeVisibilty"/>
+    <main-header
+      :is-visible="drawerVis"
+      :title="title"
+      @updateVisFromHeader="changeVisibilty"/>
     <v-content>
+      <v-progress-linear
+        v-show="isLoading"
+        :indeterminate="true"
+        color="light-green accent-3"
+        class="my-0"/>
       <v-container
         fluid
         fill-height>
@@ -62,38 +28,44 @@
         </v-layout>
       </v-container>
     </v-content>
-    <v-footer
-      fixed
-      color="indigo"
-      app>
-      <v-spacer/>
-      <span class="white--text bold">ReParty &copy; 2018</span>
-    </v-footer>
+    <main-footer/>
   </v-app>
 </template>
 
 <script>
+import NavDrawer from '@/components/LandingPage/MainNavDrawer'
+import MainFooter from '@/components/LandingPage/MainFooter'
+import MainHeader from '@/components/LandingPage/MainHeader'
+
 export default {
+  components: { NavDrawer, MainFooter, MainHeader },
   data () {
     return {
       drawerVis: false,
       source: 'hello',
       drawer: false,
-      tabs: []
+      showContentLoader: true
     }
   },
   computed: {
-    title: {
-      get () {
-        return this.$route.name || 'Projects'
-      },
-      set (newTabName) { }
+    title () {
+      return this.$route.name || 'Slides'
+    },
+    authenticated () {
+      return this.$store.getters.isAuthenticated
+    },
+    tabs () {
+      return this.$router.options.routes.filter(route =>
+        route.meta && route.meta.requiresAuth && route.meta.requiresAuth === true && this.authenticated)
+    },
+    isLoading () {
+      return this.$store.getters.isLoading
     }
   },
-  created () {
-    this.$router.options.routes.forEach(route => {
-      this.tabs.push({ name: route.name, icon: route.icon })
-    })
+  methods: {
+    changeVisibilty () {
+      this.drawerVis = !this.drawerVis
+    }
   }
 }
 </script>

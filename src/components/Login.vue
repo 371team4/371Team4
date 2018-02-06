@@ -20,20 +20,22 @@
             <v-form
               :v-model="valid"
               ref="form"
-              lazy-validation>
+              lazy-validation
+              autocomplete="off">
+              <v-select
+                :items="domains"
+                v-model="selectedDomain"
+                bottom
+                label="Domain"/>
               <v-text-field
                 prepend-icon="person"
                 name="login"
-                label="Email"
+                label="Username"
                 type="text"
-                v-model="email"
-                :rules="[rules.required, rules.email]"
+                v-model="username"
+                :rules="[rules.required, rules.username]"
                 required
-                :autocomplete="false"/>
-              <v-select
-                v-model="select"
-                combobox
-                :items="domains"/>
+                @keyup.enter="submit"/>
               <v-text-field
                 prepend-icon="lock"
                 name="password"
@@ -43,14 +45,16 @@
                 :append-icon="unmask ? 'visibility_off' : 'visibility'"
                 :append-icon-cb="() => (unmask = !unmask)"
                 required
-                :rules="[rules.required]"/>
+                :rules="[rules.required]"
+                @keyup.enter="submit"/>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
             <v-btn
               color="primary"
-              @click="submit">Login</v-btn>
+              @click="submit"
+              :disabled="isLoading">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -63,15 +67,15 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: '',
-      password: '',
-      unmask: false,
-      select: 1,
+      username: 'test',
+      password: 'test01',
+      unmask: true,
+      selectedDomain: 'test.com',
       valid: true,
-      domains: ['scc.ca', 'chcc.ca'],
+      domains: ['scc.ca', 'test.com', 'chcc.ca'],
       rules: {
         required: (value) => !!value || 'Required.',
-        email: (value) => {
+        username: (value) => {
           // eslint-disable-next-line
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))$/
           return pattern.test(value) || 'Invalid e-mail.'
@@ -79,10 +83,27 @@ export default {
       }
     }
   },
+  computed: {
+    isLoading () {
+      return this.$store.getters.isLoading
+    }
+  },
   methods: {
     submit () {
       if (this.$refs.form.validate()) {
-        console.log(this.email, this.password)
+        const loginInfo = {
+          username: this.username,
+          password: this.password,
+          domain: this.selectedDomain
+        }
+        if (this.$store.getters.isAuthenticated) {
+          this.$router.push({ name: 'Slides' })
+        } else {
+          this.$store.dispatch('signIn', loginInfo)
+            .then(state => {
+              console.log(state + 'hi hi hi')
+            })
+        }
       }
     }
   }
