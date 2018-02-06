@@ -1,38 +1,41 @@
 <template>
-  <v-layout row>
-    <v-flex
-      xs8
-      offset-xs2>
-      <v-card class="card--flex-toolbar">
-        <v-toolbar
-          card
-          color="white"
-          prominent>
-          <v-toolbar-title class="body-2 grey--text">Title</v-toolbar-title>
-          <v-spacer/>
-          <v-btn icon>
-            <v-icon>search</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>apps</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider/>
-      </v-card>
-      <v-layout
-        row
-        wrap>
-        <v-flex
-          v-for="event in events"
-          :key="event.name">
-          <EventCard :event="event"/>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-  </v-layout>
+  <v-container fluid>
+    <v-layout row>
+      <v-flex xs3>
+        <v-card class="card--flex-toolbar">
+          <v-toolbar
+            card
+            color="white"
+            prominent>
+            <v-toolbar-title class="body-2 grey--text">Title</v-toolbar-title>
+            <v-spacer/>
+            <v-btn icon>
+              <v-icon>search</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>apps</v-icon>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-divider/>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    <v-layout
+      row
+      wrap>
+      <v-flex
+        xs3
+        v-for="event in events"
+        :key="event.name">
+        <EventCard
+          class="mx-1 px-1 my-1 py-1"
+          :event="event"/>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -54,7 +57,6 @@ export default {
             isRepeatable: false
           },
           description: 'Fugiat ea enim elit exercitation sunt proident pariatur sint dolore cillum. Qui ad anim est non proident et laboris laborum adipisicing adipisicing. Velit id nulla aliqua ipsum proident nostrud reprehenderit do laboris. Excepteur ut occaecat do consequat do est nostrud sint non ut. Sit est nulla ex laboris fugiat velit esse quis non. Nisi aute non reprehenderit veniam nisi.',
-          tags: ['enim', 'et', 'cillum', 'reprehenderit', 'non'],
           isOnRotation: false
         },
         {
@@ -69,7 +71,6 @@ export default {
             isRepeatable: true
           },
           description: 'Non ex sunt qui aliquip quis quis. Irure do dolore culpa minim veniam fugiat veniam consectetur in magna aliqua est. Sit minim aliquip non qui eu minim officia et. Excepteur occaecat nostrud sint esse incididunt proident sit amet amet. Sit nisi ut elit qui esse veniam laboris dolor Lorem.',
-          tags: ['sint', 'velit', 'est', 'ea', 'amet'],
           isOnRotation: false
         },
         {
@@ -84,7 +85,6 @@ export default {
             isRepeatable: true
           },
           description: 'Est exercitation veniam veniam esse ut cillum ullamco excepteur ea proident pariatur ad. Lorem et exercitation deserunt proident proident ex cillum et. Nostrud mollit laboris excepteur consequat et dolore esse dolore amet pariatur. Esse amet occaecat culpa est in amet dolore pariatur. Laboris officia Lorem ullamco veniam consectetur.',
-          tags: [ 'pariatur', 'nulla', 'mollit', 'occaecat', 'minim' ],
           isOnRotation: false
         },
         {
@@ -99,7 +99,6 @@ export default {
             isRepeatable: false
           },
           description: 'Do et mollit cillum ullamco velit veniam ut incididunt qui cillum labore eiusmod. Magna non cupidatat et reprehenderit ullamco eu dolor adipisicing. Laborum esse aliquip Lorem culpa ipsum sit irure quis amet ullamco. Et deserunt laboris et culpa dolor magna labore irure cillum eiusmod sit proident. Sunt Lorem sit consectetur ipsum cillum deserunt in veniam ad non tempor enim. Voluptate fugiat quis dolore nisi.',
-          tags: [ 'velit', 'ut', 'quis', 'non', 'nisi' ],
           isOnRotation: false
         },
         {
@@ -114,7 +113,6 @@ export default {
             isRepeatable: false
           },
           description: 'In excepteur proident mollit minim minim. Velit deserunt deserunt est in magna dolore qui. Pariatur occaecat magna pariatur magna qui nisi Lorem est. Voluptate consequat Lorem enim est ea sit laboris eu quis in esse occaecat consequat.',
-          tags: [ 'fugiat', 'dolor', 'dolor', 'Lorem', 'fugiat' ],
           isOnRotation: true
         },
         {
@@ -129,7 +127,6 @@ export default {
             isRepeatable: false
           },
           description: 'Magna nisi ipsum nostrud officia ipsum id do velit pariatur dolor elit ullamco. Ullamco voluptate commodo nostrud eu consectetur do ullamco id velit non. Quis adipisicing nulla sint ullamco irure incididunt. Qui eiusmod laborum dolore ea eiusmod esse ad pariatur occaecat id. Non eu fugiat officia amet Lorem proident quis fugiat esse aliquip ut ex nisi. In fugiat do ad elit in. Ullamco nulla mollit nulla qui officia laboris culpa laboris deserunt.',
-          tags: [ 'occaecat', 'excepteur', 'velit', 'dolore', 'non' ],
           isOnRotation: true
         }
       ]
