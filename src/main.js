@@ -8,7 +8,7 @@ import App from './App'
 import router from './router'
 import { store } from './store'
 
-// force firebase to init * why you so smart*
+// force firebase to init
 import './services/firebase.conf'
 
 Vue.use(Vuetify)

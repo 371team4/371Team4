@@ -27,22 +27,11 @@ export const store = new Vuex.Store({
             console.log(error)
           }
         )
-    }
-  },
-  signUserIn ({ commit }, payload) {
-    authService.signInWithEmailAndPassword(payload.userid, payload.password)
-      .then(
-        user => {
-          const newUser = {
-            id: user.uid,
-            name: user.email,
-            userid: user.id
-          }
-          debugger
-          commit('setUser', { 'user': newUser })
-        }
-      )
-      .catch(
+    },
+    signOut () {
+      authService.signOut().then(function () {
+        alert('Logged out')
+      }).catch(
         error => {
           console.log(error)
         }
