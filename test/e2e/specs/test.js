@@ -11,6 +11,7 @@ module.exports = {
     browser
       .url(devServer + '/view')
       .waitForElementVisible('h1', 5000)
+      .pause(30000)
       .assert.elementPresent('h1')
       .assert.containsText('h1', 'Show View')
       .end()
