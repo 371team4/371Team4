@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from '../store/index'
+import { SET_LOADING } from '../store/mutation-types'
 
 const ShowView = () => import(/* webpackChunkName: "ShowView.vue" */'@/components/ShowView')
 const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Slides')
@@ -65,17 +66,17 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  store.commit('setLoading', { loading: true })
+  store.commit(SET_LOADING, { loading: true })
   // this route requires auth, check if logged in
   // if not, redirect to login page
   if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.isAuthenticated) {
-    store.commit('setLoading', { loading: false })
+    store.commit(SET_LOADING, { loading: false })
     next({
       path: '/login',
       query: { redirect: to.fullPath }
     })
   } else {
-    store.commit('setLoading', { loading: false })
+    store.commit(SET_LOADING, { loading: false })
     next()
   }
 })

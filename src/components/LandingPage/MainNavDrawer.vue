@@ -2,12 +2,10 @@
   <v-navigation-drawer
     app
     v-model="isVisible"
-    v-show="isVisible"
     clipped
     fixed
     floating
     dark
-    persistent
     hide-overlay
     disable-route-watcher
     disable-resize-watcher>
