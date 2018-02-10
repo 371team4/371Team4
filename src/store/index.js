@@ -4,47 +4,32 @@ import { authService } from '../services/firebase.conf'
 
 Vue.use(Vuex)
 
+const isDebug = process.env.NODE_ENV !== 'production'
+
 export const store = new Vuex.Store({
   state: {
     user: null
+  strict: isDebug,
+  modules: {
+    root,
+    user
   },
-  actions: {
-    signUserUp ({ commit }, payload) {
-      authService.createUserWithEmailAndPassword(payload.userid, payload.password)
-        .then(
-          user => {
-            const newUser = {
-              id: user.uid,
-              name: user.email,
-              userid: user.id
-            }
-            debugger
-            commit('setUser', { 'user': newUser })
-          }
-        )
-        .catch(
-          error => {
-            console.log(error)
-          }
-        )
-    },
-    signOut () {
-      authService.signOut().then(function () {
-        alert('Logged out')
-      }).catch(
-        error => {
-          console.log(error)
-        }
-      )
-  },
-  mutations: {
-    setUser (state, payload) {
-      state.user = payload.user
-    }
-  },
-  getters: {
-    user (state) {
-      return state.user
-    }
-  }
+  plugins: [createLogger()]
 })
+
+if (module.hot) {
+  // accept actions and mutations as hot modules
+  module.hot.accept(['./root', './modules/user'], () => {
+    // require the updated modules
+    // have to add .default here due to babel 6 module output
+    const root = require('./root').default
+    const user = require('./modules/user').default
+    // swap in the new actions and mutations
+    store.hotUpdate({
+      modules: {
+        root,
+        user
+      }
+    })
+  })
+}
