@@ -1,5 +1,4 @@
-// mutation types
-const SET_LOADING = 'SET_LOADING'
+import { SET_LOADING } from './mutation-types'
 
 // state of this module
 const state = {

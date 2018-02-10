@@ -1,7 +1,5 @@
 import { authService } from '@/services/firebase.conf'
-
-// mutation types
-const SET_USER = 'SET_USER'
+import { SET_USER, SET_LOADING } from '@/store/mutation-types'
 
 // state of this module
 const state = {
@@ -28,7 +26,7 @@ const mutations = {
 // actions can be async and may have side effects
 const actions = {
   signIn ({ commit }, payload) {
-    commit('setLoading', { loading: true })
+    commit(SET_LOADING, { loading: true })
     authService.signInWithEmailAndPassword(`${payload.username}@${payload.domain}`, payload.password)
       .then(
         user => {
@@ -36,13 +34,13 @@ const actions = {
             id: user.uid,
             name: user.email
           }
-          commit('setLoading', { loading: false })
-          commit('setUser', { 'user': newUser })
+          commit(SET_LOADING, { loading: false })
+          commit(SET_USER, { 'user': newUser })
         }
       )
       .catch(
         error => {
-          commit('setLoading', { loading: false })
+          commit(SET_LOADING, { loading: false })
           console.log(error)
         }
       )

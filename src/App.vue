@@ -40,22 +40,19 @@ export default {
   components: { NavDrawer, MainFooter, MainHeader },
   data () {
     return {
-      drawerVis: false,
-      source: 'hello',
-      drawer: false,
-      showContentLoader: true
+      drawerVis: false
     }
   },
   computed: {
     title () {
-      return this.$route.name || 'Slides'
+      return this.$route.name
     },
     authenticated () {
       return this.$store.getters.isAuthenticated
     },
     tabs () {
-      return this.$router.options.routes.filter(route =>
-        route.meta && route.meta.requiresAuth && route.meta.requiresAuth === true && this.authenticated)
+      return this.$router.options.routes
+      // .filter(route => route.meta && route.meta.requiresAuth && route.meta.requiresAuth === true && this.authenticated)
     },
     isLoading () {
       return this.$store.getters.isLoading
