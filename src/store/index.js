@@ -1,63 +1,36 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { authService } from '../services/firebase.conf'
+import createLogger from 'vuex/dist/logger'
+
+import root from './root'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
+const isDebug = process.env.NODE_ENV !== 'production'
+
 export const store = new Vuex.Store({
-  strict: process.env.NODE_ENV !== 'production',
-  state: {
-    user: { id: '_change', email: 'blah@blah.com' },
-    loading: false
+  strict: isDebug,
+  modules: {
+    root,
+    user
   },
-  actions: {
-    signIn ({ commit }, payload) {
-      commit('setLoading', { loading: true })
-      authService.signInWithEmailAndPassword(`${payload.username}@${payload.domain}`, payload.password)
-        .then(
-          user => {
-            const newUser = {
-              id: user.uid,
-              name: user.email
-            }
-            commit('setLoading', { loading: false })
-            commit('setUser', { 'user': newUser })
-          }
-        )
-        .catch(
-          error => {
-            commit('setLoading', { loading: false })
-            console.log(error)
-          }
-        )
-    },
-    signOut () {
-      authService.signOut().then(function () {
-        alert('Logged out')
-      }).catch(
-        error => {
-          console.log(error)
-        }
-      )
-    }
-  },
-  mutations: {
-    setUser (state, payload) {
-      state.user = payload.user
-    },
-    setLoading (state, payload) {
-      state.loading = payload.loading
-    }
-  },
-  getters: {
-    user (state) {
-      return state.user
-    },
-    isAuthenticated (state) {
-      return state.user !== null && state.user !== undefined
-    },
-    isLoading (state) {
-      return state.loading
-    }
-  }
+  plugins: [createLogger()]
 })
+
+if (module.hot) {
+  // accept actions and mutations as hot modules
+  module.hot.accept(['./root', './modules/user'], () => {
+    // require the updated modules
+    // have to add .default here due to babel 6 module output
+    const root = require('./root').default
+    const user = require('./modules/user').default
+    // swap in the new actions and mutations
+    store.hotUpdate({
+      modules: {
+        root,
+        user
+      }
+    })
+  })
+}
