@@ -56,7 +56,7 @@ function startServer (compiler, srv, port, host) {
   })
 
   const compilerStatus = new Promise((resolve, reject) => {
-    console.log('Compiling dev server...')
+    console.log(chalk.yellow('Compiling dev server...\n'))
     compiler.plugin('done', (stats) => {
       console.log(chalk.green('Compiling dev server COMPLETED\n'))
       resolve()
