@@ -7,7 +7,6 @@ module.exports = {
 
       .waitForElementVisible('#app > div.application--wrap > div > main > div.container.fluid.fill-height > div > div > div > div > div > div.card__actions > button > div', 5000)
       .click('#app > div.application--wrap > div > main > div.container.fluid.fill-height > div > div > div > div > div > div.card__actions > button > div')
-      // .assert.containsText('#main', 'Night Watch')
 
       .click('#app > div.application--wrap > div > main > div.container.fluid.fill-height > div > div > div > div > div > div.card__actions > button > div')
       .pause(2000)
