@@ -7,6 +7,7 @@
 <!--- This project only accepts pull requests related to open issues or Trello cards-->
 <!--- If fixing a bug, there should be an issue describing it with steps to reproduce -->
 <!--- Please link to the issue or the Trello Card here: -->
+[Trello card](http://www.example.com/)
 
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
