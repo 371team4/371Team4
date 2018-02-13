@@ -1,6 +1,7 @@
 // 1. start the dev server using production config
 process.env.NODE_ENV = 'testing'
 
+const chalk = require('chalk')
 const webpack = require('webpack')
 const DevServer = require('webpack-dev-server')
 
@@ -13,18 +14,16 @@ devConfigPromise.then(devConfig => {
   const devServerOptions = devConfig.devServer
   const compiler = webpack(webpackConfig)
   server = new DevServer(compiler, devServerOptions)
-  const port = devServerOptions.port
-  const host = devServerOptions.host
-  return server.listen(port, host)
+  return startServer(compiler, server, devServerOptions.port, devServerOptions.host)
 })
   .then(() => {
-  // 2. run the nightwatch test suite against it
-  // to run in additional browsers:
-  //    1. add an entry in test/e2e/nightwatch.conf.js under "test_settings"
-  //    2. add it to the --env flag below
-  // or override the environment flag, for example: `npm run e2e -- --env chrome,firefox`
-  // For more information on Nightwatch's config file, see
-  // http://nightwatchjs.org/guide#settings-file
+    // 2. run the nightwatch test suite against it
+    // to run in additional browsers:
+    //    1. add an entry in test/e2e/nightwatch.conf.json under "test_settings"
+    //    2. add it to the --env flag below
+    // or override the environment flag, for example: `npm run e2e -- --env chrome,firefox`
+    // For more information on Nightwatch's config file, see
+    // http://nightwatchjs.org/guide#settings-file
     let opts = process.argv.slice(2)
     if (opts.indexOf('--config') === -1) {
       opts = opts.concat(['--config', 'test/e2e/nightwatch.conf.js'])
@@ -46,3 +45,27 @@ devConfigPromise.then(devConfig => {
       throw err
     })
   })
+  .catch((error) => {
+    console.log(chalk.red('Error running end to end tests:\n'), error)
+    process.exit(1)
+  })
+
+function startServer (compiler, srv, port, host) {
+  const listenerStatus = new Promise((resolve, reject) => {
+    srv.listen(port, host, (err) => (err) ? reject(err) : resolve())
+  })
+
+  const compilerStatus = new Promise((resolve, reject) => {
+    console.log('Compiling dev server...')
+    compiler.plugin('done', (stats) => {
+      console.log(chalk.green('Compiling dev server COMPLETED\n'))
+      resolve()
+    })
+    compiler.plugin('failed', (err) => {
+      console.log(chalk.red('Compiling dev server FAILED\n'), err)
+      reject(err)
+    })
+  })
+
+  return Promise.all([listenerStatus, compilerStatus])
+}

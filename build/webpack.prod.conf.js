@@ -10,7 +10,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin')
+/*const WorkboxPlugin = require('workbox-webpack-plugin')
+new WorkboxPlugin({
+  globDirectory: 'dist',
+  globPatterns: ['*\*\/*.{css,html,js}'],
+  swDest: path.join('dist', 'sw.js'),
+  clientsClaim: true,
+  skipWaiting: true,
+  runtimeCaching: [
+    {
+      urlPattern: new RegExp('localhost'),
+      handler: 'staleWhileRevalidate'
+    }
+  ]
+})*/
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -69,7 +82,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         : config.build.index,
       template: 'index.html',
       inject: true,
-      isBuild: true,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -121,20 +133,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ]),
-    new WorkboxPlugin({
-      globDirectory: 'dist',
-      globPatterns: ['**/*.{css,html,js}'],
-      swDest: path.join('dist', 'sw.js'),
-      clientsClaim: true,
-      skipWaiting: true,
-      runtimeCaching: [
-        {
-          urlPattern: new RegExp('localhost'),
-          handler: 'staleWhileRevalidate'
-        }
-      ]
-    })
+    ])
   ]
 })
 

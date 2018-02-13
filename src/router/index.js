@@ -1,27 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { authService } from '../services/firebase.conf'
 import { store } from '../store/index'
+import { SET_LOADING } from '../store/mutation-types'
 
 const ShowView = () => import(/* webpackChunkName: "ShowView.vue" */'@/components/ShowView')
 const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Slides')
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
-const Login = () => import(/* webpackChunkName: "login.vue" */ '@/components/Login')
+/* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      // star is for 404 page, dummy!
+    /* {
+      // star is for catch all
       path: '*',
       name: 'Sign in',
       icon: 'person',
       scrollToTop: true,
       component: Login
-    },
+    }, */
     {
       path: '/view',
       name: 'Show View',
@@ -33,7 +33,7 @@ const router = new Router({
       }
     },
     {
-      path: '/slides',
+      path: '/',
       name: 'Slides',
       icon: 'perm_media',
       scrollToTop: true,
@@ -66,18 +66,17 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  store.commit('setLoading', { loading: true })
+  store.commit(SET_LOADING, { loading: true })
   // this route requires auth, check if logged in
   // if not, redirect to login page
-  let user = authService.currentUser
-  if (to.matched.some(record => record.meta.requiresAuth) && !user) {
-    store.commit('setLoading', { loading: false })
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.isAuthenticated) {
+    store.commit(SET_LOADING, { loading: false })
     next({
       path: '/login',
       query: { redirect: to.fullPath }
     })
   } else {
-    store.commit('setLoading', { loading: false })
+    store.commit(SET_LOADING, { loading: false })
     next()
   }
 })
