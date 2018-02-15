@@ -1,9 +1,9 @@
 <template>
   <v-card
-  height="200px"
-  v-on:click="add()"
-  v-model="isVisible"
-  disabled="isDisabled">
+    height="200px"
+    @click="add()"
+    v-model="isVisible"
+    disabled="isDisabled">
     <v-btn>
       <v-icon>add</v-icon>
     </v-btn>
@@ -12,19 +12,19 @@
 
 <script>
 export default {
-  props:{
-    isVisible:{
+  props: {
+    isVisible: {
       type: Boolean,
       required: true
     },
-    isDisabled:{
+    isDisabled: {
       type: Boolean,
       required: true
     }
   },
 
   methods: {
-    add: function(){
+    add: function () {
       this.$emit('cButtonClick')
     }
   }
