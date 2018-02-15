@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .largeButton {
-  height: 100%;
+  height: 200px;
 }
 
 </style>
