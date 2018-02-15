@@ -1,12 +1,21 @@
 <template>
   <v-card
-    height="200px"
     @click="add()"
     v-model="isVisible"
     disabled="isDisabled">
-    <v-btn>
-      <v-icon>add</v-icon>
-    </v-btn>
+    <v-container
+      fill-height
+      fluid>
+      <v-btn
+        color="blue"
+        large
+        block>
+        <v-icon
+        x-large>
+          add
+        </v-icon>
+      </v-btn>
+    </v-container>
   </v-card>
 </template>
 
