@@ -1,21 +1,21 @@
 <template>
   <v-card
-    @click="add()"
     v-model="isVisible"
     disabled="isDisabled">
-    <v-container
-      fill-height
-      fluid>
+    <v-flex
+    align-center>
       <v-btn
+        @click.stop="add"
         color="blue"
         large
-        block>
+        block
+        class="largeButton">
         <v-icon
         x-large>
           add
         </v-icon>
       </v-btn>
-    </v-container>
+    </v-flex>
   </v-card>
 </template>
 
@@ -35,7 +35,7 @@ export default {
   },
 
   methods: {
-    add: function () {
+    add () {
       this.$emit('cButtonClick')
     }
   }
@@ -44,5 +44,8 @@ export default {
 </script>
 
 <style scoped>
+.largeButton {
+  height: 100%;
+}
 
 </style>
