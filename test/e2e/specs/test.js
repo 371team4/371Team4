@@ -1,7 +1,7 @@
 // For authoring Nightwatch tests, see
 // http://nightwatchjs.org/guide#usage
 
-var devServer
+let devServer
 
 module.exports = {
   before: function (browser) {
