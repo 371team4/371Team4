@@ -43,14 +43,21 @@
           class="mx-1 px-1 my-1 py-1"
           :event="event"/>
       </v-flex>
+      <v-flex
+      xs3>
+        <add-button
+          class="mx-1 px-1 my-1 py-1"
+          @cButtonClick="cButtonClick"/>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import EventCard from './EventCard'
+import AddButton from './shared/AddButton'
 export default {
-  components: { EventCard },
+  components: { EventCard, AddButton },
   data () {
     return {
       searchString: '',
@@ -145,6 +152,9 @@ export default {
   methods: {
     searchForSlide () {
       console.log('Pressed search')
+    },
+    cButtonClick () {
+      alert('clicked')
     }
   }
 }
