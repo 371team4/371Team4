@@ -4,9 +4,15 @@
     @click="clickFunc()"
     v-model="isVisible"
     disabled="isDisabled">
-    <v-btn>
-      <v-icon>add</v-icon>
-    </v-btn>
+    <v-container
+      fill-height
+      fluid>
+      <v-btn
+        large
+        block>
+        <v-icon x-large>add</v-icon>
+      </v-btn>
+    </v-container>
   </v-card>
 </template>
 
