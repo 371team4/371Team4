@@ -15,10 +15,12 @@ export default {
   props: {
     isVisible: {
       type: Boolean,
+      default: true,
       required: true
     },
     isDisabled: {
       type: Boolean,
+      default: false,
       required: true
     }
   },
