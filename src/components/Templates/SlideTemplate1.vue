@@ -15,7 +15,7 @@
         xs12
         sm8
         md9
-        lg4>
+        lg6>
         <v-card
           color="transparent"
           flat
@@ -23,9 +23,12 @@
           <v-card-title
             primary
             class="title">
-            <h3 class="display-2">{{ title }}</h3>
-
-            <span class="subheading">{{ subtitle }}</span>
+            <h2 class="display-3">{{ title }}</h2>
+          </v-card-title>
+          <v-card-title
+            primary
+            class="title">
+            <h2 class="display-2">{{ time }}</h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -67,14 +70,7 @@
       <v-flex
         xs12
         v-show="!slideModeOn">
-        <v-card
-        color="indigo">
-          <v-container
-            fill-height
-            fluid>
-            <v-layout align-center/>
-          </v-container>
-        </v-card>
+
 
         <v-card
           color="white"
@@ -109,7 +105,8 @@ export default {
       title: 'Sherbrooke Event Title',
       subtitle: 'Sherbrooke event slide subtitle',
       eventBody: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
-      slideModeOn: false
+      slideModeOn: false,
+      time:'7:00 PM'
     }
   }
 }
