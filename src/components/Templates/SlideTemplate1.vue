@@ -95,7 +95,9 @@ export default {
       title: 'Sherbrooke Event Title',
       subtitle: 'Sherbrooke event slide subtitle',
       eventBody: 'Sherbrooke event slide body. \n\n CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
-      editMode: false
+      editMode: false,
+      authorModeOn: false,
+      slideViewMode: true
     }
   }
 }
