@@ -14,6 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
+                bat 'git reset --hard'    /* do this to avoid unstaged changes error */
                 bat 'git rebase origin/%CHANGE_TARGET%'
                 bat 'npm run build'
             }
@@ -33,7 +34,7 @@ pipeline {
 
     post {
         always {
-            deleteDir() /* clean up our workspace */
+            deleteDir()   /* clean up our workspace */
         }
         success {
             echo 'This will run only if successful'
