@@ -1,30 +1,35 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
+                bat 'echo Getting Dependencies...'
+                bat 'npm install'
+
+                bat 'echo Linting...'
+                bat `npm run lint-fix`
+
                 bat 'echo Building...'
+                bat 'npm build'
             }
         }
         stage('Test') {
             steps {
                 bat 'echo Testing...'
-                bat 'echo Multiline shell steps work too'
-                bat 'echo This is another line'
+                bat 'npm unit tests'
+                bat 'npm e2e tests'
             }
         }
         stage ('Deploy') {
             steps {
                 bat 'echo Deploying...'
+                bat 'npm run deploy'
             }
         }
     }
 
     post {
-        always {
-            echo 'This will always run'
-        }
         success {
             echo 'This will run only if successful'
         }
@@ -36,7 +41,6 @@ pipeline {
         }
         changed {
             echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
         }
     }
 }
