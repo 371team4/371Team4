@@ -4,10 +4,6 @@
       accept="image/*"
       type="file"
       @change="uploadAndSubmit">
-    <button
-    @click="cancelUpload">
-      cancel
-    </button>
   </div>
 </template>
 
@@ -24,9 +20,6 @@ export default {
       this.files = tmpArray.filter(file => file.type.indexOf('image/') !== -1)
       // console.log(this.files)
       this.$store.dispatch('uploadSingleFile', this.files[0])
-    },
-    cancelUpload: function () {
-      this.$store.dispatch('cancelUploadFile', true)
     }
   }
 }

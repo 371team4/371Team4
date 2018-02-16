@@ -86,10 +86,6 @@ const actions = {
     }
   },
   */
- // action to cancel upload
-  cancelUploadFile (context, payload) {
-    context.commit(SET_CANCEL_UPLOAD, true)
-  },
   // action to upload file
   uploadSingleFile (context, file) {
     // pre-set upload status
@@ -128,9 +124,7 @@ const actions = {
       // store it to event so load event directly use this url not use download api
       // console.log(upload.snapshot.downloadURL)
     })
-
   }
-
 }
 
 // export everything as default

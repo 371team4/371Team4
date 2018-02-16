@@ -10,7 +10,6 @@ const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/component
 /* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
 const Upload = () => import(/* webpackChunkName: "Upload.vue" */'@/components/UploadView')
 
-
 Vue.use(Router)
 
 const router = new Router({

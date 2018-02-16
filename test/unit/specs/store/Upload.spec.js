@@ -35,14 +35,6 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
-describe('index', () => {
-  it('cancelUploadFile', done => {
-    testAction(index.actions.cancelUploadFile, [true], {}, [
-      { type: 'SET_CANCEL_UPLOAD', payload: true },
-    ], done)
-  })
-})
-
 var f = new Blob()
 f.name="img1.jpg"
 f.size=100
