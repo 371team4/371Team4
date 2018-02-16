@@ -23,6 +23,7 @@
             primary
             class="title">
             <h3 class="display-2">{{ title }}</h3>
+
             <span class="subheading">{{ subtitle }}</span>
           </v-card-title>
         </v-card>
@@ -54,6 +55,16 @@
       </v-flex>
     </v-layout>
     <!-- Component used as Event Body -->
+
+    <v-card
+    color="indigo">
+      <v-container
+        fill-height
+        fluid>
+        <v-layout align-center/>
+      </v-container>
+    </v-card>
+
     <v-card
       color="white"
       height="300px">
