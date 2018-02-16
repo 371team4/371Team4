@@ -6,6 +6,7 @@
     grid-list-sm>
     <!-- Event title card -->
     <v-layout
+      v-show="!slideModeOn"
       row
       wrap
       justify-space-between>
@@ -29,6 +30,7 @@
         </v-card>
       </v-flex>
       <!-- Done Event title card -->
+
       <!-- Carousel Component -->
       <v-flex
         d-flex
@@ -45,9 +47,11 @@
         </v-carousel>
       </v-flex>
       <!-- Done the Carousel item -->
+
       <v-flex
         d-flex
-        xs12>
+        xs12
+        v-show="!slideModeOn">
         <v-card
           color="transparent"
           flat
@@ -61,7 +65,8 @@
       wrap
       fluid>
       <v-flex
-      xs12>
+        xs12
+        v-show="!slideModeOn">
         <v-card
         color="indigo">
           <v-container
@@ -104,7 +109,6 @@ export default {
       title: 'Sherbrooke Event Title',
       subtitle: 'Sherbrooke event slide subtitle',
       eventBody: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
-      authorModeOn: false,
       slideModeOn: false
     }
   }
