@@ -17,10 +17,11 @@ export default {
     }
   },
   methods: {
-    uploadAndSubmitOne: function ({ target }) {
+    uploadAndSubmit: function ({ target }) {
       let tmpArray = [...target.files]
       this.files = tmpArray.filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadSingleFile', tmpArray[0])
+      // console.log(this.files)
+      this.$store.dispatch('uploadSingleFile', this.files[0])
     },
     cancelUpload: function () {
       this.$store.dispatch('cancelUpload', true)
