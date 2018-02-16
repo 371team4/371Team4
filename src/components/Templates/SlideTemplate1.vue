@@ -14,7 +14,7 @@
         xs12
         sm8
         md9
-        lg3>
+        lg4>
         <v-card
           color="transparent"
           flat
@@ -50,11 +50,13 @@
         <v-card
           color="transparent"
           flat
-          height="100px"/>
+          height="80px"/>
       </v-flex>
     </v-layout>
-    <!-- Jumbotron component used as Event Body -->
-    <v-jumbotron color="grey lighten-2">
+    <!-- Component used as Event Body -->
+    <v-card
+      color="blue-grey lighten-5"
+      height="200px">
       <v-container
         fill-height
         fluid>
@@ -66,7 +68,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-    </v-jumbotron>
+    </v-card>
     <!-- Done event body component -->
   </v-container>
 </template>
@@ -79,9 +81,9 @@ export default {
         { src: 'https://www.usask.ca/programs/images/college.jpg', id: '1' },
         { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg', id: '2' }
       ],
-      title: 'Sherbrooke Event Slide Title',
+      title: 'Sherbrooke Event Title',
       subtitle: 'Sherbrooke event slide subtitle',
-      eventBody: 'Sherbrooke event slide body. \n CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
+      eventBody: 'Sherbrooke event slide body. \n\n CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
       editMode: false
     }
   }
