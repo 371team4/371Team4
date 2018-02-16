@@ -27,7 +27,7 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                bat 'npm run deploy'
+                bat "IF %CHANGE_TARGET% == 'master' (npm run deploy)"
             }
         }
     }
