@@ -47,6 +47,8 @@
       xs3>
         <add-button
           class="mx-1 px-1 my-1 py-1"
+          :is-disabled="false"
+          :is-visible="true"
           @cButtonClick="cButtonClick"/>
       </v-flex>
     </v-layout>
@@ -154,7 +156,6 @@ export default {
       console.log('Pressed search')
     },
     cButtonClick () {
-      alert('clicked')
     }
   }
 }
