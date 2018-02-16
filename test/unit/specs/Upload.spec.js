@@ -44,3 +44,12 @@ describe('index', () => {
     ], done)
   })
 })
+
+// Unit test for cancelUpload fail
+describe('index', () => {
+  it('should not cancel an Upload. Cancel upload failed', done => {
+    testAction(index.actions.cancelUpload, [false], {}, [
+      { type: 'SET_CANCEL_UPLOAD', payload: false }
+    ], done)
+  })
+})
