@@ -80,8 +80,6 @@ const actions = {
       context.commit(SET_BYTES_UPLOADED, 0)
       context.commit(SET_BYTES_REMAINING, 0)
       context.commit(SET_CANCEL_UPLOAD, false)
-      // store it to event so load event directly use this url not use download api
-      // console.log(upload.snapshot.downloadURL)
     })
   }
 }
