@@ -26,16 +26,16 @@ const getters = {
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
   [SET_BYTES_UPLOADED] (state, payload) {
-    state.bytesUploaded = payload.bytesUploaded
+    state.bytesUploaded = payload
   },
   [SET_BYTES_REMAINING] (state, payload) {
-    state.bytesRemaining = payload.bytesRemaining
+    state.bytesRemaining = payload
   },
   [SET_IS_UPLOADING] (state, payload) {
-    state.isUploading = payload.isUploading
+    state.isUploading = payload
   },
   [SET_CANCEL_UPLOAD] (state, payload) {
-    state.cancelUpload = payload.cancelUpload
+    state.cancelUpload = payload
   }
 }
 
