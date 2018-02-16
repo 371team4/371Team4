@@ -14,6 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
+                bat 'git rebase origin/%CHANGE_TARGET%'
                 bat 'npm run build'
             }
         }
