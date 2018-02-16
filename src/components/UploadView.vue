@@ -16,9 +16,9 @@ export default {
   },
   methods: {
     uploadAndSubmit: function ({ target }) {
+      // check file type is image
       let tmpArray = [...target.files]
       this.files = tmpArray.filter(file => file.type.indexOf('image/') !== -1)
-      // console.log(this.files)
       this.$store.dispatch('uploadSingleFile', this.files[0])
     }
   }

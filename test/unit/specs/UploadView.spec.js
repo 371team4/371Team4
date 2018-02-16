@@ -5,7 +5,7 @@ describe('UploadView.vue', () => {
   it('should render correct contents', () => {
     const Constructor = Vue.extend(Upload)
     const vm = new Constructor().$mount()
-    const input = vm.$el.getElementsByTagName("input")[0]
+    const input = vm.$el.getElementsByTagName('input')[0]
     expect(input.type)
       .to.equal('file')
     expect(input.accept)

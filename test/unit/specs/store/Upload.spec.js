@@ -1,8 +1,5 @@
 import index from '../../../../src/store/modules/upload/index'
 
-const chai = require('chai');
-const assert = chai.assert;
-
 const testAction = (action, args, state, expectedMutations, done) => {
   let count = 0
 
@@ -36,9 +33,9 @@ const testAction = (action, args, state, expectedMutations, done) => {
 }
 
 var f = new Blob()
-f.name="img1.jpg"
-f.size=100
-f.lastModifiedDate= new Date()
+f.name = 'img1.jpg'
+f.size = 100
+f.lastModifiedDate = new Date()
 
 describe('index', () => {
   it('uploadSingleFile', done => {
@@ -55,4 +52,3 @@ describe('index', () => {
     ], done)
   })
 })
-

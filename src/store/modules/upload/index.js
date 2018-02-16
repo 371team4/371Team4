@@ -41,51 +41,6 @@ const mutations = {
 
 // actions can be async and may have side effects
 const actions = {
-  /*
-  // function to upload multiple file, should be able to work but hard to test
-  uploadFiles ({ commit, dispatch }, files) {
-    // console.log(files)
-    var filesCopy = files.slice()
-    for (var i = 0; i < filesCopy.length; i++) {
-      // push all file to file queue
-      commit(PUSH_UPLOAD_QUEUE, filesCopy[i]['name'])
-    }
-    for (var j = 0; j < filesCopy.length; j++) {
-      // get last file in queue
-      var k = filesCopy.length - j - 1
-      // pop file
-      commit(POP_UPLOAD_QUEUE)
-      // set state to is uploading
-      commit(SET_IS_UPLOADING, true)
-      // set byte state to start status
-      commit(SET_BYTES_UPLOADED, 0)
-      commit(SET_BYTES_REMAINING, filesCopy[k]['size'])
-      // upload file with api
-      var upload = storageDB.child('files/' + filesCopy[k]['name']).put(filesCopy[k])
-      // check file upload status
-      upload.on(firebase.storage.TaskEvent.STATE_CHANGED, function (snapshot) {
-        // set byte state during upload
-        // these commit`s order and # of time occur is unpredicable
-        commit(SET_BYTES_UPLOADED, snapshot.bytesTransferred)
-        commit(SET_BYTES_REMAINING, snapshot.totalBytes - snapshot.bytesTransferred)
-      }, function (error) {
-        // upload fail
-        alert(error.code)
-        // reset uploading state
-        commit(SET_IS_UPLOADING, false)
-      }, function () {
-        // upload success
-        alert('upload success')
-        // reset upload state
-        commit(SET_IS_UPLOADING, false)
-        // store it to event so load event directly use this url not use download api
-        // console.log(upload.snapshot.downloadURL)
-        // push file to finish queue
-        commit(APPEND_FILES_UPLOADED, filesCopy[k]['name'])
-      })
-    }
-  },
-  */
   // action to upload file
   uploadSingleFile (context, file) {
     // pre-set upload status
@@ -98,15 +53,6 @@ const actions = {
       // update upload status
       context.commit(SET_BYTES_UPLOADED, snapshot.bytesTransferred)
       context.commit(SET_BYTES_REMAINING, snapshot.totalBytes - snapshot.bytesTransferred)
-      // check if user cancel upload
-      if (context.state.cancelUpload) {
-        alert('upload canceled')
-        upload.cancel()
-        context.commit(SET_IS_UPLOADING, false)
-        context.commit(SET_BYTES_UPLOADED, 0)
-        context.commit(SET_BYTES_REMAINING, 0)
-        context.commit(SET_CANCEL_UPLOAD, false)
-      }
     }, function (error) {
       // if upload error
       alert(error.code)
@@ -121,8 +67,6 @@ const actions = {
       context.commit(SET_BYTES_UPLOADED, 0)
       context.commit(SET_BYTES_REMAINING, 0)
       context.commit(SET_CANCEL_UPLOAD, false)
-      // store it to event so load event directly use this url not use download api
-      // console.log(upload.snapshot.downloadURL)
     })
   }
 }
