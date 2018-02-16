@@ -8,6 +8,8 @@ const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Sl
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
 /* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
+const Upload = () => import(/* webpackChunkName: "Upload.vue" */'@/components/UploadView')
+
 
 Vue.use(Router)
 
@@ -58,6 +60,16 @@ const router = new Router({
       icon: 'event',
       scrollToTop: true,
       component: Calendar,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/upload',
+      name: 'Upload',
+      icon: 'event',
+      scrollToTop: true,
+      component: Upload,
       meta: {
         requiresAuth: true
       }
