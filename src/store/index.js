@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger'
 
 import root from './root'
 import user from './modules/user'
+import Upload from './modules/upload'
 import slide from './modules/slide'
 
 Vue.use(Vuex)
@@ -15,6 +16,7 @@ export const store = new Vuex.Store({
   modules: {
     root,
     user,
+    Upload,
     slide
   },
   plugins: isDebug ? [createLogger()] : []
