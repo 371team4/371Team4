@@ -1,10 +1,10 @@
 <template>
   <v-card
-    v-model="isVisible"
-    disabled="isDisabled">
+  v-if="isVisible">
     <v-flex
     align-center>
       <v-btn
+        :disabled="isDisabled"
         @click.stop="add"
         color="blue"
         large
