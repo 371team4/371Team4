@@ -54,33 +54,42 @@
           height="80px"/>
       </v-flex>
     </v-layout>
+
     <!-- Component used as Event Body -->
+    <v-layout
+      row
+      wrap
+      fluid>
+      <v-flex
+      xs12>
+        <v-card
+        color="indigo">
+          <v-container
+            fill-height
+            fluid>
+            <v-layout align-center/>
+          </v-container>
+        </v-card>
 
-    <v-card
-    color="indigo">
-      <v-container
-        fill-height
-        fluid>
-        <v-layout align-center/>
-      </v-container>
-    </v-card>
-
-    <v-card
-      color="white"
-      height="300px">
-      <v-container
-        fill-height
-        fluid>
-        <v-layout align-center>
-          <v-flex>
-            <div class="title mb-3"> {{ subtitle }}</div>
-            <v-divider class="my-3"/>
-            <span class="subheading"> {{ eventBody }} </span>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card>
+        <v-card
+          color="white"
+          height="300px">
+          <v-container
+            fill-height
+            fluid>
+            <v-layout align-center>
+              <v-flex>
+                <div class="title mb-3"> {{ subtitle }}</div>
+                <v-divider class="my-3"/>
+                <span class="subheading"> {{ eventBody }} </span>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
     <!-- Done event body component -->
+
   </v-container>
 </template>
 
@@ -94,10 +103,9 @@ export default {
       ],
       title: 'Sherbrooke Event Title',
       subtitle: 'Sherbrooke event slide subtitle',
-      eventBody: 'Sherbrooke event slide body. \n\n CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
-      editMode: false,
+      eventBody: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
       authorModeOn: false,
-      slideViewMode: true
+      slideModeOn: false
     }
   }
 }
