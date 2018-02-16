@@ -31,6 +31,9 @@ pipeline {
     }
 
     post {
+        always {
+            deleteDir() /* clean up our workspace */
+        }
         success {
             echo 'This will run only if successful'
         }
