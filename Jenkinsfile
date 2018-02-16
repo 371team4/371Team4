@@ -21,7 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'npm run unit'
-                bat 'npm run e2e'
+                // bat 'npm run e2e'
             }
         }
         stage ('Deploy') {
