@@ -23,6 +23,12 @@ const router = new Router({
       component: Login
     }, */
     {
+      path: '/',
+      redirect: {
+        name: 'Slides'
+      }
+    },
+    {
       path: '/view',
       name: 'Show View',
       icon: 'live_tv',
