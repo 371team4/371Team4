@@ -55,8 +55,8 @@
     </v-layout>
     <!-- Component used as Event Body -->
     <v-card
-      color="blue-grey lighten-5"
-      height="200px">
+      color="white"
+      height="300px">
       <v-container
         fill-height
         fluid>
