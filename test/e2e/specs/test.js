@@ -45,10 +45,10 @@ module.exports = {
     browser
       .click('#app > div > aside > ul > li:nth-child(2) > a > div.list__tile__content > div')
       .waitForElementVisible('body', 5000)
-      .expect.element('#app > div.application--wrap > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(6)').to.be.present.after(100)
+      .expect.element('#app > div.application--wrap > main > div > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(6)').to.be.present.after(100)
 
     browser
-      .expect.element('#app > div.application--wrap > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7)').to.not.be.present.after(100)
+      .expect.element('#app > div.application--wrap > main > div > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7)').to.not.be.present.after(100)
   },
 
   'test text field': function (browser) {
