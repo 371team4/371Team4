@@ -32,6 +32,10 @@ const mutations = {
 
 // actions can be async and may have side effects
 const actions = {
+  // cancel upload action
+  cancelUpload (state, payload) {
+    state.commit(SET_CANCEL_UPLOAD, payload)
+  }
 }
 
 // export everything as default
