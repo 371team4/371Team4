@@ -2,28 +2,29 @@ pipeline {
     agent any
 
     stages {
+        stage('Install Deps') {
+            steps {
+                bat 'npm install'
+            }
+        }
+        stage('Lint') {
+            steps {
+                bat 'npm run lint-fix'
+            }
+        }
         stage('Build') {
             steps {
-                bat 'echo Getting Dependencies...'
-                bat 'npm install'
-
-                bat 'echo Linting...'
-                bat `npm run lint-fix`
-
-                bat 'echo Building...'
-                bat 'npm build'
+                bat 'npm run build'
             }
         }
         stage('Test') {
             steps {
-                bat 'echo Testing...'
-                bat 'npm unit tests'
-                bat 'npm e2e tests'
+                bat 'npm run unit'
+                bat 'npm run e2e'
             }
         }
         stage ('Deploy') {
             steps {
-                bat 'echo Deploying...'
                 bat 'npm run deploy'
             }
         }
