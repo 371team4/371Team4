@@ -3,7 +3,7 @@ import index from '../../../../src/store/modules/upload/index'
 const testAction = (action, args, state, expectedMutations, done) => {
   let count = 0
 
-  // 模拟提交
+  // mock commit
   const commit = (type, payload) => {
     const mutation = expectedMutations[count]
 
@@ -22,16 +22,17 @@ const testAction = (action, args, state, expectedMutations, done) => {
     }
   }
 
-  // 用模拟的 store 和参数调用 action
+  // call action with mock commit and args
   action({ commit, state }, ...args)
 
-  // 检查是否没有 mutation 被 dispatch
+  // check if mutation is dispatched
   if (expectedMutations.length === 0) {
     expect(count).to.equal(0)
     done()
   }
 }
 
+// create a mock file for test upload
 var f = new Blob()
 f.name = 'img1.jpg'
 f.size = 100
@@ -40,6 +41,7 @@ f.lastModifiedDate = new Date()
 describe('index', () => {
   it('uploadSingleFile', done => {
     testAction(index.actions.uploadSingleFile, [f], {}, [
+      // mutation should been called in order from first to last
       { type: 'SET_IS_UPLOADING', payload: true },
       { type: 'SET_BYTES_UPLOADED', payload: 0 },
       { type: 'SET_BYTES_REMAINING', payload: 100 },
