@@ -15,7 +15,6 @@
                 prepend-icon="search"
                 hide-details
                 single-line
-                @keyup="searchForSlide"
                 v-model="searchString"/>
               <v-btn icon>
                 <v-icon>more_vert</v-icon>
@@ -31,11 +30,11 @@
       wrap>
       <v-flex
         xs3
-        v-for="event in events"
-        :key="event.name">
+        v-for="slide in filteredSlides"
+        :key="slide.name">
         <EventCard
           class="mx-1 px-1 my-1 py-1"
-          :event="event"/>
+          :event="slide"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -48,7 +47,7 @@ export default {
   data () {
     return {
       searchString: '',
-      events: [
+      slides: [
         {
           _id: '5a700ee29c61ea4f72cd23e2',
           name: 'Lorem et proident',
@@ -136,17 +135,17 @@ export default {
       ]
     }
   },
-  methods: {
-    searchForSlide () {
-      var filter, items, i
-      filter = this.searchString.toUpperCase()
-      items = document.getElementsByClassName('slide')
-      for (i = 0; i < items.length; i++) {
-        if (items[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-          items[i].parentElement.style.display = ''
-        } else {
-          items[i].parentElement.style.display = 'none'
-        }
+  computed: {
+    filteredSlides () {
+      // check if something is typed into the search bar
+      if (this.searchString) {
+        let vm = this
+        // if there is something the in the search bar then filter the array fo current slides
+        return this.slides.filter(
+          (slide) => slide.name.toLowerCase().indexOf(vm.searchString.toLowerCase()) !== -1)
+      } else {
+        // if the search string is empty then return all the slides
+        return this.slides
       }
     }
   }
