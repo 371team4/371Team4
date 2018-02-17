@@ -15,6 +15,11 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'git reset --hard'    /* do this to avoid unstaged changes error */
+
+                bat 'echo %BRANCH_NAME%'
+                bat "IF %BRANCH_NAME% == 'Development' (%CHANGE_TARGET% = 'Development')"
+                bat "IF %BRANCH_NAME% == 'master' (%CHANGE_TARGET% = 'master')"
+
                 bat 'git rebase origin/%CHANGE_TARGET%'
                 bat 'npm run build'
             }
@@ -23,11 +28,6 @@ pipeline {
             steps {
                 bat 'npm run unit'
                 // bat 'npm run e2e'
-            }
-        }
-        stage ('Deploy') {
-            steps {
-                bat "IF %CHANGE_TARGET% == 'master' (npm run deploy)"
             }
         }
     }
