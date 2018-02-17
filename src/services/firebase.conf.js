@@ -13,5 +13,5 @@ const config = {
 const app = initializeApp(config)
 const db = app.database()
 
-export const eventsDB = db.ref('/events')
+export const slidesDB = db.ref('/slides')
 export const authService = app.auth()
