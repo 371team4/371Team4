@@ -1,5 +1,5 @@
 <template>
-  <v-card class="aCard">
+  <v-card tag="card">
     <v-card-media
       :src="event.thumbnail"
       height="200px">

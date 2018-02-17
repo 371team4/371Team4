@@ -14,7 +14,7 @@
                 prepend-icon="search"
                 hide-details
                 single-line
-                @keyup.enter="searchForSlide"
+                @keyup="searchForSlide"
                 v-model="searchString"/>
               <v-btn icon>
                 <v-icon>more_vert</v-icon>
@@ -139,12 +139,12 @@ export default {
     searchForSlide () {
       var filter, items, i
       filter = this.searchString.toUpperCase()
-      items = document.getElementsByClassName('aCard')
+      items = document.getElementsByTagName('card')
       for (i = 0; i < items.length; i++) {
         if (items[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-          items[i].style.display = ''
+          items[i].parentElement.style.display = ''
         } else {
-          items[i].style.display = 'none'
+          items[i].parentElement.style.display = 'none'
         }
       }
     }
