@@ -29,4 +29,20 @@ describe('SlideTemplate1.vue', () => {
     expect(vm.slideModeOn)
       .to.equal(false)
   })
+
+  it('Valid image files should be inside the carousel', () => {
+    const Constructor = Vue.extend(SlideTemplate1)
+    const vm = new Constructor().$mount()
+    expect(vm.items[0].src)
+      .to.contain('.jpg')
+    expect(vm.items[1].src)
+      .to.contain('.jpg')
+  })
+
+  it('Text on the template should contain specified words', () => {
+    const Constructor = Vue.extend(SlideTemplate1)
+    const vm = new Constructor().$mount()
+    expect(vm.$el.textContent)
+      .to.contain('Sherbrooke')
+  })
 })
