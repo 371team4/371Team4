@@ -19,11 +19,12 @@ pipeline {
                 bat '''
                     IF %BRANCH_NAME% == 'Development' (
                         git rebase origin/Development
-                    )
-                    IF %BRANCH_NAME% == 'master' (
-                        git rebase origin/master
                     ) ELSE (
-                        git rebase origin/%CHANGE_TARGET%
+                        IF %BRANCH_NAME% == 'master' (
+                            git rebase origin/master
+                       ) ELSE (
+                            git rebase origin/%CHANGE_TARGET%
+                       )
                     )
                 '''
 
