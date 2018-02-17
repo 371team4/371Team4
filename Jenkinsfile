@@ -17,9 +17,16 @@ pipeline {
                 bat 'git reset --hard'    /* do this to avoid unstaged changes error */
 
                 bat 'echo %BRANCH_NAME%'
-                bat "IF %BRANCH_NAME% == 'Development' (git rebase origin/Development)"
-                bat "IF %BRANCH_NAME% == 'master' (git rebase origin/master)"
-                bat "IF %CHANGE_TARGET != '' (git rebase origin/%CHANGE_TARGET%)""
+                bat '''
+                    IF %BRANCH_NAME% == 'Development' (
+                        git rebase origin/Development
+                    )
+                    IF %BRANCH_NAME% == 'master' (
+                        git rebase origin/master
+                    ) ELSE (
+                        git rebase origin/%CHANGE_TARGET%
+                    )
+                '''
 
                 bat 'npm run build'
             }
