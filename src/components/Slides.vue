@@ -11,6 +11,7 @@
               color="white"
               prominent>
               <v-text-field
+                id="search_bar"
                 prepend-icon="search"
                 hide-details
                 single-line
@@ -139,7 +140,7 @@ export default {
     searchForSlide () {
       var filter, items, i
       filter = this.searchString.toUpperCase()
-      items = document.getElementsByTagName('card')
+      items = document.getElementsByClassName('slide')
       for (i = 0; i < items.length; i++) {
         if (items[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
           items[i].parentElement.style.display = ''
