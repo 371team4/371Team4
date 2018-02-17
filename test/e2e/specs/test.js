@@ -8,7 +8,7 @@ module.exports = {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js
-    devServer = browser.globals.devServerURL
+    devServer = browser.globals.devServerURL // This link does not work for now
   },
 
   'test title': function (browser) {
@@ -20,6 +20,7 @@ module.exports = {
 
   'test header': function (browser) {
     browser
+      .pause(90000)
       .expect.element('#app > div > nav > div > div').text.to.match(/^Slides$/)
   },
 
