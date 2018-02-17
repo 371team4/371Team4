@@ -1,28 +1,34 @@
-import { SET_SLIDE } from '@/store/mutation-types'
+import { NEW_SLIDE } from '@/store/mutation-types'
 
 // state of this module
 const state = {
-  slide: { }
+  // The new Slide. Currently contains nothing but a slide name (and observer)
+  // Could be changed to a new slide item with name added
+  newSlide: {
+    'Name': 'newSlide'
+  }
 }
 
 // getters for this module's state
 const getters = {
-  slide (state) {
-    return state.slide
-  }
+
 }
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  [SET_SLIDE] (state, payload) {
-    state.slide = payload.slide
+  // Create new slide. Take the slide name as payload.
+  [NEW_SLIDE] (state, payload) {
+    // Assign the title name to the newSlide
+    state.newSlide.Name = payload
+    // console.log(state.newSlide)
+    // We can see the newSlide in state is temporary saved
   }
 }
 
 // actions can be async and may have side effects
 const actions = {
   createSlide ({ commit, dispatch }, payload) {
-
+    commit(NEW_SLIDE, payload)
   }
 }
 
