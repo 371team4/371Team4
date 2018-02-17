@@ -16,16 +16,6 @@
                 single-line
                 @keyup.enter="searchForSlide"
                 v-model="searchString"/>
-              <v-btn
-                dark
-                color="pink"
-                ripple
-                round>
-                <v-icon>add</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
             </v-toolbar>
             <v-divider/>
           </v-card>
