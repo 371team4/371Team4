@@ -1,29 +1,40 @@
 pipeline {
     agent any
-    
+
     stages {
+        stage('Install Deps') {
+            steps {
+                bat 'npm install'
+            }
+        }
+        stage('Lint') {
+            steps {
+                bat 'npm run lint-fix'
+            }
+        }
         stage('Build') {
             steps {
-                bat 'echo Building...'
+                bat 'git reset --hard'    /* do this to avoid unstaged changes error */
+                bat 'git rebase origin/%CHANGE_TARGET%'
+                bat 'npm run build'
             }
         }
         stage('Test') {
             steps {
-                bat 'echo Testing...'
-                bat 'echo Multiline shell steps work too'
-                bat 'echo This is another line'
+                bat 'npm run unit'
+                // bat 'npm run e2e'
             }
         }
         stage ('Deploy') {
             steps {
-                bat 'echo Deploying...'
+                bat "IF %CHANGE_TARGET% == 'master' (npm run deploy)"
             }
         }
     }
 
     post {
         always {
-            echo 'This will always run'
+            deleteDir()   /* clean up our workspace */
         }
         success {
             echo 'This will run only if successful'
@@ -36,7 +47,6 @@ pipeline {
         }
         changed {
             echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
         }
     }
 }
