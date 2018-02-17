@@ -29,7 +29,7 @@ module.exports = {
         path: 'test/e2e/reports/screenshots'
       },
       globals: {
-        devServerURL: `http://${config.dev.host}: ${process.env.PORT || config.dev.port}`
+        devServerURL: `http://${process.env.HOST || config.dev.host}:${process.env.PORT || config.dev.port}`
       }
     },
 
