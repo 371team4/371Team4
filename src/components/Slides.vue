@@ -16,13 +16,6 @@
                 single-line
                 @keyup.enter="searchForSlide"
                 v-model="searchString"/>
-              <v-btn
-                dark
-                color="pink"
-                ripple
-                round>
-                <v-icon>add</v-icon>
-              </v-btn>
               <v-btn icon>
                 <v-icon>more_vert</v-icon>
               </v-btn>
@@ -144,7 +137,16 @@ export default {
   },
   methods: {
     searchForSlide () {
-      console.log('Pressed search')
+      var filter, items, i
+      filter = this.searchString.toUpperCase()
+      items = document.getElementsByClassName('aCard')
+      for (i = 0; i < items.length; i++) {
+        if (items[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          items[i].style.display = ''
+        } else {
+          items[i].style.display = 'none'
+        }
+      }
     }
   }
 }
