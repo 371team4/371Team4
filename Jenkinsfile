@@ -17,10 +17,10 @@ pipeline {
                 bat 'git reset --hard'    /* do this to avoid unstaged changes error */
 
                 bat '''
-                    IF %BRANCH_NAME% == 'Development' (
+                    IF %BRANCH_NAME% == Development (
                         git rebase origin/Development
                     ) ELSE (
-                        IF %BRANCH_NAME% == 'master' (
+                        IF %BRANCH_NAME% == master (
                             git rebase origin/master
                        ) ELSE (
                             git rebase origin/%CHANGE_TARGET%
