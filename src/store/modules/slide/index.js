@@ -6,17 +6,30 @@ import { firebaseMutations } from 'vuexfire'
 
 // state of this module
 const state = {
+  slides: [],
   // The new Slide. Currently contains nothing but a slide name (and observer)
   // Could be changed to a new slide item with name added
+  // The module does not contain a "saveSlide". Instead, everything is done in this "newSlide".
+  // That is, this newSlide is also "saveSlide". It will be in cache and allow the user to modify until it is pushed into firebase.
+  // We only allow the user to temporarily leave one slide unsaved.
+  // The user can either keep working on the unsaved slide until he pressed "save" button or discard it.
+  // He cannot create another new slide if there exists one unsaved slide.
   newSlide: {
     'Name': 'newSlide'
   },
-  SlideID: 0
+  // After the "saveSlide" function is called, the currentSlideKey will points to the SlideKey just added
+  currentSlideKey: 0
 }
 
 // getters for this module's state
 const getters = {
   // getter method
+  getCurrentSlideKey (state) {
+    return state.currentSlideKey
+  },
+  getSlide (state) {
+    return state.slide
+  }
 }
 
 // mutations of this module, mutation must be sync and atomic
@@ -30,10 +43,13 @@ const mutations = {
   },
   // Push the slide into the firebase
   [SAVE_SLIDE] (state, payload) {
+    // Submit everything from payload into the "newSlide" state.
+    // Here is just an example: Change the name of the slide to the payload.
+    // Since for now there is only "name" element in the newSlide
     state.newSlide.Name = payload
-    slidesDB.push(state.newSlide)
-    // state.SlideID = slidesDB.push(state.newSlide).key
-    // console.log(state.SlideID)
+    // Push the new Slide into database and generate the key
+    state.currentSlideKey = slidesDB.push(state.newSlide).key
+    // console.log(state.currentSlideKey)
   },
   ...firebaseMutations
 }
