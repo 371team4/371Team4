@@ -139,10 +139,19 @@ export default {
     filteredSlides () {
       // check if something is typed into the search bar
       if (this.searchString) {
-        let vm = this
         // if there is something the in the search bar then filter the array fo current slides
-        return this.slides.filter(
+        let vm = this
+        // search the list of slides
+        let fSlides = this.slides.filter(
           (slide) => slide.name.toLowerCase().indexOf(vm.searchString.toLowerCase()) !== -1)
+        // if there are no slides to show, then show something funny. An error message
+        if (fSlides.length === 0) {
+          fSlides.push({
+            thumbnail: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+          })
+        }
+        // return the filtered list of slides
+        return fSlides
       } else {
         // if the search string is empty then return all the slides
         return this.slides
