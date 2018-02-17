@@ -15,4 +15,18 @@ describe('SlideTemplate1.vue', () => {
     expect(vm.subtitle)
       .to.equal('Sherbrooke event slide subtitle')
   })
+
+  it('Event body data contents should be correct', () => {
+    const Constructor = Vue.extend(SlideTemplate1)
+    const vm = new Constructor().$mount()
+    expect(vm.eventBody)
+      .to.equal('Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam')
+  })
+
+  it('Slide mode is False by default', () => {
+    const Constructor = Vue.extend(SlideTemplate1)
+    const vm = new Constructor().$mount()
+    expect(vm.slideModeOn)
+      .to.equal(false)
+  })
 })
