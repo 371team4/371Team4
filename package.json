@@ -13,7 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e",
     "lint-fix": "eslint --ext .js,.vue src test/unit test/e2e --fix",
     "build": "node build/build.js",
-    "deploy": "npm run build && firebase deploy",
+    "deploy": "firebase deploy --non-interactive",
     "functions-lint": "eslint --ext .js functions",
     "functions-serve": "firebase serve --only functions",
     "functions-shell": "firebase experimental:functions:shell",
