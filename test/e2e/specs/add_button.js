@@ -6,7 +6,7 @@ module.exports = {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js  //browser.globals.devServerURL
-    devServer = 'http://localhost:8080/' // This have to be call straight up
+    devServer = browser.globals.devServerURL
   },
 
   'test title': function (browser) {
@@ -25,7 +25,11 @@ module.exports = {
   'click add button': function (browser) {
     browser
       .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
-      // The button does not do anything right now, I don't see any change after clicking the button
+      .pause(5000)
+      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
+      .pause(5000)
+      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
+      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
       .pause(500)
   },
 
