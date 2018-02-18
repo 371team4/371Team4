@@ -156,6 +156,7 @@ export default {
       console.log('Pressed search')
     },
     cButtonClick () {
+      console.log('Pressed add (+)')
     }
   }
 }
