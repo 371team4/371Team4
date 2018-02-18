@@ -18,7 +18,7 @@ module.exports = {
 
   'check add button visible': function (browser) {
     browser
-      .pause(10000)
+      .pause(2000)
       .expect.element('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div').to.be.present.after(1000)
   },
 
