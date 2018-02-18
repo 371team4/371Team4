@@ -44,8 +44,30 @@
         </v-carousel>
       </v-flex>
       <!-- Done the Carousel item -->
+      <v-flex
+        d-flex
+        xs12>
+        <v-card
+          color="transparent"
+          flat
+          height="100px"/>
+      </v-flex>
     </v-layout>
-
+    <!-- Jumbotron component used as Event Body -->
+    <v-jumbotron color="grey lighten-2">
+      <v-container
+        fill-height
+        fluid>
+        <v-layout align-center>
+          <v-flex>
+            <div class="title mb-3"> {{ subtitle }}</div>
+            <v-divider class="my-3"/>
+            <span class="subheading"> {{ eventBody }} </span>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-jumbotron>
+    <!-- Done event body component -->
   </v-container>
 </template>
 
