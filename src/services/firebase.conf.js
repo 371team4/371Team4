@@ -15,3 +15,4 @@ const db = app.database()
 
 export const eventsDB = db.ref('/events')
 export const authService = app.auth()
+export const storageDB = app.storage().ref()
