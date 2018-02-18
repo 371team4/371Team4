@@ -25,11 +25,6 @@ module.exports = {
   'click add button': function (browser) {
     browser
       .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
-      .pause(5000)
-      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
-      .pause(5000)
-      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
-      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
       .pause(500)
   },
 
