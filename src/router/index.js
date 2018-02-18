@@ -8,7 +8,7 @@ const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Sl
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
 /* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
-const SlideTemplate1 = () => import(/* webpackChunkName: "SlideTemplate1.vue" */'@/components/templates/SlideTemplate1')
+const DefaultSlideTemplate = () => import(/* webpackChunkName: "DefaultSlideTemplate.vue" */'@/components/templates/DefaultSlideTemplate')
 
 Vue.use(Router)
 
@@ -73,7 +73,7 @@ const router = new Router({
       path: '/slide',
       name: 'Slide Template',
       icon: 'live_tv',
-      component: SlideTemplate1,
+      component: DefaultSlideTemplate,
       scrollToTop: true,
       meta: {
         requiresAuth: true
