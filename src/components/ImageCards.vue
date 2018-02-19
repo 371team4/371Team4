@@ -16,8 +16,8 @@
               align-content-center="true"
               v-scroll:#scroll-target="onScroll">
               <v-flex
-                v-for="card in cards"
-                :key="card">
+                v-for="(card, index) in cards"
+                :key="index">
                 <v-card
                 tile>
                   <v-card-media
@@ -27,7 +27,7 @@
                     <v-btn
                       icon
                       flat
-                      @click="deleteCard(card)"> {{ index }}
+                      @click="deleteCard(index)"> {{ index }}
                       <v-icon>clear</v-icon>
                     </v-btn>
                   </v-card-media>
@@ -72,8 +72,11 @@ export default {
     }
   },
   methods: {
-    deleteCard (card) {
-      this.cards.splice(this.cards.indexOf(card), 1)
+    deleteCard (index) {
+      this.cards.splice(index, 1)
+    },
+    onScroll (e) {
+      this.offsetTop = e.target.scrollTop
     }
   }
 }

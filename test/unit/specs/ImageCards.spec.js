@@ -16,7 +16,7 @@ describe('ImageCards.vue', () => {
     const clickEvent = new window.Event('click')
     button.dispatchEvent(clickEvent)
     vm._watcher.run()
-    expect(vm.data.cards.size)
+    expect(vm.cards.length)
       .to.equal(6)
   })
 })
