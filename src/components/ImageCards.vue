@@ -27,7 +27,7 @@
                     <v-btn
                       icon
                       flat
-                      @click="deleteCard(index)"> {{ index }}
+                      @click="deleteCard(index)">
                       <v-icon>clear</v-icon>
                     </v-btn>
                   </v-card-media>
