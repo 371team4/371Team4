@@ -1,4 +1,4 @@
-var devServer
+let devServer
 
 module.exports = {
 
@@ -19,13 +19,14 @@ module.exports = {
   'check add button visible': function (browser) {
     browser
       .pause(2000)
-      .expect.element('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div').to.be.present.after(1000)
+      .expect.element('#app > div > main > div > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div').to.be.present.after(1000)
   },
 
   'click add button': function (browser) {
     browser
-      .click('#app > div > div > main > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
+      .click('#app > div > main > div > div.container.fluid.fill-height > div > div > div.layout.row.wrap > div:nth-child(7) > div > div > button > div')
       .pause(500)
+      .acceptAlert()
   },
 
   after: function (browser) {
