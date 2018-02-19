@@ -49,7 +49,7 @@
           class="mx-1 px-1 my-1 py-1"
           :is-disabled="false"
           :is-visible="true"
-          @cButtonClick="cButtonClick"/>
+          @cButtonClick="alert('Hi you!')"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -154,13 +154,15 @@ export default {
   methods: {
     searchForSlide () {
       console.log('Pressed search')
-    },
-    cButtonClick () {
-      console.log('Pressed add (+)')
     }
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
