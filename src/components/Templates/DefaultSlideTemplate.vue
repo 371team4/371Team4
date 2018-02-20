@@ -95,20 +95,38 @@
 
 <script>
 export default {
-  data () {
-    return {
-      items: [
-        { src: 'https://www.usask.ca/programs/images/college.jpg', id: '1' },
-        { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg', id: '2' }
-      ],
-      title: 'Sherbrooke Event Title',
-      subtitle: 'Sherbrooke event slide subtitle',
-      eventBody: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam',
-      slideModeOn: false,
-      time: '7:00 PM'
+  props: {
+    items: {
+      type: Array,
+      default: function () {
+        return [ { src: 'https://www.usask.ca/programs/images/college.jpg', id: '1' },
+          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg', id: '2' }
+        ]
+      }
+    },
+    title: {
+      type: String,
+      default: 'Sherbrooke Event Title'
+    },
+    subtitle: {
+      type: String,
+      default: 'Sherbrooke event slide subtitle'
+    },
+    eventBody: {
+      type: String,
+      default: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam'
+    },
+    slideModeOn: {
+      type: Boolean,
+      default: false
+    },
+    time: {
+      type: String,
+      default: '7:00 PM'
     }
   }
 }
+
 </script>
 
 <style scoped>
