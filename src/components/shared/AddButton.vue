@@ -5,7 +5,7 @@
     align-center>
       <v-btn
         :disabled="isDisabled"
-        @click.stop="add"
+        @click.stop="broadcastEvent"
         color="blue"
         large
         block
@@ -24,20 +24,19 @@ export default {
   props: {
     isVisible: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isDisabled: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
 
   methods: {
-    add () {
+    broadcastEvent () {
       this.$emit('cButtonClick')
     }
   }
-
 }
 </script>
 
