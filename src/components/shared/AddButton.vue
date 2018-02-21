@@ -1,6 +1,6 @@
 <template>
   <v-card
-  v-if="isVisible">
+  v-show="isVisible">
     <v-flex
     align-center>
       <v-btn
