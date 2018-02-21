@@ -9,7 +9,8 @@
         color="blue"
         large
         block
-        class="largeButton">
+        class="largeButton"
+        :data-test-attr="testAttr">
         <v-icon
         x-large>
           add
@@ -22,6 +23,10 @@
 <script>
 export default {
   props: {
+    testAttr: {
+      type: String,
+      default: 'addButton'
+    },
     isVisible: {
       type: Boolean,
       default: true
