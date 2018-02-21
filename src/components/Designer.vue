@@ -40,6 +40,7 @@
         xs11
         sm5>
         <v-menu
+          ref="tMenu"
           lazy
           :close-on-content-click="false"
           v-model="timeMenu"
@@ -57,7 +58,8 @@
             readonly/>
           <v-time-picker
             v-model="time"
-            :allowed-minutes="allowedMinutes"/>
+            :allowed-minutes="allowedMinutes"
+            @change="$refs.tMenu.save(time)"/>
         </v-menu>
       </v-flex>
     </v-layout>
