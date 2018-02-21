@@ -4,7 +4,7 @@ import createLogger from 'vuex/dist/logger'
 
 import root from './root'
 import user from './modules/user'
-import Upload from './modules/upload'
+import upload from './modules/upload'
 import slide from './modules/slide'
 
 Vue.use(Vuex)
@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
   modules: {
     root,
     user,
-    Upload,
+    upload,
     slide
   },
   plugins: isDebug ? [createLogger()] : []
@@ -30,12 +30,14 @@ if (module.hot) {
     const root = require('./root').default
     const user = require('./modules/user').default
     const slide = require('./modules/slide').default
+    const upload = require('./modules/upload').default
     // swap in the new actions and mutations
     store.hotUpdate({
       modules: {
         root,
         user,
-        slide
+        slide,
+        upload
       }
     })
   })

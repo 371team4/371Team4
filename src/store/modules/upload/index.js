@@ -9,18 +9,18 @@ const SET_CANCEL_UPLOAD = 'SET_CANCEL_UPLOAD'
 
 // state of this module
 const state = {
-  cancelUpload: false,
   isUploading: false,
   bytesUploaded: 0,
-  bytesRemaining: 0
+  bytesRemaining: 0,
+  cancelUpload: false
 }
 
 // getters for this module's state
 const getters = {
-  getCancelUpload: state => state.cancelUpload,
   getIsUploading: state => state.isUploading,
   getBytesUploaded: state => state.bytesUploaded,
-  getBytesRemaining: state => state.bytesRemaining
+  getBytesRemaining: state => state.bytesRemaining,
+  getCancelUpload: state => state.cancelUpload
 }
 
 // mutations of this module, mutation must be sync and atomic
