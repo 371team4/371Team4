@@ -1,15 +1,16 @@
 <template>
   <v-card
-  v-if="isVisible">
+  v-show="isVisible">
     <v-flex
     align-center>
       <v-btn
         :disabled="isDisabled"
-        @click.stop="add"
+        @click.stop="broadcastEvent"
         color="blue"
         large
         block
-        class="largeButton">
+        class="largeButton"
+        :data-test-attr="testAttr">
         <v-icon
         x-large>
           add
@@ -22,24 +23,25 @@
 <script>
 export default {
   props: {
+    testAttr: {
+      type: String,
+      default: 'addButton'
+    },
     isVisible: {
       type: Boolean,
-      default: true,
-      required: true
+      default: true
     },
     isDisabled: {
       type: Boolean,
-      default: false,
-      required: true
+      default: false
     }
   },
 
   methods: {
-    add () {
+    broadcastEvent () {
       this.$emit('cButtonClick')
     }
   }
-
 }
 </script>
 
