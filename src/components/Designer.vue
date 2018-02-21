@@ -15,7 +15,6 @@
         xs11
         sm5>
         <v-menu
-          ref="dateMenu"
           lazy
           :close-on-content-click="true"
           v-model="dateMenu"
@@ -23,8 +22,7 @@
           offset-y
           full-width
           :nudge-right="40"
-          min-width="290px"
-          :return-value.sync="date">
+          min-width="290px">
           <v-text-field
             slot="activator"
             label="Date of Event"
@@ -42,27 +40,24 @@
         xs11
         sm5>
         <v-menu
-          ref="timeMenu"
           lazy
           :close-on-content-click="false"
-          v-model="menu2"
+          v-model="timeMenu"
           transition="scale-transition"
           offset-y
           full-width
           :nudge-right="40"
           max-width="290px"
-          min-width="290px"
-          :return-value.sync="time">
+          min-width="290px">
           <v-text-field
             slot="activator"
             label="Time of Event"
-            v-model="time"
+            v-model="formattedTime"
             prepend-icon="access_time"
             readonly/>
           <v-time-picker
             v-model="time"
-            :allowed-minutes="allowedMinutes"
-            @change="$refs.menu.save(time)"/>
+            :allowed-minutes="allowedMinutes"/>
         </v-menu>
       </v-flex>
     </v-layout>
@@ -91,51 +86,73 @@ import { required, maxLength } from 'vuelidate/lib/validators'
 export default {
   mixins: [validationMixin],
 
-  validations: {
-    slideTitle: { required, maxLength: maxLength(30) },
-    description: { required, maxLength: maxLength(140) }
-  },
   data: () => {
     return {
       slideTitle: '',
       description: '',
+      dateMenu: false,
+      timeMenu: false,
       date: null,
-      menu: false,
-      modal: false,
-      time: null,
-      menu2: false,
-      modal2: false,
-      allowedMinutes: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+      time: null
     }
   },
-
+  validations: {
+    slideTitle: { required, maxLength: maxLength(30) },
+    description: { required, maxLength: maxLength(140) }
+  },
   computed: {
     slideTitleErrors () {
       const errors = []
-      if (!this.$v.slideTitle.$dirty) return errors
-      !this.$v.slideTitle.maxLength && errors.push('Title must be at most 30 characters long')
-      !this.$v.slideTitle.required && errors.push('Title is required.')
+      if (!this.$v.slideTitle.$dirty) {
+        return errors
+      }
+      if (!this.$v.slideTitle.maxLength) {
+        errors.push('Title must be at most 30 characters long')
+      }
+      if (!this.$v.slideTitle.required) {
+        errors.push('Title is required.')
+      }
       return errors
     },
     descriptionErrors () {
       const errors = []
-      if (!this.$v.description.$dirty) return errors
-      !this.$v.description.maxLength && errors.push('Description must be at most 140 characters long')
-      !this.$v.description.required && errors.push('Description is required')
+      if (!this.$v.description.$dirty) {
+        return errors
+      }
+      if (!this.$v.description.maxLength) {
+        errors.push('Description must be at most 140 characters long')
+      }
+      if (!this.$v.description.required) {
+        errors.push('Description is required')
+      }
       return errors
+    },
+    formattedTime () {
+      if (this.time) {
+        const timeFrags = this.time.split(':')
+        const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] > 12 ? ' PM' : ' AM')
+        return timeFormatted
+      }
+      return this.time
     }
   },
-
   methods: {
+    allowedMinutes (minute) {
+      return minute % 5 === 0
+    },
     submit () {
+      // submit the action packaging all of the fields
       this.$v.$touch()
     },
     clear () {
+      // reset all of the data fields
       this.$v.$reset()
       this.slideTitle = ''
       this.description = ''
-      this.date = ''
-      this.time = ''
+      this.dateMenu = false
+      this.timeMenu = false
+      this.date = null
+      this.time = null
     }
   }
 }
