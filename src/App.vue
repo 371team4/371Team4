@@ -52,7 +52,7 @@ export default {
     },
     tabs () {
       return this.$router.options.routes
-      // .filter(route => route.meta && route.meta.requiresAuth && route.meta.requiresAuth === true && this.authenticated)
+        .filter(route => route.name && route.icon)
     },
     isLoading () {
       return this.$store.getters.isLoading
