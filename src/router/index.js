@@ -8,7 +8,7 @@ const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Sl
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
 /* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
-const DefaultSlideTemplate = () => import(/* webpackChunkName: "DefaultSlideTemplate.vue" */'@/components/templates/DefaultSlideTemplate')
+const DefaultSlideTemplate = () => import(/* webpackChunkName: "DefaultSlideTemplate.vue" */'@/components/Templates/DefaultSlideTemplate')
 
 Vue.use(Router)
 
