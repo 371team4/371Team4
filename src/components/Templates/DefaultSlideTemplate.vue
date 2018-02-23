@@ -100,8 +100,8 @@ export default {
     items: {
       type: Array,
       default: function () {
-        return [ { src: 'https://www.usask.ca/programs/images/college.jpg', id: '1' },
-          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg', id: '2' }
+        return [ { src: 'https://www.usask.ca/programs/images/college.jpg' },
+          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
         ]
       }
     },
