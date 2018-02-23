@@ -18,12 +18,12 @@ module.exports = {
 
   'check add button visible': function (browser) {
     browser
-      .expect.element('#app .largeButton').to.be.present.after(1000)
+      .expect.element('#app [data-test-attr=addButton]').to.be.present.after(1000)
   },
 
   'click add button': function (browser) {
     browser
-      .click('#app .largeButton')
+      .click('#app [data-test-attr=addButton]')
       .pause(500)
       .acceptAlert()
   },
