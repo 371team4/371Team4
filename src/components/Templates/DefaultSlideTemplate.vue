@@ -42,7 +42,8 @@
         md6>
         <v-carousel
           hide-controls
-          hide-delimiters>
+          hide-delimiters
+          interval="40000/6">
           <v-carousel-item
             v-for="(item,i) in items"
             :src="item.src"
