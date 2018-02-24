@@ -22,9 +22,21 @@ pipeline {
                     ) ELSE (
                         IF %BRANCH_NAME% == master (
                             git rebase origin/master
-                       ) ELSE (
-                            git rebase origin/%CHANGE_TARGET%
-                       )
+                        ) ELSE (
+                            IF %BRANCH_NAME:~0,7% == feature (
+                                git rebase origin/%BRANCH_NAME%
+                            ) ELSE (
+                                IF %BRANCH_NAME:~0,5% == issue (
+                                    git rebase origin/%BRANCH_NAME%
+                                ) ELSE (
+                                    IF %BRANCH_NAME:~0,7% == jenkins (
+                                        git rebase origin/%BRANCH_NAME%
+                                    ) ELSE (
+                                        git rebase origin/%CHANGE_TARGET%
+                                    )
+                                )
+                            )
+                        )
                     )
                 '''
 
