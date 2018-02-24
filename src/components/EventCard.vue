@@ -1,32 +1,26 @@
 <template>
   <v-card>
-    <v-card-media
-      :src="event.thumbnail"
-      height="200px">
-      <v-container
-        fill-height
-        fluid>
-        <v-layout fill-height>
-          <v-flex
-            xs6
-            align-end
-            flexbox>
-            <span
-              class="headline white--text"
-              v-text="event.name"/>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card-media>
-    <v-card-actions class="white">
-      <v-spacer/>
-      <v-btn icon>
-        <v-icon>info</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>input</v-icon>
-      </v-btn>
-    </v-card-actions>
+    <v-container
+      fluid
+      grid-list-lg>
+      <v-layout row>
+        <v-flex xl7>
+          <div
+            class="headline"
+            v-text="event.name"/>
+          <div>sub heading</div>
+        </v-flex>
+        <v-flex xs12>
+          <v-card-media
+            :src="event.thumbnail"
+            height="150px"
+            contain/>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-card-text
+      class="overflow"
+      v-text="event.description"/>
   </v-card>
 </template>
 
@@ -56,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.overflow {
+  text-overflow: ellipsis;
+}
+</style>
