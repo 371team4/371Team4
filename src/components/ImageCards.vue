@@ -44,6 +44,12 @@
 
 <script>
 export default {
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     return {
       cards: [
