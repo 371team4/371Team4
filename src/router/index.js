@@ -8,6 +8,7 @@ const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Sl
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
 /* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
+const DefaultSlideTemplate = () => import(/* webpackChunkName: "DefaultSlideTemplate.vue" */'@/components/Templates/DefaultSlideTemplate')
 
 Vue.use(Router)
 
@@ -23,6 +24,12 @@ const router = new Router({
       component: Login
     }, */
     {
+      path: '/',
+      redirect: {
+        name: 'Slides'
+      }
+    },
+    {
       path: '/view',
       name: 'Show View',
       icon: 'live_tv',
@@ -33,7 +40,7 @@ const router = new Router({
       }
     },
     {
-      path: '/',
+      path: '/Slides',
       name: 'Slides',
       icon: 'perm_media',
       scrollToTop: true,
@@ -61,24 +68,27 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/slide',
+      name: 'Slide Template',
+      icon: 'live_tv',
+      component: DefaultSlideTemplate,
+      scrollToTop: true,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   store.commit(SET_LOADING, { loading: true })
-  // this route requires auth, check if logged in
-  // if not, redirect to login page
-  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.isAuthenticated) {
-    store.commit(SET_LOADING, { loading: false })
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    store.commit(SET_LOADING, { loading: false })
-    next()
-  }
+  next()
+})
+
+router.afterEach(() => {
+  store.commit(SET_LOADING, { loading: false })
 })
 
 export default router
