@@ -147,6 +147,7 @@ export default {
         // if there are no slides to show, then show something funny. An error message
         if (fSlides.length === 0) {
           fSlides.push({
+            name: 'None Found',
             thumbnail: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
           })
         }
