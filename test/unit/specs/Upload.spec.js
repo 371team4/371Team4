@@ -1,7 +1,4 @@
 import index from '@/store/modules/upload/index'
-/* eslint-disable no-unused-vars */
-const chai = require('chai')
-/* eslint-enable no-unused-vars */
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
