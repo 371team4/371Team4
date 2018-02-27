@@ -13,8 +13,8 @@
       <v-flex
         d-flex
         xs12
-        sm8
-        md9
+        sm12
+        md12
         lg6>
         <v-card
           color="transparent"
@@ -38,11 +38,11 @@
       <v-flex
         d-flex
         xs12
-        sm8
-        md6>
+        sm12
+        md12
+        lg6>
         <v-carousel
           hide-controls
-          hide-delimiters
           interval="40000/6">
           <v-carousel-item
             v-for="(item,i) in items"
@@ -64,7 +64,7 @@
     </v-layout>
 
     <!-- Component used as Event Body -->
-    <v-layout
+    <!-- <v-layout
       row
       wrap
       fluid>
@@ -88,7 +88,23 @@
           </v-container>
         </v-card>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
+    <template>
+      <v-jumbotron color="grey lighten-2">
+        <v-container fill-height>
+          <v-layout align-center>
+            <v-flex>
+              <h3 class="display-3">Welcome to the site</h3>
+              <span class="subheading">Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id,
+              ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent
+              vocent admodum.</span>
+              <v-divider class="my-3"/>
+              <div class="title mb-3">Check out our newest features!</div>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-jumbotron>
+    </template>
     <!-- Done event body component -->
 
   </v-container>
@@ -100,8 +116,10 @@ export default {
     items: {
       type: Array,
       default: function () {
-        return [ { src: 'https://www.usask.ca/programs/images/college.jpg' },
-          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
+        return [ { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' },
+          { src: 'https://www.usask.ca/programs/images/college.jpg' },
+          { src: 'https://i.cbc.ca/1.3262002.1444291815!/fileImage/httpImage/image.png_gen/derivatives/16x9_1180/myyxe.png?imwidth=720' },
+          { src: 'http://www.usask.ca/consumer_services//features/4730695474_e71554258d_b%20copy1.jpg' }
         ]
       }
     },
