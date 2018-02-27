@@ -3,7 +3,7 @@
     row
     wrap
     fluid
-    grid-list-sm>
+    grid-list-md>
     <!-- Event title card -->
     <v-layout
       v-show="!slideModeOn"
@@ -11,15 +11,15 @@
       wrap
       justify-space-between>
       <v-flex
-        d-flex
+        align-center
+        justify-center
         xs12
         sm12
         md12
         lg6>
         <v-card
           color="transparent"
-          flat
-          height="100px">
+          flat>
           <v-card-title
             primary
             class="title">
@@ -36,14 +36,14 @@
 
       <!-- Carousel Component -->
       <v-flex
-        d-flex
+        align-content-end
         xs12
         sm12
         md12
         lg6>
         <v-carousel
           hide-controls
-          interval="40000/6">
+          interval="6667"> <!-- Carousel flip time = 40,000 time per slide / 6 images = 6667 (roughly) -->
           <v-carousel-item
             v-for="(item,i) in items"
             :src="item.src"
@@ -63,39 +63,14 @@
       </v-flex>
     </v-layout>
 
-    <!-- Component used as Event Body -->
-    <!-- <v-layout
-      row
-      wrap
-      fluid>
-      <v-flex
-        xs12
-        v-show="!slideModeOn">
-
-        <v-card
-          color="white"
-          height="300px">
-          <v-container
-            fill-height
-            fluid>
-            <v-layout align-center>
-              <v-flex>
-                <div class="title mb-3"> {{ subtitle }}</div>
-                <v-divider class="my-3"/>
-                <span class="title mb-3"> {{ eventBody }} </span>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout> -->
+    <!-- Component used as Event Body -->npm
     <template>
       <v-jumbotron color="grey lighten-2">
         <v-container fill-height>
           <v-layout align-center>
             <v-flex
             v-show="!slideModeOn">
-              <h3 class="display-3">{{ subtitle }}</h3>
+              <h3 class="display-1">{{ subtitle }}</h3>
               <v-divider class="my-3"/>
               <span class="subheading"> {{ eventBody }} </span>
             </v-flex>
