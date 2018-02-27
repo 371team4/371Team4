@@ -18,11 +18,5 @@
   },
   "storage": {
     "rules": "storage.rules"
-  },
-  "functions": {
-    "source": "./functions"
-    //"predeploy": [
-      //"npm run lint"
-    //]
   }
 }
