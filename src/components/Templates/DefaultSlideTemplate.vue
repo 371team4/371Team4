@@ -63,7 +63,7 @@
       </v-flex>
     </v-layout>
 
-    <!-- Component used as Event Body -->npm
+    <!-- Component used as Event Body -->
     <template>
       <v-jumbotron color="grey lighten-2">
         <v-container fill-height>
