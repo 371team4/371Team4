@@ -33,6 +33,29 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
+// create a mock file for test upload
+const str = 'these are the content of this file. It should be a base64 string but will do that later'
+const f = new File([str], 'filename')
+
+describe('index', () => {
+  it('uploadSingleFile', done => {
+    testAction(index.actions.uploadSingleFile, [f], {}, [
+      // mutation should been called in order from first to last
+      { type: 'SET_IS_UPLOADING', payload: true },
+      { type: 'SET_BYTES_UPLOADED', payload: 0 },
+      { type: 'SET_BYTES_REMAINING', payload: str.length },
+      { type: 'SET_BYTES_UPLOADED', payload: 0 },
+      { type: 'SET_BYTES_REMAINING', payload: str.length },
+      { type: 'SET_BYTES_UPLOADED', payload: str.length },
+      { type: 'SET_BYTES_REMAINING', payload: 0 },
+      { type: 'SET_IS_UPLOADING', payload: false },
+      { type: 'SET_BYTES_UPLOADED', payload: 0 },
+      { type: 'SET_BYTES_REMAINING', payload: 0 },
+      { type: 'SET_CANCEL_UPLOAD', payload: false }
+    ], done)
+  })
+})
+
 // Unit test for cancelUpload
 describe('index', () => {
   it('should cancel an Upload', done => {
