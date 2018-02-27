@@ -41,6 +41,10 @@ const mutations = {
 
 // actions can be async and may have side effects
 const actions = {
+  // cancel upload action
+  cancelUpload (state, payload) {
+    state.commit(SET_CANCEL_UPLOAD, payload)
+  },
   // action to upload file
   uploadSingleFile (context, file) {
     // pre-set upload status
@@ -53,6 +57,15 @@ const actions = {
       // update upload status
       context.commit(SET_BYTES_UPLOADED, snapshot.bytesTransferred)
       context.commit(SET_BYTES_REMAINING, snapshot.totalBytes - snapshot.bytesTransferred)
+      // check if user cancel upload
+      if (context.state.cancelUpload) {
+        alert('upload canceled')
+        upload.cancel()
+        context.commit(SET_IS_UPLOADING, false)
+        context.commit(SET_BYTES_UPLOADED, 0)
+        context.commit(SET_BYTES_REMAINING, 0)
+        context.commit(SET_CANCEL_UPLOAD, false)
+      }
     }, function (error) {
       // if upload error
       alert(error.code)
