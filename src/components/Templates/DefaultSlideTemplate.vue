@@ -93,13 +93,11 @@
       <v-jumbotron color="grey lighten-2">
         <v-container fill-height>
           <v-layout align-center>
-            <v-flex>
-              <h3 class="display-3">Welcome to the site</h3>
-              <span class="subheading">Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id,
-              ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent
-              vocent admodum.</span>
+            <v-flex
+            v-show="!slideModeOn">
+              <h3 class="display-3">{{ subtitle }}</h3>
               <v-divider class="my-3"/>
-              <div class="title mb-3">Check out our newest features!</div>
+              <span class="subheading"> {{ eventBody }} </span>
             </v-flex>
           </v-layout>
         </v-container>
@@ -133,7 +131,7 @@ export default {
     },
     eventBody: {
       type: String,
-      default: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam'
+      default: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum. '
     },
     slideModeOn: {
       type: Boolean,

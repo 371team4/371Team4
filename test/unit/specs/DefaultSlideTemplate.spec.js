@@ -20,7 +20,7 @@ describe('DefaultSlideTemplate.vue', () => {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.eventBody)
-      .to.equal('Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam')
+      .to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum. ')
   })
 
   it('Slide mode is False by default', () => {
