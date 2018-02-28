@@ -53,7 +53,6 @@
       <!-- Done the Carousel item -->
 
       <v-flex
-        d-flex
         xs12
         v-show="!slideModeOn">
         <v-card
