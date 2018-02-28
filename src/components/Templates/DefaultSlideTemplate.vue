@@ -91,7 +91,6 @@ export default {
       default: function () {
         return [ { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' },
           { src: 'https://www.usask.ca/programs/images/college.jpg' },
-          { src: 'https://i.cbc.ca/1.3262002.1444291815!/fileImage/httpImage/image.png_gen/derivatives/16x9_1180/myyxe.png?imwidth=720' },
           { src: 'http://www.usask.ca/consumer_services//features/4730695474_e71554258d_b%20copy1.jpg' }
         ]
       }
