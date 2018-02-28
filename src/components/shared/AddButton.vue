@@ -6,13 +6,14 @@
       <v-btn
         :disabled="isDisabled"
         @click.stop="broadcastEvent"
-        color="blue"
+        dark
         large
         block
         class="largeButton"
         :data-test-attr="testAttr">
         <v-icon
-        x-large>
+          x-large
+          color="white">
           add
         </v-icon>
       </v-btn>
@@ -47,7 +48,7 @@ export default {
 
 <style scoped>
 .largeButton {
-  height: 200px;
+  height: 150px;
 }
 
 </style>
