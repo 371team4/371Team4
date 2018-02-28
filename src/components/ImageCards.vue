@@ -2,7 +2,7 @@
   <v-layout
   justify-end="true">
     <v-flex
-    sm3>
+    sm8>
       <v-card>
         <v-container
           fluid
