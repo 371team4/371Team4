@@ -65,7 +65,7 @@
 
     <!-- Component used as Event Body -->
     <template>
-      <v-jumbotron color="grey lighten-2">
+      <v-jumbotron color="white">
         <v-container fill-height>
           <v-layout align-center>
             <v-flex
