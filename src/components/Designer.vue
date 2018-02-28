@@ -1,7 +1,8 @@
 <template>
   <v-container
-  fluid>
-    <v-layout>
+  grid-list-xl>
+    <v-layout
+    v-bind="binding">
       <v-layout>
         <v-flex
         lg8>
@@ -16,8 +17,7 @@
               required/>
             <v-layout>
               <v-flex
-                xs11
-                sm5>
+              xs11>
                 <v-menu
                   lazy
                   :close-on-content-click="true"
@@ -87,8 +87,7 @@
       </v-layout>
       <v-layout>
         <v-flex
-          lg10
-          xl10>
+        lg10>
           <ImageCards/>
         </v-flex>
       </v-layout>
@@ -120,6 +119,13 @@ export default {
     description: { required, maxLength: maxLength(140) }
   },
   computed: {
+    binding () {
+      const binding = {}
+
+      if (this.$vuetify.breakpoint.smAndDown) binding.column = true
+
+      return binding
+    },
     slideTitleErrors () {
       const errors = []
       if (!this.$v.slideTitle.$dirty) {
