@@ -44,6 +44,14 @@
           :is-visible="true"
           @cButtonClick="alert('Hi you!')"/>
       </v-flex>
+      <v-flex
+      xs3>
+        <add-button
+          class="mx-1 px-1 my-1 py-1"
+          :is-disabled="false"
+          :is-visible="true"
+          @cButtonClick="alert('Hi you!')"/>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
