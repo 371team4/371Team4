@@ -1,12 +1,9 @@
 <template>
   <v-container
-    row
-    wrap
     fluid
     grid-list-sm>
     <!-- Event title card -->
     <v-layout
-      v-show="!slideModeOn"
       row
       wrap
       justify-space-between>
@@ -18,8 +15,7 @@
         lg6>
         <v-card
           color="transparent"
-          flat
-          height="100px">
+          flat>
           <v-card-title
             primary
             class="title">
