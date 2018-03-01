@@ -7,27 +7,31 @@ import { firebaseMutations } from 'vuexfire'
 // state of this module
 const state = {
   allSlides: [],
-  // The new Slide. Currently contains nothing but a slide name (and observer)
-  // Could be changed to a new slide item with name added
-  // The module does not contain a "saveSlide". Instead, everything is done in this "newSlide".
-  // That is, this newSlide is also "saveSlide". It will be in cache and allow the user to modify until it is pushed into firebase.
-  // We only allow the user to temporarily leave one slide unsaved.
-  // The user can either keep working on the unsaved slide until he pressed "save" button or discard it.
-  // He cannot create another new slide if there exists one unsaved slide.
+  // currentSlide is the slide which is currently being worked on by user, either because
+  // it is a brand new slide, or an existing one is being edited, this is the working store
+  // of the given slides information, no changes to this currentSlide should be reflected
+  // in the database until the button to save slide changes has been pressed in the
+  // appropriate editing view. When it is, all information in the currentSlide field
+  // should be pushed to the databse
   currentSlide: {
+    // the title of the slide, what it is called by humans, has text, font information and color.
     title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    // similar to title, but generally larger text content.
     description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    // image file (or link to image file?) to be displayed in the slide
     images: null,
+    // the date of the slides event, has similar font info as title/description, content is date object
     date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    // the time of the event, same as date but time object instead of date object
     time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    // the template used to display the slide information contained herein
     template: null,
+    // integer, number of seconds the slide is to be displayed in the carousel being switching to another
     timeout: 1
   },
   // this is true if the user just created a new slide
   // or has edited an existing slide
-  isCurrentSlideDirty: false,
-  // After the "saveSlide" function is called, the currentSlideKey will points to the SlideKey just added
-  currentSlideKey: 0
+  isCurrentSlideDirty: false
 }
 
 // getters for this module's state
