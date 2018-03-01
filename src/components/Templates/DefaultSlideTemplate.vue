@@ -34,8 +34,9 @@
       <v-flex
         d-flex
         xs12
-        sm8
-        md6>
+        sm12
+        md12
+        lg6>
         <v-carousel
           hide-controls
           hide-delimiters
