@@ -105,6 +105,20 @@ export default {
           fontSize: ' ',
           fontStyle: ' ',
           fontWeight: ' '
+        },
+        date: {
+          content: '2018-05-25',
+          fontColor: ' ',
+          fontSize: ' ',
+          fontStyle: ' ',
+          fontWeight: ' '
+        },
+        time: {
+          content: '07:00 PM',
+          fontColor: ' ',
+          fontSize: ' ',
+          fontStyle: ' ',
+          fontWeight: ' '
         }
       })
     },
