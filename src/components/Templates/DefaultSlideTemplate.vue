@@ -24,7 +24,7 @@
           <v-card-title
             primary
             class="title">
-            <h2 class="display-2">{{ slideView.date.content }}, {{ slideView.time.content }} </h2>
+            <h2 class="display-2">{{ slideView.date.content }}, {{ (slideView.time.content) }} </h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -66,7 +66,7 @@
           <v-layout align-center>
             <v-flex>
               <v-divider class="my-3"/>
-              <h3 class="display-1"> {{ slideView.eventBody.content }} </h3>
+              <h3 class="display-1"> {{ slideView.eventBody.content }}</h3>
               <v-divider class="my-3"/>
               <!-- <span class="display-1"> {{ eventBody }} </span> -->
             </v-flex>
