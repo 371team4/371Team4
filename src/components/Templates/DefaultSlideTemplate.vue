@@ -59,31 +59,20 @@
     </v-layout>
 
     <!-- Component used as Event Body -->
-    <v-layout
-      row
-      wrap
-      fluid>
-      <v-flex
-        xs12
-        v-show="!slideModeOn">
-
-        <v-card
-          color="white"
-          height="300px">
-          <v-container
-            fill-height
-            fluid>
-            <v-layout align-center>
-              <v-flex>
-                <div class="title mb-3"> {{ subtitle }}</div>
-                <v-divider class="my-3"/>
-                <span class="title mb-3"> {{ eventBody }} </span>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <template>
+      <v-jumbotron color="grey lighten-3">
+        <v-container fill-height>
+          <v-layout align-center>
+            <v-flex>
+              <h3 class="display-2"> {{ subtitle }} </h3>
+              <v-divider class="my-3"/>
+              <h3 class="display-1"> {{ eventBody }} </h3>
+              <!-- <span class="display-1"> {{ eventBody }} </span> -->
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-jumbotron>
+    </template>
     <!-- Done event body component -->
 
   </v-container>
