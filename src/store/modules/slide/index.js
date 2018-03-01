@@ -1,4 +1,5 @@
 import { NEW_SLIDE, SAVE_SLIDE } from '@/store/mutation-types'
+// import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import { slidesDB } from '@/services/firebase.conf'
 import { firebaseMutations } from 'vuexfire'
 

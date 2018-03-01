@@ -1,0 +1,51 @@
+// overall mutations for the slide store module
+export const SET = 'SET'
+export const SET_STATUS = 'SET_STATUS'
+
+// commenting out delete and save, as I do not think these will be used (as mutations)
+// as they should be sync and atomic, but leaeving for now just in case
+// this comment and the below should either be removed or reinstated before pull request
+// export const DELETE = 'DELETE'
+// export const SAVE = 'SAVE'
+
+// image mutations
+export const ADD_IMAGE = 'ADD_IMAGE'
+
+// Commenting out delete imgage mutation, should be done in action I think,
+// and removing it should be done by 'setting' image to nothing instead
+// remove this comment and below mutate unless reinstated before pull request
+// export const DELETE_IMAGE = 'DELETE_IMAGE'
+
+// title mutations
+export const SET_TITLE = 'SET_TITLE'
+export const SET_TITLE_FONT_COLOR = 'SET_TITLE_FONT_COLOR'
+export const SET_TITLE_FONT_SIZE = 'SET_TITLE_FONT_SIZE'
+export const SET_TITLE_FONT_STYLE = 'SET_TITLE_FONT_STYLE'
+export const SET_TITLE_FONT_WEIGHT = 'SET_TITLE_FONT_WEIGHT'
+
+// description mutations
+export const SET_DESCRIPTION = 'SET_DESCRIPTION'
+export const SET_DESCRIPTION_FONT_COLOR = 'SET_DESCRIPTION_FONT_COLOR'
+export const SET_DESCRIPTION_FONT_SIZE = 'SET_DESCRIPTION_FONT_SIZE'
+export const SET_DESCRIPTION_FONT_STYLE = 'SET_DESCRIPTION_FONT_STYLE'
+export const SET_DESCRIPTION_FONT_WEIGHT = 'SET_DESCRIPTION_FONT_WEIGHT'
+
+// date mutations
+export const SET_DATE = 'SET_DATE'
+export const SET_DATE_FONT_COLOR = 'SET_DATE_FONT_COLOR'
+export const SET_DATE_FONT_SIZE = 'SET_DATE_FONT_SIZE'
+export const SET_DATE_FONT_STYLE = 'SET_DATE_FONT_STYLE'
+export const SET_DATE_FONT_WEIGHT = 'SET_DATE_FONT_WEIGHT'
+
+// time mutations
+export const SET_TIME = 'SET_TIME'
+export const SET_TIME_FONT_COLOR = 'SET_TIME_FONT_COLOR'
+export const SET_TIME_FONT_SIZE = 'SET_TIME_FONT_SIZE'
+export const SET_TIME_FONT_STYLE = 'SET_TIME_FONT_STYLE'
+export const SET_TIME_FONT_WEIGHT = 'SET_TIME_FONT_WEIGHT'
+
+// template which the slide should be displayed
+export const SET_TEMPLATE = 'SET_TEMPLATE'
+
+// timeout of the slide
+export const SET_TIMEOUT = 'SET_TIMEOUT'
