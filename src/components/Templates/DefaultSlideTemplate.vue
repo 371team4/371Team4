@@ -24,7 +24,7 @@
           <v-card-title
             primary
             class="title">
-            <h2 class="display-2">{{ slideView.date.content }}, {{ (slideView.time.content) }} </h2>
+            <h2 class="display-2">{{ slideView.date.content }}, {{ slideView.time.content }} </h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -32,7 +32,6 @@
 
       <!-- Carousel Component -->
       <v-flex
-        d-flex
         xs12
         sm12
         md12

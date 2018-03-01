@@ -5,44 +5,73 @@ describe('DefaultSlideTemplate.vue', () => {
   it('Title data contents should be correct', () => {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
-    expect(vm.title)
+    expect(vm.slideView.title.content)
       .to.equal('Sherbrooke Event Title')
-  })
-
-  it('Subtitle data contents should be correct', () => {
-    const Constructor = Vue.extend(DefaultSlideTemplate)
-    const vm = new Constructor().$mount()
-    expect(vm.subtitle)
-      .to.equal('Sherbrooke event slide subtitle')
+      /* test additional title attributes */
+    expect(vm.slideView.title.fontColor)
+      .to.equal(' ')
+    expect(vm.slideView.title.fontSize)
+      .to.equal(' ')
+    expect(vm.slideView.title.fontStyle)
+      .to.equal(' ')
+    expect(vm.slideView.title.fontWeight)
+      .to.equal(' ')
   })
 
   it('Event body data contents should be correct', () => {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
-    expect(vm.eventBody)
-      .to.equal('Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam')
-  })
-
-  it('Slide mode is False by default', () => {
-    const Constructor = Vue.extend(DefaultSlideTemplate)
-    const vm = new Constructor().$mount()
-    expect(vm.slideModeOn)
-      .to.equal(false)
+    expect(vm.slideView.eventBody.content)
+      .to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
+      /* test additional event body attributes */
+    expect(vm.slideView.eventBody.fontColor)
+      .to.equal(' ')
+    expect(vm.slideView.eventBody.fontSize)
+      .to.equal(' ')
+    expect(vm.slideView.eventBody.fontStyle)
+      .to.equal(' ')
+    expect(vm.slideView.eventBody.fontWeight)
+      .to.equal(' ')
   })
 
   it('Valid image files should be inside the carousel', () => {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
-    expect(vm.items[0].src)
+    expect(vm.slideView.items[0].src)
       .to.contain('.jpg')
-    expect(vm.items[1].src)
+    expect(vm.slideView.items[1].src)
       .to.contain('.jpg')
   })
 
-  it('Text on the template should contain specified words', () => {
+  it('The correct date should be displayed on the slide', () => {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
-    expect(vm.$el.textContent)
-      .to.contain('Sherbrooke')
+    expect(vm.slideView.date.content)
+      .to.equal('2018-05-25')
+      /* test additional date attributes */
+    expect(vm.slideView.date.fontColor)
+      .to.equal(' ')
+    expect(vm.slideView.date.fontSize)
+      .to.equal(' ')
+    expect(vm.slideView.date.fontStyle)
+      .to.equal(' ')
+    expect(vm.slideView.date.fontWeight)
+      .to.equal(' ')
+  })
+
+  it('The correct time should be displayed on the slide', () => {
+    const Constructor = Vue.extend(DefaultSlideTemplate)
+    const vm = new Constructor().$mount()
+    expect(vm.slideView.time.content)
+      .to.equal('07:00 PM')
+      /* test additional time attributes */
+    expect(vm.slideView.time.fontColor)
+      .to.equal(' ')
+    expect(vm.slideView.time.fontSize)
+      .to.equal(' ')
+    expect(vm.slideView.time.fontStyle)
+      .to.equal(' ')
+    expect(vm.slideView.time.fontWeight)
+      .to.equal(' ')
   })
 })
