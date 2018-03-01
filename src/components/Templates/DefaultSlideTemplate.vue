@@ -81,6 +81,33 @@
 <script>
 export default {
   props: {
+    carousel: {
+      type: Number,
+      default: 0
+    },
+    slideView: {
+      type: Object,
+      default: () => ({
+        items: [
+          { src: 'https://www.usask.ca/programs/images/college.jpg' },
+          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
+        ],
+        title: {
+          content: 'Sherbrooke Event Title',
+          fontColor: ' ',
+          fontSize: ' ',
+          fontStyle: ' ',
+          fontWeight: ' '
+        },
+        slideDescription: {
+          content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum .',
+          fontColor: ' ',
+          fontSize: ' ',
+          fontStyle: ' ',
+          fontWeight: ' '
+        }
+      })
+    },
     items: {
       type: Array,
       default: function () {
