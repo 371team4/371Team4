@@ -67,6 +67,7 @@
               <h3 class="display-2"> {{ subtitle }} </h3>
               <v-divider class="my-3"/>
               <h3 class="display-1"> {{ eventBody }} </h3>
+              <v-divider class="my-3"/>
               <!-- <span class="display-1"> {{ eventBody }} </span> -->
             </v-flex>
           </v-layout>
@@ -99,7 +100,7 @@ export default {
           fontStyle: ' ',
           fontWeight: ' '
         },
-        slideDescription: {
+        eventBody: {
           content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum .',
           fontColor: ' ',
           fontSize: ' ',
@@ -121,34 +122,6 @@ export default {
           fontWeight: ' '
         }
       })
-    },
-    items: {
-      type: Array,
-      default: function () {
-        return [ { src: 'https://www.usask.ca/programs/images/college.jpg' },
-          { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
-        ]
-      }
-    },
-    title: {
-      type: String,
-      default: 'Sherbrooke Event Title'
-    },
-    subtitle: {
-      type: String,
-      default: 'Sherbrooke event slide subtitle'
-    },
-    eventBody: {
-      type: String,
-      default: 'Sherbrooke event slide body. CMPT371 Team 4: Erik, Mahmoud, Jordan, Amy, Peggy, Ehtasham, Ben, Li, Ridwan, Duke, Mason, Nam'
-    },
-    slideModeOn: {
-      type: Boolean,
-      default: false
-    },
-    time: {
-      type: String,
-      default: '7:00 PM'
     }
   }
 }
