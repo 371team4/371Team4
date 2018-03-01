@@ -19,12 +19,12 @@
           <v-card-title
             primary
             class="title">
-            <h2 class="display-3">{{ title }}</h2>
+            <h2 class="display-3">{{ slideView.title.content }}</h2>
           </v-card-title>
           <v-card-title
             primary
             class="title">
-            <h2 class="display-2">{{ time }}</h2>
+            <h2 class="display-2">{{ slideView.date.content }}, {{ slideView.time.content }} </h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -38,11 +38,12 @@
         md12
         lg6>
         <v-carousel
+          :value="carousel"
           hide-controls
           hide-delimiters
-          interval="40000/6">
+          :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item,index) in items"
+            v-for="(item,index) in slideView.items"
             :src="item.src"
             :key="index"/>
         </v-carousel>
@@ -64,7 +65,6 @@
         <v-container fill-height>
           <v-layout align-center>
             <v-flex>
-              <h3 class="display-2"> {{ subtitle }} </h3>
               <v-divider class="my-3"/>
               <h3 class="display-1"> {{ eventBody }} </h3>
               <v-divider class="my-3"/>
@@ -120,6 +120,13 @@ export default {
           fontSize: ' ',
           fontStyle: ' ',
           fontWeight: ' '
+        },
+        overview: {
+          template: 'DefaultSlideTemplate',
+          timeout: '40',
+          repeatable: false,
+          startDate: '2018-02-16',
+          endDate: '2018-03-01'
         }
       })
     }
