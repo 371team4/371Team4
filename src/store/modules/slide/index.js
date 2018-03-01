@@ -6,7 +6,7 @@ import { firebaseMutations } from 'vuexfire'
 
 // state of this module
 const state = {
-  slides: [],
+  allSlides: [],
   // The new Slide. Currently contains nothing but a slide name (and observer)
   // Could be changed to a new slide item with name added
   // The module does not contain a "saveSlide". Instead, everything is done in this "newSlide".
@@ -14,9 +14,18 @@ const state = {
   // We only allow the user to temporarily leave one slide unsaved.
   // The user can either keep working on the unsaved slide until he pressed "save" button or discard it.
   // He cannot create another new slide if there exists one unsaved slide.
-  newSlide: {
-    'Name': 'newSlide'
+  currentSlide: {
+    title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    images: null,
+    date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+    template: null,
+    timeout: 1
   },
+  // this is true if the user just created a new slide
+  // or has edited an existing slide
+  isCurrentSlideDirty: false,
   // After the "saveSlide" function is called, the currentSlideKey will points to the SlideKey just added
   currentSlideKey: 0
 }
