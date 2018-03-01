@@ -66,7 +66,7 @@
           <v-layout align-center>
             <v-flex>
               <v-divider class="my-3"/>
-              <h3 class="display-1"> {{ eventBody }} </h3>
+              <h3 class="display-1"> {{ slideView.eventBody.content }} </h3>
               <v-divider class="my-3"/>
               <!-- <span class="display-1"> {{ eventBody }} </span> -->
             </v-flex>
@@ -101,7 +101,7 @@ export default {
           fontWeight: ' '
         },
         eventBody: {
-          content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum .',
+          content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
           fontColor: ' ',
           fontSize: ' ',
           fontStyle: ' ',
@@ -129,6 +129,16 @@ export default {
           endDate: '2018-03-01'
         }
       })
+    }
+  },
+  computed: {
+    carouselInterval () {
+      if (this.slideView && this.slideView.items && this.slideView.items.length > 0 &&
+      this.slideView.overview.timeout) {
+        return ((this.slideView.overview.timeout * 1000) / this.slideView.items.length)
+      }
+      /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
+      return 1000
     }
   }
 }
