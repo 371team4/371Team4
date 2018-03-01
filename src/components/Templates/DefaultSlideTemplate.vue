@@ -42,21 +42,19 @@
           hide-delimiters
           interval="40000/6">
           <v-carousel-item
-            v-for="(item,i) in items"
+            v-for="(item,index) in items"
             :src="item.src"
-            :key="i"/>
+            :key="index"/>
         </v-carousel>
       </v-flex>
       <!-- Done the Carousel item -->
 
       <v-flex
-        d-flex
-        xs12
-        v-show="!slideModeOn">
+      xs12>
         <v-card
           color="transparent"
           flat
-          height="40px"/>
+          height="45px"/>
       </v-flex>
     </v-layout>
 
