@@ -74,4 +74,20 @@ describe('DefaultSlideTemplate.vue', () => {
     expect(vm.slideView.time.fontWeight)
       .to.equal(' ')
   })
+
+  it('Ensure meta information is correct', () => {
+    const Constructor = Vue.extend(DefaultSlideTemplate)
+    const vm = new Constructor().$mount()
+    expect(vm.slideView.meta.template)
+      .to.equal('DefaultSlideTemplate')
+      /* test additional time attributes */
+    expect(vm.slideView.meta.timeout)
+      .to.equal('40')
+    expect(vm.slideView.meta.repeatable)
+      .to.equal(false)
+    expect(vm.slideView.meta.startDate)
+      .to.equal('2018-07-26')
+    expect(vm.slideView.meta.endDate)
+      .to.equal('2018-08-01')
+  })
 })

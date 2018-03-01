@@ -120,12 +120,12 @@ export default {
           fontStyle: ' ',
           fontWeight: ' '
         },
-        overview: {
+        meta: {
           template: 'DefaultSlideTemplate',
           timeout: '40',
           repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
+          startDate: '2018-07-26',
+          endDate: '2018-08-01'
         }
       })
     }
@@ -133,8 +133,8 @@ export default {
   computed: {
     carouselInterval () {
       if (this.slideView && this.slideView.items && this.slideView.items.length > 0 &&
-      this.slideView.overview.timeout) {
-        return ((this.slideView.overview.timeout * 1000) / this.slideView.items.length)
+      this.slideView.meta.timeout) {
+        return ((this.slideView.meta.timeout * 1000) / this.slideView.items.length)
       }
       /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
       return 1000
