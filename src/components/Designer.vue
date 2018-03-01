@@ -1,91 +1,107 @@
 <template>
-  <form>
-    <v-text-field
-      label="Title"
-      v-model="slideTitle"
-      :error-messages="slideTitleErrors"
-      :counter="30"
-      @input="$v.slideTitle.$touch()"
-      @blur="$v.slideTitle.$touch()"
-      required/>
+  <v-container
+  grid-list-xl>
     <v-layout
-      row
-      wrap>
-      <v-flex
-        xs11
-        sm5>
-        <v-menu
-          lazy
-          :close-on-content-click="true"
-          v-model="dateMenu"
-          transition="scale-transition"
-          offset-y
-          full-width
-          :nudge-right="40"
-          min-width="290px">
-          <v-text-field
-            slot="activator"
-            label="Date of Event"
-            v-model="date"
-            prepend-icon="event"
-            readonly/>
-          <v-date-picker
-            v-model="date"
-            no-title
-            scrollable/>
-        </v-menu>
-      </v-flex>
-      <v-spacer/>
-      <v-flex
-        xs11
-        sm5>
-        <v-menu
-          ref="tMenu"
-          lazy
-          :close-on-content-click="false"
-          v-model="timeMenu"
-          transition="scale-transition"
-          offset-y
-          full-width
-          :nudge-right="40"
-          max-width="290px"
-          min-width="290px">
-          <v-text-field
-            slot="activator"
-            label="Time of Event"
-            v-model="formattedTime"
-            prepend-icon="access_time"
-            readonly/>
-          <v-time-picker
-            v-model="time"
-            :allowed-minutes="allowedMinutes"
-            @change="$refs.tMenu.save(time)"/>
-        </v-menu>
-      </v-flex>
+    v-bind="binding">
+      <v-layout>
+        <v-flex
+        lg8>
+          <form>
+            <v-text-field
+              label="Title"
+              v-model="slideTitle"
+              :error-messages="slideTitleErrors"
+              :counter="30"
+              @input="$v.slideTitle.$touch()"
+              @blur="$v.slideTitle.$touch()"
+              required/>
+            <v-layout>
+              <v-flex
+              xs11>
+                <v-menu
+                  lazy
+                  :close-on-content-click="true"
+                  v-model="dateMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  min-width="290px">
+                  <v-text-field
+                    slot="activator"
+                    label="Date of Event"
+                    v-model="date"
+                    prepend-icon="event"
+                    readonly/>
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable/>
+                </v-menu>
+              </v-flex>
+              <v-spacer/>
+              <v-flex
+                xs11
+                sm5>
+                <v-menu
+                  ref="tMenu"
+                  lazy
+                  :close-on-content-click="false"
+                  v-model="timeMenu"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  max-width="290px"
+                  min-width="290px">
+                  <v-text-field
+                    slot="activator"
+                    label="Time of Event"
+                    v-model="formattedTime"
+                    prepend-icon="access_time"
+                    readonly/>
+                  <v-time-picker
+                    v-model="time"
+                    :allowed-minutes="allowedMinutes"
+                    @change="$refs.tMenu.save(time)"/>
+                </v-menu>
+              </v-flex>
+            </v-layout>
+            <v-text-field
+              label="Description"
+              v-model="description"
+              :error-messages="descriptionErrors"
+              :counter="140"
+              @input="$v.description.$touch()"
+              @blur="$v.description.$touch()"
+              required
+            />
+            <v-btn
+              color="error"
+              @click="clear">clear</v-btn>
+            <v-btn
+              color="success"
+              @click="submit">submit</v-btn>
+          </form>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        <v-flex
+        lg10>
+          <ImageCards/>
+        </v-flex>
+      </v-layout>
     </v-layout>
-    <v-text-field
-      label="Description"
-      v-model="description"
-      :error-messages="descriptionErrors"
-      :counter="140"
-      @input="$v.description.$touch()"
-      @blur="$v.description.$touch()"
-      required
-    />
-    <v-btn
-      color="error"
-      @click="clear">clear</v-btn>
-    <v-btn
-      color="success"
-      @click="submit">submit</v-btn>
-  </form>
+  </v-container>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import ImageCards from '@/components/ImageCards'
 
 export default {
+  components: { ImageCards },
   mixins: [validationMixin],
 
   data: () => {
@@ -103,6 +119,13 @@ export default {
     description: { required, maxLength: maxLength(140) }
   },
   computed: {
+    binding () {
+      const binding = {}
+
+      if (this.$vuetify.breakpoint.smAndDown) binding.column = true
+
+      return binding
+    },
     slideTitleErrors () {
       const errors = []
       if (!this.$v.slideTitle.$dirty) {
