@@ -32,17 +32,9 @@
         xs3
         v-for="slide in filteredSlides"
         :key="slide.name">
-        <EventCard
+        <SlideCard
           class="mx-1 px-1 my-1 py-1"
           :event="slide"/>
-      </v-flex>
-      <v-flex
-      xs3>
-        <add-button
-          class="mx-1 px-1 my-1 py-1"
-          :is-disabled="false"
-          :is-visible="true"
-          @cButtonClick="alert('Hi you!')"/>
       </v-flex>
       <v-flex
       xs3>
@@ -57,10 +49,10 @@
 </template>
 
 <script>
-import EventCard from './EventCard'
+import SlideCard from './SlideCard'
 import AddButton from './shared/AddButton'
 export default {
-  components: { EventCard, AddButton },
+  components: { SlideCard, AddButton },
   data () {
     return {
       searchString: '',

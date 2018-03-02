@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import EventCard from '@/components/EventCard'
+import SlideCard from '@/components/SlideCard'
 
-describe('EventCard.vue', () => {
+describe('SlideCard.vue', () => {
   it('can has correct properties', () => {
-    const Constructor = Vue.extend(EventCard)
+    const Constructor = Vue.extend(SlideCard)
     const vm = new Constructor().$mount()
 
     expect(vm.event.name).to.equal('Lorem et proident')
