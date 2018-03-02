@@ -1,5 +1,5 @@
 import { NEW_SLIDE, SAVE_SLIDE } from '@/store/mutation-types'
-// import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import { slidesDB } from '@/services/firebase.conf'
 import { firebaseMutations } from 'vuexfire'
 
@@ -83,23 +83,103 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  // Create new slide. Take the slide name as payload.
-  [NEW_SLIDE] (state, payload) {
-    // Assign the title name to the newSlide
-    state.newSlide.Name = payload
-    // console.log(state.newSlide)
-    // We can see the newSlide in state is temporary saved
+  [CURRENT_SLIDE.SET] (state, payload) {
+    state.currentSlide = payload
   },
-  // Push the slide into the firebase
-  [SAVE_SLIDE] (state, payload) {
-    // Submit everything from payload into the "newSlide" state.
-    // Here is just an example: Change the name of the slide to the payload.
-    // Since for now there is only "name" element in the newSlide
-    state.newSlide.Name = payload
-    // Push the new Slide into database and generate the key
-    state.currentSlideKey = slidesDB.push(state.newSlide).key
-    // console.log(state.currentSlideKey)
+
+  [CURRENT_SLIDE.SET_STATUS] (state, payload) {
+    state.currentSlide.isCurrentSlideDirty = payload
   },
+
+  [CURRENT_SLIDE.SET_TITLE] (state, payload) {
+    state.currentSlide.title = payload
+  },
+  [CURRENT_SLIDE.SET_TITLE_CONTENT] (state, payload) {
+    state.currentSlide.title.content = payload
+  },
+  [CURRENT_SLIDE.SET_TITLE_FONT_COLOR] (state, payload) {
+    state.currentSlide.title.fontColor = payload
+  },
+  [CURRENT_SLIDE.SET_TITLE_FONT_SIZE] (state, payload) {
+    state.currentSlide.title.fontSize = payload
+  },
+  [CURRENT_SLIDE.SET_TITLE_FONT_STYLE] (state, payload) {
+    state.currentSlide.title.fontStyle = payload
+  },
+  [CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT] (state, payload) {
+    state.currentSlide.title.fontWeight = payload
+  },
+
+  [CURRENT_SLIDE.SET_DESCRIPTION] (state, payload) {
+    state.currentSlide.description = payload
+  },
+  [CURRENT_SLIDE.SET_DESCRIPTION_CONTENT] (state, payload) {
+    state.currentSlide.description.content = payload
+  },
+  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR] (state, payload) {
+    state.currentSlide.description.fontColor = payload
+  },
+  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE] (state, payload) {
+    state.currentSlide.description.fontSize = payload
+  },
+  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE] (state, payload) {
+    state.currentSlide.description.fontStyle = payload
+  },
+  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT] (state, payload) {
+    state.currentSlide.description.fontWeight = payload
+  },
+
+  [CURRENT_SLIDE.SET_IMAGE] (state, payload) {
+    state.currentSlide.images = payload
+  },
+  // here is where DELETE_IMAGE or equivilent will go if used.
+
+  [CURRENT_SLIDE.SET_DATE] (state, payload) {
+    state.currentSlide.date = payload
+  },
+  [CURRENT_SLIDE.SET_DATE_CONTENT] (state, payload) {
+    state.currentSlide.date.content = payload
+  },
+  [CURRENT_SLIDE.SET_DATE_FONT_COLOR] (state, payload) {
+    state.currentSlide.date.fontColor = payload
+  },
+  [CURRENT_SLIDE.SET_DATE_FONT_SIZE] (state, payload) {
+    state.currentSlide.date.fontSize = payload
+  },
+  [CURRENT_SLIDE.SET_DATE_FONT_STYLE] (state, payload) {
+    state.currentSlide.date.fontStyle = payload
+  },
+  [CURRENT_SLIDE.SET_DATE_FONT_WEIGHT] (state, payload) {
+    state.currentSlide.date.fontWeight = payload
+  },
+
+  [CURRENT_SLIDE.SET_TIME] (state, payload) {
+    state.currentSlide.time = payload
+  },
+  [CURRENT_SLIDE.SET_TIME_CONTENT] (state, payload) {
+    state.currentSlide.time.content = payload
+  },
+  [CURRENT_SLIDE.SET_TIME_FONT_COLOR] (state, payload) {
+    state.currentSlide.time.fontColor = payload
+  },
+  [CURRENT_SLIDE.SET_TIME_FONT_SIZE] (state, payload) {
+    state.currentSlide.time.fontSize = payload
+  },
+  [CURRENT_SLIDE.SET_TIME_FONT_STYLE] (state, payload) {
+    state.currentSlide.time.fontStyle = payload
+  },
+  [CURRENT_SLIDE.SET_TIME_FONT_WEIGHT] (state, payload) {
+    state.currentSlide.time.fontWeight = payload
+  },
+
+  [CURRENT_SLIDE.SET_TEMPLATE] (state, payload) {
+    state.currentSlide.template = payload
+  },
+
+  [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
+    state.currentSlide.timeout = payload
+  },
+
   ...firebaseMutations
 }
 
