@@ -65,7 +65,7 @@
           <v-layout align-center>
             <v-flex>
               <v-divider class="my-3"/>
-              <h3 class="display-1"> {{ slideView.eventBody.content }}</h3>
+              <h3 class="headline"> {{ slideView.eventBody.content }}</h3>
               <v-divider class="my-3"/>
               <!-- <span class="display-1"> {{ eventBody }} </span> -->
             </v-flex>
