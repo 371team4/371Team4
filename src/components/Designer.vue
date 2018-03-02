@@ -83,6 +83,20 @@
               color="success"
               @click="submit">submit</v-btn>
           </form>
+          <!-- For font style -->
+          <v-layout>
+            <v-flex
+              xs12
+              sm12
+              md12
+              lg12
+              xl12>
+              <form>
+                <font-style
+                class="my-0 py-0"/>
+              </form>
+            </v-flex>
+          </v-layout>
         </v-flex>
       </v-layout>
       <v-layout>
@@ -99,9 +113,10 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
+import FontStyle from '@/components/FontStyle'
 
 export default {
-  components: { ImageCards },
+  components: { ImageCards, FontStyle },
   mixins: [validationMixin],
 
   data: () => {
