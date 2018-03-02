@@ -92,96 +92,121 @@ const mutations = {
 
   [CURRENT_SLIDE.SET_TITLE] (state, payload) {
     state.currentSlide.title = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TITLE_CONTENT] (state, payload) {
     state.currentSlide.title.content = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TITLE_FONT_COLOR] (state, payload) {
     state.currentSlide.title.fontColor = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TITLE_FONT_SIZE] (state, payload) {
     state.currentSlide.title.fontSize = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TITLE_FONT_STYLE] (state, payload) {
     state.currentSlide.title.fontStyle = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT] (state, payload) {
     state.currentSlide.title.fontWeight = payload
+    state.isCurrentSlideDirty = true
   },
 
   [CURRENT_SLIDE.SET_DESCRIPTION] (state, payload) {
     state.currentSlide.description = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DESCRIPTION_CONTENT] (state, payload) {
     state.currentSlide.description.content = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR] (state, payload) {
     state.currentSlide.description.fontColor = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE] (state, payload) {
     state.currentSlide.description.fontSize = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE] (state, payload) {
     state.currentSlide.description.fontStyle = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT] (state, payload) {
     state.currentSlide.description.fontWeight = payload
+    state.isCurrentSlideDirty = true
   },
 
   [CURRENT_SLIDE.SET_IMAGE] (state, payload) {
     state.currentSlide.images = payload
+    state.isCurrentSlideDirty = true
   },
   // here is where DELETE_IMAGE or equivilent will go if used.
 
   [CURRENT_SLIDE.SET_DATE] (state, payload) {
     state.currentSlide.date = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DATE_CONTENT] (state, payload) {
     state.currentSlide.date.content = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DATE_FONT_COLOR] (state, payload) {
     state.currentSlide.date.fontColor = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DATE_FONT_SIZE] (state, payload) {
     state.currentSlide.date.fontSize = payload
   },
   [CURRENT_SLIDE.SET_DATE_FONT_STYLE] (state, payload) {
     state.currentSlide.date.fontStyle = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_DATE_FONT_WEIGHT] (state, payload) {
     state.currentSlide.date.fontWeight = payload
+    state.isCurrentSlideDirty = true
   },
 
   [CURRENT_SLIDE.SET_TIME] (state, payload) {
     state.currentSlide.time = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TIME_CONTENT] (state, payload) {
     state.currentSlide.time.content = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TIME_FONT_COLOR] (state, payload) {
     state.currentSlide.time.fontColor = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TIME_FONT_SIZE] (state, payload) {
     state.currentSlide.time.fontSize = payload
   },
   [CURRENT_SLIDE.SET_TIME_FONT_STYLE] (state, payload) {
     state.currentSlide.time.fontStyle = payload
+    state.isCurrentSlideDirty = true
   },
   [CURRENT_SLIDE.SET_TIME_FONT_WEIGHT] (state, payload) {
     state.currentSlide.time.fontWeight = payload
+    state.isCurrentSlideDirty = true
   },
 
   [CURRENT_SLIDE.SET_TEMPLATE] (state, payload) {
     state.currentSlide.template = payload
+    state.isCurrentSlideDirty = true
   },
 
   [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
     state.currentSlide.timeout = payload
+    state.isCurrentSlideDirty = true
   }
 }
 
 const setSlidesRef = firebaseAction(({ bindFirebaseRef }, payload) => {
-  // bunding will automatically unbind any previously bound ref so you
+  // binding will automatically unbind any previously bound ref so you
   // don't need to unbind before binding over an existing bound key
   bindFirebaseRef('allSlides', payload)
 })
