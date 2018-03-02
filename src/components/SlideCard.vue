@@ -5,46 +5,102 @@
       grid-list-lg>
       <v-layout row>
         <v-flex xl7>
-          <div
-            class="headline"
-            v-text="event.name"/>
-          <div>sub heading</div>
+          <div class="headline">
+            {{ title }}
+          </div>
         </v-flex>
         <v-flex xs12>
           <v-card-media
-            :src="event.thumbnail"
+            :src="imageUrl"
             height="150px"
             contain/>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-card-text
-      class="overflow"
-      v-text="event.description"/>
+    <v-card-text class="overflow">
+      {{ description.substring(0, 50).concat('...') }}
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
 export default {
   props: {
-    event: {
+    slide: {
       type: Object,
-      default () {
-        return {
-          _id: '5a700ee29c61ea4f72cd23e2',
-          name: 'Lorem et proident',
-          lastEditedBy: { first: 'Pearlie', last: 'Combs' },
-          createdBy: { first: 'Shannon', last: 'Becker' },
-          thumbnail: 'http://placehold.it/32x32',
-          dateRange: {
-            start: 'Thursday, September 7, 2017 9:28 AM',
-            end: 'Thursday, February 2, 2017 2:09 PM',
-            isRepeatable: false
+      default: () => ({
+        images: [
+          {
+            src: 'https://picsum.photos/200/300/?image=92'
           },
-          description: 'Fugiat ea enim elit exercitation sunt proident pariatur sint dolore cillum. Qui ad anim est non proident et laboris laborum adipisicing adipisicing. Velit id nulla aliqua ipsum proident nostrud reprehenderit do laboris. Excepteur ut occaecat do consequat do est nostrud sint non ut. Sit est nulla ex laboris fugiat velit esse quis non. Nisi aute non reprehenderit veniam nisi.',
-          tags: ['enim', 'et', 'cillum', 'reprehenderit', 'non'],
-          isOnRotation: false
+          {
+            src: 'https://picsum.photos/200/300/?image=19'
+          },
+          {
+            src: 'https://picsum.photos/200/300/?image=14'
+          },
+          {
+            src: 'https://picsum.photos/200/300/?image=94'
+          }
+        ],
+        title: {
+          content: 'Slide1',
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        },
+        description: {
+          content: 'This is the description for Slide1',
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        },
+        date: {
+          content: '2018-02-15',
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        },
+        time: {
+          content: '13:05',
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        },
+        meta: {
+          template: 'DefaultSlideTemplate',
+          timeout: '40',
+          repeatable: false,
+          startDate: '2018-02-16',
+          endDate: '2018-03-01'
         }
+      })
+    }
+  },
+  computed: {
+    title () {
+      if (this.slide && this.slide.title && this.slide.title.content) {
+        return this.slide.title.content
+      } else {
+        return ''
+      }
+    },
+    description () {
+      if (this.slide && this.slide.description && this.slide.description.content) {
+        return this.slide.description.content
+      } else {
+        return ''
+      }
+    },
+    imageUrl () {
+      if (this.slide && this.slide.images && this.slide.images.length > 0 && this.slide.images[0].src) {
+        return this.slide.images[0].src
+      } else {
+        return ''
       }
     }
   }
