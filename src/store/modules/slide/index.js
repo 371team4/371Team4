@@ -1,7 +1,6 @@
-import { NEW_SLIDE, SAVE_SLIDE } from '@/store/mutation-types'
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import { slidesDB } from '@/services/firebase.conf'
-import { firebaseMutations } from 'vuexfire'
+import { firebaseAction } from 'vuexfire'
 
 // This module is used for create-newSlide and saveSlide
 
@@ -178,19 +177,18 @@ const mutations = {
 
   [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
     state.currentSlide.timeout = payload
-  },
-
-  ...firebaseMutations
+  }
 }
+
+const setSlidesRef = firebaseAction(({ bindFirebaseRef }, payload) => {
+  // bunding will automatically unbind any previously bound ref so you
+  // don't need to unbind before binding over an existing bound key
+  bindFirebaseRef('allSlides', payload)
+})
 
 // actions can be async and may have side effects
 const actions = {
-  createSlide ({ commit, dispatch }, payload) {
-    commit(NEW_SLIDE, payload)
-  },
-  saveSlide ({ commit }, payload) {
-    commit(SAVE_SLIDE, payload)
-  }
+  setSlidesRef
 }
 
 // export everything as default
