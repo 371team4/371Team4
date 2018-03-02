@@ -52,7 +52,7 @@ const router = new Router({
     {
       path: '/designer',
       name: 'Designer',
-      props:\ true,
+      props: true,
       icon: 'format_shapes',
       scrollToTop: true,
       component: Designer,
