@@ -90,4 +90,11 @@ describe('DefaultSlideTemplate.vue', () => {
     expect(vm.slideView.meta.endDate)
       .to.equal('2018-08-01')
   })
+
+  it('Ensure computation function is correct to compute slide', () => {
+    const Constructor = Vue.extend(DefaultSlideTemplate)
+    const vm = new Constructor().$mount()
+    expect(vm.carouselInterval)
+      .to.equal(20000)
+  })
 })
