@@ -88,7 +88,10 @@
       <v-layout>
         <v-flex
         lg10>
-          <ImageCards/>
+          <ImageCards
+            :cards="slide.images"
+            @imageSelected="imageSelected"
+            @deleteImage="deleteImage"/>
         </v-flex>
       </v-layout>
     </v-layout>
@@ -178,6 +181,12 @@ export default {
       this.timeMenu = false
       this.date = null
       this.time = null
+    },
+    imageSelected (e) {
+      this.$emit('imageSelected', e)
+    },
+    deleteImage (e) {
+      this.$emit('deleteImage', e)
     }
   }
 }

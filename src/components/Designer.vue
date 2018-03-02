@@ -88,7 +88,10 @@
       <v-layout>
         <v-flex
         lg10>
-          <ImageCards/>
+          <ImageCards
+            :cards="slide.images"
+            @imageSelected="uploadImage"
+            @deleteImage="deleteImage"/>
         </v-flex>
       </v-layout>
     </v-layout>
@@ -103,7 +106,14 @@ import ImageCards from '@/components/ImageCards'
 export default {
   components: { ImageCards },
   mixins: [validationMixin],
-
+  props: {
+    slide: {
+      type: Object,
+      default: () => ({
+        images: []
+      })
+    }
+  },
   data: () => {
     return {
       slideTitle: '',
@@ -178,6 +188,23 @@ export default {
       this.timeMenu = false
       this.date = null
       this.time = null
+    },
+    forceUpdateCarousel () {
+      this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))
+    },
+    uploadImage (files) {
+      debugger
+      const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
+      this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
+        this.addImage({ src: this.$store.getters.getUploadTask })
+      }.bind(this))
+    },
+    deleteImage (index) {
+      this.slide.images.splice(index, 1)
+    },
+    addImage (imgObject) {
+      this.slide.images.push(imgObject)
+      this.forceUpdateCarousel()
     }
   }
 }
