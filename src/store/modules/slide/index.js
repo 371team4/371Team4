@@ -1,4 +1,4 @@
-import { NEW_SLIDE, SAVE_SLIDE } from '@/store/mutation-types'
+import { NEW_SLIDE, SAVE_SLIDE, DELETE_SLIDE } from '@/store/mutation-types'
 import { slidesDB } from '@/services/firebase.conf'
 import { firebaseMutations } from 'vuexfire'
 
@@ -17,6 +17,7 @@ const state = {
   newSlide: {
     'Name': 'newSlide'
   },
+  deleteSlideKey: 0,
   // After the "saveSlide" function is called, the currentSlideKey will points to the SlideKey just added
   currentSlideKey: 0
 }
@@ -26,6 +27,9 @@ const getters = {
   // getter method
   getCurrentSlideKey (state) {
     return state.currentSlideKey
+  },
+  getDeleteSlideKey (state) {
+    return state.deleteSlideKey
   },
   getSlide (state) {
     return state.slide
@@ -51,6 +55,13 @@ const mutations = {
     state.currentSlideKey = slidesDB.push(state.newSlide).key
     // console.log(state.currentSlideKey)
   },
+  // The delete mutation takes slideKey as payload and delete the certain slide
+  [DELETE_SLIDE] (state, payload) {
+    // Assign the deleteSlideKey to payload
+    state.deleteSlideKey = payload
+    // Remove
+    slidesDB.child(payload).remove()
+  },
   ...firebaseMutations
 }
 
@@ -61,6 +72,13 @@ const actions = {
   },
   saveSlide ({ commit }, payload) {
     commit(SAVE_SLIDE, payload)
+  },
+  // delete the slide after 1000ms
+  // Delete action here takes the '.key' as payload
+  deleteTheSlide ({ commit }, payload) {
+    setTimeout(() => {
+      commit(DELETE_SLIDE, payload)
+    }, 1000)
   }
 }
 
