@@ -132,8 +132,7 @@ export default {
         'Lime',
         'Orange',
         'Brown',
-        'Grey',
-        'Black'
+        'Grey'
       ],
       fontSizes: [
         'XX-Small',
