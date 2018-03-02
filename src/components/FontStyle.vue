@@ -4,9 +4,9 @@
       v-bind="binding"
       wrap>
       <v-flex
-        xs12
+        xs6
         md6
-        lg3>
+        lg6>
         <v-select
           chips
           label="Color"
@@ -27,9 +27,9 @@
         </v-select>
       </v-flex>
       <v-flex
-        xs12
+        xs6
         md6
-        lg3>
+        lg6>
         <v-select
           chips
           label="Font Size"
@@ -50,9 +50,9 @@
         </v-select>
       </v-flex>
       <v-flex
-        xs12
+        xs6
         md6
-        lg3>
+        lg6>
         <v-select
           chips
           label="Font Weight"
@@ -73,9 +73,9 @@
         </v-select>
       </v-flex>
       <v-flex
-        xs12
+        xs6
         md6
-        lg3>
+        lg6>
         <v-select
           chips
           label="Font Style"
