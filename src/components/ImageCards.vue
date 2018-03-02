@@ -2,7 +2,7 @@
   <v-layout
   justify-end="true">
     <v-flex
-    sm3>
+    sm8>
       <v-card>
         <v-container
           fluid
@@ -33,7 +33,7 @@
                   </v-card-media>
                 </v-card>
               </v-flex>
-              <!-- add add button from Ben here -->
+              <AddButton/>
             </v-layout>
           </v-container>
         </v-container>
@@ -43,7 +43,10 @@
 </template>
 
 <script>
+import AddButton from '@/components/shared/AddButton'
+
 export default {
+  components: { AddButton },
   props: {
     isVisible: {
       type: Boolean,

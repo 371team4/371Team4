@@ -1,5 +1,6 @@
-import index from '../../../../src/store/modules/upload/index'
+import index from '@/store/modules/upload/index'
 
+// helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
   let count = 0
 
@@ -22,10 +23,10 @@ const testAction = (action, args, state, expectedMutations, done) => {
     }
   }
 
-  // call action with mock commit and args
+  // call the action with mocked store and argument
   action({ commit, state }, ...args)
 
-  // check if mutation is dispatched
+  // Check if no mutation should have been dispatched
   if (expectedMutations.length === 0) {
     expect(count).to.equal(0)
     done()
@@ -50,6 +51,24 @@ describe('index', () => {
       { type: 'SET_IS_UPLOADING', payload: false },
       { type: 'SET_BYTES_UPLOADED', payload: 0 },
       { type: 'SET_BYTES_REMAINING', payload: 0 },
+      { type: 'SET_CANCEL_UPLOAD', payload: false }
+    ], done)
+  })
+})
+
+// Unit test for cancelUpload
+describe('index', () => {
+  it('should cancel an Upload', done => {
+    testAction(index.actions.cancelUpload, [true], {}, [
+      { type: 'SET_CANCEL_UPLOAD', payload: true }
+    ], done)
+  })
+})
+
+// Unit test for cancelUpload fail
+describe('index', () => {
+  it('should not cancel an Upload. Cancel upload failed', done => {
+    testAction(index.actions.cancelUpload, [false], {}, [
       { type: 'SET_CANCEL_UPLOAD', payload: false }
     ], done)
   })
