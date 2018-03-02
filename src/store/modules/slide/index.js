@@ -24,10 +24,8 @@ const state = {
     date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
     // the time of the event, same as date but time object instead of date object
     time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // the template used to display the slide information contained herein
-    template: null,
-    // integer, number of seconds the slide is to be displayed in the carousel being switching to another
-    timeout: 1
+
+    meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
   },
   // this is true if the user just created a new slide
   // or has edited an existing slide
@@ -73,11 +71,12 @@ const getters = {
   getCurrentSlideTimeFontStyle: state => state.time.fontStyle,
   getCurrentSlideTimeFontWeight: state => state.time.fontWeight,
 
-  // getter for current slides template
-  getCurrentSlideTemplate: state => state.template,
-
-  // getter for currentslides timeout value
-  getCurrentSlideTimeout: state => state.timeout
+  // getters for the current slide meta fields
+  getCurrentSlideMeta: state => state.meta,
+  getCurrentSlideMetaTemplate: state => state.meta.template,
+  getCurrentSlideMetaTimeout: state => state.meta.repeatable,
+  getCurrentSlideMetaStartDate: state => state.meta.startDate,
+  getCurrentSlideMetaEndDate: state => state.meta.endDate
 }
 
 // mutations of this module, mutation must be sync and atomic
@@ -221,6 +220,31 @@ const mutations = {
   // takes fontweight as payload. sets fontweight of currentslide to it.
   [CURRENT_SLIDE.SET_TIME_FONT_WEIGHT] (state, payload) {
     state.currentSlide.time.fontWeight = payload
+    state.isCurrentSlideDirty = true
+  },
+
+  [CURRENT_SLIDE.SET_META] (startDate, payload) {
+    state.currentSlide.meta = payload
+    state.isCurrentSlideDirty = true
+  },
+  [CURRENT_SLIDE.SET_META_TEMPLATE] (startDate, payload) {
+    state.currentSlide.meta.template = payload
+    state.isCurrentSlideDirty = true
+  },
+  [CURRENT_SLIDE.SET_META_TIMEOUT] (startDate, payload) {
+    state.currentSlide.meta.timeout = payload
+    state.isCurrentSlideDirty = true
+  },
+  [CURRENT_SLIDE.SET_META_REPEATABLE] (startDate, payload) {
+    state.currentSlide.meta.repeatable = payload
+    state.isCurrentSlideDirty = true
+  },
+  [CURRENT_SLIDE.SET_META_STARTDATE] (startDate, payload) {
+    state.currentSlide.meta.startDate = payload
+    state.isCurrentSlideDirty = true
+  },
+  [CURRENT_SLIDE.SET_META_ENDDATE] (startDate, payload) {
+    state.currentSlide.meta.endDate = payload
     state.isCurrentSlideDirty = true
   },
 

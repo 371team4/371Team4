@@ -48,8 +48,10 @@ export const SET_TIME_FONT_SIZE = 'SET_TIME_FONT_SIZE'
 export const SET_TIME_FONT_STYLE = 'SET_TIME_FONT_STYLE'
 export const SET_TIME_FONT_WEIGHT = 'SET_TIME_FONT_WEIGHT'
 
-// template which the slide should be displayed
-export const SET_TEMPLATE = 'SET_TEMPLATE'
-
-// timeout of the slide
-export const SET_TIMEOUT = 'SET_TIMEOUT'
+// Meta mutations, for template, timeout of slides, if repeatable or not, when to start and end by date
+export const SET_META = 'SET_META'
+export const SET_META_TEMPLATE = 'SET_META_TEMPLATE'
+export const SET_META_TIMEOUT = 'SET_META_TIMEOUT'
+export const SET_META_REPEATABLE = 'SET_META_REPEATABLE'
+export const SET_META_STARTDATE = 'SET_META_STARTDATE'
+export const SET_META_ENDDATE = 'SET_META_ENDDATE'
