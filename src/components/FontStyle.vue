@@ -126,6 +126,14 @@ export default {
         'Red',
         'Green',
         'Yellow',
+        'Purple',
+        'Pink',
+        'Teal',
+        'Lime',
+        'Orange',
+        'Brown',
+        'Grey',
+        'Black'
       ],
       fontSizes: [
         'XX-Small',
