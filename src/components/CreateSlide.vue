@@ -106,7 +106,14 @@ import ImageCards from '@/components/ImageCards'
 export default {
   components: { ImageCards },
   mixins: [validationMixin],
-
+  props: {
+    slide: {
+      type: Object,
+      default: () => ({
+        images: []
+      })
+    }
+  },
   data: () => {
     return {
       slideTitle: '',

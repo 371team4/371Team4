@@ -58,7 +58,7 @@ export default {
       type: [String, Array],
       default: () =>
         // this is the same as a for each object add property `thumbnail` with value URL
-        [{}, {}, {}, {}, {}].map(a => {
+        [{}, {}, {}, {}, {}, {}, {}].map(a => {
           // add this src property to the a object and return it
           return {
             ...a,
