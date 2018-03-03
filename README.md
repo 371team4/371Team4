@@ -2,6 +2,8 @@
 
 > Event management and creation system
 
+## Project's Website [Repartyed](https://repartyed.firebaseapp.com)
+
 ## Build Setup
 
 1. Install NodeJS from here https://nodejs.org/en/download/. Go with the LTS version
@@ -55,21 +57,24 @@ npm run deploy
 ## Extensions for VS Code
 Just run these commands from the command line and you should be good to go
 ```
+code --install-extension EditorConfig.editorconfig
 code --install-extension christian-kohler.npm-intellisense
 code --install-extension christian-kohler.path-intellisense
 code --install-extension dariofuzinato.vue-peek
 code --install-extension dbaeumer.vscode-eslint
-code --install-extension donjayamanne.githistory
-code --install-extension EditorConfig.EditorConfig
+code --install-extension eamodio.gitlens
 code --install-extension eg2.vscode-npm-script
 code --install-extension esbenp.prettier-vscode
 code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
-code --install-extension lukehoban.Go
+code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension octref.vetur
+code --install-extension redhat.java
 code --install-extension robertohuertasm.vscode-icons
-code --install-extension sandeepthukral.nightwatch-js-snippets
-code --install-extension xabikos.JavaScriptSnippets
-code --install-extension zhuangtongfa.Material-theme
+code --install-extension vscjava.vscode-java-debug
+code --install-extension vscjava.vscode-java-test
+code --install-extension vscjava.vscode-maven
+code --install-extension xabikos.javascriptsnippets
+code --install-extension zhuangtongfa.material-theme
 ```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader) and https://vuejs-templates.github.io/webpack/structure.html .
