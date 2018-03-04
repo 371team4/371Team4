@@ -225,27 +225,27 @@ const mutations = {
     state.isCurrentSlideDirty = true
   },
 
-  [CURRENT_SLIDE.SET_META] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META] (state, payload) {
     state.currentSlide.meta = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_TEMPLATE] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META_TEMPLATE] (state, payload) {
     state.currentSlide.meta.template = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_TIMEOUT] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META_TIMEOUT] (state, payload) {
     state.currentSlide.meta.timeout = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_REPEATABLE] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META_REPEATABLE] (state, payload) {
     state.currentSlide.meta.repeatable = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_STARTDATE] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META_STARTDATE] (state, payload) {
     state.currentSlide.meta.startDate = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_ENDDATE] (startDate, payload) {
+  [CURRENT_SLIDE.SET_META_ENDDATE] (state, payload) {
     state.currentSlide.meta.endDate = payload
     state.isCurrentSlideDirty = true
   },
