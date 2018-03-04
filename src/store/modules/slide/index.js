@@ -88,7 +88,7 @@ const mutations = {
 
   // takes boolean as payload, sets if slide has changes made compared to version in DB.
   [CURRENT_SLIDE.SET_STATUS] (state, payload) {
-    state.currentSlide.isCurrentSlideDirty = payload
+    state.isCurrentSlideDirty = payload
   },
 
   // takes title object as payload, set currentslide title to it. dirty slide for title and all its sub setters
