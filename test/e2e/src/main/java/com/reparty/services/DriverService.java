@@ -1,8 +1,10 @@
 package com.reparty.services;
 
+import com.reparty.app.utils.CommonUtils;
 import java.io.File;
 import java.io.IOException;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -11,6 +13,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * DriverService for Chrome WebDriver
  */
 public class DriverService {
+
+  private static final String className = CommonUtils.getCallingClassName();
+  private static final Logger logger = LogManager.getLogger(className);
+
   // remember the chrome service, chrome options, and the current running webdriver
   private ChromeDriverService chromeService;
   private ChromeOptions chromeOptions = new ChromeOptions();
@@ -30,8 +36,9 @@ public class DriverService {
    * @return {@link RemoteWebDriver} of the current running webdriver
    */
   public RemoteWebDriver getChromeDriver() {
+    logger.traceEntry();
     this.webDriver = this.getChromeDriver(null);
-    return this.webDriver;
+    return logger.traceExit(this.webDriver);
   }
 
   /**
@@ -42,16 +49,17 @@ public class DriverService {
    * @return {@link RemoteWebDriver} of the current running webdriver
    */
   public RemoteWebDriver getChromeDriver(UserAgents userAgent) {
+    logger.traceEntry();
     // get the defualt chrome options
     this.chromeOptions = getChromeOptions();
     // if the user agent is set then tell the webdriver to use that agent for all the requests
-    if(userAgent != null){
+    if (userAgent != null) {
       this.chromeOptions.addArguments("user-agent=".concat(userAgent.getValue()));
     }
     // construct the webDriver using the the current chrome options
     // and return it
     this.webDriver = new RemoteWebDriver(this.chromeOptions);
-    return this.webDriver;
+    return logger.traceExit(this.webDriver);
   }
 
   /**
@@ -62,22 +70,27 @@ public class DriverService {
    * @return {@link ChromeDriverService}
    */
   private ChromeDriverService createAndStartService(final File executable) {
-      ChromeDriverService service = createDriverService(executable);
-      try {
-        service.start();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    return service;
+    logger.traceEntry();
+    ChromeDriverService service = createDriverService(executable);
+    try {
+      service.start();
+    } catch (IOException e) {
+      logger.catching(e);
+    }
+    return logger.traceExit(service);
   }
 
   /**
    * Quit the current running webDriver if it is running
    */
   public void releaseWebDriver() {
+    logger.traceEntry();
+
     if (this.webDriver != null) {
       this.webDriver.quit();
     }
+
+    logger.traceExit();
   }
 
   /**
@@ -85,8 +98,12 @@ public class DriverService {
    * Note: this will also kill the current chrome instance if it is running
    */
   public void stopService() {
+    logger.traceEntry();
+
     this.releaseWebDriver();
     this.chromeService.stop();
+
+    logger.traceExit();
   }
 
   /**
@@ -97,7 +114,10 @@ public class DriverService {
    * @return {@link ChromeDriverService}
    */
   private ChromeDriverService createDriverService(final File executable) {
-    return new ChromeDriverService.Builder().usingDriverExecutable(executable).usingAnyFreePort().build();
+    logger.traceEntry();
+    ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(executable).usingAnyFreePort()
+        .build();
+    return logger.traceExit(service);
   }
 
   /**
@@ -106,6 +126,7 @@ public class DriverService {
    * @return {@link ChromeOptions} with default configuration
    */
   private ChromeOptions getChromeOptions() {
+    logger.traceEntry();
     ChromeOptions options = new ChromeOptions();
     //TODO: enable mobile emulation for later
     //Map<String, String> mobileEmulation = new HashMap<String, String>();
@@ -114,7 +135,7 @@ public class DriverService {
     //END TODO
     options.addArguments("start-maximized");
     options.addArguments("disable-infobars");
-    return options;
+    return logger.traceExit(options);
   }
 
   /**
@@ -123,13 +144,14 @@ public class DriverService {
    * @return {@link File} of the driver executable
    */
   private File getDriverExecutable() {
+    logger.traceEntry();
     // get the driver path
     String execPath = getDriverPath();
     // get a file object from the driver executable path
     File executable = new File(this.getClass().getClassLoader().getResource(execPath).getFile());
     // need to make it executable
     executable.setExecutable(true);
-    return executable;
+    return logger.traceExit(executable);
   }
 
   /**
@@ -138,6 +160,7 @@ public class DriverService {
    * @return {@link String} of the executable that will run on this operating system
    */
   private String getDriverPath() {
+    logger.traceEntry();
     // get the name of this os
     String osName = System.getProperty("os.name").toLowerCase();
     String execPath = "";
@@ -149,6 +172,6 @@ public class DriverService {
     } else if (osName.equals("linux")) {
       execPath = "chrome/linux/chromedriver";
     }
-    return execPath;
+    return logger.traceExit(execPath);
   }
 }
