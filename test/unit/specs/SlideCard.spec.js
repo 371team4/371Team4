@@ -2,11 +2,65 @@ import Vue from 'vue'
 import SlideCard from '@/components/SlideCard'
 
 describe('SlideCard.vue', () => {
-  let Constructor, vm
+  let Constructor, vm, mockSlide
 
   before(() => {
     Constructor = Vue.extend(SlideCard)
     vm = new Constructor().$mount()
+
+    mockSlide = {
+      images: [
+        {
+          src: 'https://picsum.photos/200/300/?image=92'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=19'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=14'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=94'
+        }
+      ],
+      title: {
+        content: 'Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      },
+      description: {
+        content: 'This is the description for Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      },
+      date: {
+        content: '2018-02-15',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      },
+      time: {
+        content: '13:05',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      },
+      meta: {
+        template: 'DefaultSlideTemplate',
+        timeout: '40',
+        repeatable: false,
+        startDate: '2018-02-16',
+        endDate: '2018-03-01'
+      }
+    }
+
+    vm.slide = mockSlide
   })
 
   it('has correct images', () => {

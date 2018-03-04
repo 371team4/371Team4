@@ -29,54 +29,41 @@ export default {
     slide: {
       type: Object,
       default: () => ({
-        images: [
-          {
-            src: 'https://picsum.photos/200/300/?image=92'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=19'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=14'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=94'
-          }
-        ],
+        images: [],
         title: {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         description: {
-          content: 'This is the description for Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         date: {
-          content: '2018-02-15',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         time: {
-          content: '13:05',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         meta: {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
+          template: '',
+          timeout: '',
           repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
+          startDate: '',
+          endDate: ''
         }
       })
     }
