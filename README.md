@@ -71,6 +71,7 @@ code --install-extension msjsdiag.debugger-for-chrome
 code --install-extension octref.vetur
 code --install-extension redhat.java
 code --install-extension robertohuertasm.vscode-icons
+code --install-extension rebornix.project-snippets
 code --install-extension vscjava.vscode-java-debug
 code --install-extension vscjava.vscode-java-test
 code --install-extension vscjava.vscode-maven

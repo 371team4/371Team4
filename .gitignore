@@ -5,7 +5,7 @@ node_modules/
 *logerror.log*
 /test/unit/coverage/
 /test/e2e/target/
-logs/*
+/test/e2e/logs/
 selenium-debug.log
 
 # Editor directories and files
