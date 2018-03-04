@@ -21,7 +21,7 @@ const refreshState = () => {
 
 const assert = (s, val) => { expect(s).to.deep.equal(val) }
 
-describe.only('title', () => {
+describe('title', () => {
   let state
 
   beforeEach(() => {
@@ -100,6 +100,89 @@ describe.only('title', () => {
     slide.mutations[CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT](state, 'Bold')
 
     assert(state.currentSlide.title.fontWeight, 'Bold')
+    assert(state.isCurrentSlideDirty, true)
+  })
+})
+
+describe('description', () => {
+  let state
+
+  beforeEach(() => {
+    state = refreshState()
+  })
+
+  it('SET_DESCRIPTION', () => {
+    const titleStateBeforeMutation = { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null }
+
+    const titleStateAfterMutation = {
+      content: 'Slide1',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    }
+    assert(state.currentSlide.description, titleStateBeforeMutation)
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION](state, {
+      content: 'Slide1',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    })
+
+    assert(state.currentSlide.description, titleStateAfterMutation)
+    assert(state.isCurrentSlideDirty, true)
+  })
+
+  it('SET_DESCRIPTION_CONTENT', () => {
+    assert(state.currentSlide.description.content, '')
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_CONTENT](state, 'title')
+
+    assert(state.currentSlide.description.content, 'title')
+    assert(state.isCurrentSlideDirty, true)
+  })
+
+  it('SET_DESCRIPTION_FONT_COLOR', () => {
+    assert(state.currentSlide.description.fontColor, null)
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_CONTENT](state, 'Red')
+
+    assert(state.currentSlide.description.content, 'Red')
+    assert(state.isCurrentSlideDirty, true)
+  })
+
+  it('SET_DESCRIPTION_FONT_SIZE', () => {
+    assert(state.currentSlide.description.fontSize, null)
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE](state, 'Large')
+
+    assert(state.currentSlide.description.fontSize, 'Large')
+    assert(state.isCurrentSlideDirty, true)
+  })
+
+  it('SET_DESCRIPTION_FONT_STYLE', () => {
+    assert(state.currentSlide.description.fontStyle, null)
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE](state, 'Normal')
+
+    assert(state.currentSlide.description.fontStyle, 'Normal')
+    assert(state.isCurrentSlideDirty, true)
+  })
+
+  it('SET_DESCRIPTION_FONT_WEIGHT', () => {
+    assert(state.currentSlide.description.fontWeight, null)
+    assert(state.isCurrentSlideDirty, false)
+
+    slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT](state, 'Bold')
+
+    assert(state.currentSlide.description.fontWeight, 'Bold')
     assert(state.isCurrentSlideDirty, true)
   })
 })
