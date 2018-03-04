@@ -180,6 +180,7 @@ const mutations = {
   // takes fontsize as payload. sets fontsize of date for currentslide
   [CURRENT_SLIDE.SET_DATE_FONT_SIZE] (state, payload) {
     state.currentSlide.date.fontSize = payload
+    state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontstyle of date for currentslide
   [CURRENT_SLIDE.SET_DATE_FONT_STYLE] (state, payload) {
@@ -211,6 +212,7 @@ const mutations = {
   // takes fontsize as payload. sets fontsize of currentslide time to it.
   [CURRENT_SLIDE.SET_TIME_FONT_SIZE] (state, payload) {
     state.currentSlide.time.fontSize = payload
+    state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontstyle of currentslide time to it.
   [CURRENT_SLIDE.SET_TIME_FONT_STYLE] (state, payload) {

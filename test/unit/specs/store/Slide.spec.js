@@ -185,4 +185,87 @@ describe('description', () => {
     assert(state.currentSlide.description.fontWeight, 'Bold')
     assert(state.isCurrentSlideDirty, true)
   })
+
+  describe('date', () => {
+    let state
+
+    beforeEach(() => {
+      state = refreshState()
+    })
+
+    it('SET_DATE', () => {
+      const titleStateBeforeMutation = { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null }
+
+      const titleStateAfterMutation = {
+        content: 'Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      }
+      assert(state.currentSlide.date, titleStateBeforeMutation)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE](state, {
+        content: 'Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      })
+
+      assert(state.currentSlide.date, titleStateAfterMutation)
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_DATE_CONTENT', () => {
+      assert(state.currentSlide.date.content, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE_CONTENT](state, 'title')
+
+      assert(state.currentSlide.date.content, 'title')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_DATE_FONT_COLOR', () => {
+      assert(state.currentSlide.date.fontColor, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE_CONTENT](state, 'Red')
+
+      assert(state.currentSlide.date.content, 'Red')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_DATE_FONT_SIZE', () => {
+      assert(state.currentSlide.date.fontSize, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_SIZE](state, 'Large')
+
+      assert(state.currentSlide.date.fontSize, 'Large')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_DATE_FONT_STYLE', () => {
+      assert(state.currentSlide.date.fontStyle, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_STYLE](state, 'Normal')
+
+      assert(state.currentSlide.date.fontStyle, 'Normal')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_DATE_FONT_WEIGHT', () => {
+      assert(state.currentSlide.date.fontWeight, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_WEIGHT](state, 'Bold')
+
+      assert(state.currentSlide.date.fontWeight, 'Bold')
+      assert(state.isCurrentSlideDirty, true)
+    })
+  })
 })
