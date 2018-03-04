@@ -268,4 +268,87 @@ describe('description', () => {
       assert(state.isCurrentSlideDirty, true)
     })
   })
+
+  describe('time', () => {
+    let state
+
+    beforeEach(() => {
+      state = refreshState()
+    })
+
+    it('SET_TIME', () => {
+      const titleStateBeforeMutation = { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null }
+
+      const titleStateAfterMutation = {
+        content: 'Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      }
+      assert(state.currentSlide.time, titleStateBeforeMutation)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME](state, {
+        content: 'Slide1',
+        fontColor: 'Red',
+        fontSize: 'Large',
+        fontStyle: 'Normal',
+        fontWeight: 'Bold'
+      })
+
+      assert(state.currentSlide.time, titleStateAfterMutation)
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_TIME_CONTENT', () => {
+      assert(state.currentSlide.time.content, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME_CONTENT](state, 'title')
+
+      assert(state.currentSlide.time.content, 'title')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_TIME_FONT_COLOR', () => {
+      assert(state.currentSlide.time.fontColor, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME_CONTENT](state, 'Red')
+
+      assert(state.currentSlide.time.content, 'Red')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_TIME_FONT_SIZE', () => {
+      assert(state.currentSlide.time.fontSize, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_SIZE](state, 'Large')
+
+      assert(state.currentSlide.time.fontSize, 'Large')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_TIME_FONT_STYLE', () => {
+      assert(state.currentSlide.time.fontStyle, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_STYLE](state, 'Normal')
+
+      assert(state.currentSlide.time.fontStyle, 'Normal')
+      assert(state.isCurrentSlideDirty, true)
+    })
+
+    it('SET_TIME_FONT_WEIGHT', () => {
+      assert(state.currentSlide.time.fontWeight, null)
+      assert(state.isCurrentSlideDirty, false)
+
+      slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_WEIGHT](state, 'Bold')
+
+      assert(state.currentSlide.time.fontWeight, 'Bold')
+      assert(state.isCurrentSlideDirty, true)
+    })
+  })
 })
