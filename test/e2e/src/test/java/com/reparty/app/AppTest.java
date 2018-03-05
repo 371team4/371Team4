@@ -1,4 +1,4 @@
-package com.Reparty.app;
+package com.reparty.app;
 
 /**
  * Unit test for simple App.
