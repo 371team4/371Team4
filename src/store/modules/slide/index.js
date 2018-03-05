@@ -38,45 +38,45 @@ const getters = {
   getAllSlides: state => state.allSlides,
 
   // getters for the current slides title, and for each subfield
-  getCurrentSlideTitle: state => state.title,
-  getCurrentSlideTitleContent: state => state.title.content,
-  getCurrentSlideTitleFontColor: state => state.title.fontColor,
-  getCurrentSlideTitleFontSize: state => state.title.fontSize,
-  getCurrentSlideTitleFontStyle: state => state.title.fontStyle,
-  getCurrentSlideTitleFontWeight: state => state.title.fontWeight,
+  getCurrentSlideTitle: state => state.currentSlide.title,
+  getCurrentSlideTitleContent: state => state.currentSlide.title.content,
+  getCurrentSlideTitleFontColor: state => state.currentSlide.title.fontColor,
+  getCurrentSlideTitleFontSize: state => state.currentSlide.title.fontSize,
+  getCurrentSlideTitleFontStyle: state => state.currentSlide.title.fontStyle,
+  getCurrentSlideTitleFontWeight: state => state.currentSlide.title.fontWeight,
 
   // getters for the current slides description, and for each subfield
-  getCurrentSlideDescription: state => state.description,
-  getCurrentSlideDescriptionContent: state => state.description.content,
-  getCurrentSlideDescriptionFontColor: state => state.description.fontColor,
-  getCurrentSlideDescriptionFontSize: state => state.description.fontSize,
-  getCurrentSlideDescriptionFontStyle: state => state.description.fontStyle,
-  getCurrentSlideDescriptionFontWeight: state => state.description.fontWeight,
+  getCurrentSlideDescription: state => state.currentSlide.description,
+  getCurrentSlideDescriptionContent: state => state.currentSlide.description.content,
+  getCurrentSlideDescriptionFontColor: state => state.currentSlide.description.fontColor,
+  getCurrentSlideDescriptionFontSize: state => state.currentSlide.description.fontSize,
+  getCurrentSlideDescriptionFontStyle: state => state.currentSlide.description.fontStyle,
+  getCurrentSlideDescriptionFontWeight: state => state.currentSlide.description.fontWeight,
 
   getCurretSlideImages: state => state.images,
 
   // getters for the current slides date, and for each subfield
-  getCurrentSlideDate: state => state.date,
-  getCurrentSlideDateContent: state => state.date.content,
-  getCurrentSlideDateFontColor: state => state.date.fontColor,
-  getCurrentSlideDateFontSize: state => state.date.fontSize,
-  getCurrentSlideDateFontStyle: state => state.date.fontStyle,
-  getCurrentSlideDateFontWeight: state => state.date.fontWeight,
+  getCurrentSlideDate: state => state.currentSlide.date,
+  getCurrentSlideDateContent: state => state.currentSlide.date.content,
+  getCurrentSlideDateFontColor: state => state.currentSlide.date.fontColor,
+  getCurrentSlideDateFontSize: state => state.currentSlide.date.fontSize,
+  getCurrentSlideDateFontStyle: state => state.currentSlide.date.fontStyle,
+  getCurrentSlideDateFontWeight: state => state.currentSlide.date.fontWeight,
 
   // getters for the current slides time, and for each subfield
-  getCurrentSlideTime: state => state.time,
-  getCurrentSlideTimeContent: state => state.time.content,
-  getCurrentSlideTimeFontColor: state => state.time.fontColor,
-  getCurrentSlideTimeFontSize: state => state.time.fontSize,
-  getCurrentSlideTimeFontStyle: state => state.time.fontStyle,
-  getCurrentSlideTimeFontWeight: state => state.time.fontWeight,
+  getCurrentSlideTime: state => state.currentSlide.time,
+  getCurrentSlideTimeContent: state => state.currentSlide.time.content,
+  getCurrentSlideTimeFontColor: state => state.currentSlide.time.fontColor,
+  getCurrentSlideTimeFontSize: state => state.currentSlide.time.fontSize,
+  getCurrentSlideTimeFontStyle: state => state.currentSlide.time.fontStyle,
+  getCurrentSlideTimeFontWeight: state => state.currentSlide.time.fontWeight,
 
   // getters for the current slide meta fields
-  getCurrentSlideMeta: state => state.meta,
-  getCurrentSlideMetaTemplate: state => state.meta.template,
-  getCurrentSlideMetaTimeout: state => state.meta.repeatable,
-  getCurrentSlideMetaStartDate: state => state.meta.startDate,
-  getCurrentSlideMetaEndDate: state => state.meta.endDate
+  getCurrentSlideMeta: state => state.currentSlide.meta,
+  getCurrentSlideMetaTemplate: state => state.currentSlide.meta.template,
+  getCurrentSlideMetaTimeout: state => state.currentSlide.meta.repeatable,
+  getCurrentSlideMetaStartDate: state => state.currentSlide.meta.startDate,
+  getCurrentSlideMetaEndDate: state => state.currentSlide.meta.endDate
 }
 
 // mutations of this module, mutation must be sync and atomic
