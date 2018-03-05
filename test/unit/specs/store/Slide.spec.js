@@ -825,5 +825,45 @@ describe('slide', () => {
         assert(state.isCurrentSlideDirty, true)
       })
     })
+
+    describe('image', () => {
+      let state
+
+      beforeEach(() => {
+        state = refreshState()
+      })
+
+      it('SET_IMAGE', () => {
+        assert(state.currentSlide.images, [])
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_IMAGE](state, {
+          src: 'https://picsum.photos/200/300/?image=92'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=19'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=14'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=94'
+        })
+
+        assert(slide.getters.getCurrentSlideImages(state), {
+          src: 'https://picsum.photos/200/300/?image=92'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=19'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=14'
+        },
+        {
+          src: 'https://picsum.photos/200/300/?image=94'
+        })
+        assert(state.isCurrentSlideDirty, true)
+      })
+    })
   })
 })

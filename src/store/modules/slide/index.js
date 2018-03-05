@@ -53,7 +53,7 @@ const getters = {
   getCurrentSlideDescriptionFontStyle: state => state.currentSlide.description.fontStyle,
   getCurrentSlideDescriptionFontWeight: state => state.currentSlide.description.fontWeight,
 
-  getCurretSlideImages: state => state.images,
+  getCurrentSlideImages: state => state.currentSlide.images,
 
   // getters for the current slides date, and for each subfield
   getCurrentSlideDate: state => state.currentSlide.date,
