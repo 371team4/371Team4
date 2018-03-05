@@ -74,7 +74,8 @@ const getters = {
   // getters for the current slide meta fields
   getCurrentSlideMeta: state => state.currentSlide.meta,
   getCurrentSlideMetaTemplate: state => state.currentSlide.meta.template,
-  getCurrentSlideMetaTimeout: state => state.currentSlide.meta.repeatable,
+  getCurrentSlideMetaTimeout: state => state.currentSlide.meta.timeout,
+  getCurrentSlideMetaRepeatable: state => state.currentSlide.meta.repeatable,
   getCurrentSlideMetaStartDate: state => state.currentSlide.meta.startDate,
   getCurrentSlideMetaEndDate: state => state.currentSlide.meta.endDate
 }

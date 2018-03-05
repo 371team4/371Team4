@@ -1043,5 +1043,94 @@ describe('slide', () => {
         assert(state.isCurrentSlideDirty, true)
       })
     })
+
+    describe('meta', () => {
+      let state
+
+      beforeEach(() => {
+        state = refreshState()
+      })
+
+      it('SET_META', () => {
+        const titleStateBeforeMutation = {
+          template: null,
+          timeout: null,
+          repeatable: null,
+          startDate: null,
+          endDate: null
+        }
+
+        const titleStateAfterMutation = {
+          template: 'DefaultSlideTemplate',
+          timeout: '40',
+          repeatable: false,
+          startDate: '2018-02-16',
+          endDate: '2018-03-01'
+        }
+        assert(slide.getters.getCurrentSlideMeta(state), titleStateBeforeMutation)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_TIME](state, {
+          template: 'DefaultSlideTemplate',
+          timeout: '40',
+          repeatable: false,
+          startDate: '2018-02-16',
+          endDate: '2018-03-01'
+        })
+
+        assert(state.currentSlide.time, titleStateAfterMutation)
+        assert(state.isCurrentSlideDirty, true)
+      })
+
+      it('SET_META_TEMPLATE', () => {
+        assert(state.currentSlide.meta.template, null)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_META_TEMPLATE](state, 'DefaultSlideTemplate')
+
+        assert(slide.getters.getCurrentSlideMetaTemplate(state), 'DefaultSlideTemplate')
+        assert(state.isCurrentSlideDirty, true)
+      })
+
+      it('SET_META_TIMEOUT', () => {
+        assert(state.currentSlide.meta.timeout, null)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_META_TIMEOUT](state, '40')
+
+        assert(slide.getters.getCurrentSlideMetaTimeout(state), '40')
+        assert(state.isCurrentSlideDirty, true)
+      })
+
+      it('SET_META_REPEATABLE', () => {
+        assert(state.currentSlide.meta.repeatable, null)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_META_REPEATABLE](state, false)
+
+        assert(slide.getters.getCurrentSlideMetaRepeatable(state), false)
+        assert(state.isCurrentSlideDirty, true)
+      })
+
+      it('SET_META_STARTDATE', () => {
+        assert(state.currentSlide.meta.startDate, null)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_META_STARTDATE](state, '2018-02-16')
+
+        assert(slide.getters.getCurrentSlideMetaStartDate(state), '2018-02-16')
+        assert(state.isCurrentSlideDirty, true)
+      })
+
+      it('SET_META_ENDDATE', () => {
+        assert(state.currentSlide.meta.endDate, null)
+        assert(state.isCurrentSlideDirty, false)
+
+        slide.mutations[CURRENT_SLIDE.SET_META_ENDDATE](state, '2018-02-16')
+
+        assert(slide.getters.getCurrentSlideMetaEndDate(state), '2018-02-16')
+        assert(state.isCurrentSlideDirty, true)
+      })
+    })
   })
 })
