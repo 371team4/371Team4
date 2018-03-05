@@ -37,6 +37,9 @@ const getters = {
   // getter for allSlides
   getAllSlides: state => state.allSlides,
 
+  // getter for isCurrentSlideDirty
+  getIsCurrentSlideDirty: state => state.isCurrentSlideDirty,
+
   // getters for the current slides title, and for each subfield
   getCurrentSlideTitle: state => state.currentSlide.title,
   getCurrentSlideTitleContent: state => state.currentSlide.title.content,
