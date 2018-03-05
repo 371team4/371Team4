@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <full-calendar :events="fcEvents"/>
+    <full-calendar :events="Events"/>
   </v-container>
 </template>
 
@@ -11,7 +11,7 @@ export default {
     'full-calendar': require('vue-fullcalendar')
   },
   computed: {
-    fcEvents () {
+    Events () {
       return this.$store.getters.allSlides.map((slide) => {
         const newSlide = {}
         if (slide &&
