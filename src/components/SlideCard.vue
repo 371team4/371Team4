@@ -6,7 +6,7 @@
       <v-layout row>
         <v-flex xl7>
           <div class="headline">
-            {{ shortTitle }}
+            {{ title }}
           </div>
         </v-flex>
         <v-flex xs12>
@@ -18,7 +18,7 @@
       </v-layout>
     </v-container>
     <v-card-text class="overflow">
-      {{ shortDescription }}
+      {{ description }}
     </v-card-text>
   </v-card>
 </template>
@@ -71,34 +71,24 @@ export default {
   computed: {
     title () {
       if (this.slide && this.slide.title && this.slide.title.content) {
-        return this.slide.title.content
+        if (this.slide.title.content.length <= 15) {
+          return this.slide.title.content
+        } else {
+          return this.slide.title.content.substring(0, 15).concat('...')
+        }
       } else {
         return ''
-      }
-    },
-    shortTitle () {
-      let title = this.title
-
-      if (title.length <= 15) {
-        return title
-      } else {
-        return title.substring(0, 15).concat('...')
       }
     },
     description () {
       if (this.slide && this.slide.description && this.slide.description.content) {
-        return this.slide.description.content
+        if (this.slide.description.content.length <= 50) {
+          return this.slide.description.content
+        } else {
+          return this.slide.description.content.substring(0, 50).concat('...')
+        }
       } else {
         return ''
-      }
-    },
-    shortDescription () {
-      let description = this.description
-
-      if (description.length <= 50) {
-        return description
-      } else {
-        return description.substring(0, 50).concat('...')
       }
     },
     imageUrl () {
