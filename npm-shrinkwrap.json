@@ -20055,6 +20055,11 @@
       "resolved": "https://registry.npmjs.org/vuejs-logger/-/vuejs-logger-1.3.4.tgz",
       "integrity": "sha512-amkjhaGplVcTPhThkwGuAP7XK3mzJM7RfeQw35alYHg2KrRqYyBFsvXDxRiVxD+o7PGIOPwetCopo3Z2dWuioQ=="
     },
+    "vuelidate": {
+      "version": "0.6.1",
+      "resolved": "https://registry.npmjs.org/vuelidate/-/vuelidate-0.6.1.tgz",
+      "integrity": "sha512-QE24xV9ghPLHebe4nslzdApV4Uh8pT/tfdBmqK9GdUKOPtF+pLhPV6Q51GYaqK4+H1MBW6KedNX2Mrfi7/Oq8A=="
+    },
     "vuetify": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/vuetify/-/vuetify-1.0.1.tgz",

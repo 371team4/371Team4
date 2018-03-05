@@ -2,7 +2,7 @@
   <v-layout
   justify-end="true">
     <v-flex
-    sm3>
+    sm8>
       <v-card>
         <v-container
           fluid
@@ -33,7 +33,13 @@
                   </v-card-media>
                 </v-card>
               </v-flex>
-              <!-- add add button from Ben here -->
+              <AddButton @cButtonClick="pickFile"/>
+              <input
+                ref="uploadButton"
+                accept="image/*"
+                type="file"
+                v-show="false"
+                @change="cardSelected">
             </v-layout>
           </v-container>
         </v-container>
@@ -43,46 +49,38 @@
 </template>
 
 <script>
+import AddButton from '@/components/shared/AddButton'
+
 export default {
+  components: { AddButton },
   props: {
-    isVisible: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data () {
-    return {
-      cards: [
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        },
-        {
-          thumbnail: `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`
-        }
-      ]
+    cards: {
+      type: [String, Array],
+      default: () =>
+        // this is the same as a for each object add property `thumbnail` with value URL
+        [{}, {}, {}, {}, {}, {}, {}].map(a => {
+          // add this src property to the a object and return it
+          return {
+            ...a,
+            src: `https://picsum.photos/150/300/?image=${Math.floor(
+              Math.random() * 100 + 1
+            )}`
+          }
+        })
     }
   },
   methods: {
     deleteCard (index) {
-      this.cards.splice(index, 1)
+      this.$emit('deleteImage', index)
     },
     onScroll (e) {
       this.offsetTop = e.target.scrollTop
+    },
+    pickFile () {
+      this.$refs.uploadButton.click()
+    },
+    cardSelected (e) {
+      this.$emit('imageSelected', e.target.files)
     }
   }
 }
