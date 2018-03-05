@@ -3,7 +3,7 @@ package com.reparty.app.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CommonUtils {
+public final class CommonUtils {
 
   private static final Logger logger = LogManager.getLogger("CommonUtils");
 

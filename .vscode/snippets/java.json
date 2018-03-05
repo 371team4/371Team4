@@ -1,6 +1,6 @@
 {
   "logger Init": {
-    "prefix": "loginit",
+    "prefix": "loggerinit",
     "body": [
       "private static final String className = CommonUtils.getCallingClassName();\nprivate static final Logger logger = LogManager.getLogger(className);\n"
     ],
@@ -8,7 +8,7 @@
   },
 
   "Log method entry": {
-    "prefix": "logentry",
+    "prefix": "loggerentry",
     "body": [
       "logger.traceEntry();\n"
     ],
@@ -16,9 +16,9 @@
   },
 
   "Log method exit": {
-    "prefix": "logexit",
+    "prefix": "loggerexit",
     "body": [
-      "logger.traceExit(${1: return_value});"
+      "logger.traceExit(${1:return_value});"
     ],
     "description": "Logger for method exit"
   }

@@ -2,6 +2,7 @@ package com.reparty.app.core;
 
 import com.reparty.app.utils.CommonUtils;
 import com.reparty.app.utils.SeleniumUtils;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -18,5 +19,15 @@ public class PageObjBase {
   public PageObjBase(WebElement we) {
     this.webElement = we;
     this.webDriver = SeleniumUtils.getWrappedDriver(this.webElement);
+  }
+
+  public WebDriver getWebDriver() {
+    logger.traceEntry();
+    return logger.traceExit(this.webDriver);
+  }
+
+  public WebElement getWebEelement() {
+    logger.traceEntry();
+    return logger.traceExit(this.webElement);
   }
 }
