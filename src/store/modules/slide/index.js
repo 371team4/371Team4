@@ -6,7 +6,7 @@ import { firebaseMutations } from 'vuexfire'
 
 // state of this module
 const state = {
-  slides: [],
+  allSlides: [],
   // The new Slide. Currently contains nothing but a slide name (and observer)
   // Could be changed to a new slide item with name added
   // The module does not contain a "saveSlide". Instead, everything is done in this "newSlide".
@@ -27,8 +27,8 @@ const getters = {
   getCurrentSlideKey (state) {
     return state.currentSlideKey
   },
-  getSlide (state) {
-    return state.slide
+  allSlides (state) {
+    return state.allSlides
   }
 }
 

@@ -12,8 +12,7 @@ export default {
   },
   computed: {
     fcEvents () {
-      const Slides = this.$store.getters.getSlide
-      const filteredSlides = (Slides.map((slide) => {
+      return this.$store.getters.allSlides.map((slide) => {
         const newSlide = {}
         if (slide &&
             slide.title &&
@@ -25,17 +24,14 @@ export default {
           newSlide.start = this.addOneDay(slide)
         }
         return newSlide
-      }))
-      return filteredSlides
+      })
     }
   },
   methods: {
     // Since the calendar view cannot show the correct date,
     // One day is added manually
     addOneDay: function (slide) {
-      var Data = new Date(slide.date.content)
-      Data.setDate(Data.getDate() + 1)
-      return Data
+      return new Date(slide.date.content).setDate(new Date(slide.date.content).getDate() + 1)
     }
   }
 }
