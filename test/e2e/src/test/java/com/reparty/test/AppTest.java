@@ -1,4 +1,4 @@
-package com.reparty.app;
+package com.reparty.test;
 
 import org.junit.Assert;
 import org.junit.Test;
