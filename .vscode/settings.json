@@ -27,10 +27,7 @@
     "terminal.integrated.cursorStyle": "block",
     "extensions.ignoreRecommendations": true,
     "emmet.includeLanguages": {
-        "vue": "html",
-        "vue-html": "html",
-        "javascriptreact": "html",
-        "typescript": "html"
+        "vue-html": "html"
     },
     "editor.multiCursorModifier": "alt",
     "eslint.autoFixOnSave": true,
