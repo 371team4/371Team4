@@ -19,12 +19,12 @@
           <v-card-title
             primary
             class="title">
-            <h2 class="display-3">{{ slideView.title.content }}</h2>
+            <h2 class="display-3">{{ slide.title.content }}</h2>
           </v-card-title>
           <v-card-title
             primary
             class="title">
-            <h2 class="display-2">{{ slideView.date.content }}, {{ slideView.time.content }} </h2>
+            <h2 class="display-2">{{ slide.date.content }}, {{ slide.time.content }} </h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -42,7 +42,7 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item,index) in slideView.items"
+            v-for="(item,index) in slide.images"
             :src="item.src"
             :key="index"/>
         </v-carousel>
@@ -65,9 +65,8 @@
           <v-layout align-center>
             <v-flex>
               <v-divider class="my-3"/>
-              <h3 class="headline"> {{ slideView.eventBody.content }}</h3>
+              <h3 class="headline"> {{ slide.description.content }}</h3>
               <v-divider class="my-3"/>
-              <!-- <span class="display-1"> {{ eventBody }} </span> -->
             </v-flex>
           </v-layout>
         </v-container>
@@ -85,10 +84,10 @@ export default {
       type: Number,
       default: 0
     },
-    slideView: {
+    slide: {
       type: Object,
       default: () => ({
-        items: [
+        images: [
           { src: 'https://www.usask.ca/programs/images/college.jpg' },
           { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
         ],
@@ -99,7 +98,7 @@ export default {
           fontStyle: ' ',
           fontWeight: ' '
         },
-        eventBody: {
+        description: {
           content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
           fontColor: ' ',
           fontSize: ' ',
@@ -132,9 +131,9 @@ export default {
   },
   computed: {
     carouselInterval () {
-      if (this.slideView && this.slideView.items && this.slideView.items.length > 0 &&
-      this.slideView.meta.timeout) {
-        return ((this.slideView.meta.timeout * 1000) / this.slideView.items.length)
+      if (this.slide && this.slide.images && this.slide.images.length > 0 &&
+      this.slide.meta.timeout) {
+        return ((this.slide.meta.timeout * 1000) / this.slide.images.length)
       }
       /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
       return 1000
