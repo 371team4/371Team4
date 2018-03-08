@@ -12,26 +12,26 @@ export default {
   },
   computed: {
     Events () {
-      return this.$store.getters.allSlides.map((slide) => {
-        const newSlide = {}
+      return this.$store.getters.getAllSlides.map((slide) => {
         if (slide &&
             slide.title &&
             slide.title.content &&
             slide.date &&
             slide.date.content) {
           // Copy the title and start time
-          newSlide.title = slide.title.content
-          newSlide.start = this.addOneDay(slide)
+          return {
+            title: slide.title.content,
+            start: this.addOneDay(slide.date.content)
+          }
         }
-        return newSlide
       })
     }
   },
   methods: {
     // Since the calendar view cannot show the correct date,
     // One day is added manually
-    addOneDay: function (slide) {
-      return new Date(slide.date.content).setDate(new Date(slide.date.content).getDate() + 1)
+    addOneDay: function (dateString) {
+      return new Date(dateString).setDate(new Date(dateString).getDate() + 1)
     }
   }
 }

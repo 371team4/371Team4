@@ -8,12 +8,11 @@
     <v-toolbar-side-icon
       v-show="!isVisible"
       @click="updateVisibility"/>
-    <v-btn
-      icon
+    <v-toolbar-side-icon
       v-show="isVisible"
       @click="updateVisibility">
       <v-icon>keyboard_arrow_left</v-icon>
-    </v-btn>
+    </v-toolbar-side-icon>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
   </v-toolbar>
 </template>
@@ -27,7 +26,7 @@ export default {
     },
     title: {
       type: String,
-      default: 'something didn\'t work'
+      default: 'Something didn\'t work'
     }
   },
   methods: {
