@@ -11,7 +11,7 @@
       "cwd": "${workspaceFolder}/test/e2e",
       "console": "internalConsole",
       "stopOnEntry": false,
-      "mainClass": "com.reparty.app.utils.CommonUtils",
+      "mainClass": "com.reparty.services.DriverService",
       "args": "",
       "projectName": "reparty"
     }

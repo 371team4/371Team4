@@ -1,12 +1,15 @@
 package com.reparty.services;
 
-import com.reparty.app.utils.CommonUtils;
 import java.io.File;
 import java.io.IOException;
+
+import com.reparty.app.utils.CommonUtils;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
@@ -19,7 +22,6 @@ public class DriverService {
 
   // remember the chrome service, chrome options, and the current running webdriver
   private ChromeDriverService chromeService;
-  private ChromeOptions chromeOptions = new ChromeOptions();
   private RemoteWebDriver webDriver;
 
   /**
@@ -50,15 +52,19 @@ public class DriverService {
    */
   public RemoteWebDriver getChromeDriver(UserAgents userAgent) {
     logger.traceEntry();
+    // need this to be able to build the options correctly into the webdriver
+    DesiredCapabilities caps = DesiredCapabilities.chrome();
     // get the defualt chrome options
-    this.chromeOptions = getChromeOptions();
+    ChromeOptions options = getChromeOptions();
     // if the user agent is set then tell the webdriver to use that agent for all the requests
     if (userAgent != null) {
-      this.chromeOptions.addArguments("user-agent=".concat(userAgent.getValue()));
+      options.addArguments("user-agent=".concat(userAgent.getValue()));
     }
+    // add options are part of the capabilities
+    caps.setCapability(ChromeOptions.CAPABILITY, options);
     // construct the webDriver using the the current chrome options
     // and return it
-    this.webDriver = new RemoteWebDriver(this.chromeOptions);
+    this.webDriver = new RemoteWebDriver(this.chromeService.getUrl(), caps);
     return logger.traceExit(this.webDriver);
   }
 
@@ -134,7 +140,7 @@ public class DriverService {
     //options.setExperimentalOption("mobileEmulation", mobileEmulation);
     //END TODO
     options.addArguments("start-maximized");
-    options.addArguments("disable-infobars");
+    options.addArguments("--disable-infobars");
     return logger.traceExit(options);
   }
 

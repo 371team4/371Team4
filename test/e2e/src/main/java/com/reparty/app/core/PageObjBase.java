@@ -26,7 +26,7 @@ public class PageObjBase {
     return logger.traceExit(this.webDriver);
   }
 
-  public WebElement getWebEelement() {
+  public WebElement getWebElement() {
     logger.traceEntry();
     return logger.traceExit(this.webElement);
   }
