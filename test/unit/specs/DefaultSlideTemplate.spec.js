@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
 
-describe('DefaultSlideTemplate.vue', () => {
-  it('Title data contents should be correct', () => {
+describe('DefaultSlideTemplate.vue', function () {
+  it('Title data contents should be correct', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.title.content)
@@ -18,7 +18,7 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.equal(' ')
   })
 
-  it('Event body data contents should be correct', () => {
+  it('Event body data contents should be correct', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.description.content)
@@ -34,7 +34,7 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.equal(' ')
   })
 
-  it('Valid image files should be inside the carousel', () => {
+  it('Valid image files should be inside the carousel', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.images[0].src)
@@ -43,7 +43,7 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.contain('.jpg')
   })
 
-  it('The correct date should be displayed on the slide', () => {
+  it('The correct date should be displayed on the slide', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.date.content)
@@ -59,7 +59,7 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.equal(' ')
   })
 
-  it('The correct time should be displayed on the slide', () => {
+  it('The correct time should be displayed on the slide', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.time.content)
@@ -75,7 +75,7 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.equal(' ')
   })
 
-  it('Ensure meta information is correct', () => {
+  it('Ensure meta information is correct', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.slide.meta.template)
@@ -91,10 +91,17 @@ describe('DefaultSlideTemplate.vue', () => {
       .to.equal('2018-08-01')
   })
 
-  it('Ensure computation function is correct to compute slide', () => {
+  it('Ensure computation function is correct to compute slide', function (done) {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.carouselInterval)
       .to.equal(20000)
+
+      // Account for computed property
+    Vue.nextTick(() => {
+      expect(vm.carouselInterval)
+        .to.equal(20000)
+      done()
+    })
   })
 })
