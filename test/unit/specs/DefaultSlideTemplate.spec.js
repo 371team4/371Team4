@@ -77,6 +77,24 @@ describe('DefaultSlideTemplate.vue', function () {
     expect(vm.$props.slide.date.content).to.equal('2018-03-07')
     expect(header.textContent).to.contain(vm.$props.slide.date.content)
   })
+
+  /* testing description data */
+  it('Event description contents should be rendered correctly', function () {
+    vm.$mount()
+    /* test contents in the title */
+    const desc = vm.$el.querySelector('h3.headline')
+    expect(vm.$props.slide.description.content).to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
+    expect(desc.textContent).to.contain(vm.$props.slide.description.content)
+  })
+
+  /* test carousel components */
+  // it('Carousel components should be rendered correctly', function () {
+  //   vm.$mount()
+  //   /* test contents in the title */
+  //   const img = vm.$el.querySelector('carouselElements')
+  //   expect(vm.$props.slide.images.src[0]).to.equal('https://www.usask.ca/programs/images/college.jpg')
+  //   expect(img.textContent).to.contain(vm.$props.slide.images.src[0])
+  // })
 })
 
 /* Unit tests expecting contents of the prop values of the DEFAULT content values */
