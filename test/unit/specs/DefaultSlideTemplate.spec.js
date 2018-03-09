@@ -42,10 +42,10 @@ describe('DefaultSlideTemplate.vue', function () {
       },
       meta: {
         template: 'DefaultSlideTemplate',
-        timeout: '40',
-        repeatable: false,
-        startDate: '2018-07-26',
-        endDate: '2018-08-01'
+        timeout: '90',
+        repeatable: true,
+        startDate: '2018-07-25',
+        endDate: '2018-09-01'
       }
     }
   }
@@ -62,6 +62,17 @@ describe('DefaultSlideTemplate.vue', function () {
     const title = vm.$el.querySelector('h2.display-3')
     expect(vm.$props.slide.title.content).to.equal('Sherbrooke Event Title')
     expect(title.textContent).to.equal(vm.$props.slide.title.content)
+
+    expect(vm.$props.slide.title.fontColor).to.equal('Blue')
+
+    expect(vm.$props.slide.title.fontSize).to.equal('Large')
+    // expect(title.textContent).to.equal(vm.$props.slide.title.fontSize)
+
+    expect(vm.$props.slide.title.fontStyle).to.equal('Normal')
+    // expect(title.textContent).to.equal(vm.$props.slide.title.fontStyle)
+
+    expect(vm.$props.slide.title.fontWeight).to.equal('Oblique')
+    // expect(title.textContent).to.equal(vm.$props.slide.title.fontWeight)
   })
 
   it('Time and date content should be rendered corrctly', function () {
@@ -73,9 +84,25 @@ describe('DefaultSlideTemplate.vue', function () {
     expect(vm.$props.slide.time.content).to.equal('11:05 AM')
     expect(header.textContent).to.contain(vm.$props.slide.time.content)
 
+    expect(vm.$props.slide.time.fontColor).to.equal('Yellow')
+
+    expect(vm.$props.slide.time.fontSize).to.equal('Smaller')
+
+    expect(vm.$props.slide.time.fontStyle).to.equal('Normal')
+
+    expect(vm.$props.slide.time.fontWeight).to.equal('Bold')
+
     /* testing date */
     expect(vm.$props.slide.date.content).to.equal('2018-03-07')
     expect(header.textContent).to.contain(vm.$props.slide.date.content)
+
+    expect(vm.$props.slide.date.fontColor).to.equal('Green')
+
+    expect(vm.$props.slide.date.fontSize).to.equal('Medium')
+
+    expect(vm.$props.slide.date.fontStyle).to.equal('Italic')
+
+    expect(vm.$props.slide.date.fontWeight).to.equal('Bolder')
   })
 
   /* testing description data */
@@ -85,6 +112,29 @@ describe('DefaultSlideTemplate.vue', function () {
     const desc = vm.$el.querySelector('h3.headline')
     expect(vm.$props.slide.description.content).to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
     expect(desc.textContent).to.contain(vm.$props.slide.description.content)
+
+    expect(vm.$props.slide.description.fontColor).to.equal('Red')
+
+    expect(vm.$props.slide.description.fontSize).to.equal('Small')
+
+    expect(vm.$props.slide.description.fontStyle).to.equal('Normal')
+
+    expect(vm.$props.slide.description.fontWeight).to.equal('Lighter')
+  })
+
+  /* testing meta data */
+  it('meta data contents should be rendered correctly', function () {
+    vm.$mount()
+
+    expect(vm.$props.slide.meta.template).to.equal('DefaultSlideTemplate')
+
+    expect(vm.$props.slide.meta.timeout).to.equal('90')
+
+    expect(vm.$props.slide.meta.repeatable).to.equal(true)
+
+    expect(vm.$props.slide.meta.startDate).to.equal('2018-07-25')
+
+    expect(vm.$props.slide.meta.endDate).to.equal('2018-09-01')
   })
 
   /* test carousel components */
