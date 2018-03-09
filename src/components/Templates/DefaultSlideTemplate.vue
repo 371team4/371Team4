@@ -42,7 +42,6 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            class="carouselElements"
             v-for="(item,index) in slide.images"
             :src="item.src"
             :key="index"/>
@@ -137,7 +136,6 @@ export default {
         return ((this.slide.meta.timeout * 1000) / this.slide.images.length)
       }
       /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
-      return 1000
     }
   }
 }
