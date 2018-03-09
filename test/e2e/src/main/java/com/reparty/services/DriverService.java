@@ -171,7 +171,7 @@ public class DriverService {
     String osName = System.getProperty("os.name").toLowerCase();
     String execPath = "";
     // based on the os name return the correct chrome driver path
-    if (osName.equals("windows")) {
+    if (osName.startsWith("windows")) {
       execPath = "chrome/win/chromedriver.exe";
     } else if (osName.equals("mac")) {
       execPath = "chrome/mac/chromedriver";
