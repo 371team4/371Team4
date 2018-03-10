@@ -37,12 +37,14 @@ public class WebDriverBase {
   @ClassRule
   public static ExternalResource resource = new ExternalResource() {
     @Override
+    // setup webdriver before running a class of tests
     protected void before() throws Throwable {
       driverService = new DriverService();
       driver = driverService.getChromeDriver();
     };
 
     @Override
+    // teardown webdriver after running a class of tests
     protected void after() {
       driverService.releaseWebDriver();
     };
@@ -51,6 +53,7 @@ public class WebDriverBase {
   @Rule
   public final TestRule watchman = new TestWatcher() {
     @Override
+    // take a screenshot of the browser after a failed
     protected void failed(Throwable e, Description description) {
       logger.traceEntry();
 
@@ -61,7 +64,7 @@ public class WebDriverBase {
       String os = System.getProperty("os.name").replaceAll(" ", "-");
       String browser = capabilities.getBrowserName().toLowerCase();
       String v = capabilities.getVersion().toString();
-      String fileName = os + "-" + browser + "-" + v + "_" + className + "." + methodName + ".png";
+      String fileName = String.format("%s-%s-%s_%s.%s().png", os, browser, v, className, methodName);
 
       try {
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
