@@ -31,18 +31,10 @@
       <v-flex
         xs3
         v-for="slide in filteredSlides"
-        :key="slide.name">
-        <EventCard
+        :key="slide.title.content">
+        <SlideCard
           class="mx-1 px-1 my-1 py-1"
-          :event="slide"/>
-      </v-flex>
-      <v-flex
-      xs3>
-        <add-button
-          class="mx-1 px-1 my-1 py-1"
-          :is-disabled="false"
-          :is-visible="true"
-          @cButtonClick="alert('Hi you!')"/>
+          :slide="slide"/>
       </v-flex>
       <v-flex
       xs3>
@@ -57,10 +49,10 @@
 </template>
 
 <script>
-import EventCard from './EventCard'
+import SlideCard from './SlideCard'
 import AddButton from './shared/AddButton'
 export default {
-  components: { EventCard, AddButton },
+  components: { SlideCard, AddButton },
   data () {
     return {
       searchString: '',
@@ -74,12 +66,21 @@ export default {
         // if there is something the in the search bar then filter the array fo current slides
         // search the list of slides
         let filteredSlides = this.slides.filter(
-          (slide) => slide.name.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1)
+          (slide) => slide.title.content.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1)
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
-            name: 'None Found',
-            thumbnail: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+            title: {
+              content: 'None Found'
+            },
+            description: {
+              content: 'No matching slides were found'
+            },
+            images: [
+              {
+                src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+              }
+            ]
           })
         }
         // return the filtered list of slides
