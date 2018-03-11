@@ -59,13 +59,12 @@ code --install-extension christian-kohler.npm-intellisense
 code --install-extension christian-kohler.path-intellisense
 code --install-extension dariofuzinato.vue-peek
 code --install-extension dbaeumer.vscode-eslint
-code --install-extension donjayamanne.githistory
+code --install-extension eamodio.gitlens
 code --install-extension EditorConfig.EditorConfig
 code --install-extension eg2.vscode-npm-script
 code --install-extension esbenp.prettier-vscode
 code --install-extension formulahendry.auto-close-tag
 code --install-extension formulahendry.auto-rename-tag
-code --install-extension lukehoban.Go
 code --install-extension octref.vetur
 code --install-extension robertohuertasm.vscode-icons
 code --install-extension sandeepthukral.nightwatch-js-snippets
