@@ -221,4 +221,18 @@ describe('Slides.vue', () => {
       expect(searchResult[0].images[0].src).to.equal('https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png')
     })
   })
+  /**
+  describe('goToSlide() method', () => {
+    it('should have got the method', () => {
+      Constructor = Vue.extend(Slides)
+      vm = new Constructor().$mount()
+
+      const routes = {
+        name: 'Designer'
+      }
+      const button = vm.$el.querySelector('button')
+      button.click()
+      expect(vm.$route).to.equal(routes)
+    })
+  }) */
 })

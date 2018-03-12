@@ -92,11 +92,11 @@ export default {
   data () {
     return {
       searchString: '',
-      slides: []
+      dialog: false
     }
   },
   computed: {
-    slide () {
+    slides () {
       return this.$store.getters.allSlides
     },
     filteredSlides () {
