@@ -9,11 +9,7 @@ describe('Calendar.vue', function () {
   // There are three test cases in total: day change, month change and year change
   it('Test addOneday Method', (done) => {
     // Fake Slide
-    const fakeSlide = {
-      date: {
-        content: '2018-01-01'
-      }
-    }
+    var fakeSlide = '2018-01-01'
     // To check whether the one day is added correctly
     // Should be "2018-01-02"
     expect((vm.addOneDay(fakeSlide)).toDateString)
@@ -21,8 +17,7 @@ describe('Calendar.vue', function () {
 
     // Now testing whether the month can be changed correctly.
     // Change the date to '2018-01-31'
-    fakeSlide.date.content = '2018-01-31'
-    expect(fakeSlide.date).to.have.property('content', '2018-01-31')
+    fakeSlide = '2018-01-31'
 
     // the computed property will get triggered on the nex tick
     Vue.nextTick(() => {
@@ -33,8 +28,7 @@ describe('Calendar.vue', function () {
 
     // Now testing whether the month can be changed correctly.
     // Change the date to '2019-01-01'
-    fakeSlide.date.content = '2018-12-31'
-    expect(fakeSlide.date).to.have.property('content', '2018-12-31')
+    fakeSlide = '2018-12-31'
 
     // the computed property will get triggered on the nex tick
     Vue.nextTick(() => {
