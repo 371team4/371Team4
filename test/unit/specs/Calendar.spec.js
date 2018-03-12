@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Calendar from '@/components/Calendar'
 
-describe.only('Calendar.vue', function () {
+describe('Calendar.vue', function () {
   const Constructor = Vue.extend(Calendar)
   const vm = new Constructor().$mount()
 
