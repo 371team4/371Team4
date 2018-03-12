@@ -252,6 +252,18 @@ const mutations = {
   [CURRENT_SLIDE.SET_META_ENDDATE] (state, payload) {
     state.currentSlide.meta.endDate = payload
     state.isCurrentSlideDirty = true
+  },
+
+  // takes a template object as payload. set template of currentslide, and dirty it.
+  [CURRENT_SLIDE.SET_TEMPLATE] (state, payload) {
+    state.currentSlide.template = payload
+    state.isCurrentSlideDirty = true
+  },
+
+  // takes timeout as payload (int), and sets timeout for currentslide, dirty it.
+  [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
+    state.currentSlide.timeout = payload
+    state.isCurrentSlideDirty = true
   }
 }
 
