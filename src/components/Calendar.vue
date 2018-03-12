@@ -13,17 +13,17 @@ export default {
   computed: {
     Events () {
       return this.$store.getters.getAllSlides.map((slide) => {
+        const newSlide = {}
         if (slide &&
             slide.title &&
             slide.title.content &&
             slide.date &&
             slide.date.content) {
           // Copy the title and start time
-          return {
-            title: slide.title.content,
-            start: this.addOneDay(slide.date.content)
-          }
+          newSlide.title = slide.title.content
+          newSlide.start = this.addOneDay(slide.date.content)
         }
+        return newSlide
       })
     }
   },
