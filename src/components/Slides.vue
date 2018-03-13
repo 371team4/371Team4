@@ -92,13 +92,10 @@ export default {
   data () {
     return {
       searchString: '',
-      dialog: false
+      slides: []
     }
   },
   computed: {
-    slides () {
-      return this.$store.getters.allSlides
-    },
     filteredSlides () {
       // check if something is typed into the search bar
       if (this.searchString) {
@@ -148,5 +145,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+</style>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
 </style>
