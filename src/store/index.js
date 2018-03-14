@@ -6,6 +6,7 @@ import root from './root'
 import user from './modules/user'
 import upload from './modules/upload'
 import slide from './modules/slide'
+import image from './modules/image'
 
 Vue.use(Vuex)
 
@@ -17,27 +18,30 @@ export const store = new Vuex.Store({
     root,
     user,
     upload,
-    slide
+    slide,
+    image
   },
   plugins: isDebug ? [createLogger()] : []
 })
 
 if (module.hot) {
   // accept actions and mutations as hot modules
-  module.hot.accept(['./root', './modules/user', './modules/slide'], () => {
+  module.hot.accept(['./root', './modules/user', './modules/slide', './modules/image'], () => {
     // require the updated modules
     // have to add .default here due to babel 6 module output
     const root = require('./root').default
     const user = require('./modules/user').default
     const slide = require('./modules/slide').default
     const upload = require('./modules/upload').default
+    const image = require('./modules/image').default
     // swap in the new actions and mutations
     store.hotUpdate({
       modules: {
         root,
         user,
         slide,
-        upload
+        upload,
+        image
       }
     })
   })
