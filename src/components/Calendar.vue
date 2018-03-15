@@ -18,38 +18,39 @@ export default {
   },
   data () {
     return {
-      events: [],
       config: {
         defaultView: 'month'
       }
     }
   },
-  created () {
-    this.events = this.$store.getters.getAllSlides.map((slide) => {
-      const newSlide = {}
-      // Events at least need title and date information
-      if (slide &&
+  computed: {
+    events () {
+      return this.$store.getters.getAllSlides.map((slide) => {
+        const newSlide = {}
+        // Events at least need title and date information
+        if (slide &&
           slide.title &&
           slide.title.content &&
           slide.date &&
           slide.date.content) {
         // Copy the title and start time
-        newSlide.title = slide.title.content
-        newSlide.start = slide.date.content
-        // Now if the event also has time or description, add it into the slide as well. Notice that description is not useful at all in this step, but might be useful later
-        if (slide.description &&
+          newSlide.title = slide.title.content
+          newSlide.start = slide.date.content
+          // Now if the event also has time or description, add it into the slide as well
+          if (slide.description &&
             slide.description.content) {
-          newSlide.description = slide.description.content
-        }
-        if (slide.time &&
+            newSlide.description = slide.description.content
+          }
+          if (slide.time &&
             slide.time.content) {
           // Since the event cannot show correctly with the time from "0 AM" to "10 AM",
           // We have to make a new Date
-          newSlide.start = new Date(newSlide.start + ' ' + slide.time.content)
+            newSlide.start = new Date(newSlide.start + ' ' + slide.time.content)
+          }
         }
-      }
-      return newSlide
-    })
+        return newSlide
+      })
+    }
   },
   methods: {
 
