@@ -11,7 +11,6 @@ describe('AddButton.vue', function () {
   })
 
   it('should have correct defaults', function () {
-    expect(vm.$props).to.have.property('testAttr', 'addButton')
     expect(vm.$props).to.have.property('isVisible', true)
     expect(vm.$props).to.have.property('isDisabled', false)
   })
