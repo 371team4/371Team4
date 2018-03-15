@@ -12,7 +12,7 @@ const config = {
 
 const app = initializeApp(config)
 const db = app.database()
-
-export const slidesDB = db.ref('/slides')
-export const authService = app.auth()
-export const storageDB = app.storage().ref()
+console.log(db)
+// export const slidesDB = db.ref('/slides')
+// export const authService = app.auth()
+// export const storageDB = app.storage().ref()
