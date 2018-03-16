@@ -116,12 +116,18 @@ export default {
     uploadImage (files) {
       debugger
       const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
-        this.addImage({ src: this.$store.getters.getUploadTask })
-      }.bind(this))
+      this.$store.dispatch('uploadImage', tmpArray[0]).then(function (value) {
+        this.addImage(value)
+      }.bind(this)).catch(function(err){
+        alert(err)
+      })
     },
     deleteImage (index) {
-      this.slide.images.splice(index, 1)
+      this.$store.dispatch('deleteImage',this.slide.images[index]).then(function(){
+        this.slide.images.splice(index, 1)
+      }).catch(function(err){
+        alert(err)
+      }) 
     },
     addImage (imgObject) {
       this.slide.images.push(imgObject)

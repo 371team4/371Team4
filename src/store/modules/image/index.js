@@ -42,13 +42,17 @@ const actions = {
     state.commit(SET_IMAGE_ID, 'new Image')
     return new Promise((resolve, reject) => {
       request.put(server + '/api/images')
-        .set('Content-Type', 'application/octet-stream')
+        //.set('Content-Type', 'application/octet-stream')
+        .send({
+          token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNTkzNzcsImV4cCI6MTUyMTE2Mjk3N30.aJX12Lfq8v5j2FzqesxHr26csovcuS7pGFkZfzeDkI8'
+        })
         .send(payload)
         .then(function (responce) {
           resolve(responce._id)
           state.commit(SET_IMAGE_ID, '')
         })
         .catch(function (err) {
+          console.log("request fail")
           reject(err)
           state.commit(SET_IMAGE_ID, '')
         })
