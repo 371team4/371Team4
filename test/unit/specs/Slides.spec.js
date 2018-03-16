@@ -1,7 +1,6 @@
 import Vue from 'vue'
 // import sinon from 'Sinon'
 import Slides from '@/components/Slides'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 describe('Slides.vue', () => {
   let Constructor, vm, mockSlides
