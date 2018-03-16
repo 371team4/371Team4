@@ -1,38 +1,42 @@
 import Vue from 'vue'
 import FontStyle from '@/components/FontStyle'
 
-// Test number of font colors showing
-describe('FontStyle.vue', () => {
-  it('Font Colors should be 11', () => {
-    const Constructor = Vue.extend(FontStyle)
-    const vm = new Constructor().$mount()
-    expect(vm.$data.fontColors.length).to.equal(11)
-  })
-})
+describe.only('FontStyle.vue', function () {
+  let Constructor, vm
 
-// Test number of font sizes showing
-describe('FontStyle.vue', () => {
-  it('Font Sizes should be 9', () => {
-    const Constructor = Vue.extend(FontStyle)
-    const vm = new Constructor().$mount()
-    expect(vm.$data.fontSizes.length).to.equal(9)
+  before(function () {
+    Constructor = Vue.extend(FontStyle)
+    vm = new Constructor().$mount()
   })
-})
 
-// Test number of font styles showing
-describe('FontStyle.vue', () => {
-  it('Font Styles should be 3', () => {
-    const Constructor = Vue.extend(FontStyle)
-    const vm = new Constructor().$mount()
-    expect(vm.$data.fontStyles.length).to.equal(3)
+  it('should have correct defaults', function () {
+    expect(vm.$props.fontColor).to.equal('')
+    expect(vm.$props.fontSize).to.equal('')
+    expect(vm.$props.fontWeight).to.equal('')
+    expect(vm.$props.fontStyle).to.equal('')
   })
-})
 
-// Test number of font weights showing
-describe('FontStyle.vue', () => {
-  it('Font Weights should be 4', () => {
-    const Constructor = Vue.extend(FontStyle)
-    const vm = new Constructor().$mount()
-    expect(vm.$data.fontWeights.length).to.equal(4)
+  it('should have correct colors', function () {
+    let expectedColors = ['Blue', 'Red', 'Green', 'Yellow', 'Purple', 'Pink', 'Teal', 'Lime', 'Orange', 'Brown', 'Grey']
+
+    expect(vm.$data.fontColors).to.eql(expectedColors)
+  })
+
+  it('should have correct sizes', function () {
+    let expectedSizes = ['XX-Small', 'X-Small', 'Smaller', 'Small', 'Medium', 'Large', 'Larger', 'X-Large', 'XX-Large']
+
+    expect(vm.$data.fontSizes).to.eql(expectedSizes)
+  })
+
+  it('should have correct styles', function () {
+    let expectedStyles = ['Italic', 'Normal', 'Oblique']
+
+    expect(vm.$data.fontStyles).to.eql(expectedStyles)
+  })
+
+  it('should have correct weights', function () {
+    let expectedWeights = ['Lighter', 'Normal', 'Bold', 'Bolder']
+
+    expect(vm.$data.fontWeights).to.eql(expectedWeights)
   })
 })
