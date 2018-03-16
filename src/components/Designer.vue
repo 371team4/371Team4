@@ -26,7 +26,7 @@
         @click="clear">clear</v-btn>
       <v-spacer/>
       <v-btn @click.stop="changeViews">
-        {{ showPreview ? 'Form' : 'Preview' }}
+        {{ showPreview ? 'Edit' : 'Preview' }}
       </v-btn>
       <v-btn
         color="success"

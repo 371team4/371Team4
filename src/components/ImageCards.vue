@@ -6,7 +6,7 @@
       <v-card>
         <v-container
           fluid
-          style="height: 650px"
+          style="height: 550px"
           class="scroll-y"
           id="scroll-target">
           <v-container
