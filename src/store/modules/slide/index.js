@@ -1,6 +1,7 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
-import { slidesDB } from '@/services/firebase.conf'
 import { firebaseAction } from 'vuexfire'
+import axios from 'axios'
+const server = 'https://cmpt371g4.usask.ca:8443'
 
 // This module is used for create-newSlide and saveSlide
 
@@ -280,29 +281,56 @@ const actions = {
   setSlidesRef,
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ commit }) {
-    // trys to assign the database key to id, it will work if slide is from DB
-    const id = state.currentSlide['.key'] // key exists from DB if this slide is already in it
+  saveSlide (payload) {
+    // trys to assign the database key(_id) to id
+    const id = state.currentSlide['_id']
     // checks if id object exists (it does if already in DB) otherwise it doesn't and will be false.
     if (id) {
-      delete state.currentSlide['.key'] // don't want to re add key to DB so delete it on our side
-      // use key saved in id to update the edited slide in DB.
-      state.currentSlide = slidesDB.child(id).update(state.currentSlide)
+      // If id already exist, post the body of current slide in the id that already exist
+      axios.put(server + '/api/slides/', {
+        _id: id,
+        body: state.currentSlide })
+        .then(function (response) {
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      // reloads the window or page
+      window.location.reload()
     } else {
-      // Does not have a key yet, means this is a new slide, so to save we
-      // 'push' to DB instead to create a new entry which automatically returns us a new key
-      state.currentSlide = slidesDB.push(state.currentSlide)
+      // id does not exist in the database so we save as new slide
+      axios.post(server + '/api/slides/', {
+        body: state.currentSlide
+      })
+        .then(function (response) {
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
 
     // This should not be set to false until it is confirmed that the slide is saved
     // Because the modifications to the slide have now been saved to database,
     // both this version, and the database one should be the same, so dirty
     // state is now false.
-    commit(CURRENT_SLIDE.SET_STATUS, false)
+    payload(CURRENT_SLIDE.SET_STATUS, false)
   },
-  // takes in slide database key as payload, uses to find and remove from database.
+  // takes currentSlide as payload, used for deleting slides from database.
   deleteSlide (payload) {
-    slidesDB.child(payload).remove()
+    // assign the database key(_id) to id
+    const id = state.currentSlide['_id']
+
+    axios.delete(server + '/api/slides/', {
+      id,
+      body: state.currentSlide
+    })
+      .then(function (response) {
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    // reloads the window or page
+    window.location.reload()
   }
 }
 
