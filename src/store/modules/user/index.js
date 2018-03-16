@@ -1,4 +1,4 @@
-import request from 'superagent'
+import axios from 'axios'
 import { SET_USER, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
 
 const server = 'https://cmpt371g4.usask.ca:8443'
@@ -38,7 +38,7 @@ const actions = {
     commit(SET_LOADING, { loading: true })
 
     return new Promise((resolve, reject) => {
-      request.post(server + '/api/login/' + payload)
+      axios.post(server + '/api/login/' + payload)
         .then(function (responce) {
           commit(SET_TOKEN, responce)
           const newUser = {
