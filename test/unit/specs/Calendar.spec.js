@@ -11,7 +11,7 @@ describe.only('Calendar.vue', function () {
     Constructor = Vue.extend(Calendar)
   })
 
-  describe('Test Events property', function () {
+  describe('Test events property', function () {
     let mockSlides
     before(function () {
       const store = new Vuex.Store(slides)
@@ -19,20 +19,6 @@ describe.only('Calendar.vue', function () {
 
       mockSlides = [
         {
-          images: [
-            {
-              src: 'https://picsum.photos/200/300/?image=92'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=19'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=14'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=94'
-            }
-          ],
           title: {
             content: 'Slide1',
             fontColor: 'Red',
@@ -55,35 +41,14 @@ describe.only('Calendar.vue', function () {
             fontWeight: 'Bold'
           },
           time: {
-            content: '13:05',
+            content: '03:45',
             fontColor: 'Red',
             fontSize: 'Large',
             fontStyle: 'Normal',
             fontWeight: 'Bold'
-          },
-          meta: {
-            template: 'DefaultSlideTemplate',
-            timeout: '40',
-            repeatable: false,
-            startDate: '2018-02-16',
-            endDate: '2018-03-01'
           }
         },
         {
-          images: [
-            {
-              src: 'https://picsum.photos/200/300/?image=92'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=19'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=14'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=94'
-            }
-          ],
           title: {
             content: 'Slide2 with a longer title',
             fontColor: 'Red',
@@ -99,42 +64,21 @@ describe.only('Calendar.vue', function () {
             fontWeight: 'Bold'
           },
           date: {
-            content: '2018-02-15',
+            content: '2018-02-01',
             fontColor: 'Red',
             fontSize: 'Large',
             fontStyle: 'Normal',
             fontWeight: 'Bold'
           },
           time: {
-            content: '13:05',
+            content: '09:55',
             fontColor: 'Red',
             fontSize: 'Large',
             fontStyle: 'Normal',
             fontWeight: 'Bold'
-          },
-          meta: {
-            template: 'DefaultSlideTemplate',
-            timeout: '40',
-            repeatable: false,
-            startDate: '2018-02-16',
-            endDate: '2018-03-01'
           }
         },
         {
-          images: [
-            {
-              src: 'https://picsum.photos/200/300/?image=92'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=19'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=14'
-            },
-            {
-              src: 'https://picsum.photos/200/300/?image=94'
-            }
-          ],
           title: {
             content: 'The Last One',
             fontColor: 'Red',
@@ -150,25 +94,18 @@ describe.only('Calendar.vue', function () {
             fontWeight: 'Bold'
           },
           date: {
-            content: '2018-02-15',
+            content: '2018-08-05',
             fontColor: 'Red',
             fontSize: 'Large',
             fontStyle: 'Normal',
             fontWeight: 'Bold'
           },
           time: {
-            content: '13:05',
+            content: '10:05',
             fontColor: 'Red',
             fontSize: 'Large',
             fontStyle: 'Normal',
             fontWeight: 'Bold'
-          },
-          meta: {
-            template: 'DefaultSlideTemplate',
-            timeout: '40',
-            repeatable: false,
-            startDate: '2018-02-16',
-            endDate: '2018-03-01'
           }
         }
       ]
@@ -176,12 +113,11 @@ describe.only('Calendar.vue', function () {
 
     afterEach(function () {
       vm.$store.allSlides = []
-      console.log('running after')
     })
 
     it('should have no slides', function (done) {
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(0)
+        expect(vm.events.length).to.equal(0)
         done()
       })
     })
@@ -190,7 +126,7 @@ describe.only('Calendar.vue', function () {
       vm.$store.state.allSlides = mockSlides
 
       Vue.nextTick(() => {
-        vm.Events.forEach((event, i) => {
+        vm.events.forEach((event, i) => {
           expect(event.title).to.equal(mockSlides[i].title.content)
         })
         done()
@@ -201,20 +137,105 @@ describe.only('Calendar.vue', function () {
       vm.$store.state.allSlides = mockSlides
 
       Vue.nextTick(() => {
-        vm.Events.forEach((event, i) => {
-          expect(event.start).to.equal(vm.addOneDay(mockSlides[i].date.content))
+        vm.events.forEach((event, i) => {
+          let expectDate = new Date(mockSlides[i].date.content + ' ' + mockSlides[i].time.content).toString
+          expect(event.start.toString).to.equal(expectDate)
         })
         done()
       })
     })
 
-    it('should have correct start dates', function (done) {
+    it('should have correct descriptions', function (done) {
       vm.$store.state.allSlides = mockSlides
 
       Vue.nextTick(() => {
-        vm.Events.forEach((event, i) => {
-          expect(event.start).to.equal(vm.addOneDay(mockSlides[i].date.content))
+        vm.events.forEach((event, i) => {
+          expect(event.description).to.equal(mockSlides[i].description.content)
         })
+        done()
+      })
+    })
+
+    it('should have no description given no description', function (done) {
+      vm.$store.state.allSlides = [{
+        title: {
+          content: 'The Last One'
+        },
+        date: {
+          content: '2018-02-15'
+        }
+      }]
+
+      Vue.nextTick(() => {
+        expect(vm.events.length).to.equal(1)
+        expect(vm.events[0].description).to.equal(undefined)
+        done()
+      })
+    })
+
+    it('should have no description given no description content', function (done) {
+      vm.$store.state.allSlides = [{
+        title: {
+          content: 'The Last One'
+        },
+        date: {
+          content: '2018-02-15'
+        },
+        description: {
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        }
+      }]
+
+      Vue.nextTick(() => {
+        expect(vm.events.length).to.equal(1)
+        expect(vm.events[0].description).to.equal(undefined)
+        done()
+      })
+    })
+
+    it('should have correct start given no time', function (done) {
+      let mockSlide = {
+        title: {
+          content: 'The Last One'
+        },
+        date: {
+          content: '2018-02-15'
+        }
+      }
+
+      vm.$store.state.allSlides = [mockSlide]
+
+      Vue.nextTick(() => {
+        expect(vm.events.length).to.equal(1)
+        expect(vm.events[0].start).to.equal(mockSlide.date.content)
+        done()
+      })
+    })
+
+    it('should have correct start given no time content', function (done) {
+      let mockSlide = {
+        title: {
+          content: 'The Last One'
+        },
+        date: {
+          content: '2018-02-15'
+        },
+        time: {
+          fontColor: 'Red',
+          fontSize: 'Large',
+          fontStyle: 'Normal',
+          fontWeight: 'Bold'
+        }
+      }
+
+      vm.$store.state.allSlides = [mockSlide]
+
+      Vue.nextTick(() => {
+        expect(vm.events.length).to.equal(1)
+        expect(vm.events[0].start).to.equal(mockSlide.date.content)
         done()
       })
     })
@@ -223,8 +244,8 @@ describe.only('Calendar.vue', function () {
       vm.$store.state.allSlides = [{}]
 
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(1)
-        expect(isEmptyObject(vm.Events[0])).to.equal(true)
+        expect(vm.events.length).to.equal(1)
+        expect(isEmptyObject(vm.events[0])).to.equal(true)
         done()
       })
     })
@@ -238,8 +259,8 @@ describe.only('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(1)
-        expect(isEmptyObject(vm.Events[0])).to.equal(true)
+        expect(vm.events.length).to.equal(1)
+        expect(isEmptyObject(vm.events[0])).to.equal(true)
         done()
       })
     })
@@ -258,8 +279,8 @@ describe.only('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(1)
-        expect(isEmptyObject(vm.Events[0])).to.equal(true)
+        expect(vm.events.length).to.equal(1)
+        expect(isEmptyObject(vm.events[0])).to.equal(true)
         done()
       })
     })
@@ -273,8 +294,8 @@ describe.only('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(1)
-        expect(isEmptyObject(vm.Events[0])).to.equal(true)
+        expect(vm.events.length).to.equal(1)
+        expect(isEmptyObject(vm.events[0])).to.equal(true)
         done()
       })
     })
@@ -293,8 +314,8 @@ describe.only('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.Events.length).to.equal(1)
-        expect(isEmptyObject(vm.Events[0])).to.equal(true)
+        expect(vm.events.length).to.equal(1)
+        expect(isEmptyObject(vm.events[0])).to.equal(true)
         done()
       })
     })
@@ -304,45 +325,4 @@ describe.only('Calendar.vue', function () {
   function isEmptyObject (obj) {
     return Object.keys(obj).length === 0 && obj.constructor === Object
   }
-
-  describe('Test addOnDay method', function () {
-    before(function () {
-      vm = new Constructor().$mount()
-    })
-
-    // Following test is for method "addOneday".
-    // There are three test cases in total: day change, month change and year change
-    it('Test addOneday Method', (done) => {
-      // Fake Slide
-      var fakeSlide = '2018-01-01'
-      // To check whether the one day is added correctly
-      // Should be "2018-01-02"
-      expect((vm.addOneDay(fakeSlide)).toDateString)
-        .to.equal(('2018-01-02').toDateString)
-
-      // Now testing whether the month can be changed correctly.
-      // Change the date to '2018-01-31'
-      fakeSlide = '2018-01-31'
-
-      // the computed property will get triggered on the nex tick
-      Vue.nextTick(() => {
-        // Check the date again
-        expect((vm.addOneDay(fakeSlide)).toDateString)
-          .to.equal(('2018-02-01').toDateString)
-      })
-
-      // Now testing whether the month can be changed correctly.
-      // Change the date to '2019-01-01'
-      fakeSlide = '2018-12-31'
-
-      // the computed property will get triggered on the nex tick
-      Vue.nextTick(() => {
-        // Check the date again
-        expect((vm.addOneDay(fakeSlide)).toDateString)
-          .to.equal(('2019-01-01').toDateString)
-        // must call done() to tell mocha we are done testing this aysnc statement
-        done()
-      })
-    })
-  })
 })
