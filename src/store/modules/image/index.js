@@ -1,4 +1,4 @@
-import request from 'superagent'
+import axios from 'axios'
 
 const server = 'https://cmpt371g4.usask.ca:8443'
 
@@ -27,7 +27,7 @@ const actions = {
   getImage (state, payload) {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
-      request.get(server + '/api/images/' + payload)
+      axios.get(server + '/api/images/' + payload)
         .then(function (responce) {
           resolve(server + responce.path)
           state.commit(SET_IMAGE_ID, '')
@@ -41,18 +41,16 @@ const actions = {
   uploadImage (state, payload) {
     state.commit(SET_IMAGE_ID, 'new Image')
     return new Promise((resolve, reject) => {
-      request.put(server + '/api/images')
-        //.set('Content-Type', 'application/octet-stream')
-        .send({
-          token : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNTkzNzcsImV4cCI6MTUyMTE2Mjk3N30.aJX12Lfq8v5j2FzqesxHr26csovcuS7pGFkZfzeDkI8'
-        })
-        .send(payload)
+      var formData = new FormData()
+      formData.append('image', payload)
+      formData.append('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNjM1MTEsImV4cCI6MTUyMTE2NzExMX0.Z64815D6pH1iDPjDIuzloxMNKwrEM0tyzUUfDhCJdqQ')
+      axios.put(server + '/api/images', formData)
         .then(function (responce) {
-          resolve(responce._id)
+          resolve(responce.data)
           state.commit(SET_IMAGE_ID, '')
         })
         .catch(function (err) {
-          console.log("request fail")
+          console.log('request fail')
           reject(err)
           state.commit(SET_IMAGE_ID, '')
         })
@@ -61,7 +59,12 @@ const actions = {
   deleteImage (state, payload) {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
-      request.delete(server + '/api/images/' + payload)
+      axios.delete(server + '/api/images/' + payload, {
+        data:
+        {
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNjM1MTEsImV4cCI6MTUyMTE2NzExMX0.Z64815D6pH1iDPjDIuzloxMNKwrEM0tyzUUfDhCJdqQ'
+        }
+      })
         .then(function (responce) {
           resolve()
           state.commit(SET_IMAGE_ID, '')

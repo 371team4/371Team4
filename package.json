@@ -23,6 +23,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "firebase": "^4.10.0",
     "superagent": "^3.8.2",
     "vue": "^2.5.2",
