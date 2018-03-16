@@ -5,8 +5,13 @@
     class="my-0"
     align-content-start>
     <v-layout column>
-      <!-- insert slide template here -->
+      <default-slide-template
+        :carousel="carousel"
+        :slide="slide"
+        v-show="showPreview"/>
       <AuthorSlide
+        v-show="!showPreview"
+        ref="form"
         :slide="slide"
         @titleBlur="$v.slide.title.content.$touch()"
         @descBlur="$v.slide.description.content.$touch()"
@@ -14,6 +19,18 @@
         @deleteImage="deleteImage"
         @clear="clear"
         @submit="submit"/>
+    </v-layout>
+    <v-layout horizontal>
+      <v-btn
+        color="error"
+        @click="clear">clear</v-btn>
+      <v-spacer/>
+      <v-btn @click.stop="changeViews">
+        {{ showPreview ? 'Form' : 'Preview' }}
+      </v-btn>
+      <v-btn
+        color="success"
+        @click="submit">submit</v-btn>
     </v-layout>
   </v-container>
 </template>
@@ -23,6 +40,8 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
 import AuthorSlide from '@/components/AuthorSlide'
+
+import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 export default {
   components: { ImageCards, AuthorSlide },
@@ -37,17 +56,25 @@ export default {
   },
   data: () => {
     return {
-      slideTitle: '',
-      description: '',
-      dateMenu: false,
-      timeMenu: false,
-      date: null,
-      time: null
+      showPreview: false,
+      carousel: -1
     }
   },
   validations: {
-    slideTitle: { required, maxLength: maxLength(30) },
-    description: { required, maxLength: maxLength(140) }
+    slide: {
+      title: {
+        content: {
+          required,
+          maxLength: maxLength(30)
+        }
+      },
+      description: {
+        content: {
+          required,
+          maxLength: maxLength(140)
+        }
+      }
+    }
   },
   computed: {
     binding () {
@@ -93,22 +120,22 @@ export default {
     }
   },
   methods: {
-    allowedMinutes (minute) {
-      return minute % 5 === 0
-    },
     submit () {
       // submit the action packaging all of the fields
       this.$v.$touch()
+      if (!this.$v.$invalid) {
+        this.forceUpdateCarousel()
+        this.$store.commit(CURRENT_SLIDE.SET, this.slide)
+        this.$store.dispatch('saveSlide')
+        this.changeViews()
+      }
     },
     clear () {
       // reset all of the data fields
       this.$v.$reset()
-      this.slideTitle = ''
-      this.description = ''
-      this.dateMenu = false
-      this.timeMenu = false
-      this.date = null
-      this.time = null
+      this.$refs.form.clear()
+      this.forceUpdateCarousel()
+      this.$store.commit(CURRENT_SLIDE.SET, this.slide)
     },
     forceUpdateCarousel () {
       this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))
@@ -125,6 +152,10 @@ export default {
     },
     addImage (imgObject) {
       this.slide.images.push(imgObject)
+      this.forceUpdateCarousel()
+    },
+    changeViews () {
+      this.showPreview = !this.showPreview
       this.forceUpdateCarousel()
     }
   }

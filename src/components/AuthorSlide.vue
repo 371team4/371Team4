@@ -76,12 +76,6 @@
               @blur="$v.description.$touch()"
               required
             />
-            <v-btn
-              color="error"
-              @click="clear">clear</v-btn>
-            <v-btn
-              color="success"
-              @click="submit">submit</v-btn>
           </form>
         </v-flex>
       </v-layout>
