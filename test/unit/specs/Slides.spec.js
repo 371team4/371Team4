@@ -1,5 +1,7 @@
 import Vue from 'vue'
+// import sinon from 'Sinon'
 import Slides from '@/components/Slides'
+import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 describe('Slides.vue', () => {
   let Constructor, vm, mockSlides
@@ -221,18 +223,26 @@ describe('Slides.vue', () => {
       expect(searchResult[0].images[0].src).to.equal('https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png')
     })
   })
+
   /**
   describe('goToSlide() method', () => {
-    it('should have got the method', () => {
-      Constructor = Vue.extend(Slides)
-      vm = new Constructor().$mount()
-
-      const routes = {
-        name: 'Designer'
+    it('commits CURRENT_SLIDE.SET when a slide is clicked', () => {
+      let store, mutations
+      mutations = {
+        MUTATION: CURRENT_SLIDE.SET
       }
+      store = new Vue.Store({
+        mutations
+      })
+
+      Constructor = Vue.extend(Slides)
+      vm = new Constructor(store).$mount()
       const button = vm.$el.querySelector('button')
       button.click()
-      expect(vm.$route).to.equal(routes)
+
+      expect(mutations.MUTATION.mock.calls).toHaveLength(1)
+      expect(mutations.MUTATION.mock.calls[0][1]).toEqual({ val: 'val' })
     })
-  }) */
+  })
+  */
 })
