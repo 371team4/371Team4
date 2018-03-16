@@ -62,6 +62,39 @@ const actions = {
     //   error => {
     //     console.log(error)
     //   }
+  },
+  createUser (payload) {
+    return new Promise((resolve, reject) => {
+      axios.post(server + '/api/user/' + payload)
+        .then(function (responce) {
+        })
+        .catch(function (err) {
+          reject(err)
+          console.log(err)
+        })
+    })
+  },
+  updateUser (payload) {
+    return new Promise((resolve, reject) => {
+      axios.post(server + '/api/user/:' + payload.username)
+        .then(function (responce) {
+        })
+        .catch(function (err) {
+          reject(err)
+          console.log(err)
+        })
+    })
+  },
+  deleteUser (payload) {
+    return new Promise((resolve, reject) => {
+      axios.delete(server + '/api/user/:' + payload.username)
+        .then(function (responce) {
+        })
+        .catch(function (err) {
+          reject(err)
+          console.log(err)
+        })
+    })
   }
 }
 
