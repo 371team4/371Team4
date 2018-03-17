@@ -65,55 +65,82 @@
 </template>
 -->
 <template>
-  <div>
-    <v-toolbar
-      color="light-blue darken-3"
-      dark
-      tabs>
-      <v-toolbar-title>Food Menu Widget</v-toolbar-title>
-      <v-spacer/>
-      <v-btn
-        fab
-        small
-        color="red darken-3"
-        @click.native="addWeek">
-
-        <v-icon dark>add</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>save</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>event</v-icon>
-      </v-btn>
-      <v-tabs
-        align-with-title
+  <v-container>
+    <div>
+      <v-toolbar
+        xs12
+        sm12
+        md12
+        lg12
         color="light-blue darken-3"
-        slot="extension"
-        slider-color="amber lighten-3"
-        v-model="model"
-      >
-        <v-tab
+        dark
+        tabs>
+        <v-toolbar-title>Food Menu Widget</v-toolbar-title>
+        <v-spacer/>
+        <v-btn
+          fab
+          small
+          color="red darken-3"
+          @click.native="addWeek">
+
+          <v-icon dark>add</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>save</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>event</v-icon>
+        </v-btn>
+        <v-tabs
+          align-with-title
+          color="light-blue darken-3"
+          slot="extension"
+          slider-color="amber lighten-3"
+          v-model="model"
+        >
+          <v-tab
+            v-for="i in 3"
+            :key="i"
+            :href="`#tab-${i}`"
+          >
+            Week {{ i }}
+          </v-tab>
+        </v-tabs>
+      </v-toolbar>
+      <v-tabs-items v-model="model">
+        <v-tab-item
           v-for="i in 3"
           :key="i"
-          :href="`#tab-${i}`"
+          :id="`tab-${i}`"
         >
-          Week {{ i }}
-        </v-tab>
-      </v-tabs>
-    </v-toolbar>
-    <v-tabs-items v-model="model">
-      <v-tab-item
-        v-for="i in 3"
-        :key="i"
-        :id="`tab-${i}`"
-      >
-        <v-card flat>
-          <v-card-text v-text="text"/>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-  </div>
+          <!-- <v-card flat>
+            <v-card-text v-text="text"/>
+          </v-card> -->
+
+          <template>
+            <v-layout>
+              <v-flex
+                xs2
+                sm2
+                md2
+                lg2
+                offset-sm2>
+                <v-card>
+                  <v-card-title primary-title>
+                    <div>
+                      <h3 class="headline mb-0">Monday</h3>
+                      <div> {{ text }} </div>
+                    </div>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </template>
+
+        </v-tab-item>
+      </v-tabs-items>
+    </div>
+  </v-container>
 </template>
 
 <script>
