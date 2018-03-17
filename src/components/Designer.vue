@@ -6,7 +6,7 @@
     align-content-start>
     <v-layout column>
       <!-- insert slide template here -->
-      <CreateSlide
+      <AuthorSlide
         :slide="slide"
         @titleBlur="$v.slide.title.content.$touch()"
         @descBlur="$v.slide.description.content.$touch()"
@@ -22,10 +22,10 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
-import CreateSlide from '@/components/CreateSlide'
+import AuthorSlide from '@/components/AuthorSlide'
 
 export default {
-  components: { ImageCards, CreateSlide },
+  components: { ImageCards, AuthorSlide },
   mixins: [validationMixin],
   props: {
     slide: {

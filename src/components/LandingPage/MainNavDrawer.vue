@@ -4,10 +4,9 @@
     v-model="isVisible"
     clipped
     fixed
-    floating
     dark
     hide-overlay
-    disable-route-watcher
+    stateless
     disable-resize-watcher>
     <v-list
       two-line
