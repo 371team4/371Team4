@@ -67,6 +67,7 @@
               </v-flex>
             </v-layout>
             <v-text-field
+              textarea
               label="Description"
               v-model="slide.description.content"
               :error-messages="descriptionErrors"
