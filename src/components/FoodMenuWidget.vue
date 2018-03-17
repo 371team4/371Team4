@@ -253,7 +253,7 @@ export default {
     removeWeek (weekNumber) {
       console.log(weekNumber)
       // this.weeks.splice(weekNumber, 1);
-      delete this.weeks[weekNumber]
+      console.log(this.weeks[4].Monday)
     }
   }
 }
