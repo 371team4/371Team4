@@ -4,7 +4,6 @@ import ImageCards from '@/components/ImageCards'
 import Vuex from 'vuex'
 import slide from '@/store/modules/slide/index'
 import { SET } from '@/store/modules/slide/mutation-types'
-// import { SET } from '@/store/modules/slide/mutation-types'
 
 describe('ImageCards.vue', function () {
   let Constructor, vm, mockCurrentSlide
@@ -73,8 +72,6 @@ describe('ImageCards.vue', function () {
   })
 
   it('correctly emits a delete image call with defualt values', function () {
-    // const Constructor = Vue.extend(ImageCards)
-    // const vm = new Constructor().$mount()
     const button = vm.$el.querySelector('button')
     const clickEvent = new window.Event('click')
     button.dispatchEvent(clickEvent)
@@ -86,8 +83,6 @@ describe('ImageCards.vue', function () {
   it('correctly reders cards with non-default values', function () {
     vm.$store.commit(SET, mockCurrentSlide)
     vm.cards = vm.$store.state.currentSlide.images
-    expect(vm.cards.length).to.equal(mockCurrentSlide.images.length)
-    expect(vm.cards.length).to.equal(vm.$store.state.currentSlide.images.length)
     expect(vm.cards).to.equal(mockCurrentSlide.images)
     expect(vm.cards).to.equal(vm.$store.state.currentSlide.images)
   })
@@ -105,8 +100,6 @@ describe('ImageCards.vue', function () {
     mockCurrentSlide.images = [ ]
     vm.$store.commit(SET, mockCurrentSlide)
     vm.cards = vm.$store.state.currentSlide.images
-    expect(vm.cards.length).to.equal(mockCurrentSlide.images.length)
-    expect(vm.cards.length).to.equal(vm.$store.state.currentSlide.images.length)
     expect(vm.cards).to.equal(mockCurrentSlide.images)
     expect(vm.cards).to.equal(vm.$store.state.currentSlide.images)
   })
