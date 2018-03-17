@@ -248,6 +248,11 @@ export default {
   methods: {
     addWeek () {
       this.numWeeks = this.numWeeks + 1
+    },
+    removeWeek (weekNumber) {
+      console.log(weekNumber)
+      // this.weeks.splice(weekNumber, 1);
+      delete this.weeks[weekNumber]
     }
   }
 }
