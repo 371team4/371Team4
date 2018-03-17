@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import SlideCard from '@/components/SlideCard'
 
-describe.only('SlideCard.vue', function () {
+describe('SlideCard.vue', function () {
   let Constructor, vm
 
   before(function () {
@@ -60,61 +60,61 @@ describe.only('SlideCard.vue', function () {
 
   describe('Test SlideCard props', function () {
     before(function () {
-      vm = new Constructor().$mount()
-
-      const mockSlide = {
-        images: [
-          {
-            src: 'https://picsum.photos/200/300/?image=92'
+      const mockProps = {
+        slide: {
+          images: [
+            {
+              src: 'https://picsum.photos/200/300/?image=92'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=19'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=14'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=94'
+            }
+          ],
+          title: {
+            content: 'Slide1',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
           },
-          {
-            src: 'https://picsum.photos/200/300/?image=19'
+          description: {
+            content: 'This is the description for Slide1',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
           },
-          {
-            src: 'https://picsum.photos/200/300/?image=14'
+          date: {
+            content: '2018-02-15',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
           },
-          {
-            src: 'https://picsum.photos/200/300/?image=94'
+          time: {
+            content: '13:05',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
+          },
+          meta: {
+            template: 'DefaultSlideTemplate',
+            timeout: '40',
+            repeatable: false,
+            startDate: '2018-02-16',
+            endDate: '2018-03-01'
           }
-        ],
-        title: {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        description: {
-          content: 'This is the description for Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        date: {
-          content: '2018-02-15',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        time: {
-          content: '13:05',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        meta: {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
         }
       }
 
-      vm.$props.slide = mockSlide
+      vm = new Constructor({ propsData: mockProps }).$mount()
     })
 
     it('should have correct images', function () {
@@ -163,6 +163,219 @@ describe.only('SlideCard.vue', function () {
       expect(vm.$props.slide.meta.repeatable).to.equal(false)
       expect(vm.$props.slide.meta.startDate).to.equal('2018-02-16')
       expect(vm.$props.slide.meta.endDate).to.equal('2018-03-01')
+    })
+  })
+
+  describe('Test computed properties', function () {
+    beforeEach(function () {
+      vm = new Constructor().$mount()
+    })
+
+    describe('Test title', function () {
+      it('should return empty title given no slide', function (done) {
+        vm.$props.slide = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty title given no slide title', function (done) {
+        vm.$props.slide.title = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty title given no slide title content', function (done) {
+        vm.$props.slide.title.content = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('')
+        })
+        done()
+      })
+
+      it('should return correct value given empty title', function (done) {
+        vm.$props.slide.title.content = ''
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('')
+        })
+        done()
+      })
+
+      it('should return correct value given short title', function (done) {
+        vm.$props.slide.title.content = 'hello'
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('hello')
+        })
+        done()
+      })
+
+      it('should return correct value given long title', function (done) {
+        vm.$props.slide.title.content = '1234567890abcdefghijklmnopqrstuvwxyz'
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('1234567890abcde...')
+        })
+        done()
+      })
+
+      it('should return correct value given title with 15 characters', function (done) {
+        vm.$props.slide.title.content = '123456789012345'
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('123456789012345')
+        })
+        done()
+      })
+
+      it('should return correct value given title with 16 characters', function (done) {
+        vm.$props.slide.title.content = '123456789012345'
+
+        Vue.nextTick(() => {
+          expect(vm.title).to.equal('123456789012345...')
+        })
+        done()
+      })
+    })
+
+    describe('Test description', function () {
+      it('should return empty description given no slide', function (done) {
+        vm.$props.slide = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty description given no slide description', function (done) {
+        vm.$props.slide.description = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty description given no slide description content', function (done) {
+        vm.$props.slide.description.content = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('')
+        })
+        done()
+      })
+
+      it('should return correct value given empty description', function (done) {
+        vm.$props.slide.description.content = ''
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('')
+        })
+        done()
+      })
+
+      it('should return correct value given short description', function (done) {
+        vm.$props.slide.description.content = 'hello world'
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('hello')
+        })
+        done()
+      })
+
+      it('should return correct value given long description', function (done) {
+        vm.$props.slide.description.content = '1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz'
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('1234567890abcdefghijklmnopqrstuvwxyz 1234567890abc...')
+        })
+        done()
+      })
+
+      it('should return correct value given description with 50 characters', function (done) {
+        vm.$props.slide.description.content = '1234567890abcdefghijklmnopqrstuvwxyz 1234567890abc'
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('1234567890abcdefghijklmnopqrstuvwxyz 1234567890abc')
+        })
+        done()
+      })
+
+      it('should return correct value given description with 51 characters', function (done) {
+        vm.$props.slide.description.content = '1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcd'
+
+        Vue.nextTick(() => {
+          expect(vm.description).to.equal('1234567890abcdefghijklmnopqrstuvwxyz 1234567890abc...')
+        })
+        done()
+      })
+    })
+
+    describe('Test imageUrl', function () {
+      it('should return empty string given no slide', function (done) {
+        vm.$props.slide = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty string given no slide images', function (done) {
+        vm.$props.slide.images = undefined
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty string given empty images', function (done) {
+        vm.$props.slide.images = []
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('')
+        })
+        done()
+      })
+
+      it('should return empty string given no image src', function (done) {
+        vm.$props.slide.images = [{}]
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('')
+        })
+        done()
+      })
+
+      it('should return correct url given 1 image', function (done) {
+        vm.$props.slide.images = [{ src: 'https://picsum.photos/200/300/?image=94' }]
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('https://picsum.photos/200/300/?image=94')
+        })
+        done()
+      })
+
+      it('should return correct url given 3 images', function (done) {
+        vm.$props.slide.images = [
+          { src: 'thisisaurl' },
+          { src: 'https://picsum.photos/200/300/?image=95' },
+          { src: 'https://picsum.photos/200/300/?image=94' }]
+
+        Vue.nextTick(() => {
+          expect(vm.imageUrl).to.equal('thisisaurl')
+        })
+        done()
+      })
     })
   })
 })
