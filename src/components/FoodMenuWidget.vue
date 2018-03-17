@@ -92,8 +92,158 @@ export default {
   },
   computed: {
     weeks () {
-      return {
-      }
+      return [
+        {
+          Monday: {
+            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
+            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
+          },
+          Tuesday: {
+            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
+            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
+          },
+          Wednesday: {
+            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
+            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
+          },
+          Thursday: {
+            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
+            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
+          },
+          Friday: {
+            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
+            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
+          },
+          Saturday: {
+            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
+            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
+          },
+          Sunday: {
+            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
+            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
+          }
+        },
+        {
+          Monday: {
+            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
+            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
+          },
+          Tuesday: {
+            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
+            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
+          },
+          Wednesday: {
+            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
+            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
+          },
+          Thursday: {
+            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
+            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
+          },
+          Friday: {
+            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
+            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
+          },
+          Saturday: {
+            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
+            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
+          },
+          Sunday: {
+            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
+            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
+          }
+        },
+        {
+          Monday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Tuesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Wednesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Thursday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Friday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Saturday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Sunday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          }
+        },
+        {
+          Monday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Tuesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Wednesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Thursday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Friday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Saturday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Sunday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          }
+        },
+        {
+          Monday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Tuesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Wednesday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Thursday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Friday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Saturday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          },
+          Sunday: {
+            Lunch: ['', '', '', '', ''],
+            Dinner: ['', '', '', '', '']
+          }
+        }
+      ]
     }
   },
   methods: {
