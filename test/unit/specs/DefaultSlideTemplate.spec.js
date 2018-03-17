@@ -175,13 +175,13 @@ describe('DefaultSlideTemplate.vue', function () {
       .to.equal('Sherbrooke Event Title')
       /* test additional title attributes */
     expect(vm.$props.slide.title.fontColor)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.title.fontSize)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.title.fontStyle)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.title.fontWeight)
-      .to.equal('')
+      .to.equal(' ')
   })
 
   it('Event body data contents should be correct', function () {
@@ -191,13 +191,13 @@ describe('DefaultSlideTemplate.vue', function () {
       .to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
       /* test additional event body attributes */
     expect(vm.$props.slide.description.fontColor)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.description.fontSize)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.description.fontStyle)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.description.fontWeight)
-      .to.equal('')
+      .to.equal(' ')
   })
 
   it('Valid image files should be inside the carousel', function () {
@@ -213,32 +213,32 @@ describe('DefaultSlideTemplate.vue', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.$props.slide.date.content)
-      .to.equal('2018-12-01')
+      .to.equal('2018-05-25')
       /* test additional date attributes */
     expect(vm.$props.slide.date.fontColor)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.date.fontSize)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.date.fontStyle)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.date.fontWeight)
-      .to.equal('')
+      .to.equal(' ')
   })
 
   it('The correct time should be displayed on the slide', function () {
     const Constructor = Vue.extend(DefaultSlideTemplate)
     const vm = new Constructor().$mount()
     expect(vm.$props.slide.time.content)
-      .to.equal('7:00')
+      .to.equal('07:00 PM')
       /* test additional time attributes */
     expect(vm.$props.slide.time.fontColor)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.time.fontSize)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.time.fontStyle)
-      .to.equal('')
+      .to.equal(' ')
     expect(vm.$props.slide.time.fontWeight)
-      .to.equal('')
+      .to.equal(' ')
   })
 
   it('Ensure meta information is correct', function () {
@@ -252,9 +252,9 @@ describe('DefaultSlideTemplate.vue', function () {
     expect(vm.$props.slide.meta.repeatable)
       .to.equal(false)
     expect(vm.$props.slide.meta.startDate)
-      .to.equal('2018-02-16')
+      .to.equal('2018-07-26')
     expect(vm.$props.slide.meta.endDate)
-      .to.equal('2018-03-01')
+      .to.equal('2018-08-01')
   })
 
   it('Ensure computation function is correct to compute slide', function (done) {
