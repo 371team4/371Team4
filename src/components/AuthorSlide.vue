@@ -9,11 +9,10 @@
           <form>
             <v-text-field
               label="Title"
-              v-model="slideTitle"
-              :error-messages="slideTitleErrors"
+              v-model="slide.title.content"
+              :error-messages="titleErrors"
               :counter="30"
-              @input="$v.slideTitle.$touch()"
-              @blur="$v.slideTitle.$touch()"
+              @blur="$emit('titleBlur')"
               required/>
             <v-layout>
               <v-flex
@@ -30,11 +29,11 @@
                   <v-text-field
                     slot="activator"
                     label="Date of Event"
-                    v-model="date"
+                    v-model="slide.date.content"
                     prepend-icon="event"
                     readonly/>
                   <v-date-picker
-                    v-model="date"
+                    v-model="slide.date.content"
                     no-title
                     scrollable/>
                 </v-menu>
@@ -61,19 +60,18 @@
                     prepend-icon="access_time"
                     readonly/>
                   <v-time-picker
-                    v-model="time"
+                    v-model="slide.time.content"
                     :allowed-minutes="allowedMinutes"
-                    @change="$refs.tMenu.save(time)"/>
+                    @change="$refs.tMenu.save(slide.time.content)"/>
                 </v-menu>
               </v-flex>
             </v-layout>
             <v-text-field
               label="Description"
-              v-model="description"
+              v-model="slide.description.content"
               :error-messages="descriptionErrors"
               :counter="140"
-              @input="$v.description.$touch()"
-              @blur="$v.description.$touch()"
+              @blur="$emit('descBlur')"
               required
             />
           </form>
@@ -93,13 +91,10 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
 
 export default {
   components: { ImageCards },
-  mixins: [validationMixin],
   props: {
     slide: {
       type: Object,
@@ -141,82 +136,53 @@ export default {
           endDate: null
         }
       })
+    },
+    titleErrors: {
+      type: Array,
+      default: null
+    },
+    descriptionErrors: {
+      type: Array,
+      default: null
     }
   },
   data: () => {
     return {
-      slideTitle: '',
-      description: '',
       dateMenu: false,
-      timeMenu: false,
-      date: null,
-      time: null
+      timeMenu: false
     }
-  },
-  validations: {
-    slideTitle: { required, maxLength: maxLength(30) },
-    description: { required, maxLength: maxLength(140) }
   },
   computed: {
     binding () {
+      // shift images under the form on small screens
       const binding = {}
-
-      if (this.$vuetify.breakpoint.smAndDown) binding.column = true
-
+      if (this.$vuetify.breakpoint.smAndDown) {
+        binding.column = true
+      }
       return binding
     },
-    slideTitleErrors () {
-      const errors = []
-      if (!this.$v.slideTitle.$dirty) {
-        return errors
-      }
-      if (!this.$v.slideTitle.maxLength) {
-        errors.push('Title must be at most 30 characters long')
-      }
-      if (!this.$v.slideTitle.required) {
-        errors.push('Title is required.')
-      }
-      return errors
-    },
-    descriptionErrors () {
-      const errors = []
-      if (!this.$v.description.$dirty) {
-        return errors
-      }
-      if (!this.$v.description.maxLength) {
-        errors.push('Description must be at most 140 characters long')
-      }
-      if (!this.$v.description.required) {
-        errors.push('Description is required')
-      }
-      return errors
-    },
     formattedTime () {
-      if (this.time) {
-        const timeFrags = this.time.split(':')
+      if (this.slide && this.slide.time && this.slide.time.content !== null) {
+        const timeFrags = this.slide.time.content.split(':')
         const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] > 12 ? ' PM' : ' AM')
         return timeFormatted
       }
-      return this.time
+      return null
     }
   },
   methods: {
     allowedMinutes (minute) {
-      return minute % 5 === 0
+      return (minute % 5) === 0
     },
     submit () {
       // submit the action packaging all of the fields
-      this.$v.$touch()
+      this.$emit('submit')
     },
     clear () {
       // reset all of the data fields
-      this.$v.$reset()
-      this.slideTitle = ''
-      this.description = ''
+      this.$emit('clear')
       this.dateMenu = false
       this.timeMenu = false
-      this.date = null
-      this.time = null
     },
     imageSelected (e) {
       this.$emit('imageSelected', e)
