@@ -21,7 +21,7 @@
                 <v-card
                 tile>
                   <v-card-media
-                    :src="card.thumbnail"
+                    :src="card.src"
                     height="150px">
                     <v-spacer/>
                     <v-btn
