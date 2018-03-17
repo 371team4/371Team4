@@ -10,14 +10,16 @@ import com.reparty.services.DriverService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExternalResource;
+import org.junit.rules.MethodRule;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.Statement;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -33,13 +35,17 @@ public class WebDriverBase {
   public static DriverService driverService;
   public static WebDriver webDriver;
 
-  @ClassRule
-  public static ExternalResource resource = new ExternalResource() {
+  private static Description description = null;
+
+  public WebDriverBase() {
+    driverService = new DriverService();
+  }
+
+  public ExternalResource resource = new ExternalResource() {
     // setup webdriver before running a class of tests
     @Override
     protected void before() {
       // this will get executed before the each test case
-      driverService = new DriverService();
       webDriver = driverService.getChromeDriver();
     };
 
@@ -50,20 +56,53 @@ public class WebDriverBase {
     };
   };
 
-  @Before
-  public void setupBeforeTest(){
-    // start the driver before every test
-    if (webDriver == null) {
-      webDriver = driverService.getChromeDriver();
+  public final TestRule watchman = new TestWatcher() {
+    @Override
+    // remember the description of the current test case
+    protected void starting(Description description) {
+      logger.traceEntry();
+      setDescription(description);
+      logger.traceExit();
+    }
+  };
+
+  @Rule
+  public ScreenshotTestRule screenshotTestRule = new ScreenshotTestRule();
+
+  public class ScreenshotTestRule implements MethodRule {
+    public Statement apply(final Statement base, final FrameworkMethod method, Object target) {
+      return new Statement() {
+        @Override
+        public void evaluate() throws Throwable {
+          if (method.getMethod().isAnnotationPresent(Test.class)) {
+            try {
+              base.evaluate();
+            } catch (Throwable t) {
+              captureScreenshot();
+              throw t; // rethrow to allow the failure to be reported to JUnit
+            }
+          } else {
+            base.evaluate();
+          }
+        }
+
+        public void captureScreenshot() {
+          logger.traceEntry();
+          try {
+            File src = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
+            File dest = new File(getScreenshotDirectoryPath(), getScreenshotName(getDescription()));
+            Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+          } catch (IOException ioe) {
+            logger.catching(ioe);
+          }
+          logger.traceExit();
+        }
+      };
     }
   }
 
-  @After
-  public void tearDownAfterTest() {
-    // shutdown the driver after every testcase
-    driverService.releaseWebDriver();
-    webDriver = null;
-  }
+  @Rule
+  public RuleChain chain = RuleChain.outerRule(resource).around(watchman);
 
   /**
    * @return the current instance of the running webDriver
@@ -102,21 +141,17 @@ public class WebDriverBase {
     return fileName;
   }
 
-  @Rule
-  public final TestRule watchman = new TestWatcher() {
-    @Override
-    // take a screenshot of the browser after a failed
-    protected void failed(Throwable e, Description description) {
-      logger.traceEntry();
+  /**
+   * @return the description
+   */
+  public static Description getDescription() {
+    return description;
+  }
 
-      try {
-        File src = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.FILE);
-        File dest = new File(getScreenshotDirectoryPath(), getScreenshotName(description));
-        Files.copy(src.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-      } catch (IOException ioe) {
-        logger.throwing(new RuntimeException(ioe));
-      }
-      logger.traceExit();
-    }
-  };
+  /**
+   * @param description the description to set
+   */
+  public static void setDescription(Description description) {
+    WebDriverBase.description = description;
+  }
 }

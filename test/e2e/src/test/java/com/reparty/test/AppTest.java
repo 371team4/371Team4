@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import com.reparty.app.core.WebDriverBase;
-import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,6 +34,6 @@ public class AppTest extends WebDriverBase {
     getWebDriver().get("http://google.com");
     WebElement searchField = getWebDriver().findElement(By.cssSelector("input[name='q']"));
     searchField.sendKeys(Keys.chord("unicorns", Keys.ENTER));
-    //fail();
+    fail();
   }
 }
