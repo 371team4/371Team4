@@ -104,7 +104,42 @@ export default {
     slide: {
       type: Object,
       default: () => ({
-        images: []
+        images: [],
+        title: {
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        description: {
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        date: {
+          content: null,
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        time: {
+          content: null,
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        meta: {
+          template: '',
+          timeout: '',
+          repeatable: false,
+          startDate: null,
+          endDate: null
+        }
       })
     }
   },

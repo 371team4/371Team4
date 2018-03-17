@@ -93,38 +93,38 @@ export default {
         ],
         title: {
           content: 'Sherbrooke Event Title',
-          fontColor: ' ',
-          fontSize: ' ',
-          fontStyle: ' ',
-          fontWeight: ' '
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         description: {
           content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
-          fontColor: ' ',
-          fontSize: ' ',
-          fontStyle: ' ',
-          fontWeight: ' '
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         date: {
-          content: '2018-05-25',
-          fontColor: ' ',
-          fontSize: ' ',
-          fontStyle: ' ',
-          fontWeight: ' '
+          content: '2018-12-01',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         time: {
-          content: '07:00 PM',
-          fontColor: ' ',
-          fontSize: ' ',
-          fontStyle: ' ',
-          fontWeight: ' '
+          content: '7:00',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
         },
         meta: {
           template: 'DefaultSlideTemplate',
           timeout: '40',
           repeatable: false,
-          startDate: '2018-07-26',
-          endDate: '2018-08-01'
+          startDate: '2018-02-16',
+          endDate: '2018-03-01'
         }
       })
     }

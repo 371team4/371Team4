@@ -5,7 +5,7 @@
     class="my-0"
     align-content-start>
     <v-layout column>
-      <default-slide-template
+      <DefaultSlideTemplate
         :carousel="carousel"
         :slide="slide"
         v-show="showPreview"/>
@@ -40,17 +40,53 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
 import AuthorSlide from '@/components/AuthorSlide'
+import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 export default {
-  components: { ImageCards, AuthorSlide },
+  components: { ImageCards, AuthorSlide, DefaultSlideTemplate },
   mixins: [validationMixin],
   props: {
     slide: {
       type: Object,
       default: () => ({
-        images: []
+        images: [],
+        title: {
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        description: {
+          content: '',
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        date: {
+          content: null,
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        time: {
+          content: null,
+          fontColor: '',
+          fontSize: '',
+          fontStyle: '',
+          fontWeight: ''
+        },
+        meta: {
+          template: '',
+          timeout: '',
+          repeatable: false,
+          startDate: null,
+          endDate: null
+        }
       })
     }
   },
