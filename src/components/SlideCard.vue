@@ -17,7 +17,7 @@
             <div
               class="ellipsis12 mt-2"
               @click.stop="$emit('click')">
-              {{ description.substring(0, 50).concat('...') }}
+              {{ description }}
             </div>
           </v-flex>
         </v-layout>
