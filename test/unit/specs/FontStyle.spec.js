@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import FontStyle from '@/components/FontStyle'
 
-describe.only('FontStyle.vue', function () {
+describe('FontStyle.vue', function () {
   let Constructor, vm
 
   before(function () {
