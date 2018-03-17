@@ -6,7 +6,7 @@ import slide from '@/store/modules/slide/index'
 import { SET } from '@/store/modules/slide/mutation-types'
 // import { SET } from '@/store/modules/slide/mutation-types'
 
-describe.only('ImageCards.vue', function () {
+describe('ImageCards.vue', function () {
   let Constructor, vm, mockCurrentSlide
 
   before(function () {
@@ -99,5 +99,15 @@ describe.only('ImageCards.vue', function () {
     vm._watcher.run()
     expect(vm.$emit).to.have.been.calledWith('deleteImage')
     expect(vm.cards.length).to.equal(mockCurrentSlide.images.length)
+  })
+
+  it('corrently rederns nothing when there are no images', function () {
+    mockCurrentSlide.images = [ ]
+    vm.$store.commit(SET, mockCurrentSlide)
+    vm.cards = vm.$store.state.currentSlide.images
+    expect(vm.cards.length).to.equal(mockCurrentSlide.images.length)
+    expect(vm.cards.length).to.equal(vm.$store.state.currentSlide.images.length)
+    expect(vm.cards).to.equal(mockCurrentSlide.images)
+    expect(vm.cards).to.equal(vm.$store.state.currentSlide.images)
   })
 })
