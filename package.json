@@ -7,19 +7,12 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --colors --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e",
-    "lint-fix": "eslint --ext .js,.vue src test/unit test/e2e --fix",
+    "tdd": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "unit": "npm run tdd -- --single-run",
+    "lint": "eslint --cache --ext .js,.vue src test/unit test/e2e",
+    "lint-fix": "npm run lint -- --fix",
     "build": "node build/build.js",
     "deploy": "firebase deploy",
-    "functions-lint": "eslint --ext .js functions",
-    "functions-serve": "firebase serve --only functions",
-    "functions-shell": "firebase experimental:functions:shell",
-    "functions-start": "npm run shell",
-    "functions-deploy": "firebase deploy --only functions",
-    "functions-logs": "firebase functions:log",
     "precommit": "npm run lint"
   },
   "dependencies": {
