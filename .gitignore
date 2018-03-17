@@ -4,6 +4,7 @@ node_modules/
 *debug.log*
 *logerror.log*
 /test/unit/coverage/
+/test/unit/test-reports/
 /test/e2e/reports/
 selenium-debug.log
 
