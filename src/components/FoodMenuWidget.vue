@@ -72,6 +72,14 @@
       tabs>
       <v-toolbar-title>Food Menu Widget</v-toolbar-title>
       <v-spacer/>
+      <v-btn
+        fab
+        small
+        color="red darken-3"
+        @click.native="addWeek">
+
+        <v-icon dark>add</v-icon>
+      </v-btn>
       <v-btn icon>
         <v-icon>save</v-icon>
       </v-btn>
