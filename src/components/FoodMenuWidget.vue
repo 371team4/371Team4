@@ -2,10 +2,6 @@
   <v-container>
     <div>
       <v-toolbar
-        xs12
-        sm12
-        md12
-        lg12
         color="light-blue darken-3"
         dark
         tabs>
@@ -30,23 +26,19 @@
           color="light-blue darken-3"
           slot="extension"
           slider-color="amber lighten-3"
-          v-model="model"
-        >
+          v-model="active">
           <v-tab
             v-for="i in numWeeks"
-            :key="i"
-            :href="`#tab-${i}`"
-          >
+            :key="i">
+
             Week {{ i }}
           </v-tab>
         </v-tabs>
       </v-toolbar>
-      <v-tabs-items v-model="model">
+      <v-tabs-items v-model="active">
         <v-tab-item
           v-for="i in numWeeks"
-          :key="i"
-          :id="`tab-${i}`"
-        >
+          :key="i">
           <!-- <v-card flat>
             <v-card-text v-text="text"/>
           </v-card> -->
@@ -82,7 +74,6 @@ export default {
   data () {
     return {
       numWeeks: 1,
-      model: 'tab-2',
       active: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
