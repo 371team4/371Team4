@@ -210,10 +210,9 @@ describe('DefaultSlideTemplate.vue', function () {
     })
   })
 
-  describe.only('Tests carouselInterval()', function () {
+  describe('Tests carouselInterval()', function () {
     beforeEach(function () {
       vm = new Constructor().$mount()
-      console.log(vm.$props.slide.meta)
     })
 
     it('should return undefined given no slide', function (done) {
