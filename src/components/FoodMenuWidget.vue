@@ -31,6 +31,15 @@
             v-for="i in numWeeks"
             :key="i">
 
+            <!-- Delete week button -->
+            <v-btn
+              round
+              small
+              flat
+              icon>
+              <v-icon>close</v-icon>
+            </v-btn>
+
             Week {{ i }}
           </v-tab>
         </v-tabs>
