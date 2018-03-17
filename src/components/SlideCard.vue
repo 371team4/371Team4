@@ -27,7 +27,7 @@
             height="150px"
             contain
             @click.stop="$emit('click')"/>
-        </v-flex>
+        </v-flex>str
       </v-layout>
     </v-container>
   </v-card>

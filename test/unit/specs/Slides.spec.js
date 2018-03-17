@@ -1,9 +1,5 @@
 import Vue from 'vue'
-
-import sinon from 'Sinon'
-// import lodash from 'lodash'
-
-// import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+// import sinon from 'Sinon'
 import Slides from '@/components/Slides'
 
 describe('Slides.vue', () => {
@@ -227,35 +223,25 @@ describe('Slides.vue', () => {
     })
   })
 
+  /**
   describe('goToSlide() method', () => {
-    it('commits CURRENT_SLIDE.SET when a slide is clicked', function () {
-      /** let store, mutations
+    it('commits CURRENT_SLIDE.SET when a slide is clicked', () => {
+      let store, mutations
       mutations = {
         MUTATION: CURRENT_SLIDE.SET
       }
       store = new Vue.Store({
         mutations
       })
+
       Constructor = Vue.extend(Slides)
       vm = new Constructor(store).$mount()
-      */
-      function once (fn) {
-        var returnValue = false
-        var called = false
-        return function () {
-          if (!called) {
-            called = true
-            returnValue = fn.apply(this, arguments)
-          }
-          return returnValue
-        }
-      }
+      const button = vm.$el.querySelector('button')
+      button.click()
 
-      let assert
-      var callback = sinon.stub().returns(42)
-      var proxy = once(callback)
-
-      assert.equals(proxy(), 42)
+      expect(mutations.MUTATION.mock.calls).toHaveLength(1)
+      expect(mutations.MUTATION.mock.calls[0][1]).toEqual({ val: 'val' })
     })
   })
+  */
 })
