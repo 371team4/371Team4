@@ -42,7 +42,7 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item,index) in slide.images"
+            v-for="(item, index) in slide.images"
             :src="item.src"
             :key="index"/>
         </v-carousel>
