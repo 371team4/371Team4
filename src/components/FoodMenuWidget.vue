@@ -99,7 +99,7 @@
           v-model="model"
         >
           <v-tab
-            v-for="i in 3"
+            v-for="i in numWeeks"
             :key="i"
             :href="`#tab-${i}`"
           >
@@ -109,7 +109,7 @@
       </v-toolbar>
       <v-tabs-items v-model="model">
         <v-tab-item
-          v-for="i in 3"
+          v-for="i in numWeeks"
           :key="i"
           :id="`tab-${i}`"
         >
@@ -144,32 +144,16 @@
 </template>
 
 <script>
-// export default {
-//   data () {
-//     return {
-//       active: null,
-//       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-//       numWeeks: 1
-//     }
-//   },
-//   methods: {
-//     next () {
-//       const active = parseInt(this.active)
-//       this.active = (active < 2 ? active + 1 : 0).toString()
-//     },
-//     addWeek () {
-//       this.numWeeks = this.numWeeks + 1
-//     }
-//   }
-// }
-
 export default {
   data () {
     return {
       numWeeks: 1,
       model: 'tab-2',
+      active: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
+  },
+  computed: {
   },
   methods: {
     addWeek () {
@@ -177,7 +161,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
