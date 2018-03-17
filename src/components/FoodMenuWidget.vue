@@ -5,6 +5,7 @@
         color="light-blue darken-3"
         dark
         tabs>
+        <v-icon>assignment</v-icon>
         <v-toolbar-title>Food Menu Widget</v-toolbar-title>
         <v-spacer/>
         <v-btn
@@ -20,6 +21,9 @@
         </v-btn>
         <v-btn icon>
           <v-icon>event</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>delete</v-icon>
         </v-btn>
         <v-tabs
           align-with-title
