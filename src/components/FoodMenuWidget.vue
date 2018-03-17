@@ -55,7 +55,7 @@
           :key="index">
 
           <!-- Temporary solution: Day Cards in Week Component -->
-          <template>
+          <!-- <template>
             <v-layout>
               <v-flex
                 xs3
@@ -73,8 +73,51 @@
                 </v-card>
               </v-flex>
             </v-layout>
-          </template>
+          </template> -->
 
+          <v-container
+            align-content-center
+            align-center
+            align-baseline
+            align-content-space-around
+            justify-center
+            justify-space-around
+            grid-list-md
+            text-xs-center>
+            <v-layout
+              row
+              wrap>
+              <v-flex
+                xs4
+                v-for="j in 3"
+                :key="j*89">
+                <v-card>
+                  <v-card-text class="px-0">sup</v-card-text>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4
+                v-for="p in 3"
+                :key="p*865">
+                <v-card>
+                  <v-card-text class="px-0">b</v-card-text>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4
+                offset-xs0
+                offset-md0
+                offset-lg4
+                v-for="k in 1"
+                :key="k*809">
+                <v-card>
+                  <v-card-text class="px-0">lol</v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
           <!-- Done Day Cards -->
 
         </v-tab-item>
