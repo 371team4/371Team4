@@ -22,9 +22,6 @@
         <v-btn icon>
           <v-icon>event</v-icon>
         </v-btn>
-        <v-btn icon>
-          <v-icon>delete</v-icon>
-        </v-btn>
         <v-tabs
           align-with-title
           color="light-blue darken-3"
@@ -40,7 +37,8 @@
               round
               small
               flat
-              icon>
+              icon
+              @click="removeWeek(index)">
               <v-icon>close</v-icon>
             </v-btn>
 
