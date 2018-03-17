@@ -22,6 +22,8 @@
         <v-btn icon>
           <v-icon>event</v-icon>
         </v-btn>
+
+        <!-- Week Component begins here -->
         <v-tabs
           align-with-title
           color="light-blue darken-3"
@@ -51,17 +53,15 @@
         <v-tab-item
           v-for="(i, index) in weeks"
           :key="index">
-          <!-- <v-card flat>
-            <v-card-text v-text="text"/>
-          </v-card> -->
 
+          <!-- Temporary solution: Day Cards in Week Component -->
           <template>
             <v-layout>
               <v-flex
-                xs2
-                sm2
-                md2
-                lg2
+                xs3
+                sm3
+                md3
+                lg3
                 offset-sm2>
                 <v-card>
                   <v-card-title primary-title>
@@ -75,8 +75,11 @@
             </v-layout>
           </template>
 
+          <!-- Done Day Cards -->
+
         </v-tab-item>
       </v-tabs-items>
+      <!-- Done Week Component -->
     </div>
   </v-container>
 </template>
@@ -254,8 +257,8 @@ export default {
     },
     removeWeek (weekNumber) {
       console.log(weekNumber)
-      // this.weeks.splice(weekNumber, 1);
-      console.log(this.weeks[weekNumber-1].Monday)
+      this.weeks.splice(weekNumber, 1)
+      // console.log(this.weeks[weekNumber-1].Monday)
     }
   }
 }
