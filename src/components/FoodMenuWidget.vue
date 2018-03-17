@@ -29,7 +29,7 @@
           slider-color="amber lighten-3"
           v-model="active">
           <v-tab
-            v-for="i in numWeeks"
+            v-for="(i) in numWeeks"
             :key="i">
 
             <!-- Delete week button -->
@@ -38,18 +38,19 @@
               small
               flat
               icon
-              @click="removeWeek(index)">
+              @click="removeWeek(i)">
               <v-icon>close</v-icon>
             </v-btn>
 
             Week {{ i }}
+
           </v-tab>
         </v-tabs>
       </v-toolbar>
       <v-tabs-items v-model="active">
         <v-tab-item
-          v-for="i in numWeeks"
-          :key="i">
+          v-for="(i, index) in weeks"
+          :key="index">
           <!-- <v-card flat>
             <v-card-text v-text="text"/>
           </v-card> -->
@@ -66,7 +67,7 @@
                   <v-card-title primary-title>
                     <div>
                       <h3 class="headline mb-0">Monday</h3>
-                      <div> {{ text }} </div>
+                      <div> {{ i }} </div>
                     </div>
                   </v-card-title>
                 </v-card>
@@ -92,156 +93,6 @@ export default {
   computed: {
     weeks () {
       return {
-        'Week 1': {
-          Monday: {
-            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
-            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
-          },
-          Friday: {
-            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
-          }
-        },
-        'Week 2': {
-          Monday: {
-            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
-            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
-          },
-          Friday: {
-            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
-          }
-        },
-        'Week 3': {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        },
-        'Week 4': {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        },
-        'Week 5': {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        }
       }
     }
   },
