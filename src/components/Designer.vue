@@ -113,7 +113,7 @@ export default {
       this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))
     },
     uploadImage (files) {
-      // debugger
+      debugger
       const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
       this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
         this.addImage({ src: this.$store.getters.getUploadTask })

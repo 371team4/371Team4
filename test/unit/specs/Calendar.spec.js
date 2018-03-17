@@ -3,7 +3,7 @@ import Calendar from '@/components/Calendar'
 import Vuex from 'vuex'
 import slides from '@/store/modules/slide/index'
 
-describe.only('Calendar.vue', function () {
+describe('Calendar.vue', function () {
   let Constructor, vm
 
   before(function () {
