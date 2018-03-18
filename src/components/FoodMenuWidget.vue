@@ -374,8 +374,6 @@ export default {
       }
     },
     removeWeek (weekNumber) {
-      console.log('Whats the number', weekNumber)
-
       // Don't delete the first week
       if (weekNumber !== 0) {
         // Show alert dialog to warn users that they are deleting
