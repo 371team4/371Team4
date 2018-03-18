@@ -3,7 +3,7 @@
     <div>
       <!-- Food Menu Widget Toolbar -->
       <v-toolbar
-        color="light-blue darken-3"
+        color="light-blue darken-1"
         dark
         tabs>
         <v-icon>assignment</v-icon>
@@ -34,7 +34,7 @@
         <!-- Week Component begins here -->
         <v-tabs
           align-with-title
-          color="light-blue darken-3"
+          color="light-blue darken-1"
           slot="extension"
           slider-color="amber lighten-3"
           v-model="active">
@@ -360,7 +360,7 @@ export default {
         // Ensure only 5 weeks are added
         this.numWeeks = this.numWeeks + 1
       } else if (this.numWeeks >= 5) {
-        // Show that too many weeks are currently displayed 
+        // Show that too many weeks are currently displayed
         this.tooManyWeeksDialogShown = true
       }
     },
