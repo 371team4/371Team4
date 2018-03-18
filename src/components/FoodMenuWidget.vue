@@ -3,10 +3,14 @@
     <div>
       <!-- Food Menu Widget Toolbar -->
       <v-toolbar
+        xs12
+        md12
+        sm12
+        lg12
         color="light-blue darken-1"
         dark
         tabs>
-        <v-icon>assignment</v-icon>
+        <v-icon>restaurant</v-icon>
         <v-toolbar-title>Food Menu Widget</v-toolbar-title>
         <v-spacer/>
         <v-btn
