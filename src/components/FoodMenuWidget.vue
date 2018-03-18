@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <div>
       <!-- Food Menu Widget Toolbar -->
       <v-toolbar
@@ -39,6 +39,7 @@
           sm12
           md12
           lg12
+          show-arrows
           align-with-title
           color="light-blue darken-1"
           slot="extension"
@@ -169,7 +170,10 @@
 
           <!-- Ensure the first week doesn't get deleted -->
           <v-snackbar
-          v-model="dontDeleteTheFirstWeek">
+            multi-line
+            right
+            vertical
+            v-model="dontDeleteTheFirstWeek">
             Cannot delete the first week!
             <v-btn
               flat
@@ -179,8 +183,10 @@
 
           <!-- Ensure only 5 weeks get added -->
           <v-snackbar
-            v-model="tooManyWeeksDialogShown"
-          >
+            multi-line
+            right
+            vertical
+            v-model="tooManyWeeksDialogShown">
             {{ tooManyWeeksAdded }}
             <v-btn
               flat
@@ -391,12 +397,12 @@ export default {
     },
     saveChanges () {
       // Not yet implemented
-      // console.log('Save button was pressed')
+      console.log('Save button was pressed')
       return 0 // <-- for testing purposes, test that a value was returned
     },
     scheduleMenu () {
       // Not yet implemented
-      // console.log('Event button was pressed')
+      console.log('Event button was pressed')
       return 0 // <-- for testing purposes, test that a value was returned
     }
   }
