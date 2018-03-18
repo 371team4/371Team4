@@ -48,11 +48,11 @@
               small
               flat
               icon
-              @click="removeWeek(i)">
+              @click="removeWeek(index)">
               <v-icon>close</v-icon>
             </v-btn>
 
-            Week {{ index+1 }}
+            Week {{ i }}
 
           </v-tab>
         </v-tabs>
@@ -153,6 +153,18 @@
           </v-container>
           <!-- Done Day Cards -->
 
+          <!-- Ensure the first week doesn't get deleted -->
+          <v-snackbar
+            v-model="dontDeleteTheFirstWeek"
+          >
+            Cannot delete the first week!
+            <v-btn
+              flat
+              color="blue lighten-3"
+              @click.native="dontDeleteTheFirstWeek = false">Close</v-btn>
+          </v-snackbar>
+
+          <!-- Ensure only 5 weeks get added -->
           <v-snackbar
             v-model="tooManyWeeksDialogShown"
           >
@@ -177,7 +189,8 @@ export default {
       // Information dialog when there are more than 5 weeks added
       tooManyWeeksDialogShown: false,
       tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
-      //
+      // Ensure first week does not get deleted
+      dontDeleteTheFirstWeek: false,
       numWeeks: 1,
       active: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -346,12 +359,19 @@ export default {
       } else if (this.numWeeks >= 5) {
         this.tooManyWeeksDialogShown = true
       }
-      console.log('Number of weeks: ' + this.numWeeks)
     },
     removeWeek (weekNumber) {
-      console.log(weekNumber)
-      this.weeks.splice(weekNumber, 1)
-      this.numWeeks = this.numWeeks - 1
+      console.log('Whats the number', weekNumber)
+
+      // Don't delete the first week
+      if (weekNumber !== 0) {
+        this.weeks.splice(weekNumber + 1, 1)
+        this.numWeeks = this.numWeeks - 1
+      } else {
+        // Set to show a message saying not to delete the first week
+        this.dontDeleteTheFirstWeek = true
+      }
+
       // console.log(this.weeks[weekNumber-1].Monday)
     },
     saveChanges () {
