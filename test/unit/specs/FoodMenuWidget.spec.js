@@ -4,7 +4,7 @@ import FoodMenuWidget from '@/components/FoodMenuWidget'
 // This testing will change. Was not able to test the Vue components themselves, so
 // I am testing the data and computed components within this unit test instead.
 
-describe.only('FoodMenuWidget.vue', function () {
+describe('FoodMenuWidget.vue', function () {
   let vm, Constructor // <-- objects to be redefined
 
   before(function () {
@@ -30,7 +30,50 @@ describe.only('FoodMenuWidget.vue', function () {
     })
 
     it('Property to control behavior of week tabs should be null', function () {
-      expect(vm.$data.active).to.equal(0)
+      expect(vm.$data.active).to.equal(null)
+    })
+  })
+
+  describe('Computed properties should match default', function () {
+    before(function () {
+      vm = new Constructor().$mount()
+    })
+
+    it('Week array should remain unaltered', function (done) {
+      let weekOne = {
+        Monday: {
+          Lunch: ['Pizza', 'Spinach Casserole', '', '', ''],
+          Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
+        },
+        Tuesday: {
+          Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
+          Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
+        },
+        Wednesday: {
+          Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
+          Dinner: ['Beef Wellington', 'Calzones', '', '', '']
+        },
+        Thursday: {
+          Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
+          Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
+        },
+        Friday: {
+          Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
+          Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
+        },
+        Saturday: {
+          Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
+          Dinner: ['Pho', 'Enchiladas with Salsa Verde', '', '', '']
+        },
+        Sunday: {
+          Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
+          Dinner: ['Baked Alaska', 'Kale Salad', '', '', '']
+        }
+      }
+      expect(vm.weeks[0]).to.contain(weekOne)
+      Vue.nextTick(() => {
+        done()
+      })
     })
   })
 })
