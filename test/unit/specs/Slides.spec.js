@@ -181,15 +181,11 @@ describe('Slides.vue', function () {
   })
 
   describe('Test search bar', function () {
-    let notFound
-
-    before(function () {
-      notFound = {
-        title: { content: 'None Found' },
-        description: { content: 'No matching slides were found' },
-        images: [{ src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png' }]
-      }
-    })
+    const notFound = {
+      title: { content: 'None Found' },
+      description: { content: 'No matching slides were found' },
+      images: [{ src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png' }]
+    }
 
     it('should return a no results found slide given "hello"', function () {
       vm.searchString = 'hello'
@@ -237,54 +233,20 @@ describe('Slides.vue', function () {
     })
   })
 
-  describe('goToSlide() method', () => {
-    it('commits current when a slide is clicked', () => {
+  describe('Test goToSlide() method', function () {
+    it('should commit current when a slide is clicked', function () {
       sinon.spy(vm.$store, 'commit')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
+
       expect(vm.$store.commit.firstCall.args).to.deep.equal([CURRENT_SLIDE.SET, mockSlides[1]])
     })
-  describe('Test goToSlide method', function () {
-    let spy, expectedArgument
 
-    before(function () {
-      Vue.use(Vuex)
-      const store = new Vuex.Store(slideModule)
-
-      const routes = routerModule.routes
-      const router = new VueRouter({ routes })
-
-      vm = new Constructor({ store, router }).$mount()
-
-      vm.$store.state.allSlides = mockSlides
-
-      expectedArgument = {
-        name: 'Designer',
-        params: {}
-      }
-    })
-
-    beforeEach(function () {
-      spy = sinon.spy(vm.$router, 'push')
-    })
-
-    afterEach(function () {
-      vm.$router.push.restore()
-    })
-
-    it('should redirect to slide 0 and update currentSlide', function () {
-      expectedArgument.params.slide = mockSlides[0]
-
-      vm.goToSlide(expectedArgument.params.slide)
-
-      Vue.nextTick(() => {
-        expect(vm.$store.state.currrentSlide).to.equal(expectedArgument.params.slide)
-      })
-
-    it('should navigate to the desginer view', () => {
+    it('should navigate to the desginer view', function () {
       sinon.spy(vm.$router, 'push')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
+
       expect(vm.$router.push.firstCall.args).to.deep.equal([{
         path: '/designer', // the router injects this into the param
         name: 'Designer',
@@ -292,34 +254,6 @@ describe('Slides.vue', function () {
           slide: mockSlides[1]
         }
       }])
-      expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(expectedArgument)
-    })
-
-    it('should redirect to correct slide 1 and update currentSlide', function () {
-      expectedArgument.params.slide = mockSlides[1]
-
-      vm.goToSlide(expectedArgument.params.slide)
-
-      Vue.nextTick(() => {
-        expect(vm.$store.state.currrentSlide).to.equal(expectedArgument.params.slide)
-      })
-
-      expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(expectedArgument)
-    })
-
-    it('should redirect to correct slide 2 and update currentSlide', function () {
-      expectedArgument.params.slide = mockSlides[2]
-
-      vm.goToSlide(expectedArgument.params.slide)
-
-      Vue.nextTick(() => {
-        expect(vm.$store.state.currrentSlide).to.equal(expectedArgument.params.slide)
-      })
-
-      expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(expectedArgument)
     })
   })
 })
