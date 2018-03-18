@@ -238,7 +238,7 @@ describe('Slides.vue', () => {
       sinon.spy(vm.$store, 'commit')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
-      expect(vm.$store.commit.firstCall.args).to.deep.equal(['SET', mockSlides[1]])
+      expect(vm.$store.commit.firstCall.args).to.deep.equal([CURRENT_SLIDE.SET, mockSlides[1]])
     })
 
     it('should navigate to the desginer view', () => {
