@@ -40,7 +40,7 @@
           v-model="active">
           <v-tab
             v-for="(i, index) in weeks, numWeeks"
-            :key="index">
+            :key="i">
 
             <!-- Delete week button -->
             <v-btn
@@ -63,7 +63,7 @@
           :key="index">
 
           <!-- Temporary solution: Day Cards in Week Component -->
-          <!-- Need Jordan's Day Cards in here -->
+          <!-- Need Day Cards component in here -->
           <v-container
             align-content-center
             align-center
@@ -191,11 +191,8 @@ export default {
       tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
       // Ensure first week does not get deleted
       dontDeleteTheFirstWeek: false,
-      // Alert dialog to warn the user that they are going to delete a week
-      dialog: false,
       numWeeks: 1,
-      active: null,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      active: null
     }
   },
   computed: {
@@ -379,8 +376,6 @@ export default {
         // Set to show a message saying not to delete the first week
         this.dontDeleteTheFirstWeek = true
       }
-
-      // console.log(this.weeks[weekNumber-1].Monday)
     },
     saveChanges () {
       // Not yet implemented
