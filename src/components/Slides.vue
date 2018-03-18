@@ -45,6 +45,7 @@
         v-for="(slide, index) in filteredSlides"
         :key="index">
         <slide-card
+          :data-test-attr="`slideCard_${index}`"
           :slide="slide"
           @click="goToSlide(slide)"
           class="mx-1 px-1 my-1 py-1"/>

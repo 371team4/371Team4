@@ -15,7 +15,7 @@
           </v-flex>
           <v-flex xs6>
             <div
-              class="ellipsis12 mt-2"
+              class="mt-2"
               @click.stop="$emit('click')">
               {{ description }}
             </div>
@@ -111,9 +111,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.overflow {
-  text-overflow: ellipsis;
-}
-</style>

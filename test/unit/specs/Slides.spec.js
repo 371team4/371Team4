@@ -1,171 +1,177 @@
 import Vue from 'vue'
-// import sinon from 'Sinon'
+import sinon from 'sinon'
 import Slides from '@/components/Slides'
+import { store } from '@/store'
+import router from '@/router'
+import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+
+const mockSlides = [
+  {
+    images: [
+      {
+        src: 'https://picsum.photos/200/300/?image=92'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=19'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=14'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=94'
+      }
+    ],
+    title: {
+      content: 'Slide1',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    description: {
+      content: 'This is the description for Slide1',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    date: {
+      content: '2018-02-15',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    time: {
+      content: '13:05',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    meta: {
+      template: 'DefaultSlideTemplate',
+      timeout: '40',
+      repeatable: false,
+      startDate: '2018-02-16',
+      endDate: '2018-03-01'
+    }
+  },
+  {
+    images: [
+      {
+        src: 'https://picsum.photos/200/300/?image=92'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=19'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=14'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=94'
+      }
+    ],
+    title: {
+      content: 'Slide2 with a longer title',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    description: {
+      content: 'This is the description for Slide2, with some additional text at the end',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    date: {
+      content: '2018-02-15',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    time: {
+      content: '13:05',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    meta: {
+      template: 'DefaultSlideTemplate',
+      timeout: '40',
+      repeatable: false,
+      startDate: '2018-02-16',
+      endDate: '2018-03-01'
+    }
+  },
+  {
+    images: [
+      {
+        src: 'https://picsum.photos/200/300/?image=92'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=19'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=14'
+      },
+      {
+        src: 'https://picsum.photos/200/300/?image=94'
+      }
+    ],
+    title: {
+      content: 'The Last One',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    description: {
+      content: 'This is the description for Slide3',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    date: {
+      content: '2018-02-15',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    time: {
+      content: '13:05',
+      fontColor: 'Red',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    meta: {
+      template: 'DefaultSlideTemplate',
+      timeout: '40',
+      repeatable: false,
+      startDate: '2018-02-16',
+      endDate: '2018-03-01'
+    }
+  }
+]
 
 describe('Slides.vue', () => {
-  let Constructor, vm, mockSlides
+  let vm
 
-  before(() => {
-    Constructor = Vue.extend(Slides)
-    vm = new Constructor().$mount()
-
-    mockSlides = [
-      {
-        images: [
-          {
-            src: 'https://picsum.photos/200/300/?image=92'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=19'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=14'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=94'
-          }
-        ],
-        title: {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        description: {
-          content: 'This is the description for Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        date: {
-          content: '2018-02-15',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        time: {
-          content: '13:05',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        meta: {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
-        }
-      },
-      {
-        images: [
-          {
-            src: 'https://picsum.photos/200/300/?image=92'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=19'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=14'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=94'
-          }
-        ],
-        title: {
-          content: 'Slide2 with a longer title',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        description: {
-          content: 'This is the description for Slide2, with some additional text at the end',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        date: {
-          content: '2018-02-15',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        time: {
-          content: '13:05',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        meta: {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
-        }
-      },
-      {
-        images: [
-          {
-            src: 'https://picsum.photos/200/300/?image=92'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=19'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=14'
-          },
-          {
-            src: 'https://picsum.photos/200/300/?image=94'
-          }
-        ],
-        title: {
-          content: 'The Last One',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        description: {
-          content: 'This is the description for Slide3',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        date: {
-          content: '2018-02-15',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        time: {
-          content: '13:05',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        },
-        meta: {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
-        }
-      }
-    ]
-
+  before(function (done) {
+    const Constructor = Vue.extend(Slides)
+    vm = new Constructor({ store, router }).$mount()
     vm.slides = mockSlides
+    // need to wait for next tick so slides can be created
+    Vue.nextTick(() => {
+      done()
+    })
   })
 
   describe('Saved Slides', () => {
@@ -182,7 +188,9 @@ describe('Slides.vue', () => {
       expect(searchResult.length).to.equal(1)
 
       expect(searchResult[0].title.content).to.equal('None Found')
-      expect(searchResult[0].images[0].src).to.equal('https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png')
+      expect(searchResult[0].images[0].src).to.equal(
+        'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+      )
     })
 
     it('should return all saved slides', () => {
@@ -219,29 +227,32 @@ describe('Slides.vue', () => {
       expect(searchResult.length).to.equal(1)
 
       expect(searchResult[0].title.content).to.equal('None Found')
-      expect(searchResult[0].images[0].src).to.equal('https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png')
+      expect(searchResult[0].images[0].src).to.equal(
+        'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+      )
     })
   })
 
-  /**
   describe('goToSlide() method', () => {
-    it('commits CURRENT_SLIDE.SET when a slide is clicked', () => {
-      let store, mutations
-      mutations = {
-        MUTATION: CURRENT_SLIDE.SET
-      }
-      store = new Vue.Store({
-        mutations
-      })
+    it('commits current when a slide is clicked', () => {
+      sinon.spy(vm.$store, 'commit')
+      const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
+      cardHeader.click()
+      expect(vm.$store.commit.firstCall.args).to.deep.equal(['SET', mockSlides[1]])
+    })
 
-      Constructor = Vue.extend(Slides)
-      vm = new Constructor(store).$mount()
-      const button = vm.$el.querySelector('button')
-      button.click()
-
-      expect(mutations.MUTATION.mock.calls).toHaveLength(1)
-      expect(mutations.MUTATION.mock.calls[0][1]).toEqual({ val: 'val' })
+    it('should navigate to the desginer view', () => {
+      sinon.spy(vm.$router, 'push')
+      const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
+      cardHeader.click()
+      debugger
+      expect(vm.$router.push.firstCall.args).to.deep.equal([{
+        path: '/designer', // the router injects this into the param
+        name: 'Designer',
+        params: {
+          slide: mockSlides[1]
+        }
+      }])
     })
   })
-  */
 })
