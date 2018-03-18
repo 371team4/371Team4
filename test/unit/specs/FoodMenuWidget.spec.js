@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import sinon from 'sinon'
 import FoodMenuWidget from '@/components/FoodMenuWidget'
 
 // This testing will change. Was not able to test the Vue components themselves, so
@@ -153,6 +152,14 @@ describe.only('FoodMenuWidget.vue', function () {
     it('scheduleMenu() - returns 0 for now', function () {
       const result = vm.scheduleMenu()
       expect(result).to.equal(0)
+    })
+    // TO DO when integrated - ADDING THE NUMBER OF WEEKS TO THE FOOD MENU WIDGET
+    it('addWeek() - should be keeping track of the number of weeks added', function () {
+
+    })
+    // TO DO when integrated - REMOVING THE WEEKS OF THE FOOD MENU WIDGET
+    it('removeWeek() - should remove the week from the Weeks component when button is pressed', function () {
+
     })
   })
 })
