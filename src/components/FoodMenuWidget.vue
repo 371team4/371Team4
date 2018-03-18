@@ -36,7 +36,6 @@
         <!-- Week Component begins here -->
         <v-tabs
           show-arrows
-          align-with-title
           color="light-blue darken-1"
           slot="extension"
           slider-color="amber lighten-3"
@@ -66,7 +65,7 @@
 
           <!-- Temporary solution: Day Cards in Week Component -->
           <!-- Need Day Cards component in here. Not testing this portion
-          extensively because will be replaced soon with Day Cards -->
+          extensively because will be replaced soon with Day Cards; integrated after-->
           <v-container
             justify-center
             justify-space-around
