@@ -346,10 +346,12 @@ export default {
       } else if (this.numWeeks >= 5) {
         this.tooManyWeeksDialogShown = true
       }
+      console.log('Number of weeks: ' + this.numWeeks)
     },
     removeWeek (weekNumber) {
       console.log(weekNumber)
       this.weeks.splice(weekNumber, 1)
+      this.numWeeks = this.numWeeks - 1
       // console.log(this.weeks[weekNumber-1].Monday)
     },
     saveChanges () {
