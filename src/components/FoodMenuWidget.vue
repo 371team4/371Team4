@@ -168,7 +168,7 @@
 
           <!-- Ensure the first week doesn't get deleted -->
           <v-snackbar
-            v-model="dontDeleteTheFirstWeek">
+          v-model="dontDeleteTheFirstWeek">
             Cannot delete the first week!
             <v-btn
               flat
