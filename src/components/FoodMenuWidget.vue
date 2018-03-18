@@ -3,15 +3,11 @@
     <div>
       <!-- Food Menu Widget Toolbar -->
       <v-toolbar
-        xs12
-        md12
-        sm12
-        lg12
         color="light-blue darken-1"
         dark
         tabs>
         <v-icon>restaurant</v-icon>
-        <v-toolbar-title>Food Menu Widget</v-toolbar-title>
+        <v-toolbar-title>Food Menu</v-toolbar-title>
         <v-spacer/>
         <v-btn
           fab
@@ -25,11 +21,13 @@
         <!-- buttons to save changes and schedule the menu -->
         <!-- NOT YET IMPLEMENTED YET. -->
         <v-btn
+          small
           icon
           @click.native="saveChanges">
           <v-icon>save</v-icon>
         </v-btn>
         <v-btn
+          small
           icon
           @click.native="scheduleMenu">
           <v-icon>event</v-icon>
@@ -37,6 +35,10 @@
 
         <!-- Week Component begins here -->
         <v-tabs
+          xs12
+          sm12
+          md12
+          lg12
           align-with-title
           color="light-blue darken-1"
           slot="extension"
@@ -69,10 +71,10 @@
           <!-- Temporary solution: Day Cards in Week Component -->
           <!-- Need Day Cards component in here -->
           <v-container
-            align-content-center
-            align-center
-            align-baseline
-            align-content-space-around
+            xs12
+            sm12
+            md12
+            lg12
             justify-center
             justify-space-around
             grid-list-md
@@ -82,7 +84,8 @@
               wrap>
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Monday</h3>
                     <div> {{ i.Monday }} </div>
@@ -92,7 +95,8 @@
 
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Tuesday</h3>
                     <div> {{ i.Tuesday }} </div>
@@ -102,7 +106,8 @@
 
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Wednesday</h3>
                     <div> {{ i.Wednesday }} </div>
@@ -112,7 +117,8 @@
 
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Thursday</h3>
                     <div> {{ i.Thursday }} </div>
@@ -122,7 +128,8 @@
 
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Friday</h3>
                     <div> {{ i.Friday }} </div>
@@ -132,7 +139,8 @@
 
               <v-flex
               xs4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Saturday</h3>
                     <div> {{ i.Saturday }} </div>
@@ -145,7 +153,8 @@
                 offset-xs0
                 offset-md0
                 offset-lg4>
-                <v-card>
+                <v-card
+                height="250px">
                   <div>
                     <h3 class="headline mb-0">Sunday</h3>
                     <div> {{ i.Sunday }} </div>
