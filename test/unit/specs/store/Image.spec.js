@@ -1,8 +1,8 @@
 import index from '@/store/modules/image/index'
-import Mock from 'mockjs'
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
+  console.log(action)
   let count = 0
 
   // mock commit
@@ -34,26 +34,26 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
-const sampleImage = Mock.Random.image()
+describe('Image APIs', function () {
+  describe('index', () => {
+    it('getImage', done => {
+      testAction(index.actions.getImage, ['5a98ada216608d51864ef43c'], {}, [
+        { type: 'SET_IMAGE_ID', payload: '5a98ada216608d51864ef43c' },
+        { type: 'SET_IMAGE_PATH', payload: '/images/google.jpg' },
+        { type: 'SET_IMAGE_ID', payload: '' },
+        { type: 'SET_TASK_STATUS', payload: true }
+      ], done)
+    })
+  })
 
-describe.only('index', () => {
-  it('uploadImage', done => {
-    testAction(index.actions.uploadImage, [sampleImage], {}, [
-      // mutation should been called in order from first to last
-      { type: 'SET_IMAGE_ID', payload: 'new Image' },
-      { type: 'SET_IMAGE_ID', payload: '' }
-    ], done)
+  // testing on a new uploaded image, can be used once, otherwise need restore
+  describe('index', () => {
+    it('deleteImage', done => {
+      testAction(index.actions.deleteImage, ['5aaef49c2cf54b02f0114a54'], {}, [
+        { type: 'SET_IMAGE_ID', payload: '5aaef49c2cf54b02f0114a54' },
+        { type: 'SET_IMAGE_ID', payload: '' },
+        { type: 'SET_TASK_STATUS', payload: true }
+      ], done)
+    })
   })
 })
-
-describe.only('index', () => {
-  it('getImage', done => {
-    testAction(index.actions.getImage, ['5a98ada216608d51864ef43c'], {}, [
-      { type: 'SET_IMAGE_ID', payload: '5a98ada216608d51864ef43c' },
-      { type: 'SET_IMAGE_PATH', payload: '/images/google.jpg' }
-    ], done)
-  })
-})
-
-
-
