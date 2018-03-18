@@ -191,6 +191,8 @@ export default {
       tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
       // Ensure first week does not get deleted
       dontDeleteTheFirstWeek: false,
+      // Alert dialog to warn the user that they are going to delete a week
+      dialog: false,
       numWeeks: 1,
       active: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -355,8 +357,10 @@ export default {
   methods: {
     addWeek () {
       if (this.numWeeks < 5) {
+        // Ensure only 5 weeks are added
         this.numWeeks = this.numWeeks + 1
       } else if (this.numWeeks >= 5) {
+        // Show that too many weeks are currently displayed 
         this.tooManyWeeksDialogShown = true
       }
     },
@@ -365,7 +369,11 @@ export default {
 
       // Don't delete the first week
       if (weekNumber !== 0) {
+        // Show alert dialog to warn users that they are deleting
+        this.dialog = true
+        // Remove the week
         this.weeks.splice(weekNumber + 1, 1)
+        // Counter to only add 5 weeks
         this.numWeeks = this.numWeeks - 1
       } else {
         // Set to show a message saying not to delete the first week
