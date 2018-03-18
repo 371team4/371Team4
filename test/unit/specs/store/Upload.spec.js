@@ -1,4 +1,5 @@
 import index from '@/store/modules/upload/index'
+// var mock = require('mockjs')
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {

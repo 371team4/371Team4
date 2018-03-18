@@ -15,6 +15,12 @@
         @clear="clear"
         @submit="submit"/>
     </v-layout>
+    <button
+      :onClick="getURL()"
+    >Submit</button>
+    <img
+    id="testImage"
+    />
   </v-container>
 </template>
 
@@ -133,6 +139,13 @@ export default {
     addImage (imgObject) {
       this.slide.images.push(imgObject)
       this.forceUpdateCarousel()
+    },
+    getURL () {
+      this.$store.dispatch('getImage', '5a98ada216608d51864ef43c').then(function(responce){
+        document.getElementById('testImage').setAttribute('src',responce)
+      }).catch(function(err){
+        alert(err)
+      })
     }
   }
 }

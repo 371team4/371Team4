@@ -1,18 +1,22 @@
 import axios from 'axios'
+import util from 'util'
 
 const server = 'https://cmpt371g4.usask.ca:8443'
 
 // mutation types
 const SET_IMAGE_ID = 'SET_IMAGE_ID'
+const SET_IMAGE_PATH = 'SET_IMAGE_PATH'
 
 // state of this module
 const state = {
-  currentImageId: ''
+  currentImageId: '',
+  currentImagePath: ''
 }
 
 // getters for this module's state
 const getters = {
-  getCurrentImage: state => state.currentImageId
+  getCurrentImageId: state => state.currentImageId,
+  getCurrentImagePath: state => state.currentImagePath
 }
 
 // mutations of this module, mutation must be sync and atomic
@@ -20,6 +24,9 @@ const mutations = {
   // takes a slide object as payload, sets current slide to it.
   [SET_IMAGE_ID] (state, payload) {
     state.currentImageId = payload
+  },
+  [SET_IMAGE_PATH] (state, payload) {
+    state.currentImagePath = payload
   }
 }
 
@@ -29,10 +36,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.get(server + '/api/images/' + payload)
         .then(function (responce) {
-          resolve(server + responce.path)
-          state.commit(SET_IMAGE_ID, '')
+          resolve(server + responce.data.path)
+          state.commit(SET_IMAGE_PATH, responce.data.path)
         })
         .catch(function (err) {
+          console.log(util.inspect(err,false,null))
           reject(err)
           state.commit(SET_IMAGE_ID, '')
         })
@@ -43,14 +51,16 @@ const actions = {
     return new Promise((resolve, reject) => {
       var formData = new FormData()
       formData.append('image', payload)
-      formData.append('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNjM1MTEsImV4cCI6MTUyMTE2NzExMX0.Z64815D6pH1iDPjDIuzloxMNKwrEM0tyzUUfDhCJdqQ')
+      formData.append('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjEzNTM2NzEsImV4cCI6MTUyMTM1NzI3MX0.vmovhluY9vLB74uyvJye8LoXWkRz0aR1J-5bFrQpJqw')
+      // var token = this.$store.getters.token
+      // formData.append('token', token)
       axios.put(server + '/api/images', formData)
         .then(function (responce) {
           resolve(responce.data)
-          state.commit(SET_IMAGE_ID, '')
+          state.commit(SET_IMAGE_ID, responce.data._id)
         })
         .catch(function (err) {
-          console.log('request fail')
+          console.log(util.inspect(err,false,null))
           reject(err)
           state.commit(SET_IMAGE_ID, '')
         })
@@ -62,7 +72,8 @@ const actions = {
       axios.delete(server + '/api/images/' + payload, {
         data:
         {
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjExNjM1MTEsImV4cCI6MTUyMTE2NzExMX0.Z64815D6pH1iDPjDIuzloxMNKwrEM0tyzUUfDhCJdqQ'
+          // token: this.$store.getters.token
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1MjEzNDU4MTMsImV4cCI6MTUyMTM0OTQxM30.St-FtQEA5XcR5WeoP5JfDC-72Id1Wd9zTon3VodjS7Y'
         }
       })
         .then(function (responce) {
