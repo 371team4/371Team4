@@ -273,6 +273,12 @@ describe('AuthorSlide.vue', function () {
       expect(vm.formattedTime).to.equal('0:00 AM')
     })
 
+    it('should return correct time given 0:01', function () {
+      vm.$props.slide.time.content = '0:00'
+
+      expect(vm.formattedTime).to.equal('0:01 AM')
+    })
+
     it('should return correct time given 12:00', function () {
       vm.$props.slide.time.content = '12:00'
 
