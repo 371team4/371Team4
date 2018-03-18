@@ -69,7 +69,8 @@
           :key="index">
 
           <!-- Temporary solution: Day Cards in Week Component -->
-          <!-- Need Day Cards component in here -->
+          <!-- Need Day Cards component in here. Not testing this portion
+          extensively because will be replaced soon with Day Cards -->
           <v-container
             xs12
             sm12
