@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div>
+      <!-- Food Menu Widget Toolbar --> 
       <v-toolbar
         color="light-blue darken-3"
         dark
@@ -88,61 +89,61 @@
               row
               wrap>
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Monday</h3>
-                  <div> {{ i.Monday }} </div>
+                    <h3 class="headline mb-0">Monday</h3>
+                    <div> {{ i.Monday }} </div>
                   </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Tuesday</h3>
-                  <div> {{ i.Tuesday }} </div>
+                    <h3 class="headline mb-0">Tuesday</h3>
+                    <div> {{ i.Tuesday }} </div>
                   </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Wednesday</h3>
-                  <div> {{ i.Wednesday }} </div>
+                    <h3 class="headline mb-0">Wednesday</h3>
+                    <div> {{ i.Wednesday }} </div>
                   </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Thursday</h3>
-                  <div> {{ i.Thursday }} </div>
+                    <h3 class="headline mb-0">Thursday</h3>
+                    <div> {{ i.Thursday }} </div>
                   </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Friday</h3>
-                  <div> {{ i.Friday }} </div>
+                    <h3 class="headline mb-0">Friday</h3>
+                    <div> {{ i.Friday }} </div>
                   </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4>
+              xs4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Saturday</h3>
-                  <div> {{ i.Saturday }} </div>
+                    <h3 class="headline mb-0">Saturday</h3>
+                    <div> {{ i.Saturday }} </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -154,8 +155,8 @@
                 offset-lg4>
                 <v-card>
                   <div>
-                  <h3 class="headline mb-0">Sunday</h3>
-                  <div> {{ i.Sunday }} </div>
+                    <h3 class="headline mb-0">Sunday</h3>
+                    <div> {{ i.Sunday }} </div>
                   </div>
                 </v-card>
               </v-flex>
@@ -163,6 +164,16 @@
             </v-layout>
           </v-container>
           <!-- Done Day Cards -->
+
+          <v-snackbar
+            v-model="tooManyWeeksDialogShown"
+          >
+            {{ tooManyWeeksAdded }}
+            <v-btn
+              flat
+              color="blue lighten-3"
+              @click.native="tooManyWeeksDialogShown = false">Close</v-btn>
+          </v-snackbar>
 
         </v-tab-item>
       </v-tabs-items>
@@ -175,6 +186,10 @@
 export default {
   data () {
     return {
+      // Information dialog when there are more than 5 weeks added
+      tooManyWeeksDialogShown: false,
+      tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
+      //
       numWeeks: 1,
       active: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -340,6 +355,8 @@ export default {
     addWeek () {
       if (this.numWeeks < 5) {
         this.numWeeks = this.numWeeks + 1
+      } else if (this.numWeeks >= 5) {
+        this.tooManyWeeksDialogShown = true
       }
     },
     removeWeek (weekNumber) {
