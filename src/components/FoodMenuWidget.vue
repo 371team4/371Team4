@@ -377,7 +377,7 @@ export default {
         // Show alert dialog to warn users that they are deleting
         this.dialog = true
         // Remove the week
-        this.weeks.splice(weekNumber + 1, 1)
+        this.weeks.splice(weekNumber, 1)
         // Counter to only add 5 weeks
         this.numWeeks = this.numWeeks - 1
       } else {
