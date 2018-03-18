@@ -4,7 +4,7 @@ import FoodMenuWidget from '@/components/FoodMenuWidget'
 // This testing will change. Was not able to test the Vue components themselves, so
 // I am testing the data and computed components within this unit test instead.
 
-describe.only('FoodMenuWidget.vue', function () {
+describe('FoodMenuWidget.vue', function () {
   let vm, Constructor // <-- objects to be redefined
 
   before(function () {
