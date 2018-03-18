@@ -88,20 +88,62 @@
               row
               wrap>
               <v-flex
-                xs4
-                v-for="j in 3"
-                :key="j*89">
+                xs4>
                 <v-card>
-                  <v-card-text class="px-0">sup</v-card-text>
+                  <div>
+                  <h3 class="headline mb-0">Monday</h3>
+                  <div> {{ i.Monday }} </div>
+                  </div>
                 </v-card>
               </v-flex>
 
               <v-flex
-                xs4
-                v-for="p in 3"
-                :key="p*865">
+                xs4>
                 <v-card>
-                  <v-card-text class="px-0">b</v-card-text>
+                  <div>
+                  <h3 class="headline mb-0">Tuesday</h3>
+                  <div> {{ i.Tuesday }} </div>
+                  </div>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4>
+                <v-card>
+                  <div>
+                  <h3 class="headline mb-0">Wednesday</h3>
+                  <div> {{ i.Wednesday }} </div>
+                  </div>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4>
+                <v-card>
+                  <div>
+                  <h3 class="headline mb-0">Thursday</h3>
+                  <div> {{ i.Thursday }} </div>
+                  </div>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4>
+                <v-card>
+                  <div>
+                  <h3 class="headline mb-0">Friday</h3>
+                  <div> {{ i.Friday }} </div>
+                  </div>
+                </v-card>
+              </v-flex>
+
+              <v-flex
+                xs4>
+                <v-card>
+                  <div>
+                  <h3 class="headline mb-0">Saturday</h3>
+                  <div> {{ i.Saturday }} </div>
+                  </div>
                 </v-card>
               </v-flex>
 
@@ -109,13 +151,15 @@
                 xs4
                 offset-xs0
                 offset-md0
-                offset-lg4
-                v-for="k in 1"
-                :key="k*809">
+                offset-lg4>
                 <v-card>
-                  <v-card-text class="px-0">lol</v-card-text>
+                  <div>
+                  <h3 class="headline mb-0">Sunday</h3>
+                  <div> {{ i.Sunday }} </div>
+                  </div>
                 </v-card>
               </v-flex>
+
             </v-layout>
           </v-container>
           <!-- Done Day Cards -->
