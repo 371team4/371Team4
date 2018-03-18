@@ -1,64 +1,57 @@
 import Vue from 'vue'
 import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
 
-describe('DefaultSlideTemplate.vue', function () {
-  let vm, Constructor // <- objects to be redefined
+/* definition of props to be passed down */
+const mockProps = {
+  carousel: 0,
+  slide: {
+    images: [
+      { src: 'https://www.usask.ca/programs/images/college.jpg' },
+      { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
+    ],
+    title: {
+      content: 'Sherbrooke Event Title',
+      fontColor: 'Blue',
+      fontSize: 'Large',
+      fontStyle: 'Normal',
+      fontWeight: 'Oblique'
+    },
+    description: {
+      content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
+      fontColor: 'Red',
+      fontSize: 'Small',
+      fontStyle: 'Normal',
+      fontWeight: 'Lighter'
+    },
+    date: {
+      content: '2018-03-07',
+      fontColor: 'Green',
+      fontSize: 'Medium',
+      fontStyle: 'Italic',
+      fontWeight: 'Bolder'
+    },
+    time: {
+      content: '11:05 AM',
+      fontColor: 'Yellow',
+      fontSize: 'Smaller',
+      fontStyle: 'Normal',
+      fontWeight: 'Bold'
+    },
+    meta: {
+      template: 'DefaultSlideTemplate',
+      timeout: '90',
+      repeatable: true,
+      startDate: '2018-07-25',
+      endDate: '2018-09-01'
+    }
+  }
+}
 
-  before(function () {
-    Constructor = Vue.extend(DefaultSlideTemplate)
-  })
+describe('DefaultSlideTemplate.vue', function () {
+  const Constructor = Vue.extend(DefaultSlideTemplate)
+  let vm // <- objects to be redefined
 
   describe('Test slide content', function () {
-    let mockProps
-
-    before(function () {
-      /* definition of props to be passed down */
-      mockProps = {
-        carousel: 0,
-        slide: {
-          images: [
-            { src: 'https://www.usask.ca/programs/images/college.jpg' },
-            { src: 'http://csee2015.usask.ca/images/3611278449_e68f87520b_b.jpg' }
-          ],
-          title: {
-            content: 'Sherbrooke Event Title',
-            fontColor: 'Blue',
-            fontSize: 'Large',
-            fontStyle: 'Normal',
-            fontWeight: 'Oblique'
-          },
-          description: {
-            content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
-            fontColor: 'Red',
-            fontSize: 'Small',
-            fontStyle: 'Normal',
-            fontWeight: 'Lighter'
-          },
-          date: {
-            content: '2018-03-07',
-            fontColor: 'Green',
-            fontSize: 'Medium',
-            fontStyle: 'Italic',
-            fontWeight: 'Bolder'
-          },
-          time: {
-            content: '11:05 AM',
-            fontColor: 'Yellow',
-            fontSize: 'Smaller',
-            fontStyle: 'Normal',
-            fontWeight: 'Bold'
-          },
-          meta: {
-            template: 'DefaultSlideTemplate',
-            timeout: '90',
-            repeatable: true,
-            startDate: '2018-07-25',
-            endDate: '2018-09-01'
-          }
-        }
-      }
-    })
-
     // reset the test case
     beforeEach('Reset the contents to the preset style of props', function () {
       // pass data into propsData
