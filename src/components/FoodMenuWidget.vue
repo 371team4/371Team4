@@ -10,7 +10,7 @@
         <v-toolbar-title>Food Menu</v-toolbar-title>
         <v-spacer/>
         <v-btn
-          fab
+          icon
           small
           color="red darken-3"
           @click.native="addWeek">
@@ -168,8 +168,7 @@
 
           <!-- Ensure the first week doesn't get deleted -->
           <v-snackbar
-            v-model="dontDeleteTheFirstWeek"
-          >
+            v-model="dontDeleteTheFirstWeek">
             Cannot delete the first week!
             <v-btn
               flat
@@ -243,7 +242,7 @@ export default {
         },
         {
           Monday: {
-            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
+            Lunch: ['Pickled Radish', 'Spinach and Peas', '', '', ''],
             Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
           },
           Tuesday: {
@@ -252,7 +251,7 @@ export default {
           },
           Wednesday: {
             Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
+            Dinner: ['Beef Wellington', 'Rice Porridge', '', '', '']
           },
           Thursday: {
             Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
@@ -264,11 +263,11 @@ export default {
           },
           Saturday: {
             Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
+            Dinner: ['Bubble Waffles', 'Enchiladas with Salsa Verde', '', '', '']
           },
           Sunday: {
             Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
+            Dinner: ['Chickpea Falafel', 'Kale Salad', '', '', '']
           }
         },
         {
