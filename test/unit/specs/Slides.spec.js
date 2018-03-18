@@ -3,8 +3,8 @@ import sinon from 'sinon'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import Slides from '@/components/Slides'
-import slideModule from '@/store/modules/slide/index'
-import routerModule from '@/router/index'
+import slideModule from '@/store/modules/slide'
+import routerModule from '@/router'
 
 const mockSlides = [
   {
