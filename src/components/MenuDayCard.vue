@@ -1,61 +1,39 @@
 <template>
   <v-container>
     <v-card
-      width="450px"
-      hover>
-      <v-layout horizontal>
+      hover
+      :data-test-attr="testAttr">
+      <!-- to be positioned later -->
+      <v-card-text
+        data-test-attr="dayName"
+        class="pt-2 pb-0">
+        {{ day.name }}
+      </v-card-text>
+      <v-layout
+        wrap
+        horizontal>
         <v-flex
-          sm
-          pr-3
-          pl-1
-          pb-1>
-          <v-subheader>Lunch</v-subheader>
-          <v-text-field
-            solo
-            name="item1"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item2"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item3"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item4"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item5"
-            label="Food Item"/>
-        </v-flex>
-        <v-flex
-          sm
-          pb-1
-          pr-1>
-          <v-subheader>Supper</v-subheader>
-          <v-text-field
-            solo
-            name="item1"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item2"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item3"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item4"
-            label="Food Item"/>
-          <v-text-field
-            solo
-            name="item5"
-            label="Food Item"/>
+          class="mx-1 my-1"
+          v-for="(content, name) in day.meals"
+          :key="name">
+          <!-- need a div to get this data test attr, v-flex and v-container don't accept custom html attrs -->
+          <div :data-test-attr="`mealContainer_${name}`">
+            <v-subheader
+              data-test-attr="mealName"
+              class="justify-center py-1">
+              {{ name }}
+            </v-subheader>
+            <v-text-field
+              solo
+              label="Food Item"
+              class="mb-1"
+              data-test-attr="menuItem"
+              v-for="(menuItem, index) in content"
+              :key="index"
+              :name="menuItem"
+              :readonly="readOnly"
+              :flat="readOnly"/>
+          </div>
         </v-flex>
       </v-layout>
     </v-card>
@@ -65,30 +43,25 @@
 <script>
 export default {
   props: {
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
     day: {
       type: Object,
       default: () => ({
-        meal1: {
-          item1: ' ',
-          item2: ' ',
-          item3: ' ',
-          item4: ' ',
-          item5: ' '
-        },
-        meal2: {
-          item1: ' ',
-          item2: ' ',
-          item3: ' ',
-          item4: ' ',
-          item5: ' '
+        name: 'Monday',
+        meals: {
+          'Lunch': [' ', ' ', ' ', ' ', ' '],
+          'Supper': [' ', ' ', ' ', ' ', ' ']
         }
       })
     }
+  },
+  data () {
+    return {
+      testAttr: 'menuDayCard'
+    }
   }
 }
-
 </script>
-
-<style scoped>
-
-</style>
