@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div>
-      <!-- Food Menu Widget Toolbar --> 
+      <!-- Food Menu Widget Toolbar -->
       <v-toolbar
         color="light-blue darken-3"
         dark
@@ -17,10 +17,17 @@
 
           <v-icon dark>add</v-icon>
         </v-btn>
-        <v-btn icon>
+
+        <!-- buttons to save changes and schedule the menu -->
+        <!-- NOT YET IMPLEMENTED YET. -->
+        <v-btn
+          icon
+          @click.native="saveChanges">
           <v-icon>save</v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn
+          icon
+          @click.native="scheduleMenu">
           <v-icon>event</v-icon>
         </v-btn>
 
@@ -200,7 +207,7 @@ export default {
       return [
         {
           Monday: {
-            Lunch: ['Pizza', 'Spinach and Peas', '', '', ''],
+            Lunch: ['Pizza', 'Spinach Casserole', '', '', ''],
             Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
           },
           Tuesday: {
@@ -209,7 +216,7 @@ export default {
           },
           Wednesday: {
             Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Sushi', '', '', '']
+            Dinner: ['Beef Wellington', 'Calzones', '', '', '']
           },
           Thursday: {
             Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
@@ -221,11 +228,11 @@ export default {
           },
           Saturday: {
             Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Kimchi Pancakes', 'Enchiladas with Salsa Verde', '', '', '']
+            Dinner: ['Pho', 'Enchiladas with Salsa Verde', '', '', '']
           },
           Sunday: {
             Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Gumbo', 'Kale Salad', '', '', '']
+            Dinner: ['Baked Alaska', 'Kale Salad', '', '', '']
           }
         },
         {
@@ -363,6 +370,14 @@ export default {
       console.log(weekNumber)
       this.weeks.splice(weekNumber, 1)
       // console.log(this.weeks[weekNumber-1].Monday)
+    },
+    saveChanges () {
+      // Not yet implemented
+      console.log("Save button was pressed")
+    },
+    scheduleMenu () {
+      // Not yet implemented
+      console.log("Event button was pressed")
     }
   }
 }
