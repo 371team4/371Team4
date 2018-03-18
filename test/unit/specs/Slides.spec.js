@@ -245,7 +245,6 @@ describe('Slides.vue', () => {
       sinon.spy(vm.$router, 'push')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
-      debugger
       expect(vm.$router.push.firstCall.args).to.deep.equal([{
         path: '/designer', // the router injects this into the param
         name: 'Designer',
