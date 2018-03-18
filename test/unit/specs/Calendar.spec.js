@@ -244,8 +244,7 @@ describe('Calendar.vue', function () {
       vm.$store.state.allSlides = [{}]
 
       Vue.nextTick(() => {
-        expect(vm.events.length).to.equal(1)
-        expect(isEmptyObject(vm.events[0])).to.equal(true)
+        expect(vm.events).to.eql([{}])
         done()
       })
     })
@@ -259,8 +258,7 @@ describe('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.events.length).to.equal(1)
-        expect(isEmptyObject(vm.events[0])).to.equal(true)
+        expect(vm.events).to.eql([{}])
         done()
       })
     })
@@ -279,8 +277,7 @@ describe('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.events.length).to.equal(1)
-        expect(isEmptyObject(vm.events[0])).to.equal(true)
+        expect(vm.events).to.eql([{}])
         done()
       })
     })
@@ -294,8 +291,7 @@ describe('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.events.length).to.equal(1)
-        expect(isEmptyObject(vm.events[0])).to.equal(true)
+        expect(vm.events).to.eql([{}])
         done()
       })
     })
@@ -314,15 +310,9 @@ describe('Calendar.vue', function () {
       }]
 
       Vue.nextTick(() => {
-        expect(vm.events.length).to.equal(1)
-        expect(isEmptyObject(vm.events[0])).to.equal(true)
+        expect(vm.events).to.eql([{}])
         done()
       })
     })
   })
-
-  // checks if obj is an empty Object i.e. obj = {}
-  function isEmptyObject (obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object
-  }
 })
