@@ -39,8 +39,8 @@
           slider-color="amber lighten-3"
           v-model="active">
           <v-tab
-            v-for="(i) in numWeeks"
-            :key="i">
+            v-for="(i, index) in weeks, numWeeks"
+            :key="index">
 
             <!-- Delete week button -->
             <v-btn
@@ -52,7 +52,7 @@
               <v-icon>close</v-icon>
             </v-btn>
 
-            Week {{ i }}
+            Week {{ index+1 }}
 
           </v-tab>
         </v-tabs>
@@ -63,26 +63,7 @@
           :key="index">
 
           <!-- Temporary solution: Day Cards in Week Component -->
-          <!-- <template>
-            <v-layout>
-              <v-flex
-                xs3
-                sm3
-                md3
-                lg3
-                offset-sm2>
-                <v-card>
-                  <v-card-title primary-title>
-                    <div>
-                      <h3 class="headline mb-0">Monday</h3>
-                      <div> {{ i }} </div>
-                    </div>
-                  </v-card-title>
-                </v-card>
-              </v-flex>
-            </v-layout>
-          </template> -->
-
+          <!-- Need Jordan's Day Cards in here -->
           <v-container
             align-content-center
             align-center
@@ -373,11 +354,11 @@ export default {
     },
     saveChanges () {
       // Not yet implemented
-      console.log("Save button was pressed")
+      console.log('Save button was pressed')
     },
     scheduleMenu () {
       // Not yet implemented
-      console.log("Event button was pressed")
+      console.log('Event button was pressed')
     }
   }
 }
