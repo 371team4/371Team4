@@ -35,10 +35,6 @@
 
         <!-- Week Component begins here -->
         <v-tabs
-          xs12
-          sm12
-          md12
-          lg12
           show-arrows
           align-with-title
           color="light-blue darken-1"
@@ -51,7 +47,6 @@
 
             <!-- Delete week button -->
             <v-btn
-              round
               small
               flat
               icon
@@ -73,10 +68,6 @@
           <!-- Need Day Cards component in here. Not testing this portion
           extensively because will be replaced soon with Day Cards -->
           <v-container
-            xs12
-            sm12
-            md12
-            lg12
             justify-center
             justify-space-around
             grid-list-md
@@ -387,7 +378,7 @@ export default {
         // Show alert dialog to warn users that they are deleting
         this.dialog = true
         // Remove the week
-        this.weeks.splice(weekNumber, 1)
+        this.weeks.splice(weekNumber + 1, 1)
         // Counter to only add 5 weeks
         this.numWeeks = this.numWeeks - 1
       } else {
