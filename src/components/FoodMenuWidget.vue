@@ -375,12 +375,13 @@ export default {
       }
     },
     removeWeek (weekNumber) {
+      // console.log(weekNumber)
       // Don't delete the first week
       if (weekNumber !== 0) {
         // Show alert dialog to warn users that they are deleting
         this.dialog = true
         // Remove the week
-        this.weeks.splice(weekNumber + 1, 1)
+        this.weeks.splice(weekNumber, 1)
         // Counter to only add 5 weeks
         this.numWeeks = this.numWeeks - 1
       } else {
@@ -390,11 +391,13 @@ export default {
     },
     saveChanges () {
       // Not yet implemented
-      console.log('Save button was pressed')
+      // console.log('Save button was pressed')
+      return 0 // <-- for testing purposes, test that a value was returned
     },
     scheduleMenu () {
       // Not yet implemented
-      console.log('Event button was pressed')
+      // console.log('Event button was pressed')
+      return 0 // <-- for testing purposes, test that a value was returned
     }
   }
 }

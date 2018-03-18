@@ -20,5 +20,17 @@ describe.only('FoodMenuWidget.vue', function () {
       expect(vm.$data.tooManyWeeksDialogShown).to.equal(false)
       expect(vm.$data.tooManyWeeksAdded).to.equal('Cannot add more than 5 weeks!')
     })
+
+    it('Ensure property to control not deleting the first week is set to false by default', function () {
+      expect(vm.$data.dontDeleteTheFirstWeek).to.equal(false)
+    })
+
+    it('Number of weeks to be added counter should be 1 by default', function () {
+      expect(vm.$data.numWeeks).to.equal(1)
+    })
+
+    it('Property to control behavior of week tabs should be null', function () {
+      expect(vm.$data.active).to.equal(0)
+    })
   })
 })
