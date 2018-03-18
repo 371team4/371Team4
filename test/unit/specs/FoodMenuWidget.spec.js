@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import sinon from 'sinon'
 import FoodMenuWidget from '@/components/FoodMenuWidget'
 
 // This testing will change. Was not able to test the Vue components themselves, so
@@ -28,18 +29,17 @@ describe.only('FoodMenuWidget.vue', function () {
     it('Number of weeks to be added counter should be 1 by default', function () {
       expect(vm.$data.numWeeks).to.equal(1)
     })
-
-    it('Property to control behavior of week tabs should be null', function () {
-      expect(vm.$data.active).to.equal(null || '0')
-    })
   })
 
-  describe('Computed properties should match default', function () {
+  describe('Computed properties should match default', function (done) {
     before(function () {
       vm = new Constructor().$mount()
+      Vue.nextTick(() => {
+        done()
+      })
     })
 
-    it('Week array should remain unaltered', function (done) {
+    it('Week array should remain unaltered', function () {
       let weekOne = {
         Monday: {
           Lunch: ['Pizza', 'Spinach Casserole', '', '', ''],
@@ -137,10 +137,22 @@ describe.only('FoodMenuWidget.vue', function () {
       expect(vm.weeks[2]).to.deep.equal(weekThree)
       expect(vm.weeks[3]).to.deep.equal(weekThree)
       expect(vm.weeks[4]).to.deep.equal(weekThree)
+    })
+  })
 
-      Vue.nextTick(() => {
-        done()
-      })
+  describe('Functions should be called and return the correct values', function () {
+    before(function () {
+      vm = new Constructor().$mount()
+    })
+
+    it('saveChanges() - returns 0 for now', function () {
+      const result = vm.saveChanges()
+      expect(result).to.equal(0)
+    })
+
+    it('scheduleMenu() - returns 0 for now', function () {
+      const result = vm.scheduleMenu()
+      expect(result).to.equal(0)
     })
   })
 })
