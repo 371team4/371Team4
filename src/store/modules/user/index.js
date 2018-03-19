@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { SET_USER, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
 
-const server = 'https://cmpt371g4.usask.ca:8443'
+const server = 'https://cmpt371g4.usask.ca:8081'
 
 // state of this module
 const state = {
   token: '',
-  user: { id: '_change', email: 'blah@blah.com' }
+  _id: '',
+  username: ''
 }
 
 // getters for this module's state
@@ -34,15 +35,16 @@ const mutations = {
 
 // actions can be async and may have side effects
 const actions = {
+  // payload is username and password
   signIn ({ commit }, payload) {
     commit(SET_LOADING, { loading: true })
 
     return new Promise((resolve, reject) => {
-      axios.post(server + '/api/login/' + payload)
+      axios.post(server + '/api/login/', payload)
         .then(function (responce) {
           commit(SET_TOKEN, responce)
           const newUser = {
-            id: responce.id,
+            id: responce._id,
             name: responce
           }
           commit(SET_LOADING, { loading: false })
@@ -55,14 +57,11 @@ const actions = {
         })
     })
   },
-  signOut () {
-    // authService.signOut().then(function () {
-    //   alert('Logged out')
-    // }).catch(
-    //   error => {
-    //     console.log(error)
-    //   }
+  signOut ({ commit }) {
+    commit(SET_TOKEN, '')
+    alert('logged out')
   },
+  // payload is usernname and password
   createUser (payload) {
     return new Promise((resolve, reject) => {
       axios.post(server + '/api/user/', payload)
@@ -74,12 +73,13 @@ const actions = {
         })
     })
   },
+  // payload is password
   updateUser (payload) {
-    const id = state.user.id
+    const id = state._id
 
     if (id) {
       return new Promise((resolve, reject) => {
-        axios.post(server + '/api/user/:' + payload.username)
+        axios.post(server + '/api/user/:' + id, payload)
           .then(function (responce) {
           })
           .catch(function (err) {
@@ -90,11 +90,11 @@ const actions = {
     }
   },
   deleteUser (payload) {
-    const id = state.user.id
+    const id = state._id
 
     if (id) {
       return new Promise((resolve, reject) => {
-        axios.delete(server + '/api/user/:' + payload.username)
+        axios.delete(server + '/api/user/:' + id)
           .then(function (responce) {
           })
           .catch(function (err) {
