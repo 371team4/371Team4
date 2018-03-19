@@ -26,10 +26,10 @@ const getters = {
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
   [SET_USER] (state, payload) {
-    state.user = payload.user
+    state.user = payload
   },
   [SET_TOKEN] (state, payload) {
-    state.token = payload.token
+    state.token = payload
   }
 }
 
