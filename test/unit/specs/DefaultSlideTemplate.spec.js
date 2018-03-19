@@ -262,15 +262,6 @@ describe('DefaultSlideTemplate.vue', function () {
       })
     })
 
-    it('should return undefined given 0 timeout', function (done) {
-      vm.$props.slide.meta.timeout = 0
-
-      Vue.nextTick(() => {
-        expect(vm.carouselInterval).to.equal(undefined)
-        done()
-      })
-    })
-
     it('should return undefined given negative timeout', function (done) {
       vm.$props.slide.meta.timeout = -10
 
