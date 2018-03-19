@@ -282,13 +282,7 @@ describe('AuthorSlide.vue', function () {
     it('should return correct time given 12:00', function () {
       vm.$props.slide.time.content = '12:00'
 
-      expect(vm.formattedTime).to.equal('12:00 AM')
-    })
-
-    it('should return correct time given 12:00', function () {
-      vm.$props.slide.time.content = '12:00'
-
-      expect(vm.formattedTime).to.equal('12:00 AM')
+      expect(vm.formattedTime).to.equal('12:00 PM')
     })
 
     it('should return correct time given 4:37', function () {
@@ -303,10 +297,10 @@ describe('AuthorSlide.vue', function () {
       expect(vm.formattedTime).to.equal('1:01 PM')
     })
 
-    it('should return correct time given 18:17', function () {
-      vm.$props.slide.time.content = '18:17'
+    it('should return correct time given 23:59', function () {
+      vm.$props.slide.time.content = '23:59'
 
-      expect(vm.formattedTime).to.equal('6:17 PM')
+      expect(vm.formattedTime).to.equal('11:59 PM')
     })
   })
 })
