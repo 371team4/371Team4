@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { SET_USER, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
+import util from 'util'
+import { SET_USERNAME, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
 
-const server = 'https://cmpt371g4.usask.ca:8081'
+const server = 'http://cmpt371g4.usask.ca:8081'
 
 // state of this module
 const state = {
@@ -25,7 +26,7 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  [SET_USER] (state, payload) {
+  [SET_USERNAME] (state, payload) {
     state.user = payload
   },
   [SET_TOKEN] (state, payload) {
@@ -40,17 +41,14 @@ const actions = {
     commit(SET_LOADING, { loading: true })
 
     return new Promise((resolve, reject) => {
-      axios.post(server + '/api/login/', payload)
+      axios.post(server + '/api/login', payload)
         .then(function (responce) {
-          commit(SET_TOKEN, responce)
-          const newUser = {
-            id: responce._id,
-            name: responce
-          }
+          commit(SET_TOKEN, responce.token)
           commit(SET_LOADING, { loading: false })
-          commit(SET_USER, { 'user': newUser })
+          commit(SET_USERNAME, responce.username)
         })
         .catch(function (err) {
+          console.log(util.inspect(err, false, null))
           reject(err)
           commit(SET_LOADING, { loading: false })
           console.log(err)

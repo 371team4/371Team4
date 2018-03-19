@@ -1,5 +1,5 @@
 import user from '@/store/modules/user/index'
-// import * as CURRENT_USER from '@/store/mutation-types'
+import * as CURRENT_USER from '@/store/mutation-types'
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
@@ -9,13 +9,23 @@ const testAction = (action, args, state, expectedMutations, done) => {
   const commit = (type, payload) => {
     const mutation = expectedMutations[count]
 
-    try {
-      expect(mutation.type).to.equal(type)
-      if (payload) {
-        expect(mutation.payload).to.deep.equal(payload)
+    // need extra case for SET_TOKEN since cannot know token beforehand and must get it from state after set by another
+    if (mutation.type === CURRENT_USER.SET_TOKEN) {
+      try {
+        expect(mutation.type).to.equal(type)
+        expect(mutation.payload.token).to.not.equal('')
+      } catch (error) {
+        done(error)
       }
-    } catch (error) {
-      done(error)
+    } else {
+      try {
+        expect(mutation.type).to.equal(type)
+        if (payload) {
+          expect(mutation.payload).to.deep.equal(payload)
+        }
+      } catch (error) {
+        done(error)
+      }
     }
 
     count++
@@ -35,74 +45,14 @@ const testAction = (action, args, state, expectedMutations, done) => {
 }
 
 describe('', () => {
+  // initial users in /src/config/seed.js must stay the same
   it('signIn', done => {
-    testAction(user.actions.signIn, [ { username: 'na', password: 'pass' } ], {}, [
+    testAction(user.actions.signIn, [ { username: 'test', password: 'admin001' } ], {}, [
       // mutation should been called in order from first to last
       { type: 'SET_LOADING', payload: { loading: true } },
       { type: 'SET_TOKEN', payload: 'as4' },
-      { type: 'SET_LOADING', payload: false },
-      { type: 'SET_USER', payload: { id: 123, name: 'na' } }
+      { type: 'SET_LOADING', payload: { loading: false } },
+      { type: 'SET_USERNAME', payload: 'test' }
     ], done)
   })
 })
-
-// actions have not been tested
-
-// const refreshState = () => {
-//   return {
-//     token: '',
-//     _id: '',
-//     username: ''
-//   }
-// }
-
-// const assert = (s, val) => { expect(s).to.deep.equal(val) }
-
-// describe('user', () => {
-//   // TEST GETTERS
-//   describe('getters', () => {
-//   })
-
-//   describe('mutations', () => {
-//     let state
-
-//     beforeEach(() => {
-//       state = refreshState()
-//     })
-
-//     it('SET_TOKEN', () => {
-//       const tokenBeforeMutation = ''
-
-//       const tokenAfterMutation = 'a34f'
-//       assert(state.token, tokenBeforeMutation)
-
-//       user.mutations[CURRENT_USER.SET_TOKEN](state, tokenAfterMutation)
-
-//       assert(state.token, tokenAfterMutation)
-//     })
-
-//     it('SET_USER', () => {
-//       const userBeforeMutation = ''
-
-//       const userAfterMutation = 'a34f'
-//       assert(state.token, userBeforeMutation)
-
-//       user.mutations[CURRENT_USER.SET_TOKEN](state, userAfterMutation)
-
-//       assert(state.token, userAfterMutation)
-//     })
-//   })
-
-//   describe.only('actions', () => {
-//     let state
-
-//     beforeEach(() => {
-//       state = refreshState()
-//     })
-
-//     it('signIn', () => {
-//       assert(state.token, userBeforeMutation)
-
-//     })
-//   })
-// })
