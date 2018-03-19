@@ -1,7 +1,7 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import { firebaseAction } from 'vuexfire'
 import axios from 'axios'
-const server = 'https://cmpt371g4.usask.ca:8443'
+const server = 'https://cmpt371g4.usask.ca:8081'
 
 // This module is used for create-newSlide and saveSlide
 
@@ -321,10 +321,10 @@ const actions = {
     const id = state.currentSlide['_id']
 
     axios.delete(server + '/api/slides/', {
-      id,
-      body: state.currentSlide
+      id
     })
       .then(function (response) {
+        console.log(response)
       })
       .catch(function (error) {
         console.log(error)
