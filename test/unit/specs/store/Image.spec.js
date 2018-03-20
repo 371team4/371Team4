@@ -14,10 +14,9 @@ const testAction = (action, args, state, expectedMutations, done) => {
     try {
       expect(mutation.type).to.equal(type)
       if (payload) {
-        if( mutation.payload != 'new'){
+        if (mutation.payload !== 'new') {
           expect(mutation.payload).to.deep.equal(payload)
-        }
-        else{
+        } else {
           sampleImageID = payload
         }
       }
@@ -46,7 +45,6 @@ var sampleImage
 var sampleImageID
 
 describe('Image APIs', function () {
-
   before(done => {
     sampleImage = new File('./207.png')
     done()

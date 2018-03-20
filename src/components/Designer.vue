@@ -124,7 +124,7 @@ export default {
     uploadImage (files) {
       debugger
       const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      console.log( tmpArray[0])
+      console.log(tmpArray[0])
       this.$store.dispatch('uploadImage', tmpArray[0]).then(function (value) {
         this.addImage(value._id)
       }.bind(this)).catch(function (err) {

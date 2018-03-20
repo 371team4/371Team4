@@ -5,7 +5,7 @@ const server = 'http://cmpt371g4.usask.ca:8081'
 
 function getImage (Id) {
   return new Promise((resolve, reject) => {
-    axios.get(server + '/api/images/' + payload)
+    axios.get(server + '/api/images/' + Id)
       .then(function (responce) {
         resolve(server + responce.data.path)
       })
@@ -38,7 +38,7 @@ function uploadImage (image) {
 
 function deleteImage (Id) {
   return new Promise((resolve, reject) => {
-    axios.delete(server + '/api/images/' + payload, {
+    axios.delete(server + '/api/images/' + Id, {
       data:
       {
         // token: this.$store.getters.token
