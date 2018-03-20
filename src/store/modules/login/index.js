@@ -1,7 +1,6 @@
 import axios from 'axios'
+import loginAPI from '@/services/API/login'
 import { SET_USERNAME, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
-
-const server = 'http://cmpt371g4.usask.ca:8081'
 
 // state of this module
 const state = {
@@ -37,25 +36,10 @@ const mutations = {
 const actions = {
   // payload is username and password
   signIn ({ commit }, payload) {
-    commit(SET_LOADING, { loading: true })
-
-    return new Promise((resolve, reject) => {
-      axios.post(server + '/api/login', payload)
-        .then(function (responce) {
-          commit(SET_TOKEN, responce.token)
-          commit(SET_LOADING, { loading: false })
-          commit(SET_USERNAME, responce.username)
-        })
-        .catch(function (err) {
-          reject(err)
-          commit(SET_LOADING, { loading: false })
-          console.log(err)
-        })
-    })
+    loginAPI.signIn({ commit }, payload)
   },
   signOut ({ commit }) {
-    commit(SET_TOKEN, '')
-    alert('logged out')
+    loginAPI.signOut({ commit })
   }
 }
 
