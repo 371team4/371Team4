@@ -1,3 +1,4 @@
+
 <template>
   <v-container
     fluid
@@ -14,6 +15,14 @@
         @clear="clear"
         @submit="submit"/>
     </v-layout>
+    <!--
+      <button
+        :onClick="getURL()"
+      >Submit</button>
+      <img
+      id="testImage"
+      ></img>
+    -->
   </v-container>
 </template>
 
@@ -22,6 +31,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import ImageCards from '@/components/ImageCards'
 import AuthorSlide from '@/components/AuthorSlide'
+
 export default {
   components: { ImageCards, AuthorSlide },
   mixins: [validationMixin],
@@ -50,7 +60,9 @@ export default {
   computed: {
     binding () {
       const binding = {}
+
       if (this.$vuetify.breakpoint.smAndDown) binding.column = true
+
       return binding
     },
     slideTitleErrors () {
@@ -112,16 +124,31 @@ export default {
     uploadImage (files) {
       debugger
       const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
-        this.addImage({ src: this.$store.getters.getUploadTask })
-      }.bind(this))
+      console.log( tmpArray[0])
+      this.$store.dispatch('uploadImage', tmpArray[0]).then(function (value) {
+        this.addImage(value._id)
+      }.bind(this)).catch(function (err) {
+        alert(err)
+      })
     },
     deleteImage (index) {
-      this.slide.images.splice(index, 1)
+      var image = this.slide.images
+      this.$store.dispatch('deleteImage', this.slide.images[index]).then(function () {
+        image.splice(index, 1)
+      }).catch(function (err) {
+        alert(err)
+      })
     },
     addImage (imgObject) {
       this.slide.images.push(imgObject)
       this.forceUpdateCarousel()
+    },
+    getURL () {
+      this.$store.dispatch('getImage', '5a98ada216608d51864ef43c').then(function (responce) {
+        document.getElementById('testImage').setAttribute('src', responce)
+      }).catch(function (err) {
+        alert(err)
+      })
     }
   }
 }
