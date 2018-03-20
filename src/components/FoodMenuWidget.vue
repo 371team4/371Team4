@@ -1,193 +1,128 @@
 <template>
   <v-container fluid>
-    <div>
-      <!-- Food Menu Widget Toolbar -->
-      <v-toolbar
+    <!-- Food Menu Widget Toolbar -->
+    <v-toolbar
+      dark
+      tabs
+      color="light-blue darken-1">
+      <v-icon>restaurant</v-icon>
+      <v-toolbar-title>Food Menu</v-toolbar-title>
+      <v-spacer/>
+      <v-btn
+        icon
+        small
+        color="red darken-3"
+        @click.native="addWeek">
+
+        <v-icon dark>add</v-icon>
+      </v-btn>
+
+      <!-- buttons to save changes and schedule the menu -->
+      <!-- NOT YET IMPLEMENTED YET. -->
+      <v-btn
+        small
+        icon
+        @click.native="saveChanges">
+        <v-icon>save</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        icon
+        @click.native="scheduleMenu">
+        <v-icon>event</v-icon>
+      </v-btn>
+
+      <!-- Week Component begins here -->
+      <v-tabs
+        v-model="active"
         color="light-blue darken-1"
-        dark
-        tabs>
-        <v-icon>restaurant</v-icon>
-        <v-toolbar-title>Food Menu</v-toolbar-title>
-        <v-spacer/>
-        <v-btn
-          icon
-          small
-          color="red darken-3"
-          @click.native="addWeek">
-
-          <v-icon dark>add</v-icon>
-        </v-btn>
-
-        <!-- buttons to save changes and schedule the menu -->
-        <!-- NOT YET IMPLEMENTED YET. -->
-        <v-btn
-          small
-          icon
-          @click.native="saveChanges">
-          <v-icon>save</v-icon>
-        </v-btn>
-        <v-btn
-          small
-          icon
-          @click.native="scheduleMenu">
-          <v-icon>event</v-icon>
-        </v-btn>
-
-        <!-- Week Component begins here -->
-        <v-tabs
-          show-arrows
-          color="light-blue darken-1"
-          slot="extension"
-          slider-color="amber lighten-3"
-          v-model="active">
-          <v-tab
-            v-for="(i, index) in weeks, numWeeks"
-            :key="i">
-
-            <!-- Delete week button -->
-            <v-btn
-              small
-              flat
-              icon
-              @click="removeWeek(index)">
-              <v-icon>close</v-icon>
-            </v-btn>
-
-            Week {{ i }}
-
-          </v-tab>
-        </v-tabs>
-      </v-toolbar>
-      <v-tabs-items v-model="active">
-        <v-tab-item
-          v-for="(i, index) in weeks"
+        slot="extension"
+        slider-color="amber lighten-3">
+        <v-tab
+          v-for="(week, index) in weeks"
           :key="index">
 
-          <!-- Temporary solution: Day Cards in Week Component -->
-          <!-- Need Day Cards component in here. Not testing this portion
+          <!-- Delete week button -->
+          <v-btn
+            small
+            flat
+            icon
+            class="ml-0"
+            @click="removeWeek(index)">
+            <v-icon>close</v-icon>
+          </v-btn>
+          Week {{ index + 1 }}
+        </v-tab>
+      </v-tabs>
+    </v-toolbar>
+    <v-tabs-items v-model="active">
+      <v-tab-item
+        v-for="(week, index) in weeks"
+        :key="index">
+
+        <!-- Temporary solution: Day Cards in Week Component -->
+        <!-- Need Day Cards component in here. Not testing this portion
           extensively because will be replaced soon with Day Cards; integrated after-->
-          <v-container
-            justify-center
-            justify-space-around
-            grid-list-md
-            text-xs-center>
-            <v-layout
-              row
-              wrap>
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Monday</h3>
-                    <div> {{ i.Monday }} </div>
+        <v-container
+          justify-center
+          justify-space-around
+          grid-list-md
+          text-xs-center>
+          <v-layout
+            row
+            wrap>
+            <v-flex
+              xs4
+              v-for="(day, i) in week"
+              :key="i">
+              <v-card height="250px">
+                <div>
+                  <h3 class="headline mb-0">{{ day.name }}</h3>
+                  <div
+                    v-for="(mealContent, mealName) in day.meals"
+                    :key="mealName">
+                    <h2>{{ mealName }}</h2>
+                    <p
+                      v-for="menuItem in mealContent"
+                      :key="menuItem">
+                      {{ menuItem }}
+                    </p>
                   </div>
-                </v-card>
-              </v-flex>
+                </div>
+              </v-card>
+            </v-flex>
 
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Tuesday</h3>
-                    <div> {{ i.Tuesday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
+          </v-layout>
+        </v-container>
+        <!-- Done Day Cards -->
+      </v-tab-item>
+    </v-tabs-items>
+    <!-- Ensure the first week doesn't get deleted -->
+    <v-snackbar
+      multi-line
+      right
+      vertical
+      v-model="dontDeleteTheFirstWeek">
+      Cannot delete the first week!
+      <v-btn
+        flat
+        color="blue lighten-3"
+        @click.native="dontDeleteTheFirstWeek = false">Close</v-btn>
+    </v-snackbar>
 
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Wednesday</h3>
-                    <div> {{ i.Wednesday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Thursday</h3>
-                    <div> {{ i.Thursday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Friday</h3>
-                    <div> {{ i.Friday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-              xs4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Saturday</h3>
-                    <div> {{ i.Saturday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
-
-              <v-flex
-                xs4
-                offset-xs0
-                offset-md0
-                offset-lg4>
-                <v-card
-                height="250px">
-                  <div>
-                    <h3 class="headline mb-0">Sunday</h3>
-                    <div> {{ i.Sunday }} </div>
-                  </div>
-                </v-card>
-              </v-flex>
-
-            </v-layout>
-          </v-container>
-          <!-- Done Day Cards -->
-
-          <!-- Ensure the first week doesn't get deleted -->
-          <v-snackbar
-            multi-line
-            right
-            vertical
-            v-model="dontDeleteTheFirstWeek">
-            Cannot delete the first week!
-            <v-btn
-              flat
-              color="blue lighten-3"
-              @click.native="dontDeleteTheFirstWeek = false">Close</v-btn>
-          </v-snackbar>
-
-          <!-- Ensure only 5 weeks get added -->
-          <v-snackbar
-            multi-line
-            right
-            vertical
-            v-model="tooManyWeeksDialogShown">
-            {{ tooManyWeeksAdded }}
-            <v-btn
-              flat
-              color="blue lighten-3"
-              @click.native="tooManyWeeksDialogShown = false">Close</v-btn>
-          </v-snackbar>
-
-        </v-tab-item>
-      </v-tabs-items>
-      <!-- Done Week Component -->
-    </div>
+    <!-- Ensure only 5 weeks get added -->
+    <v-snackbar
+      multi-line
+      right
+      vertical
+      v-model="tooManyWeeksDialogShown">
+      {{ tooManyWeeksAdded }}
+      <v-btn
+        flat
+        color="blue lighten-3"
+        @click.native="tooManyWeeksDialogShown = false">Close</v-btn>
+    </v-snackbar>
+    <!-- Done Week Component -->
   </v-container>
 </template>
 
@@ -200,186 +135,74 @@ export default {
       tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
       // Ensure first week does not get deleted
       dontDeleteTheFirstWeek: false,
-      numWeeks: 1,
-      active: null
-    }
-  },
-  computed: {
-    weeks () {
-      return [
-        {
-          Monday: {
-            Lunch: ['Pizza', 'Spinach Casserole', '', '', ''],
-            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
+      active: null,
+      weeks: [
+        [
+          {
+            name: 'Monday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Tuesday: {
-            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
+          {
+            name: 'Tuesday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Wednesday: {
-            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Calzones', '', '', '']
+          {
+            name: 'Wednesday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Thursday: {
-            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
+          {
+            name: 'Thursday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Friday: {
-            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
+          {
+            name: 'Friday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Saturday: {
-            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Pho', 'Enchiladas with Salsa Verde', '', '', '']
+          {
+            name: 'Saturday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           },
-          Sunday: {
-            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Baked Alaska', 'Kale Salad', '', '', '']
+          {
+            name: 'Sunday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
           }
-        },
-        {
-          Monday: {
-            Lunch: ['Pickled Radish', 'Spinach and Peas', '', '', ''],
-            Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-            Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-            Dinner: ['Beef Wellington', 'Rice Porridge', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-            Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
-          },
-          Friday: {
-            Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-            Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-            Dinner: ['Bubble Waffles', 'Enchiladas with Salsa Verde', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-            Dinner: ['Chickpea Falafel', 'Kale Salad', '', '', '']
-          }
-        },
-        {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        },
-        {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        },
-        {
-          Monday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Tuesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Wednesday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Thursday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Friday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Saturday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          },
-          Sunday: {
-            Lunch: ['', '', '', '', ''],
-            Dinner: ['', '', '', '', '']
-          }
-        }
+        ]
       ]
     }
   },
   methods: {
     addWeek () {
-      if (this.numWeeks < 5) {
-        // Ensure only 5 weeks are added
-        this.numWeeks = this.numWeeks + 1
-      } else if (this.numWeeks >= 5) {
+      // Ensure only 5 weeks are added
+      if (this.weeks.length === 5) {
         // Show that too many weeks are currently displayed
         this.tooManyWeeksDialogShown = true
+      } else {
+        // add an empty week to the list of weeks
+        const weekTemplate = [
+          { name: 'Monday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Tuesday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Wednesday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Thursday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Friday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Saturday', meals: { Lunch: [], Supper: [] } },
+          { name: 'Sunday', meals: { Lunch: [], Supper: [] } }
+        ]
+        this.weeks.push(weekTemplate)
+        // switch the tab view to the last week added to the list of weeks
+        // vuetify tabs don't understand anything but strings
+        this.active = (parseInt(this.weeks.length) - 1).toString()
       }
     },
     removeWeek (weekNumber) {
-      // console.log(weekNumber)
       // Don't delete the first week
-      if (weekNumber !== 0) {
+      if (this.weeks.length > 1) {
         // Show alert dialog to warn users that they are deleting
-        this.dialog = true
+        // this.dialog = true
         // Remove the week
         this.weeks.splice(weekNumber, 1)
-        // Counter to only add 5 weeks
-        this.numWeeks = this.numWeeks - 1
+        // switch the tab view to the week before the deleted one
+        // vuetify tabs don't understand anything but strings
+        this.active = (parseInt(weekNumber) - 1).toString()
       } else {
         // Set to show a message saying not to delete the first week
         this.dontDeleteTheFirstWeek = true
