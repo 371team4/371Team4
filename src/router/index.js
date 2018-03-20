@@ -84,7 +84,7 @@ const router = new Router({
     {
       path: '/foodmenu',
       name: 'Food Menu Widget',
-      icon: 'live_tv',
+      icon: 'local_dining',
       component: FoodMenuWidget,
       scrollToTop: true,
       meta: {
