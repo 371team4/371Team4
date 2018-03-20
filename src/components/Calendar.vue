@@ -1,16 +1,14 @@
 <template>
-  <v-container fluid>
-    <full-calendar
-      :config="config"
-      :events="events"/>
-  </v-container>
+  <full-calendar
+    class="mx-3 my-3"
+    :config="config"
+    :events="events"/>
 </template>
 
 <script>
 // Import calendar as a plugin
 import { FullCalendar } from 'vue-full-calendar'
-// CSS
-import 'fullcalendar/dist/fullcalendar.min.css'
+
 export default {
   name: 'Hello',
   components: {
@@ -19,7 +17,16 @@ export default {
   data () {
     return {
       config: {
-        defaultView: 'month'
+        editable: false,
+        selectable: false,
+        defaultView: 'month',
+        header: {
+          left: 'prev,next',
+          center: 'title',
+          right: ''
+        },
+        height: 'auto',
+        contentHeight: 'auto'
       }
     }
   },
@@ -56,5 +63,22 @@ export default {
 
   }
 }
-
 </script>
+
+<style>
+  @import 'fullcalendar/dist/fullcalendar.min.css';
+
+  @media print {
+    @page {size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)}
+    #calendar { margin: 0px;  }
+    .fc-left { display: none; }
+    /*
+    .toolbar { display: none; }
+    */
+
+    [data-test-attr='appToolBar'] { display: none; }
+    [data-test-attr='appNav'] { display: none; }
+    .navigaton-drawer { display: none; }
+
+  }
+</style>
