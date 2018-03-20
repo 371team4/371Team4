@@ -26,7 +26,7 @@ describe('FoodMenuWidget.vue', function () {
     })
 
     it('Number of weeks to be added counter should be 1 by default', function () {
-      expect(vm.$data.weeks).to.have.lengthOf(1)
+      vm.$nextTick(() => expect(vm.weeks).to.have.lengthOf(1))
     })
   })
 
@@ -71,7 +71,7 @@ describe('FoodMenuWidget.vue', function () {
           }
         ]
       ]
-      expect(vm.$data.weeks).to.deep.equal(weeks)
+      expect(vm.weeks).to.deep.equal(weeks)
     })
   })
 

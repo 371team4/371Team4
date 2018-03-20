@@ -135,36 +135,61 @@ export default {
       tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
       // Ensure first week does not get deleted
       dontDeleteTheFirstWeek: false,
-      active: null,
-      weeks: [
+      active: null
+    }
+  },
+  computed: {
+    weeks () {
+      return [
         [
           {
             name: 'Monday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Tuesday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Wednesday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Thursday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Friday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Saturday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           },
           {
             name: 'Sunday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['Pizza', 'Spinach Casserole'],
+              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+            }
           }
         ]
       ]
