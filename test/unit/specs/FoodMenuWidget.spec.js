@@ -26,7 +26,7 @@ describe('FoodMenuWidget.vue', function () {
     })
 
     it('Number of weeks to be added counter should be 1 by default', function () {
-      expect(vm.$data.numWeeks).to.equal(1)
+      expect(vm.$data.weeks).to.have.lengthOf(1)
     })
   })
 
@@ -39,103 +39,39 @@ describe('FoodMenuWidget.vue', function () {
     })
 
     it('Week array should remain unaltered', function () {
-      let weekOne = {
-        Monday: {
-          Lunch: ['Pizza', 'Spinach Casserole', '', '', ''],
-          Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
-        },
-        Tuesday: {
-          Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-          Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
-        },
-        Wednesday: {
-          Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-          Dinner: ['Beef Wellington', 'Calzones', '', '', '']
-        },
-        Thursday: {
-          Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-          Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
-        },
-        Friday: {
-          Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-          Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
-        },
-        Saturday: {
-          Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-          Dinner: ['Pho', 'Enchiladas with Salsa Verde', '', '', '']
-        },
-        Sunday: {
-          Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-          Dinner: ['Baked Alaska', 'Kale Salad', '', '', '']
-        }
-      }
-
-      let weekTwo = {
-        Monday: {
-          Lunch: ['Pickled Radish', 'Spinach and Peas', '', '', ''],
-          Dinner: ['Meat Loaf', 'Chicken Noodle Soup', '', '', '']
-        },
-        Tuesday: {
-          Lunch: ['Thai Curry', 'Strawberry Pancakes', '', '', ''],
-          Dinner: ['Fish Tacos', 'Cream of Broccoli Soup', '', '', '']
-        },
-        Wednesday: {
-          Lunch: ['Chili Prawns', 'Fried Rice', '', '', ''],
-          Dinner: ['Beef Wellington', 'Rice Porridge', '', '', '']
-        },
-        Thursday: {
-          Lunch: ['Poutine', 'Chicken Burgers', '', '', ''],
-          Dinner: ['Quinoa Salad', 'Quesadillas with Chipotle Sauce', '', '', '']
-        },
-        Friday: {
-          Lunch: ['Banana Crepes', 'Beef Stroganoff', '', '', ''],
-          Dinner: ['Peach Cobbler', 'Spaghetti and Meatballs', '', '', '']
-        },
-        Saturday: {
-          Lunch: ['New York Cheesecake', 'Spicy Pork Ramen', '', '', ''],
-          Dinner: ['Bubble Waffles', 'Enchiladas with Salsa Verde', '', '', '']
-        },
-        Sunday: {
-          Lunch: ['Baked Salmon', 'Sirloin Steak', '', '', ''],
-          Dinner: ['Chickpea Falafel', 'Kale Salad', '', '', '']
-        }
-      }
-
-      let weekThree = {
-        Monday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Tuesday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Wednesday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Thursday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Friday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Saturday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        },
-        Sunday: {
-          Lunch: ['', '', '', '', ''],
-          Dinner: ['', '', '', '', '']
-        }
-      }
-      expect(vm.weeks[0]).to.deep.equal(weekOne)
-      expect(vm.weeks[1]).to.deep.equal(weekTwo)
-      expect(vm.weeks[2]).to.deep.equal(weekThree)
-      expect(vm.weeks[3]).to.deep.equal(weekThree)
-      expect(vm.weeks[4]).to.deep.equal(weekThree)
+      const weeks = [
+        [
+          {
+            name: 'Monday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Tuesday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Wednesday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Thursday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Friday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Saturday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          },
+          {
+            name: 'Sunday',
+            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+          }
+        ]
+      ]
+      expect(vm.$data.weeks).to.deep.equal(weeks)
     })
   })
 
@@ -154,12 +90,8 @@ describe('FoodMenuWidget.vue', function () {
       expect(result).to.equal(0)
     })
     // TO DO when integrated - ADDING THE NUMBER OF WEEKS TO THE FOOD MENU WIDGET
-    it('addWeek() - should be keeping track of the number of weeks added', function () {
-
-    })
+    it('addWeek() - should be keeping track of the number of weeks added')
     // TO DO when integrated - REMOVING THE WEEKS OF THE FOOD MENU WIDGET
-    it('removeWeek() - should remove the week from the Weeks component when button is pressed', function () {
-
-    })
+    it('removeWeek() - should remove the week from the Weeks component when button is pressed')
   })
 })
