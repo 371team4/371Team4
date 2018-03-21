@@ -58,6 +58,10 @@ export default {
       return this.$store.getters.isLoading
     }
   },
+  created () {
+    this.$store.dispatch('initAllSlides')
+    this.$store.dispatch('initSlide')
+  },
   methods: {
     changeVisibilty () {
       this.drawerVis = !this.drawerVis
