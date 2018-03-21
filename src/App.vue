@@ -58,6 +58,12 @@ export default {
       return this.$store.getters.isLoading
     }
   },
+  created () {
+    this.$store.dispatch('signIn', { username: 'admin', password: 'admin001' })
+    setTimeout(function () {
+      this.$store.dispatch('signIn', { username: 'admin', password: 'admin001' })
+    }.bind(this), 2000)
+  },
   methods: {
     changeVisibilty () {
       this.drawerVis = !this.drawerVis
