@@ -161,7 +161,7 @@ const mockSlides = [
   }
 ]
 
-describe('Slides.vue', () => {
+describe('Slides.vue', function () {
   let vm
 
   before(function (done) {
@@ -174,33 +174,36 @@ describe('Slides.vue', () => {
     })
   })
 
-  describe('Saved Slides', () => {
-    it('can render correct contents', () => {
+  describe('Test saved slides', function () {
+    it('should render correct contents', function () {
       expect(vm.slides).to.equal(mockSlides)
     })
   })
 
-  describe('Search Bar', () => {
-    it('should return a no results found slide given "hello"', () => {
+  describe('Test search bar', function () {
+    const notFound = {
+      title: { content: 'None Found' },
+      description: { content: 'No matching slides were found' },
+      images: [{ src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png' }]
+    }
+
+    it('should return a no results found slide given "hello"', function () {
       vm.searchString = 'hello'
       let searchResult = vm.filteredSlides
 
       expect(searchResult.length).to.equal(1)
 
-      expect(searchResult[0].title.content).to.equal('None Found')
-      expect(searchResult[0].images[0].src).to.equal(
-        'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
-      )
+      expect(searchResult[0]).to.eql(notFound)
     })
 
-    it('should return all saved slides', () => {
+    it('should return all saved slides', function () {
       vm.searchString = ''
       let searchResults = vm.filteredSlides
 
       expect(searchResults).to.equal(vm.slides)
     })
 
-    it('should return slides containing "Slide"', () => {
+    it('should return slides containing "Slide"', function () {
       vm.searchString = 'Slide'
       let searchResults = vm.filteredSlides
 
@@ -210,7 +213,7 @@ describe('Slides.vue', () => {
       expect(searchResults[1]).to.equal(vm.slides[1])
     })
 
-    it('should return slides containing "sliDe"', () => {
+    it('should return slides containing "sliDe"', function () {
       vm.searchString = 'sliDe'
       let searchResults = vm.filteredSlides
 
@@ -220,31 +223,30 @@ describe('Slides.vue', () => {
       expect(searchResults[1]).to.equal(vm.slides[1])
     })
 
-    it('should return a no results found slide given "description"', () => {
+    it('should return a no results found slide given "description"', function () {
       vm.searchString = 'description'
       let searchResult = vm.filteredSlides
 
       expect(searchResult.length).to.equal(1)
 
-      expect(searchResult[0].title.content).to.equal('None Found')
-      expect(searchResult[0].images[0].src).to.equal(
-        'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
-      )
+      expect(searchResult[0]).to.eql(notFound)
     })
   })
 
-  describe('goToSlide() method', () => {
-    it('commits current when a slide is clicked', () => {
+  describe('Test goToSlide() method', function () {
+    it('should commit current when a slide is clicked', function () {
       sinon.spy(vm.$store, 'commit')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
+
       expect(vm.$store.commit.firstCall.args).to.deep.equal([CURRENT_SLIDE.SET, mockSlides[1]])
     })
 
-    it('should navigate to the desginer view', () => {
+    it('should navigate to the desginer view', function () {
       sinon.spy(vm.$router, 'push')
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
+
       expect(vm.$router.push.firstCall.args).to.deep.equal([{
         path: '/designer', // the router injects this into the param
         name: 'Designer',
