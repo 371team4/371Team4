@@ -1,25 +1,17 @@
 import Vue from 'vue'
-import Designer from '@/components/Designer'
+import AuthorSlide from '@/components/AuthorSlide'
 
-describe('Designer.vue', () => {
+describe('CreateSlide.vue', () => {
   it('should render correct contents', () => {
-    const Constructor = Vue.extend(Designer)
+    const Constructor = Vue.extend(AuthorSlide)
     const vm = new Constructor().$mount()
-    expect(vm.slideTitle)
-      .to.equal('')
-    expect(vm.description)
-      .to.equal('')
-    expect(vm.date)
-      .to.equal(null)
-    expect(vm.dateMenu)
-      .to.equal(false)
-    expect(vm.time)
-      .to.equal(null)
-    expect(vm.timeMenu)
-      .to.equal(false)
-    expect(vm.allowedMinutes(5))
-      .to.equal(true)
-    expect(vm.allowedMinutes(4))
-      .to.equal(false)
+    expect(vm.slide.title.content).to.equal('')
+    expect(vm.slide.description.content).to.equal('')
+    expect(vm.slide.date.content).to.equal(null)
+    expect(vm.slide.time.content).to.equal(null)
+    expect(vm.$data.dateMenu).to.equal(false)
+    expect(vm.$data.timeMenu).to.equal(false)
+    expect(vm.allowedMinutes(5)).to.equal(true)
+    expect(vm.allowedMinutes(4)).to.equal(false)
   })
 })
