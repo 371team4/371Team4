@@ -4,7 +4,6 @@ import sinon from 'sinon'
 
 describe('AuthorSlide.vue', function () {
   let vm
-
   const Constructor = Vue.extend(AuthorSlide)
 
   describe('Test default values', function () {
