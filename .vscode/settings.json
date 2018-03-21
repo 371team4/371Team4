@@ -27,10 +27,7 @@
     "terminal.integrated.cursorStyle": "block",
     "extensions.ignoreRecommendations": true,
     "emmet.includeLanguages": {
-        "vue": "html",
-        "vue-html": "html",
-        "javascriptreact": "html",
-        "typescript": "html"
+        "vue-html": "html"
     },
     "editor.multiCursorModifier": "alt",
     "eslint.autoFixOnSave": true,
@@ -45,4 +42,37 @@
     "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
     "vetur.validation.template": true,
     "files.autoSaveDelay": 2500,
-}
+    "[javascript]": {
+      "editor.tabSize": 2,
+      "editor.insertSpaces": true
+    },
+    "[vue]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+    "eslint.options": {
+        "extensions": [".html", ".js", ".vue", ".jsx"]
+    },
+    "eslint.validate": [
+      {
+        "language": "html",
+        "autoFix": true
+      },
+      {
+        "language": "vue",
+        "autoFix": true
+      },
+      {
+        "language": "javascript",
+        "autoFix": true
+      },
+      {
+        "language": "javascriptreact",
+        "autoFix": true
+      }
+    ],
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+    "java.debug.settings.enableHotCodeReplace": true,
+    "java.saveActions.organizeImports": true,
+    "java.configuration.updateBuildConfiguration": "automatic"
+  }
