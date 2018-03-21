@@ -42,7 +42,7 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item,index) in slide.images"
+            v-for="(item, index) in slide.images"
             :src="item.src"
             :key="index"/>
         </v-carousel>
@@ -99,7 +99,8 @@ export default {
           fontWeight: ' '
         },
         description: {
-          content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
+          content:
+            'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
           fontColor: ' ',
           fontSize: ' ',
           fontStyle: ' ',
@@ -140,7 +141,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
