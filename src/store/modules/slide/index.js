@@ -3,28 +3,26 @@ import * as server from '@/services/API/slides'
 // This module is used for create-newSlide and saveSlide
 const SET_ALL_SLIDES = 'SET_ALL_SLIDES'
 // state of this module
+const newSlide = {
+  // the title of the slide, what it is called by humans, has text, font information and color.
+  title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // similar to title, but generally larger text content.
+  description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // image array of image files (or link to image files?) to be displayed in the slide
+  images: [],
+  // the date of the slides event, has similar font info as title/description, content is date object
+  date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // the time of the event, same as date but time object instead of date object
+  time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+
+  meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
+}
+
 const state = {
   allSlides: [],
   // currentSlide is the slide which is currently being worked on by user, either because
-  // it is a brand new slide, or an existing one is being edited, this is the working store
-  // of the given slides information, no changes to this currentSlide should be reflected
-  // in the database until the button to save slide changes has been pressed in the
-  // appropriate editing view. When it is, all information in the currentSlide field
-  // should be pushed to the databse
-  currentSlide: {
-    // the title of the slide, what it is called by humans, has text, font information and color.
-    title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // similar to title, but generally larger text content.
-    description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // image array of image files (or link to image files?) to be displayed in the slide
-    images: [],
-    // the date of the slides event, has similar font info as title/description, content is date object
-    date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // the time of the event, same as date but time object instead of date object
-    time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-
-    meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
-  },
+  // it is a brand new slide, or an existing one is being edited
+  currentSlide: newSlide,
   // this is true if the user just created a new slide
   // or has edited an existing slide
   isCurrentSlideDirty: false
@@ -284,7 +282,7 @@ const actions = {
 
   // Takes id as payload and gets the slide with the given id
   initSlide ({ commit }) {
-    server.getSlide('5aaeb4523cc35925c0bd615f')
+    server.getSlide('')
       .then(response => {
         commit(CURRENT_SLIDE.SET, response.data)
       })
@@ -294,10 +292,9 @@ const actions = {
   },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ commit }) {
-    server.saveSlide()
+  saveSlide ({ state }) {
+    server.saveSlide(state.currentSlide)
       .then(response => {
-        commit()
       })
       .catch(function (error) {
         console.log(error)
@@ -305,9 +302,9 @@ const actions = {
   },
   // takes currentSlide as payload, used for deleting slides from database.
   deleteSlide ({ commit }) {
-    server.deleteSlide()
+    server.deleteSlide('')
       .then(response => {
-        commit()
+        commit(CURRENT_SLIDE.SET, newSlide)
       })
       .catch(function (error) {
         console.log(error)
