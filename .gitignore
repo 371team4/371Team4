@@ -7,7 +7,9 @@ node_modules/
 /test/e2e/target/
 /test/e2e/logs/
 /test/e2e/screenshots/
+/test/unit/test-reports/
 selenium-debug.log
+.eslintcache
 
 # Editor directories and files
 .idea

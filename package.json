@@ -7,11 +7,10 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --colors --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "tdd": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "tdd": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --browsers=Chrome",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e",
-    "lint-fix": "eslint --ext .js,.vue src test/unit test/e2e --fix",
+    "lint": "eslint --cache --ext .js,.vue src test/unit test/e2e",
+    "lint-fix": "npm run lint -- --fix",
     "build": "node build/build.js",
     "deploy": "firebase deploy",
     "precommit": "npm run lint"
@@ -68,6 +67,7 @@
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
+    "karma-html-reporter": "^0.2.7",
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-phantomjs-shim": "^1.4.0",
