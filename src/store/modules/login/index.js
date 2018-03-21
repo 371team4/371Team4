@@ -1,21 +1,16 @@
-import axios from 'axios'
-import loginAPI from '@/services/API/login'
-import { SET_USERNAME, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
+import { setToken } from '@/services/api.endpoint'
+import * as loginAPI from '@/services/API/login'
+import { SET_USERNAME } from '@/store/mutation-types'
 
 // state of this module
 const state = {
-  token: '',
-  _id: '',
   username: ''
 }
 
 // getters for this module's state
 const getters = {
-  user (state) {
+  user1 (state) {
     return state.user
-  },
-  token (state) {
-    return state.token
   },
   isAuthenticated (state) {
     return state.user !== null && state.user !== undefined
@@ -26,9 +21,6 @@ const getters = {
 const mutations = {
   [SET_USERNAME] (state, payload) {
     state.user = payload
-  },
-  [SET_TOKEN] (state, payload) {
-    state.token = payload
   }
 }
 
@@ -36,10 +28,8 @@ const mutations = {
 const actions = {
   // payload is username and password
   signIn ({ commit }, payload) {
-    loginAPI.signIn({ commit }, payload)
-  },
-  signOut ({ commit }) {
-    loginAPI.signOut({ commit })
+    loginAPI.signIn(payload.username, payload.password)
+      .then(response => setToken(response.data.token))
   }
 }
 
