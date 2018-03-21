@@ -1,4 +1,5 @@
 import * as API from '@/services/API/images'
+import util from 'util'
 
 // mutation types
 const SET_IMAGE_ID = 'SET_IMAGE_ID'
@@ -43,6 +44,7 @@ const actions = {
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
+        console.error('get image error: '.concat(util.inspect(err,false,null)))
         reject(err)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, false)
@@ -57,6 +59,7 @@ const actions = {
         state.commit(SET_IMAGE_ID, responce.data._id)
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
+        console.error('upload image error: '.concat(util.inspect(err,false,null)))
         reject(err)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, false)
@@ -71,6 +74,7 @@ const actions = {
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
+        console.error('delete image error: '.concat(util.inspect(err,false,null)))
         reject(err)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, false)
