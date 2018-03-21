@@ -6,9 +6,11 @@ const SET_BYTES_UPLOADED = 'SET_BYTES_UPLOADED'
 const SET_BYTES_REMAINING = 'SET_BYTES_REMAINING'
 const SET_IS_UPLOADING = 'SET_IS_UPLOADING'
 const SET_CANCEL_UPLOAD = 'SET_CANCEL_UPLOAD'
+const SET_UPLOAD_TASK = 'SET_UPLOAD_TASK'
 
 // state of this module
 const state = {
+  uploadTask: '',
   isUploading: false,
   bytesUploaded: 0,
   bytesRemaining: 0,
@@ -17,6 +19,7 @@ const state = {
 
 // getters for this module's state
 const getters = {
+  getUploadTask: state => state.uploadTask,
   getIsUploading: state => state.isUploading,
   getBytesUploaded: state => state.bytesUploaded,
   getBytesRemaining: state => state.bytesRemaining,
@@ -25,6 +28,9 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
+  [SET_UPLOAD_TASK] (state, payload) {
+    state.uploadTask = payload
+  },
   [SET_BYTES_UPLOADED] (state, payload) {
     state.bytesUploaded = payload
   },
@@ -47,44 +53,47 @@ const actions = {
   },
   // action to upload file
   uploadSingleFile (context, file) {
-    // pre-set upload status
-    return new Promise((resolve, reject) => {
-      context.commit(SET_IS_UPLOADING, true)
-      context.commit(SET_BYTES_UPLOADED, 0)
-      context.commit(SET_BYTES_REMAINING, file.size)
-      // start upload
-      var upload = storageDB.child('files/' + file.name).put(file)
-      upload.on(Firebase.storage.TaskEvent.STATE_CHANGED, function (snapshot) {
+    if (file) {
+      return new Promise((resolve, reject) => {
+      // pre-set upload status
+        context.commit(SET_IS_UPLOADING, true)
+        context.commit(SET_BYTES_UPLOADED, 0)
+        context.commit(SET_BYTES_REMAINING, file.size)
+        // start upload
+        const upload = storageDB.child('files/' + file.name).put(file)
+
+        upload.on(Firebase.storage.TaskEvent.STATE_CHANGED, function (snapshot) {
         // update upload status
-        context.commit(SET_BYTES_UPLOADED, snapshot.bytesTransferred)
-        context.commit(SET_BYTES_REMAINING, snapshot.totalBytes - snapshot.bytesTransferred)
-        // check if user cancel upload
-        if (context.state.cancelUpload) {
-          alert('upload canceled')
-          upload.cancel()
+          context.commit(SET_BYTES_UPLOADED, snapshot.bytesTransferred)
+          context.commit(SET_BYTES_REMAINING, snapshot.totalBytes - snapshot.bytesTransferred)
+          // check if user cancel upload
+          if (context.state.cancelUpload) {
+            upload.cancel()
+            context.commit(SET_IS_UPLOADING, false)
+            context.commit(SET_BYTES_UPLOADED, 0)
+            context.commit(SET_BYTES_REMAINING, 0)
+            context.commit(SET_CANCEL_UPLOAD, false)
+            resolve()
+          }
+        }, function (error) {
+        // if upload error
+          console.log(error.code)
           context.commit(SET_IS_UPLOADING, false)
           context.commit(SET_BYTES_UPLOADED, 0)
           context.commit(SET_BYTES_REMAINING, 0)
           context.commit(SET_CANCEL_UPLOAD, false)
-        }
-      }, function (error) {
-        // if upload error
-        alert(error.code)
-        context.commit(SET_IS_UPLOADING, false)
-        context.commit(SET_BYTES_UPLOADED, 0)
-        context.commit(SET_BYTES_REMAINING, 0)
-        context.commit(SET_CANCEL_UPLOAD, false)
-        reject(error)
-      }, function () {
+          reject(error)
+        }, function () {
         // if upload success
-        alert('upload success')
-        context.commit(SET_IS_UPLOADING, false)
-        context.commit(SET_BYTES_UPLOADED, 0)
-        context.commit(SET_BYTES_REMAINING, 0)
-        context.commit(SET_CANCEL_UPLOAD, false)
-        resolve()
+          context.commit(SET_IS_UPLOADING, false)
+          context.commit(SET_BYTES_UPLOADED, 0)
+          context.commit(SET_BYTES_REMAINING, 0)
+          context.commit(SET_CANCEL_UPLOAD, false)
+          context.commit(SET_UPLOAD_TASK, upload.snapshot.downloadURL)
+          resolve()
+        })
       })
-    })
+    }
   }
 }
 
