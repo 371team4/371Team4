@@ -13,7 +13,10 @@ module.exports = function (config) {
     // 2. add it to the `browsers` array below.
     browsers: ['ChromeHeadless'],
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage'],
+    reporters: ['html', 'spec', 'coverage'],
+    htmlReporter: {
+      outputDir: './test/unit/test-reports'
+    },
     files: ['./index.js'],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']

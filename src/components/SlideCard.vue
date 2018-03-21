@@ -1,25 +1,35 @@
 <template>
-  <v-card>
+  <v-card class="clickable">
     <v-container
       fluid
-      grid-list-lg>
+      align-center
+      @click.stop="$emit('click')">
       <v-layout row>
-        <v-flex xl7>
-          <div class="headline">
-            {{ title }}
-          </div>
-        </v-flex>
-        <v-flex xs12>
+        <v-layout column>
+          <v-flex xs6>
+            <div
+              class="headline"
+              @click.stop="$emit('click')">
+              {{ title }}
+            </div>
+          </v-flex>
+          <v-flex xs6>
+            <div
+              class="mt-2"
+              @click.stop="$emit('click')">
+              {{ description }}
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-flex xs8>
           <v-card-media
             :src="imageUrl"
             height="150px"
-            contain/>
+            contain
+            @click.stop="$emit('click')"/>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-card-text class="overflow">
-      {{ description }}
-    </v-card-text>
   </v-card>
 </template>
 
@@ -101,9 +111,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.overflow {
-  text-overflow: ellipsis;
-}
-</style>
