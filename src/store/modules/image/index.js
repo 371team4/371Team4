@@ -1,4 +1,4 @@
-import API from '@/services/API/images'
+import * as API from '@/services/API/images'
 
 // mutation types
 const SET_IMAGE_ID = 'SET_IMAGE_ID'
@@ -38,12 +38,11 @@ const actions = {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
       API.getImage(payload).then(function (responce) {
-        resolve(server + responce.data.path)
+        resolve(`http://cmpt371g4.usask.ca:8081${responce.data.path}`)
         state.commit(SET_IMAGE_PATH, responce.data.path)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
-        console.log(util.inspect(err, false, null))
         reject(err)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, false)
@@ -58,7 +57,6 @@ const actions = {
         state.commit(SET_IMAGE_ID, responce.data._id)
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
-        console.log(util.inspect(err, false, null))
         reject(err)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, false)
