@@ -3,16 +3,13 @@ import * as userAPI from '@/services/API/user'
 
 // state of this module
 const state = {
-  users: [],
-  token: '',
-  _id: '',
-  username: ''
+  users: []
 }
 
 // getters for this module's state
 const getters = {
-  user (state) {
-    return state.user
+  users (state) {
+    return state.users
   }
 }
 

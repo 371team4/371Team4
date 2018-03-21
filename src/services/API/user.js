@@ -38,6 +38,8 @@ export function createUser (user) {
         }
       }
     )
+  } else {
+    console.error('No user is present')
   }
 }
 
