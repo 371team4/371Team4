@@ -1,3 +1,4 @@
+import { server } from '@/services/api.endpoint'
 import * as API from '@/services/API/images'
 import util from 'util'
 
@@ -39,7 +40,7 @@ const actions = {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
       API.getImage(payload).then(function (responce) {
-        resolve(`http://cmpt371g4.usask.ca:8081${responce.data.path}`)
+        resolve(`${server.defaults.baseURL}${responce.data.path}`)
         state.commit(SET_IMAGE_PATH, responce.data.path)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)
