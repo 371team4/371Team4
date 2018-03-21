@@ -57,7 +57,6 @@ export default {
     }
   },
   created () {
-    console.log('I was here ')
     this.$store.dispatch('setSlidesRef', slidesDB)
   },
   methods: {
