@@ -1,4 +1,3 @@
-import axios from 'axios'
 import server from '@/services/api.endpoint'
 import { SET_USERNAME, SET_TOKEN, SET_LOADING } from '@/store/mutation-types'
 

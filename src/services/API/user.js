@@ -3,15 +3,15 @@ import server from '@/services/api.endpoint'
 
 
 // payload is: username, password, email
-function createUserRequest (payload) {
+function createUserRequest (user) {
   return new Promise((resolve, reject) => {
     server.post('/api/user/',
       { body:
         {
           token: login.getters.token,
-          username: payload.username,
-          password: payload.password,
-          email: payload.email
+          username: user.username,
+          password: user.password,
+          email: user.email
         }
       })
       .then(function (response) {
@@ -23,12 +23,12 @@ function createUserRequest (payload) {
   })
 
  // payload is password
- function updateUserRequest (payload) {
+ function updateUserRequest (password) {
   const id = state._id
 
   if (id) {
     return new Promise((resolve, reject) => {
-      server.post('/api/user/' + id, payload)
+      server.post('/api/user/' + id, password)
         .then(function (responce) {
         })
         .catch(function (err) {
@@ -39,7 +39,7 @@ function createUserRequest (payload) {
   }
 }
 
-function deleteUserRequest (payload) {
+function deleteUserRequest (user) {
   const id = state._id
 
   if (id) {
