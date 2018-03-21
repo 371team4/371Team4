@@ -4,8 +4,10 @@ node_modules/
 *debug.log*
 *logerror.log*
 /test/unit/coverage/
+/test/e2e/target/
+/test/e2e/logs/
+/test/e2e/screenshots/
 /test/unit/test-reports/
-/test/e2e/reports/
 selenium-debug.log
 .eslintcache
 
