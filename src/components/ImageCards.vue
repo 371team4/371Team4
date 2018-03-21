@@ -6,7 +6,7 @@
       <v-card>
         <v-container
           fluid
-          style="height: 650px"
+          style="height: 550px"
           class="scroll-y"
           id="scroll-target">
           <v-container
@@ -21,7 +21,7 @@
                 <v-card
                 tile>
                   <v-card-media
-                    :src="card.thumbnail"
+                    :src="card.src"
                     height="150px">
                     <v-spacer/>
                     <v-btn

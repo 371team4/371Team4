@@ -42,7 +42,7 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item,index) in slide.images"
+            v-for="(item, index) in slide.images"
             :src="item.src"
             :key="index"/>
         </v-carousel>
@@ -99,7 +99,8 @@ export default {
           fontWeight: ' '
         },
         description: {
-          content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
+          content:
+            'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
           fontColor: ' ',
           fontSize: ' ',
           fontStyle: ' ',
@@ -132,14 +133,14 @@ export default {
   computed: {
     carouselInterval () {
       if (this.slide && this.slide.images && this.slide.images.length > 0 &&
-      this.slide.meta.timeout) {
+      this.slide.meta && this.slide.meta.timeout && this.slide.meta.timeout > 0) {
         return ((this.slide.meta.timeout * 1000) / this.slide.images.length)
       }
       /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
+      // if the above is false, undefined is returned which Vuetify treats as 'use the default'
     }
   }
 }
-
 </script>
 
 <style scoped>
