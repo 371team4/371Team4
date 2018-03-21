@@ -118,14 +118,13 @@ export default {
     titleErrors () {
       const errors = []
       if (!this.$v.slide.title.content.$dirty) {
-        errors.push('abc')
         return errors
       }
       if (!this.$v.slide.title.content.maxLength) {
         errors.push('Title must be at most 30 characters long')
       }
       if (!this.$v.slide.title.content.required) {
-        errors.push('Title is required.')
+        errors.push('Title is required')
       }
       return errors
     },

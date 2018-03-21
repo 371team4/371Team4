@@ -246,6 +246,7 @@ describe('Designer.vue', function () {
 
       expect(spy.calledOnce).to.equal(true)
       expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
+      spy.restore()
     })
 
     it('should commit current slide', function () {
@@ -254,74 +255,124 @@ describe('Designer.vue', function () {
       vm.clear()
 
       expect(spy.calledOnce).to.equal(true)
+      spy.restore()
     })
   })
 
-  // describe.only('Test submit', function () {
-  //   let spy
+  describe('Test submit', function () {
+    let spy
 
-  //   before(function () {
-  //     const props = {
-  //       slide: {
-  //         title: {
-  //           content: 'Slide1'
-  //         },
-  //         description: {
-  //           content: 'This is the description for Slide1'
-  //         }
-  //       }
-  //     }
+    before(function () {
+      const props = {
+        slide: {
+          images: [
+            {
+              src: 'https://picsum.photos/200/300/?image=92'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=19'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=14'
+            },
+            {
+              src: 'https://picsum.photos/200/300/?image=94'
+            }
+          ],
+          title: {
+            content: 'Slide1',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
+          },
+          description: {
+            content: 'This is the description for Slide1',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
+          },
+          date: {
+            content: '2018-02-15',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
+          },
+          time: {
+            content: '13:05',
+            fontColor: 'Red',
+            fontSize: 'Large',
+            fontStyle: 'Normal',
+            fontWeight: 'Bold'
+          },
+          meta: {
+            template: 'DefaultSlideTemplate',
+            timeout: '40',
+            repeatable: false,
+            startDate: '2018-02-16',
+            endDate: '2018-03-01'
+          }
+        }
+      }
 
-  //     vm = new Constructor({ propsData: props, store }).$mount()
-  //   })
+      vm = new Constructor({ propsData: props, store }).$mount()
+    })
 
-  //   afterEach(function () {
-  //     spy.restore()
-  //   })
+    afterEach(function () {
+      spy.restore()
+    })
 
-  //   it('should update carousel', function () {
-  //     console.log(vm.$v.$invalid)
-  //     spy = sinon.spy(vm, 'forceUpdateCarousel')
+    it('should update carousel', function () {
+      spy = sinon.spy(vm, 'forceUpdateCarousel')
 
-  //     vm.submit()
+      vm.submit()
 
-  //     expect(spy.calledOnce).to.equal(true)
-  //   })
+      expect(spy.called).to.equal(true)
+    })
 
-  //   it('should update carousel', function () {
-  //     spy = sinon.spy(vm, 'forceUpdateCarousel')
+    it('should commit current slide', function () {
+      spy = sinon.spy(vm.$store, 'commit')
 
-  //     vm.submit()
+      vm.submit()
 
-  //     expect(spy.calledOnce).to.equal(true)
-  //   })
+      expect(spy.calledOnce).to.equal(true)
+      expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
+    })
 
-  //   it('should commit current slide', function () {
-  //     spy = sinon.spy(vm.$store, 'commit')
+    it('should save current slide', function () {
+      spy = sinon.spy(vm.$store, 'dispatch')
 
-  //     vm.submit()
+      vm.submit()
 
-  //     expect(spy.calledOnce).to.equal(true)
-  //     expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
-  //   })
+      expect(spy.calledOnce).to.equal(true)
+      expect(spy).to.have.been.calledWith('saveSlide')
+    })
 
-  //   it('should save current slide', function () {
-  //     spy = sinon.spy(vm.$store, 'dispatch')
+    it('should change views', function () {
+      spy = sinon.spy(vm, 'changeViews')
 
-  //     vm.submit()
+      vm.submit()
 
-  //     expect(spy.calledOnce).to.equal(true)
-  //     expect(spy).to.have.been.calledWith('saveSlide')
-  //   })
+      expect(spy.calledOnce).to.equal(true)
+    })
 
-  //   it('should change views', function () {
-  //     spy = sinon.spy(vm, 'changeViews')
+    it('should do nothing', function () {
+      vm.$data.showPreview = false
+      vm.$data.carousel = -1
 
-  //     vm.submit()
+      const slide = { title: { content: 'hello' }, description: { content: 'world' } }
+      vm.$store.state.currentSlide = slide
+      vm.$props.slide = { title: { content: '' }, description: { content: '' } }
 
-  //     expect(spy.calledOnce).to.equal(true)
-  //   })
-  // })
+      vm.submit()
+
+      expect(vm.$data.carousel).to.equal(-1)
+      expect(vm.$store.state.currentSlide).to.equal(slide)
+      expect(vm.$data.showPreview).to.equal(false)
+    })
+  })
 
   describe('Test remaining methods', function () {
     let spy
@@ -331,7 +382,7 @@ describe('Designer.vue', function () {
     })
 
     it('should update carousel', function (done) {
-      vm.showPreview = true
+      vm.$data.showPreview = true
 
       vm.forceUpdateCarousel()
       Vue.nextTick(() => {
@@ -347,15 +398,15 @@ describe('Designer.vue', function () {
 
     it('should toggle view and update carousel', function () {
       spy = sinon.spy(vm, 'forceUpdateCarousel')
-      vm.showPreview = false
+      vm.$data.showPreview = false
 
       vm.changeViews()
 
-      expect(vm.showPreview).to.equal(true)
+      expect(vm.$data.showPreview).to.equal(true)
 
       vm.changeViews()
 
-      expect(vm.showPreview).to.equal(false)
+      expect(vm.$data.showPreview).to.equal(false)
       expect(spy.calledTwice).to.equal(true)
       spy.restore()
     })
@@ -374,16 +425,73 @@ describe('Designer.vue', function () {
     })
   })
 
-  describe.only('Test title errors', function () {
+  describe('Test title errors', function () {
     before(function () {
       vm = new Constructor({ store }).$mount()
     })
 
-    it('should do something', function (done) {
-      // vm.slide.title.content = 'hello'
+    beforeEach(function () {
+      vm.$props.slide.title.content = ''
       vm.$v.$reset()
-      console.log(vm.titleErrors)
-      done()
+    })
+
+    it('should have no errors', function () {
+      expect(vm.titleErrors).to.eql([])
+    })
+
+    it('should still have no errors', function () {
+      vm.$props.slide.title.content = '123456789012345678901234567890'
+      vm.$v.$touch()
+
+      expect(vm.titleErrors).to.eql([])
+    })
+
+    it('should have no title required error', function () {
+      vm.$v.$touch()
+
+      expect(vm.titleErrors).to.eql(['Title is required'])
+    })
+
+    it('should have no title too long error', function () {
+      vm.$props.slide.title.content = 'This title is more than thirty characters long'
+      vm.$v.$touch()
+
+      expect(vm.titleErrors).to.eql(['Title must be at most 30 characters long'])
+    })
+  })
+
+  describe('Test description errors', function () {
+    before(function () {
+      vm = new Constructor({ store }).$mount()
+    })
+
+    beforeEach(function () {
+      vm.$props.slide.description.content = ''
+      vm.$v.$reset()
+    })
+
+    it('should have no errors', function () {
+      expect(vm.descriptionErrors).to.eql([])
+    })
+
+    it('should still have no errors', function () {
+      vm.$props.slide.description.content = '123456789012345678901234567890'
+      vm.$v.$touch()
+
+      expect(vm.descriptionErrors).to.eql([])
+    })
+
+    it('should have no description required error', function () {
+      vm.$v.$touch()
+
+      expect(vm.descriptionErrors).to.eql(['Description is required'])
+    })
+
+    it('should have no description too long error', function () {
+      vm.$props.slide.description.content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vulputate, dui luctus finibus consequat, lacus nisl lobortis urna, posuere ultricies ipsum sapien'
+      vm.$v.$touch()
+
+      expect(vm.descriptionErrors).to.eql(['Description must be at most 140 characters long'])
     })
   })
 })
