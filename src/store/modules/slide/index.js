@@ -1,10 +1,7 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
-import { firebaseAction } from 'vuexfire'
-import axios from 'axios'
-const server = 'https://cmpt371g4.usask.ca:8081'
-
+import * as server from '@/services/API/slides'
 // This module is used for create-newSlide and saveSlide
-
+const SET_ALL_SLIDES = 'SET_ALL_SLIDES'
 // state of this module
 const state = {
   allSlides: [],
@@ -86,6 +83,10 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
+  //
+  [SET_ALL_SLIDES] (state, payload) {
+    state.allSlides = payload
+  },
   // takes a slide object as payload, sets current slide to it.
   [CURRENT_SLIDE.SET] (state, payload) {
     state.currentSlide = payload
@@ -268,69 +269,49 @@ const mutations = {
   }
 }
 
-const setSlidesRef = firebaseAction(({ bindFirebaseRef }, payload) => {
-  // binding will automatically unbind any previously bound ref so you
-  // don't need to unbind before binding over an existing bound key
-  bindFirebaseRef('allSlides', payload)
-})
-
 // actions can be async and may have side effects
 const actions = {
-  // binds the slidesDB to the allSlides[] field via above const setSlidesRef
-  // when called
-  setSlidesRef,
-
-  // used for saving both new slides, and edits to existing slides.
-  saveSlide (payload) {
-    // trys to assign the database key(_id) to id
-    const id = state.currentSlide['_id']
-    // checks if id object exists (it does if already in DB) otherwise it doesn't and will be false.
-    if (id) {
-      // If id already exist, post the body of current slide in the id that already exist
-      axios.put(server + '/api/slides/', {
-        _id: id,
-        body: state.currentSlide })
-        .then(function (response) {
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      // reloads the window or page
-      window.location.reload()
-    } else {
-      // id does not exist in the database so we save as new slide
-      axios.post(server + '/api/slides/', {
-        body: state.currentSlide
-      })
-        .then(function (response) {
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
-
-    // This should not be set to false until it is confirmed that the slide is saved
-    // Because the modifications to the slide have now been saved to database,
-    // both this version, and the database one should be the same, so dirty
-    // state is now false.
-    payload(CURRENT_SLIDE.SET_STATUS, false)
-  },
-  // takes currentSlide as payload, used for deleting slides from database.
-  deleteSlide (payload) {
-    // assign the database key(_id) to id
-    const id = state.currentSlide['_id']
-
-    axios.delete(server + '/api/slides/', {
-      id
-    })
-      .then(function (response) {
-        console.log(response)
+  // Gets all the slides in the database
+  initAllSlides ({ commit }) {
+    server.getAllSlides()
+      .then(response => {
+        commit(SET_ALL_SLIDES, response.data)
       })
       .catch(function (error) {
         console.log(error)
       })
-    // reloads the window or page
-    window.location.reload()
+  },
+
+  // Takes id as payload and gets the slide with the given id
+  initSlide ({ commit }) {
+    server.getSlide('5aaeb4523cc35925c0bd615f')
+      .then(response => {
+        commit(CURRENT_SLIDE.SET, response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+
+  // used for saving both new slides, and edits to existing slides.
+  saveSlide ({ commit }) {
+    server.saveSlide()
+      .then(response => {
+        commit()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+  // takes currentSlide as payload, used for deleting slides from database.
+  deleteSlide ({ commit }) {
+    server.deleteSlide()
+      .then(response => {
+        commit()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 
