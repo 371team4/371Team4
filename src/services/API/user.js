@@ -1,57 +1,69 @@
-import server from '@/services/api.endpoint'
+import { server } from '@/services/api.endpoint'
 
+const route = '/api/users/'
+
+function validateUser (user) {
+  let flag = true
+  if (!user) {
+    console.error('Need User object')
+    flag = false
+  }
+  if (!user.username) {
+    console.error('Need username for user')
+    flag = false
+  }
+  if (!user.password) {
+    console.error('Need password for user')
+    flag = false
+  }
+  if (!user.email) {
+    console.error('Need email for user')
+    flag = false
+  }
+  return flag
+}
+
+export function getAllUsers () {
+  return server.get(route)
+}
 
 // payload is: username, password, email
-function createUserRequest (user) {
-  return new Promise((resolve, reject) => {
-    server.post('/api/user/',
+export function createUser (user) {
+  if (validateUser(user)) {
+    return server.post(route,
       { body:
-        {
-          token: login.getters.token,
-          username: user.username,
+        { username: user.username,
           password: user.password,
           email: user.email
         }
-      })
-      .then(function (response) {
-      })
-      .catch(function (err) {
-        reject(err)
-        console.log(err)
-      })
-  })
-
- // payload is password
- function updateUserRequest (password) {
-  const id = state._id
-
-  if (id) {
-    return new Promise((resolve, reject) => {
-      server.post('/api/user/' + id, password)
-        .then(function (responce) {
-        })
-        .catch(function (err) {
-          reject(err)
-          console.log(err)
-        })
-    })
+      }
+    )
   }
 }
 
-function deleteUserRequest (user) {
-  const id = state._id
-
-  if (id) {
-    return new Promise((resolve, reject) => {
-      axios.delete(server + '/api/user/' + id)
-        .then(function (responce) {
+// payload is user
+export function updateUser (user) {
+  if (validateUser(user)) {
+    if (user._id) {
+      return server.post(`${route}${user._id}`,
+        { body:
+        { username: user.username,
+          password: user.password,
+          email: user.email
+        }
         })
-        .catch(function (err) {
-          reject(err)
-          console.log(err)
-        })
-    })
+    } else {
+      console.error('No _id is present')
+    }
   }
 }
 
-module.exports = { createUserRequest, updateUserRequest, deleteUserRequest }
+export function deleteUser (user) {
+  if (validateUser(user)) {
+    if (user._id) {
+      return server.delete(`${route}${user._id}`)
+    } else {
+      console.error('No _id is present')
+    }
+  }
+}
