@@ -6,7 +6,7 @@
       <v-btn
         :disabled="isDisabled"
         @click.stop="broadcastEvent"
-        dark
+        color="grey darken-3"
         large
         block
         class="largeButton"
