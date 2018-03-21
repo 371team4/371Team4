@@ -118,6 +118,7 @@ export default {
     titleErrors () {
       const errors = []
       if (!this.$v.slide.title.content.$dirty) {
+        errors.push('abc')
         return errors
       }
       if (!this.$v.slide.title.content.maxLength) {

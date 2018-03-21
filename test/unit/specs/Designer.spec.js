@@ -257,6 +257,72 @@ describe('Designer.vue', function () {
     })
   })
 
+  // describe.only('Test submit', function () {
+  //   let spy
+
+  //   before(function () {
+  //     const props = {
+  //       slide: {
+  //         title: {
+  //           content: 'Slide1'
+  //         },
+  //         description: {
+  //           content: 'This is the description for Slide1'
+  //         }
+  //       }
+  //     }
+
+  //     vm = new Constructor({ propsData: props, store }).$mount()
+  //   })
+
+  //   afterEach(function () {
+  //     spy.restore()
+  //   })
+
+  //   it('should update carousel', function () {
+  //     console.log(vm.$v.$invalid)
+  //     spy = sinon.spy(vm, 'forceUpdateCarousel')
+
+  //     vm.submit()
+
+  //     expect(spy.calledOnce).to.equal(true)
+  //   })
+
+  //   it('should update carousel', function () {
+  //     spy = sinon.spy(vm, 'forceUpdateCarousel')
+
+  //     vm.submit()
+
+  //     expect(spy.calledOnce).to.equal(true)
+  //   })
+
+  //   it('should commit current slide', function () {
+  //     spy = sinon.spy(vm.$store, 'commit')
+
+  //     vm.submit()
+
+  //     expect(spy.calledOnce).to.equal(true)
+  //     expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
+  //   })
+
+  //   it('should save current slide', function () {
+  //     spy = sinon.spy(vm.$store, 'dispatch')
+
+  //     vm.submit()
+
+  //     expect(spy.calledOnce).to.equal(true)
+  //     expect(spy).to.have.been.calledWith('saveSlide')
+  //   })
+
+  //   it('should change views', function () {
+  //     spy = sinon.spy(vm, 'changeViews')
+
+  //     vm.submit()
+
+  //     expect(spy.calledOnce).to.equal(true)
+  //   })
+  // })
+
   describe('Test remaining methods', function () {
     let spy
 
@@ -305,6 +371,19 @@ describe('Designer.vue', function () {
       expect(spy).to.have.been.calledWith(mockImg)
       expect(vm.forceUpdateCarousel.calledOnce).to.equal(true)
       spy.restore()
+    })
+  })
+
+  describe.only('Test title errors', function () {
+    before(function () {
+      vm = new Constructor({ store }).$mount()
+    })
+
+    it('should do something', function (done) {
+      // vm.slide.title.content = 'hello'
+      vm.$v.$reset()
+      console.log(vm.titleErrors)
+      done()
     })
   })
 })
