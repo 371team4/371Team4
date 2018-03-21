@@ -1,4 +1,3 @@
-import axios from 'axios'
 import server from '@/services/api.endpoint'
 
 
@@ -54,3 +53,5 @@ function deleteUserRequest (user) {
     })
   }
 }
+
+module.exports = { createUserRequest, updateUserRequest, deleteUserRequest }

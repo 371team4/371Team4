@@ -23,3 +23,5 @@ function signOutRequest ({ commit }) {
   commit(SET_TOKEN, '')
   alert('logged out')
 }
+
+module.exports = { signInRequest, signOutRequest }
