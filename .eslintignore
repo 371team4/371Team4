@@ -3,4 +3,5 @@
 /dist/
 /*.js
 /test/unit/coverage/
-/test/e2e/nightwatch.conf.js
+/test/e2e/
+.md
