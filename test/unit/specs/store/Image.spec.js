@@ -1,9 +1,9 @@
 import index from '@/store/modules/image/index'
-// import sample from './imageBlob'
+import { setToken } from '@/services/api.endpoint'
+import * as loginAPI from '@/services/API/login'
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
-  console.log(action)
   let count = 0
 
   // mock commit
@@ -13,6 +13,7 @@ const testAction = (action, args, state, expectedMutations, done) => {
     try {
       expect(mutation.type).to.equal(type)
       if (payload) {
+        // else is a special case for set sampleImageID to new uploaded id and used when deleteImage
         if (mutation.payload !== 'new') {
           expect(mutation.payload).to.deep.equal(payload)
         } else {
@@ -39,19 +40,27 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
+// mock image
 var sampleImage
 
+// uploaded mock image id
 var sampleImageID
 
 describe('Image APIs', function () {
   before(done => {
-    var b64 = ["data:image/png;base64,nothing crazy here"]
-    sampleImage  = new Blob(b64,{type: 'image/png'})
+    // create mock image
+    var b64 = ['data:image/png;base64,nothing crazy here']
+    sampleImage = new Blob(b64, { type: 'image/png' })
     sampleImage['name'] = '207.png'
-   // sampleImage = new File([sample],'207.png', {size: 12864, type: 'image/png'}) 
-   done()
+    // ask for login to get token
+    loginAPI.signIn('test', 'admin001')
+      .then(async (response) => {
+        await setToken(response.data.token)
+        done()
+      })
   })
 
+  // test getImage
   describe('index', () => {
     it('getImage', done => {
       testAction(index.actions.getImage, ['5a98ada216608d51864ef43c'], {}, [
@@ -63,9 +72,9 @@ describe('Image APIs', function () {
     })
   })
 
-  describe.only('index', () => {
+  // test uploadImage
+  describe('index', () => {
     it('uploadImage', done => {
-      
       testAction(index.actions.uploadImage, [sampleImage], {}, [
         { type: 'SET_IMAGE_ID', payload: 'new Image' },
         { type: 'SET_IMAGE_ID', payload: 'new' },
@@ -74,7 +83,7 @@ describe('Image APIs', function () {
     })
   })
 
-  // testing on a new uploaded image, can be used once, otherwise need restore
+  // test deleteImage
   describe('index', () => {
     it('deleteImage', done => {
       testAction(index.actions.deleteImage, [sampleImageID], {}, [

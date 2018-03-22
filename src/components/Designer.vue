@@ -15,10 +15,10 @@
         @clear="clear"
         @submit="submit"/>
     </v-layout>
-
-    <button @click.stop="getURL"> Submit </button>
-    <img id="testImage">  </img>
-
+    <!--
+      <button @click.stop="getURL"> Submit </button>
+      <img id="testImage">  </img>
+    -->
   </v-container>
 </template>
 
