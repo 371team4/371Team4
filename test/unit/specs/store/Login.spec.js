@@ -44,7 +44,7 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
-describe.only('login', () => {
+describe('login', () => {
   describe('actions', () => {
     // initial users in /src/config/seed.js must stay the same
     it('signIn', done => {
