@@ -74,7 +74,10 @@
             row
             wrap>
             <v-flex
-              xs4
+              xs12
+              sm12
+              md6
+              lg4
               v-for="(day, i) in week"
               :key="i">
               <menu-day-card :day="day"/>
