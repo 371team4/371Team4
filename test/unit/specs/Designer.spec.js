@@ -494,4 +494,26 @@ describe('Designer.vue', function () {
       expect(vm.descriptionErrors).to.eql(['Description must be at most 140 characters long'])
     })
   })
+
+  describe('Test uploadImage', function () {
+    let spy
+
+    before(function () {
+      vm = new Constructor({ store }).$mount()
+    })
+
+    afterEach(function () {
+      spy.restore()
+    })
+
+    it('should do nothing', function () {
+      const file = new File([''], 'filename', { type: 'text/plain' })
+      spy = sinon.spy(vm.$store, 'dispatch')
+
+      vm.uploadImage([file])
+
+      expect(spy).to.have.been.calledWith('uploadSingleFile', undefined)
+      expect(vm.$props.slide.images.length).to.equal(0)
+    })
+  })
 })
