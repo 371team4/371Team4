@@ -282,7 +282,7 @@ const actions = {
 
   // Takes id as payload and gets the slide with the given id
   initSlide ({ commit }) {
-    server.getSlide('')
+    server.getSlide(commit)
       .then(response => {
         commit(CURRENT_SLIDE.SET, response.data)
       })

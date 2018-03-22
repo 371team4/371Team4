@@ -1,58 +1,40 @@
-import { authService } from '@/services/firebase.conf'
-import { SET_USER, SET_LOADING } from '@/store/mutation-types'
+import * as userAPI from '@/services/API/user'
+// import { SET_USERNAME, SET_TOKEN } from '@/store/mutation-types'
 
 // state of this module
 const state = {
-  user: { id: '_change', email: 'blah@blah.com' }
+  users: []
 }
 
 // getters for this module's state
 const getters = {
-  user (state) {
-    return state.user
-  },
-  isAuthenticated (state) {
-    return state.user !== null && state.user !== undefined
+  users (state) {
+    return state.users
   }
 }
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  [SET_USER] (state, payload) {
-    state.user = payload.user
+  SET_ALL_USERS (state, payload) {
+    state.users = payload
   }
 }
 
 // actions can be async and may have side effects
 const actions = {
-  signIn ({ commit }, payload) {
-    commit(SET_LOADING, { loading: true })
-    authService.signInWithEmailAndPassword(`${payload.username}@${payload.domain}`, payload.password)
-      .then(
-        user => {
-          const newUser = {
-            id: user.uid,
-            name: user.email
-          }
-          commit(SET_LOADING, { loading: false })
-          commit(SET_USER, { 'user': newUser })
-        }
-      )
-      .catch(
-        error => {
-          commit(SET_LOADING, { loading: false })
-          console.log(error)
-        }
-      )
+  getAllUsers ({ commit }) {
+    userAPI.getAllUsers().then((response) => commit('SET_ALL_USERS', response.data))
   },
-  signOut () {
-    authService.signOut().then(function () {
-      alert('Logged out')
-    }).catch(
-      error => {
-        console.log(error)
-      }
-    )
+  // payload is: username, password, email
+  createUser (payload) {
+    userAPI.createUser(payload)
+  },
+  // payload is password
+  updateUser (payload) {
+    userAPI.updateUser(payload)
+  },
+  deleteUser (payload) {
+    userAPI.deleteUser(payload)
   }
 }
 
