@@ -165,7 +165,7 @@ export default {
     formattedTime () {
       if (this.slide && this.slide.time && this.slide.time.content !== null) {
         const timeFrags = this.slide.time.content.split(':')
-        const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] > 12 ? ' PM' : ' AM')
+        const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] >= 12 ? ' PM' : ' AM')
         return timeFormatted
       }
       return null
