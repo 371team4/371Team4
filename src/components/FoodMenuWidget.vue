@@ -2,9 +2,10 @@
   <v-container fluid>
     <!-- Food Menu Widget Toolbar -->
     <v-toolbar
+      extended
       dark
       tabs
-      color="light-blue darken-1">
+      color="light-blue darken-3">
       <v-icon>restaurant</v-icon>
       <v-toolbar-title>Food Menu</v-toolbar-title>
       <v-spacer/>
@@ -34,8 +35,9 @@
 
       <!-- Week Component begins here -->
       <v-tabs
+        hide-slider
         v-model="active"
-        color="light-blue darken-1"
+        color="light-blue darken-3"
         slot="extension"
         slider-color="amber lighten-3">
         <v-tab
