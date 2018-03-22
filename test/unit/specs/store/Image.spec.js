@@ -51,7 +51,6 @@ describe('Image APIs', function () {
     // create mock image
     var b64 = ['data:image/png;base64,nothing crazy here']
     sampleImage = new Blob(b64, { type: 'image/png' })
-    sampleImage['name'] = '207.png'
     // ask for login to get token
     loginAPI.signIn('test', 'admin001')
       .then(async (response) => {

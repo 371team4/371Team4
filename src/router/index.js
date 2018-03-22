@@ -57,7 +57,7 @@ const router = new Router({
       scrollToTop: true,
       component: Designer,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
