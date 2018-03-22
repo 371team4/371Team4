@@ -75,21 +75,7 @@
               xs4
               v-for="(day, i) in week"
               :key="i">
-              <v-card height="250px">
-                <div>
-                  <h3 class="headline mb-0">{{ day.name }}</h3>
-                  <div
-                    v-for="(mealContent, mealName) in day.meals"
-                    :key="mealName">
-                    <h2>{{ mealName }}</h2>
-                    <p
-                      v-for="menuItem in mealContent"
-                      :key="menuItem">
-                      {{ menuItem }}
-                    </p>
-                  </div>
-                </div>
-              </v-card>
+              <menu-day-card :day="day"/>
             </v-flex>
 
           </v-layout>
@@ -97,44 +83,32 @@
         <!-- Done Day Cards -->
       </v-tab-item>
     </v-tabs-items>
-    <!-- Ensure the first week doesn't get deleted -->
-    <v-snackbar
-      multi-line
-      right
-      vertical
-      v-model="dontDeleteTheFirstWeek">
-      Cannot delete the first week!
-      <v-btn
-        flat
-        color="blue lighten-3"
-        @click.native="dontDeleteTheFirstWeek = false">Close</v-btn>
-    </v-snackbar>
 
     <!-- Ensure only 5 weeks get added -->
     <v-snackbar
       multi-line
       right
       vertical
-      v-model="tooManyWeeksDialogShown">
-      {{ tooManyWeeksAdded }}
+      v-model="showSnackbar">
+      {{ snackbarMessage }}
       <v-btn
         flat
         color="blue lighten-3"
-        @click.native="tooManyWeeksDialogShown = false">Close</v-btn>
+        @click.native="showSnackbar = false">Close</v-btn>
     </v-snackbar>
     <!-- Done Week Component -->
   </v-container>
 </template>
 
 <script>
+import MenuDayCard from '@/components/MenuDayCard'
+
 export default {
+  components: { MenuDayCard },
   data () {
     return {
-      // Information dialog when there are more than 5 weeks added
-      tooManyWeeksDialogShown: false,
-      tooManyWeeksAdded: 'Cannot add more than 5 weeks!',
-      // Ensure first week does not get deleted
-      dontDeleteTheFirstWeek: false,
+      showSnackbar: false,
+      snackbarMessage: '',
       active: null
     }
   },
@@ -200,7 +174,8 @@ export default {
       // Ensure only 5 weeks are added
       if (this.weeks.length === 5) {
         // Show that too many weeks are currently displayed
-        this.tooManyWeeksDialogShown = true
+        this.showSnackbar = true
+        this.snackbarMessage = 'Cannot add more than 5 weeks!'
       } else {
         // add an empty week to the list of weeks
         const weekTemplate = [
@@ -230,7 +205,8 @@ export default {
         this.active = (parseInt(weekNumber) - 1).toString()
       } else {
         // Set to show a message saying not to delete the first week
-        this.dontDeleteTheFirstWeek = true
+        this.showSnackbar = true
+        this.snackbarMessage = 'Cannot delete the first week!'
       }
     },
     saveChanges () {
