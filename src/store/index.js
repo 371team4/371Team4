@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
+import { firebaseMutations } from 'vuexfire'
 
 import root from './root'
 import user from './modules/user'
@@ -13,6 +14,7 @@ const isDebug = process.env.NODE_ENV !== 'production'
 
 export const store = new Vuex.Store({
   strict: isDebug,
+  mutations: firebaseMutations,
   modules: {
     root,
     user,
