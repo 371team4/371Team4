@@ -1,7 +1,6 @@
 <template>
   <v-container fulid>
     <full-calendar
-      class="mx-0 my-0"
       :config="config"
       :events="events"/>
   </v-container>
