@@ -1,5 +1,5 @@
 <template>
-  <v-container fulid>
+  <v-container fluid>
     <full-calendar
       :config="config"
       :events="events"/>
@@ -9,12 +9,9 @@
 <script>
 // Import calendar as a plugin
 import { FullCalendar } from 'vue-full-calendar'
-// CSS
-import 'fullcalendar/dist/fullcalendar.min.css'
 import moment from 'moment'
 
 export default {
-  name: 'Hello',
   components: {
     FullCalendar
   },
@@ -68,17 +65,19 @@ export default {
 </script>
 
 <style>
-
+  @import 'fullcalendar/dist/fullcalendar.css';
   @media print {
     @page {
       size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)
     }
+    /* main html content */
+    main.content[data-booted] { margin: 0px; padding: 0px;}
     .container.fluid { margin: 0px; }
-    #calendar { margin: 0px;  }
+    /* fullCalendar */
+    #calendar { margin: 0px; padding: 0px; }
     .fc-left { display: none; }
+    /* App shell */
     [data-test-attr='appToolBar'] { display: none; }
     [data-test-attr='appNav'] { display: none; }
-    .navigaton-drawer { display: none; }
-
   }
 </style>
