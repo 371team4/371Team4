@@ -1,13 +1,18 @@
 <template>
-  <full-calendar
-    class="mx-3 my-3"
-    :config="config"
-    :events="events"/>
+  <v-container fulid>
+    <full-calendar
+      class="mx-0 my-0"
+      :config="config"
+      :events="events"/>
+  </v-container>
 </template>
 
 <script>
 // Import calendar as a plugin
 import { FullCalendar } from 'vue-full-calendar'
+// CSS
+import 'fullcalendar/dist/fullcalendar.min.css'
+import moment from 'moment'
 
 export default {
   name: 'Hello',
@@ -52,7 +57,8 @@ export default {
             slide.time.content) {
           // Since the event cannot show correctly with the time from "0 AM" to "10 AM",
           // We have to make a new Date
-            newSlide.start = new Date(newSlide.start + ' ' + slide.time.content)
+          // If we use ' ' instead of 'T', data cannot show on the safari!
+            newSlide.start = moment(newSlide.start + ' ' + slide.time.content, 'YYYY-MM-DD hh:mm a')
           }
         }
         return newSlide
@@ -66,16 +72,14 @@ export default {
 </script>
 
 <style>
-  @import 'fullcalendar/dist/fullcalendar.min.css';
 
   @media print {
-    @page {size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)}
+    @page {
+      size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)
+    }
+    .container.fluid { margin: 0px; }
     #calendar { margin: 0px;  }
     .fc-left { display: none; }
-    /*
-    .toolbar { display: none; }
-    */
-
     [data-test-attr='appToolBar'] { display: none; }
     [data-test-attr='appNav'] { display: none; }
     .navigaton-drawer { display: none; }
