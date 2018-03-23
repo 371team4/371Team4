@@ -1,7 +1,6 @@
 import { server } from '@/services/api.endpoint'
 
 export function getAllSlides () {
-  debugger
   return server.get('api/slides/')
 }
 
@@ -21,16 +20,13 @@ export function saveSlide (slide) {
     // checks if id object exists (it does if already in DB) otherwise it doesn't and will be false.
     if (slide._id) {
       // If id already exist, post the body of current slide in the id that already exist
-      return server.put(`api/slides/${slide._id}`, {
-        body: slide })
+      return server.put(`api/slides/${slide._id}`, slide)
     } else {
       // id does not exist in the database so we save as new slide
-      return server.post(server + '/api/slides/', {
-        body: slide
-      })
+      return server.post('api/slides/', slide)
     }
   } else {
-    console.log('Need it for `saveSlide`')
+    console.log('Need slide for `saveSlide`')
   }
 }
 // takes currentSlide as payload, used for deleting slides from database.

@@ -33,6 +33,8 @@ const getters = {
   // getter for allSlides
   getAllSlides: state => state.allSlides,
 
+  getCurrentSlide: state => state.currentSlide,
+
   // getter for isCurrentSlideDirty
   getIsCurrentSlideDirty: state => state.isCurrentSlideDirty,
 
@@ -280,9 +282,10 @@ const actions = {
   },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ state }) {
+  saveSlide ({ state, commit }) {
     server.saveSlide(state.currentSlide)
       .then(response => {
+        commit(CURRENT_SLIDE.SET, response.data)
       })
       .catch(function (error) {
         console.log(error)
