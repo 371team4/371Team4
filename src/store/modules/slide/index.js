@@ -292,8 +292,8 @@ const actions = {
       })
   },
   // takes currentSlide as payload, used for deleting slides from database.
-  deleteSlide ({ commit }) {
-    server.deleteSlide('')
+  deleteSlide ({ commit }, id) {
+    server.deleteSlide(id)
       .then(response => {
         commit(CURRENT_SLIDE.SET, newSlide)
       })
