@@ -16,6 +16,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "firebase": "^4.10.0",
     "vue": "^2.5.2",
     "vue-fullcalendar": "^1.0.9",
