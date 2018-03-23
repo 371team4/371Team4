@@ -49,6 +49,7 @@ function waitFor (func, timeout) {
 }
 
 describe('index', function () {
+  this.timeout(15000)
   before('Setup before slide tests', function (done) {
     vm.$store.dispatch('signIn', { username: 'test', password: 'admin001' })
     vm.$store.dispatch('initAllSlides')
@@ -77,17 +78,20 @@ describe('index', function () {
     }, 1000)
   })
 
-  it.skip('should saveSlide when it is not new', done => {
+  it('should saveSlide when it is not new', done => {
     debugger
     const ogSlide = vm.$store.getters.getAllSlides[0]
     vm.$store.dispatch('getSlide', ogSlide._id)
     waitFor(() => {
       vm.$store.commit(CURRENT_SLIDE.SET_TITLE_CONTENT, 'updatedSlide')
+      vm.$store.commit(CURRENT_SLIDE.SET_IMAGE, [])
       vm.$store.dispatch('saveSlide')
       waitFor(() => {
         debugger
         ogSlide.title.content = 'updatedSlide'
-        expect(vm.$store.getters.getCurrentSlide).to.deep.equal(ogSlide)
+        ogSlide.images = []
+        expect(vm.$store.getters.getCurrentSlide.title.content).to.deep.equal(ogSlide.title.content)
+        expect(vm.$store.getters.getCurrentSlide.images).to.deep.equal(ogSlide.images)
         done()
       }, 1000)
     }, 1000)
