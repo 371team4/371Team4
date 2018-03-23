@@ -5,28 +5,28 @@ import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 let newSlide = {
   images: [],
   title: {
-    content: 'SlideAPIUnitTest1',
+    content: 'SlideAPIUnitTestforDeleteSlide',
     fontColor: 'Blue',
     fontSize: 'Large',
     fontStyle: 'Normal',
     fontWeight: 'Bold'
   },
   description: {
-    content: 'This is just for Slide API unit test',
+    content: 'This is just for Slide API deleteSlide unit test, it should be deleted',
     fontColor: 'Blue',
     fontSize: 'Large',
     fontStyle: 'Normal',
     fontWeight: 'Bold'
   },
   date: {
-    content: '2018-03-21',
+    content: '2018-03-23',
     fontColor: 'Red',
     fontSize: 'Large',
     fontStyle: 'Normal',
     fontWeight: 'Bold'
   },
   time: {
-    content: '11:40',
+    content: '12:40',
     fontColor: 'Red',
     fontSize: 'Large',
     fontStyle: 'Normal',
@@ -102,6 +102,15 @@ describe('index', function () {
     vm.$store.dispatch('getSlide', slide._id)
     waitFor(() => {
       expect(vm.$store.getters.getCurrentSlide).to.deep.equal(slide)
+      done()
+    }, 1000)
+  })
+
+  it('should deleteSlide', done => {
+    const slide = vm.$store.getters.getAllSlides[0]
+    vm.$store.dispatch('deleteSlide', slide._id)
+    waitFor(() => {
+      expect(vm.$store.getters.getCurrentSlide).to.not.deep.equal(slide)
       done()
     }, 1000)
   })
