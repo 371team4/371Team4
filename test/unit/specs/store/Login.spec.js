@@ -1,5 +1,6 @@
 import login from '@/store/modules/login/index'
 import * as CURRENT_USER from '@/store/mutation-types'
+import { server } from '@/services/api.endpoint'
 
 // helper for testing action with expected mutations
 const testAction = (action, args, state, expectedMutations, done) => {
@@ -44,15 +45,29 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
-describe.only('login', () => {
+describe('login, this suite is order dependenant', () => {
   describe('actions', () => {
     // initial users in /src/config/seed.js must stay the same
     it('signIn', done => {
-      debugger
       testAction(login.actions.signIn, [ { username: 'test', password: 'admin001' } ], {}, [
       // mutation should been called in order from first to last
         { type: 'SET_USER', payload: 'test' }
       ], done)
+    })
+
+    it('shoud have a token with each request after signIn', () => {
+      expect(server.defaults.headers['x-access-token']).to.not.equal('')
+    })
+
+    it('signOut', done => {
+      testAction(login.actions.signOut, [], {}, [
+      // mutation should been called in order from first to last
+        { type: 'SET_USER', payload: {} }
+      ], done)
+    })
+
+    it('shoud not have a token after signOut', () => {
+      expect(server.defaults.headers).to.not.contain.key('x-access-token')
     })
   })
 })
