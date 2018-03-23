@@ -11,6 +11,28 @@ describe('Calendar.vue', function () {
     Constructor = Vue.extend(Calendar)
   })
 
+  describe('Test data', function () {
+    before(function () {
+      vm = new Constructor().$mount()
+    })
+
+    it('should have correct data', function () {
+      const config = vm.$data.config
+      expect(config.editable).to.equal(false)
+      expect(config.selectable).to.equal(false)
+      expect(config.defaultView).to.equal('month')
+      expect(config.height).to.equal('auto')
+      expect(config.contentHeight).to.equal('auto')
+    })
+
+    it('should have correct header', function () {
+      const config = vm.$data.config
+      expect(config.header.left).to.equal('prev,next')
+      expect(config.header.center).to.equal('title')
+      expect(config.header.right).to.equal('')
+    })
+  })
+
   describe('Test events property', function () {
     let mockSlides
     before(function () {
@@ -133,14 +155,14 @@ describe('Calendar.vue', function () {
       })
     })
 
-    it('should have correct start dates', function (done) {
+    it('should have correct start date & time', function (done) {
       vm.$store.state.allSlides = mockSlides
 
       Vue.nextTick(() => {
-        vm.events.forEach((event, i) => {
-          let expectDate = new Date(mockSlides[i].date.content + ' ' + mockSlides[i].time.content).toString
-          expect(event.start.toString).to.equal(expectDate)
-        })
+        expect(vm.events.length).to.equal(3)
+        expect(vm.events[0].start.toString()).to.equal('Thu Feb 15 2018 03:45:00 GMT-0600')
+        expect(vm.events[1].start.toString()).to.equal('Thu Feb 01 2018 09:55:00 GMT-0600')
+        expect(vm.events[2].start.toString()).to.equal('Sun Aug 05 2018 10:05:00 GMT-0600')
         done()
       })
     })
