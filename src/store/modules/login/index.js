@@ -1,4 +1,4 @@
-import { setToken } from '@/services/api.endpoint'
+import { setToken, removeToken } from '@/services/api.endpoint'
 import * as loginAPI from '@/services/API/login'
 import { SET_USER } from '@/store/mutation-types'
 
@@ -38,7 +38,7 @@ const actions = {
 
   signOut ({ commit }) {
     commit(SET_USER, {}) // empty the user object
-    setToken('') // need to remove the authentication token from the axios instance
+    removeToken() // need to remove the authentication token from the axios instance
   }
 }
 
