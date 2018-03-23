@@ -118,56 +118,57 @@ export default {
     }
   },
   computed: {
+    // weeks as a computed property returns an empty array
     weeks () {
       return [
         [
           {
             name: 'Monday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Tuesday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Wednesday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Thursday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Friday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Saturday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           },
           {
             name: 'Sunday',
             meals: {
-              Lunch: ['Pizza', 'Spinach Casserole'],
-              Supper: ['Meat Loaf', 'Chicken Noodle Soup']
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
             }
           }
         ]
