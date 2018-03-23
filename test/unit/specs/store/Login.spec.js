@@ -44,16 +44,14 @@ const testAction = (action, args, state, expectedMutations, done) => {
   }
 }
 
-describe('login', () => {
+describe.only('login', () => {
   describe('actions', () => {
     // initial users in /src/config/seed.js must stay the same
     it('signIn', done => {
+      debugger
       testAction(login.actions.signIn, [ { username: 'test', password: 'admin001' } ], {}, [
       // mutation should been called in order from first to last
-        { type: 'SET_LOADING', payload: { loading: true } },
-        { type: 'SET_TOKEN', payload: 'as4' },
-        { type: 'SET_LOADING', payload: { loading: false } },
-        { type: 'SET_USERNAME', payload: 'test' }
+        { type: 'SET_USER', payload: 'test' }
       ], done)
     })
   })
