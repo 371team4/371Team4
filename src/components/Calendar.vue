@@ -64,9 +64,6 @@ export default {
         return newSlide
       })
     }
-  },
-  methods: {
-
   }
 }
 </script>
