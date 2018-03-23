@@ -11,3 +11,7 @@ export function setToken (token) {
     console.error('Need token for authentication ')
   }
 }
+
+export function removeToken () {
+  delete server.defaults.headers['x-access-token']
+}
