@@ -16,13 +16,9 @@ describe('FoodMenuWidget.vue', function () {
       vm = new Constructor().$mount()
     })
 
-    it('Dialog showing that "too many weeks have been added" should be false by default', function () {
-      expect(vm.$data.tooManyWeeksDialogShown).to.equal(false)
-      expect(vm.$data.tooManyWeeksAdded).to.equal('Cannot add more than 5 weeks!')
-    })
-
-    it('Ensure property to control not deleting the first week is set to false by default', function () {
-      expect(vm.$data.dontDeleteTheFirstWeek).to.equal(false)
+    it('Dialog displaying too many weeks added/can\'t delete the first week is false by default', function () {
+      expect(vm.$data.showSnackbar).to.equal(false)
+      expect(vm.$data.snackbarMessage).to.equal('')
     })
 
     it('Number of weeks to be added counter should be 1 by default', function () {
@@ -43,31 +39,52 @@ describe('FoodMenuWidget.vue', function () {
         [
           {
             name: 'Monday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Tuesday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Wednesday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Thursday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Friday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Saturday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           },
           {
             name: 'Sunday',
-            meals: { Lunch: ['Pizza', 'Spinach Casserole'], Supper: ['Meat Loaf', 'Chicken Noodle Soup'] }
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
           }
         ]
       ]
