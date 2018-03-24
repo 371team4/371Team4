@@ -21,6 +21,7 @@ module.exports = function (config) {
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
+    colors: true,
     webpack: webpackConfig,
     webpackMiddleware: {
       noInfo: true
