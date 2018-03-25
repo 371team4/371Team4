@@ -1,8 +1,6 @@
 <template>
-  <v-card
-  v-show="isVisible">
-    <v-flex
-    align-center>
+  <v-card v-show="isVisible">
+    <v-flex align-center>
       <v-btn
         :disabled="isDisabled"
         @click.stop="broadcastEvent"
