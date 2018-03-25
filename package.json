@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --inline --colors --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "tdd": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
-    "unit": "npm run tdd --single-run",
+    "unit": "npm run tdd -- --single-run",
     "lint": "eslint --cache --fix --ext .js,.vue src test/unit test/e2e",
     "e2e": "node test/e2e/run-e2e.js",
     "build": "node build/build.js",
