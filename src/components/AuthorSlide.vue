@@ -8,6 +8,7 @@
         lg8>
           <form>
             <v-text-field
+              data-test-attr="title"
               label="Title"
               v-model="slide.title.content"
               :error-messages="titleErrors"

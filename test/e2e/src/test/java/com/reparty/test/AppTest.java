@@ -36,4 +36,28 @@ public class AppTest extends WebDriverBase {
     searchField.sendKeys(Keys.chord("unicorns", Keys.ENTER));
     fail();
   }
+
+  @Test
+	public void googleForCheese() {
+		getWebDriver().navigate().to("https://www.google.com");
+    WebElement element = getWebDriver().findElement(By.name("q"));
+
+		element.sendKeys("Cheese!");
+		element.submit();
+
+    getWebDriver().findElement(By.id("res"));
+    Assert.assertEquals(getWebDriver().findElement(By.tagName("body")).getText(), "curds");
+  }
+
+  @Test
+	public void testSimple() throws Exception {
+		getWebDriver().navigate().to("http://www.google.com");
+		Assert.assertEquals("Gogle", getWebDriver().getTitle());
+  }
+
+  @Test
+	public void testingSlide() throws Exception {
+		getWebDriver().navigate().to("http://localhost:8080/designer");
+		Assert.assertEquals("Retirement Parties", getWebDriver().getTitle());
+  }
 }
