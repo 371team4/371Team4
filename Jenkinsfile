@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Lint') {
             steps {
-                bat 'npm run lint-fix'
+                bat 'npm run lint'
             }
         }
         stage('Build') {

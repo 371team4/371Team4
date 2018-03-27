@@ -49,8 +49,7 @@
       </v-flex>
       <!-- Done the Carousel item -->
 
-      <v-flex
-      xs12>
+      <v-flex xs12>
         <v-card
           color="transparent"
           flat
