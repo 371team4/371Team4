@@ -1,5 +1,6 @@
 <template>
   <v-toolbar
+    data-test-attr="appToolBar"
     color="indigo"
     dark
     fixed
