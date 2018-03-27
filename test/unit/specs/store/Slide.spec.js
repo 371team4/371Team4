@@ -79,7 +79,6 @@ describe('index', function () {
   })
 
   it('should saveSlide when it is not new', done => {
-    debugger
     const ogSlide = vm.$store.getters.getAllSlides[0]
     vm.$store.dispatch('getSlide', ogSlide._id)
     waitFor(() => {
@@ -87,7 +86,6 @@ describe('index', function () {
       vm.$store.commit(CURRENT_SLIDE.SET_IMAGE, [])
       vm.$store.dispatch('saveSlide')
       waitFor(() => {
-        debugger
         ogSlide.title.content = 'updatedSlide'
         ogSlide.images = []
         expect(vm.$store.getters.getCurrentSlide.title.content).to.deep.equal(ogSlide.title.content)

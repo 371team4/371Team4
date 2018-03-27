@@ -282,7 +282,7 @@ const actions = {
   },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ state, commit }) {
+  saveSlide ({ state, commit, dispatch }) {
     server.saveSlide(state.currentSlide)
       .then(response => {
         commit(CURRENT_SLIDE.SET, response.data)
@@ -290,9 +290,10 @@ const actions = {
       .catch(function (error) {
         console.log(error)
       })
+    dispatch('initAllSlides')
   },
   // takes currentSlide as payload, used for deleting slides from database.
-  deleteSlide ({ commit }, id) {
+  deleteSlide ({ commit, dispatch }, id) {
     server.deleteSlide(id)
       .then(response => {
         commit(CURRENT_SLIDE.SET, newSlide)
@@ -300,6 +301,7 @@ const actions = {
       .catch(function (error) {
         console.log(error)
       })
+    dispatch('initAllSlides')
   }
 }
 
