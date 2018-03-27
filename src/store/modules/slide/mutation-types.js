@@ -60,4 +60,4 @@ export const SET_META_ENDDATE = 'SET_META_ENDDATE'
 export const SET_TEMPLATE = 'SET_TEMPLATE'
 
 // for set timeout
-export const SET_TIMEOUT = 'SET_ SET_TIMEOUT'
+export const SET_TIMEOUT = 'SET_TIMEOUT'
