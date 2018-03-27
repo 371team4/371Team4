@@ -446,13 +446,13 @@ describe('Designer.vue', function () {
       expect(vm.titleErrors).to.eql([])
     })
 
-    it('should have no title required error', function () {
+    it('should have a "title required" error', function () {
       vm.$v.$touch()
 
       expect(vm.titleErrors).to.eql(['Title is required'])
     })
 
-    it('should have no title too long error', function () {
+    it('should have "title too long" error', function () {
       vm.$props.slide.title.content = 'This title is more than thirty characters long'
       vm.$v.$touch()
 
@@ -481,13 +481,13 @@ describe('Designer.vue', function () {
       expect(vm.descriptionErrors).to.eql([])
     })
 
-    it('should have no description required error', function () {
+    it('should have "description required" error', function () {
       vm.$v.$touch()
 
       expect(vm.descriptionErrors).to.eql(['Description is required'])
     })
 
-    it('should have no description too long error', function () {
+    it('should have "description too long" error', function () {
       vm.$props.slide.description.content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vulputate, dui luctus finibus consequat, lacus nisl lobortis urna, posuere ultricies ipsum sapien'
       vm.$v.$touch()
 
