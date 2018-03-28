@@ -20,22 +20,21 @@
         @deleteImage="deleteImage"
         @clear="clear"
         @submit="submit"/>
-    </v-layout>
-    <v-layout horizontal>
-      <v-btn
-        data-test-attr="clearButton"
-        color="error"
-        @click="clear">clear</v-btn>
-      <v-spacer/>
-      <v-btn
-        @click.stop="changeViews"
-        data-test-attr="previewButton">
-        {{ showPreview ? 'Edit' : 'Preview' }}
-      </v-btn>
-      <v-btn
-        data-test-attr="submitButton"
-        color="success"
-        @click="submit">submit</v-btn>
+      <v-flex>
+        <v-btn
+          data-test-attr="clearButton"
+          color="error"
+          @click="clear">clear</v-btn>
+        <v-btn
+          @click="changeViews"
+          data-test-attr="previewButton">
+          {{ showPreview ? 'Edit' : 'Preview' }}
+        </v-btn>
+        <v-btn
+          data-test-attr="submitButton"
+          color="success"
+          @click="submit">submit</v-btn>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -165,6 +164,7 @@ export default {
       this.slide.time.content = null
       this.forceUpdateCarousel()
       this.$store.commit(CURRENT_SLIDE.SET, this.slide)
+      this.changeViews()
     },
     forceUpdateCarousel () {
       this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))

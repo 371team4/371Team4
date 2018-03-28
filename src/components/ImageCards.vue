@@ -1,48 +1,43 @@
 <template>
-  <v-layout justify-end="true">
-    <v-flex sm8>
-      <v-card>
-        <v-container
-          fluid
-          style="height: 550px"
-          class="scroll-y"
-          id="scroll-target">
-          <v-container grid-list-sm>
-            <v-layout
-              column
-              align-content-center="true"
-              v-scroll:#scroll-target="onScroll">
-              <v-flex
-                v-for="(card, index) in cards"
-                :key="index">
-                <v-card tile>
-                  <v-card-media
-                    :src="card.src"
-                    height="150px">
-                    <v-spacer/>
-                    <v-btn
-                      icon
-                      flat
-                      @click="deleteCard(index)">
-                      <v-icon>clear</v-icon>
-                    </v-btn>
-                  </v-card-media>
-                </v-card>
-              </v-flex>
-              <AddButton @cButtonClick="pickFile"/>
-              <input
-                data-test-attr="uploadButton"
-                ref="uploadButton"
-                accept="image/*"
-                type="file"
-                v-show="false"
-                @change="cardSelected">
-            </v-layout>
-          </v-container>
-        </v-container>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <v-card>
+    <v-container
+      fluid
+      class="scroll-y"
+      id="scroll-target">
+      <v-container grid-list-sm>
+        <v-layout
+          column
+          align-content-center="true"
+          v-scroll:#scroll-target="onScroll">
+          <v-flex
+            v-for="(card, index) in cards"
+            :key="index">
+            <v-card tile>
+              <v-card-media
+                :src="card.src"
+                height="150px">
+                <v-spacer/>
+                <v-btn
+                  icon
+                  flat
+                  @click="deleteCard(index)">
+                  <v-icon>clear</v-icon>
+                </v-btn>
+              </v-card-media>
+            </v-card>
+          </v-flex>
+          <AddButton @cButtonClick="pickFile"/>
+          <input
+            data-test-attr="uploadButton"
+            ref="uploadButton"
+            accept="image/*"
+            type="file"
+            v-show="false"
+            @change="cardSelected">
+        </v-layout>
+      </v-container>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

@@ -1,97 +1,140 @@
 <template>
-  <v-container grid-list-xl>
-    <v-layout v-bind="binding">
-      <v-layout>
-        <v-flex lg8>
-          <form>
-            <v-text-field
-              data-test-attr="title"
-              label="Title"
-              v-model="slide.title.content"
-              :error-messages="titleErrors"
-              :counter="30"
-              @blur="$emit('titleBlur')"
-              required/>
-            <v-layout>
-              <v-flex xs11>
-                <v-menu
-                  lazy
-                  :close-on-content-click="true"
-                  v-model="dateMenu"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  :nudge-right="40"
-                  min-width="290px">
-                  <v-text-field
-                    slot="activator"
-                    label="Date of Event"
-                    v-model="slide.date.content"
-                    prepend-icon="event"
-                    readonly/>
-                  <v-date-picker
-                    v-model="slide.date.content"
-                    no-title
-                    scrollable/>
-                </v-menu>
-              </v-flex>
-              <v-spacer/>
-              <v-flex
-                xs11
-                sm5>
-                <v-menu
-                  ref="tMenu"
-                  lazy
-                  :close-on-content-click="false"
-                  v-model="timeMenu"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  :nudge-right="40"
-                  max-width="290px"
-                  min-width="290px">
-                  <v-text-field
-                    slot="activator"
-                    label="Time of Event"
-                    v-model="formattedTime"
-                    prepend-icon="access_time"
-                    readonly/>
-                  <v-time-picker
-                    v-model="slide.time.content"
-                    :allowed-minutes="allowedMinutes"
-                    @change="$refs.tMenu.save(slide.time.content)"/>
-                </v-menu>
-              </v-flex>
-            </v-layout>
-            <v-text-field
-              textarea
-              label="Description"
-              v-model="slide.description.content"
-              :error-messages="descriptionErrors"
-              :counter="140"
-              @blur="$emit('descBlur')"
-              required
-            />
-          </form>
+  <form>
+    <v-container fluid>
+      <v-layout v-bind="binding">
+        <v-flex>
+          <v-layout column>
+            <v-flex>
+              <v-text-field
+                data-test-attr="title"
+                label="Title"
+                v-model="slide.title.content"
+                :error-messages="titleErrors"
+                :counter="30"
+                @blur="$emit('titleBlur')"
+                required/>
+                <!--<v-expansion-panel>
+                <v-expansion-panel-content expand-icon="settings">
+                  <div slot="header">Item</div>
+                  <font-style
+                    :font-style="slide.title.fontSytle"
+                    :font-size="slide.title.fontSize"
+                    :font-weight="slide.title.fontWeight"
+                    :font-color="slide.title.fontColor"/>
+                </v-expansion-panel-content>
+              </v-expansion-panel>-->
+            </v-flex>
+            <v-flex>
+              <v-layout v-bind="binding">
+                <v-flex>
+                  <v-menu
+                    lazy
+                    :close-on-content-click="true"
+                    v-model="dateMenu"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    :nudge-right="40"
+                    min-width="290px">
+                    <v-text-field
+                      slot="activator"
+                      label="Date of Event"
+                      v-model="slide.date.content"
+                      prepend-icon="event"
+                      readonly/>
+                    <v-date-picker
+                      v-model="slide.date.content"
+                      no-title
+                      scrollable/>
+                  </v-menu>
+                  <!--<v-expansion-panel>
+                    <v-expansion-panel-content expand-icon="settings">
+                      <div slot="header">Item</div>
+                      <font-style
+                        :font-style="slide.date.fontSytle"
+                        :font-size="slide.date.fontSize"
+                        :font-weight="slide.date.fontWeight"
+                        :font-color="slide.date.fontColor"/>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>-->
+                </v-flex>
+                <v-flex>
+                  <v-menu
+                    ref="tMenu"
+                    lazy
+                    :close-on-content-click="false"
+                    v-model="timeMenu"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    :nudge-right="40"
+                    max-width="290px"
+                    min-width="290px">
+                    <v-text-field
+                      slot="activator"
+                      label="Time of Event"
+                      v-model="formattedTime"
+                      prepend-icon="access_time"
+                      readonly/>
+                    <v-time-picker
+                      v-model="slide.time.content"
+                      :allowed-minutes="allowedMinutes"
+                      @change="$refs.tMenu.save(slide.time.content)"/>
+                  </v-menu>
+                  <!--<v-expansion-panel>
+                    <v-expansion-panel-content expand-icon="settings">
+                      <div slot="header">Item</div>
+                      <font-style
+                        :font-style="slide.time.fontSytle"
+                        :font-size="slide.time.fontSize"
+                        :font-weight="slide.time.fontWeight"
+                        :font-color="slide.time.fontColor"/>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>-->
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex>
+              <v-text-field
+                textarea
+                label="Description"
+                v-model="slide.description.content"
+                :error-messages="descriptionErrors"
+                :counter="140"
+                @blur="$emit('descBlur')"
+                required/>
+                <!--<v-expansion-panel>
+                <v-expansion-panel-content expand-icon="settings">
+                  <div slot="header">Item</div>
+                  <font-style
+                    :font-style="slide.description.fontSytle"
+                    :font-size="slide.description.fontSize"
+                    :font-weight="slide.description.fontWeight"
+                    :font-color="slide.description.fontColor"/>
+                </v-expansion-panel-content>
+              </v-expansion-panel>-->
+            </v-flex>
+          </v-layout>
         </v-flex>
-      </v-layout>
-      <v-layout>
-        <v-flex lg10>
+        <v-flex
+          xs4
+          class="ml-4">
           <ImageCards
             :cards="slide.images"
             @imageSelected="imageSelected"
             @deleteImage="deleteImage"/>
         </v-flex>
       </v-layout>
-    </v-layout>
-  </v-container>
+    </v-container>
+  </form>
 </template>
 
 <script>
+import FontStyle from '@/components/FontStyle'
 import ImageCards from '@/components/ImageCards'
 
 export default {
-  components: { ImageCards },
+  components: { ImageCards, FontStyle },
   props: {
     slide: {
       type: Object,
