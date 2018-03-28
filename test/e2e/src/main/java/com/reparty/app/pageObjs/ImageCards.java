@@ -9,22 +9,18 @@ import org.openqa.selenium.support.FindBy;
 public class ImageCards extends PageObjBase {
 
   @FindBy(css= "[data-test-attr='uploadButton']")
-  private WebElement UploadButton;
+  private WebElement UploadInputField;
 
-  private AddButton add;
+  @FindBy(css= "[data-test-attr='addButton']")
+  private WebElement AddButton;
 
   public ImageCards(WebElement element) {
     super(element);
-    add = new AddButton(element);
-  }
-
-  public AddButton addButton() {
-    return add;
   }
 
   public void uploadFile(String path) {
-    this.UploadButton.clear();
-    this.UploadButton.sendKeys(path);
+    this.UploadInputField.clear();
+    this.UploadInputField.sendKeys(path);
     CommonUtils.sleep(5);
   }
 }
