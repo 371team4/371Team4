@@ -23,13 +23,17 @@
     </v-layout>
     <v-layout horizontal>
       <v-btn
+        data-test-attr="clearButton"
         color="error"
         @click="clear">clear</v-btn>
       <v-spacer/>
-      <v-btn @click.stop="changeViews">
+      <v-btn
+        @click.stop="changeViews"
+        data-test-attr="previewButton">
         {{ showPreview ? 'Edit' : 'Preview' }}
       </v-btn>
       <v-btn
+        data-test-attr="submitButton"
         color="success"
         @click="submit">submit</v-btn>
     </v-layout>

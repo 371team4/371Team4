@@ -6,7 +6,8 @@
       <v-layout>
         <v-flex
         lg8>
-          <form>
+          <form
+          data-test-attr="authorSlide">
             <v-text-field
               data-test-attr="title"
               label="Title"

@@ -35,6 +35,7 @@
               </v-flex>
               <AddButton @cButtonClick="pickFile"/>
               <input
+                data-test-attr="uploadButton"
                 ref="uploadButton"
                 accept="image/*"
                 type="file"
