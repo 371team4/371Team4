@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import MenuDayCard from '@/components/MenuDayCard'
+import MenuDayCard from '@/components/widgets/MenuDayCard'
 
 export default {
   components: { MenuDayCard },
