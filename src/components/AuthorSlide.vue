@@ -1,13 +1,9 @@
 <template>
-  <v-container
-  grid-list-xl>
-    <v-layout
-    v-bind="binding">
+  <v-container grid-list-xl>
+    <v-layout v-bind="binding">
       <v-layout>
-        <v-flex
-        lg8>
-          <form
-          data-test-attr="authorSlide">
+        <v-flex lg8>
+          <form>
             <v-text-field
               data-test-attr="title"
               label="Title"
@@ -17,8 +13,7 @@
               @blur="$emit('titleBlur')"
               required/>
             <v-layout>
-              <v-flex
-              xs11>
+              <v-flex xs11>
                 <v-menu
                   lazy
                   :close-on-content-click="true"
@@ -81,8 +76,7 @@
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex
-        lg10>
+        <v-flex lg10>
           <ImageCards
             :cards="slide.images"
             @imageSelected="imageSelected"
@@ -167,7 +161,7 @@ export default {
     formattedTime () {
       if (this.slide && this.slide.time && this.slide.time.content !== null) {
         const timeFrags = this.slide.time.content.split(':')
-        const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] > 12 ? ' PM' : ' AM')
+        const timeFormatted = (timeFrags[0] > 12 ? timeFrags[0] - 12 : timeFrags[0]) + ':' + timeFrags[1] + (timeFrags[0] >= 12 ? ' PM' : ' AM')
         return timeFormatted
       }
       return null

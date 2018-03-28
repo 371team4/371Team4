@@ -1,44 +1,83 @@
 <template>
   <v-container fluid>
-    <full-calendar :events="Events"/>
+    <full-calendar
+      :config="config"
+      :events="events"/>
   </v-container>
 </template>
 
 <script>
+// Import calendar as a plugin
+import { FullCalendar } from 'vue-full-calendar'
+import moment from 'moment'
 
 export default {
   components: {
-    'full-calendar': require('vue-fullcalendar')
+    FullCalendar
+  },
+  data () {
+    return {
+      config: {
+        editable: false,
+        selectable: false,
+        defaultView: 'month',
+        header: {
+          left: 'prev,next',
+          center: 'title',
+          right: ''
+        },
+        height: 'auto',
+        contentHeight: 'auto'
+      }
+    }
   },
   computed: {
-    Events () {
+    events () {
       return this.$store.getters.getAllSlides.map((slide) => {
         const newSlide = {}
+        // Events at least need title and date information
         if (slide &&
-            slide.title &&
-            slide.title.content &&
-            slide.date &&
-            slide.date.content) {
-          // Copy the title and start time
+          slide.title &&
+          slide.title.content &&
+          slide.date &&
+          slide.date.content) {
+        // Copy the title and start time
           newSlide.title = slide.title.content
-          newSlide.start = this.addOneDay(slide.date.content)
+          newSlide.start = slide.date.content
+          // Now if the event also has time or description, add it into the slide as well
+          if (slide.description &&
+            slide.description.content) {
+            newSlide.description = slide.description.content
+          }
+          if (slide.time &&
+            slide.time.content) {
+          // Since the event cannot show correctly with the time from "0 AM" to "10 AM",
+          // We have to make a new Date
+          // If we use ' ' instead of 'T', data cannot show on the safari!
+            newSlide.start = moment(newSlide.start + ' ' + slide.time.content, 'YYYY-MM-DD hh:mm a')
+          }
         }
         return newSlide
       })
     }
-  },
-  methods: {
-    // Since the calendar view cannot show the correct date,
-    // One day is added manually
-    addOneDay: function (dateString) {
-      return new Date(dateString).setDate(new Date(dateString).getDate() + 1)
-    }
   }
 }
-
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style>
+  @import 'fullcalendar/dist/fullcalendar.css';
+  @media print {
+    @page {
+      size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)
+    }
+    /* main html content */
+    main.content[data-booted] { margin: 0px; padding: 0px;}
+    .container.fluid { margin: 0px; }
+    /* fullCalendar */
+    #calendar { margin: 0px; padding: 0px; }
+    .fc-left { display: none; }
+    /* App shell */
+    [data-test-attr='appToolBar'] { display: none; }
+    [data-test-attr='appNav'] { display: none; }
+  }
 </style>

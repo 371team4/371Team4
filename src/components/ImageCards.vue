@@ -1,16 +1,13 @@
 <template>
-  <v-layout
-  justify-end="true">
-    <v-flex
-    sm8>
+  <v-layout justify-end="true">
+    <v-flex sm8>
       <v-card>
         <v-container
           fluid
           style="height: 550px"
           class="scroll-y"
           id="scroll-target">
-          <v-container
-          grid-list-sm>
+          <v-container grid-list-sm>
             <v-layout
               column
               align-content-center="true"
@@ -18,8 +15,7 @@
               <v-flex
                 v-for="(card, index) in cards"
                 :key="index">
-                <v-card
-                tile>
+                <v-card tile>
                   <v-card-media
                     :src="card.src"
                     height="150px">
