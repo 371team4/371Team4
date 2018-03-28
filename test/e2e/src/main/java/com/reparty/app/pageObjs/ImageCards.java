@@ -14,8 +14,15 @@ public class ImageCards extends PageObjBase {
   @FindBy(css= "[data-test-attr='addButton']")
   private WebElement AddButton;
 
+  @FindBy(css= "[data-test-attr='deleteCard']")
+  private WebElement DeleteCardButton;
+
   public ImageCards(WebElement element) {
     super(element);
+  }
+
+  public void deleteCard() {
+    DeleteCardButton.click();
   }
 
   public void uploadFile(String path) {

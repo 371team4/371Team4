@@ -34,15 +34,26 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
 	public void componentTestTitle() {
-    WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
-    WebElement elementTitle = authorSlide.findElement(By.cssSelector("[data-test-attr='title']"));
+    //WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
+    WebElement elementTitle = getWebDriver().findElement(By.cssSelector("[data-test-attr='title']"));
     elementTitle.sendKeys("Cheese!");
+  }
+
+  @Test
+	public void componentTestDescription() {
+    //WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
+    WebElement elementDescription = getWebDriver().findElement(By.cssSelector("[data-test-attr='description']"));
+    elementDescription.sendKeys("Cheese!");
   }
 
   @Test
 	public void componentTestUploadFile() {
     WebElement uploadButton = getWebDriver().findElement(By.cssSelector("[data-test-attr='uploadButton']"));
     uploadButton.sendKeys("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
+    CommonUtils.sleep(5);
+
+    WebElement deleteCard = getWebDriver().findElement(By.cssSelector("[data-test-attr='deleteCard']"));
+    deleteCard.click();
     CommonUtils.sleep(5);
   }
 
