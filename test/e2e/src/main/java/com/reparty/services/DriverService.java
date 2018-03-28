@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
@@ -52,19 +51,15 @@ public class DriverService {
    */
   public RemoteWebDriver getChromeDriver(UserAgents userAgent) {
     logger.traceEntry();
-    // need this to be able to build the options correctly into the webdriver
-    DesiredCapabilities caps = DesiredCapabilities.chrome();
     // get the defualt chrome options
     ChromeOptions options = getChromeOptions();
     // if the user agent is set then tell the webdriver to use that agent for all the requests
     if (userAgent != null) {
       options.addArguments("user-agent=".concat(userAgent.getValue()));
     }
-    // add options are part of the capabilities
-    caps.setCapability(ChromeOptions.CAPABILITY, options);
     // construct the webDriver using the the current chrome options
     // and return it
-    this.webDriver = new RemoteWebDriver(this.chromeService.getUrl(), caps);
+    this.webDriver = new RemoteWebDriver(this.chromeService.getUrl(), options);
     return logger.traceExit(this.webDriver);
   }
 
