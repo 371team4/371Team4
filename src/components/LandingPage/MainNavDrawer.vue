@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+    data-test-attr="appNav"
     app
     v-model="isVisible"
     clipped
