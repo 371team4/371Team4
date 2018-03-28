@@ -15,10 +15,9 @@
         class="my-0"/>
       <v-container
         fluid
-        fill-height>
-        <v-layout
-          justify-center
-          align-center>
+        fill-height
+        class="px-0 py-0">
+        <v-layout>
           <transition>
             <keep-alive>
               <router-view/>
@@ -27,17 +26,16 @@
         </v-layout>
       </v-container>
     </v-content>
-    <main-footer/>
   </v-app>
 </template>
 
 <script>
 import NavDrawer from '@/components/LandingPage/MainNavDrawer'
-import MainFooter from '@/components/LandingPage/MainFooter'
 import MainHeader from '@/components/LandingPage/MainHeader'
+import { slidesDB } from '@/services/firebase.conf'
 
 export default {
-  components: { NavDrawer, MainFooter, MainHeader },
+  components: { NavDrawer, MainHeader },
   data () {
     return {
       drawerVis: false
@@ -59,10 +57,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('signIn', { username: 'admin', password: 'admin001' })
-    setTimeout(function () {
-      this.$store.dispatch('signIn', { username: 'admin', password: 'admin001' })
-    }.bind(this), 2000)
+    this.$store.dispatch('setSlidesRef', slidesDB)
   },
   methods: {
     changeVisibilty () {

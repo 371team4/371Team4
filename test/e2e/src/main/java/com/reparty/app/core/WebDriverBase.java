@@ -37,14 +37,13 @@ public class WebDriverBase {
 
   private static Description description = null;
 
-  public WebDriverBase() {
-    driverService = new DriverService();
-  }
+  public WebDriverBase() { }
 
   public ExternalResource resource = new ExternalResource() {
     // setup webdriver before running a class of tests
     @Override
     protected void before() {
+      driverService = new DriverService();
       // this will get executed before the each test case
       webDriver = driverService.getChromeDriver();
     };
@@ -52,7 +51,7 @@ public class WebDriverBase {
     // teardown webdriver after running a class of tests
     @Override
     protected void after() {
-      driverService.releaseWebDriver();
+      driverService.stopService();
     };
   };
 
