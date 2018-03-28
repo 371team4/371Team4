@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import ImageCards from '@/components/ImageCards'
+import ImageCards from '@/components/slide/ImageCards'
 
 export default {
   components: { ImageCards },
