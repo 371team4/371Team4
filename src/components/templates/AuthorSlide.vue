@@ -1,11 +1,8 @@
 <template>
-  <v-container
-  grid-list-xl>
-    <v-layout
-    v-bind="binding">
+  <v-container grid-list-xl>
+    <v-layout v-bind="binding">
       <v-layout>
-        <v-flex
-        lg8>
+        <v-flex lg8>
           <form>
             <v-text-field
               label="Title"
@@ -15,8 +12,7 @@
               @blur="$emit('titleBlur')"
               required/>
             <v-layout>
-              <v-flex
-              xs11>
+              <v-flex xs11>
                 <v-menu
                   lazy
                   :close-on-content-click="true"
@@ -79,8 +75,7 @@
         </v-flex>
       </v-layout>
       <v-layout>
-        <v-flex
-        lg10>
+        <v-flex lg10>
           <ImageCards
             :cards="slide.images"
             @imageSelected="imageSelected"
