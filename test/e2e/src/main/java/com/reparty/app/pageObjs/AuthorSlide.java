@@ -12,24 +12,19 @@ public class AuthorSlide extends PageObjBase {
   @FindBy(css= "[data-test-attr='title']")
   private WebElement TitleInput;
 
-  @FindBy(css= "[data-test-attr='addButton']")
-  private WebElement AddButton;
-
-  @FindBy(css= "[data-test-attr='uploadButton']")
-  private WebElement UploadButton;
-
-  @FindBy(css= "[data-test-attr='submitButton']")
-  private WebElement SubmitButton;
-
-  @FindBy(css= "[data-test-attr='previewButton']")
-  private WebElement PreviewButton;
-
-  @FindBy(css= "[data-test-attr='clearButton']")
-  private WebElement ClearButton;
+  private ImageCards image;
 
   public AuthorSlide(WebElement element) {
     super(element);
+    image = new ImageCards(element);
   }
 
+  public ImageCards imageCards() {
+    return image;
+  }
 
+  public void enterTitle(String title) {
+    this.TitleInput.clear();
+    this.TitleInput.sendKeys(title);
+  }
 }
