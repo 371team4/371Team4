@@ -1,6 +1,6 @@
 import { setToken } from '@/services/api.endpoint'
 import * as loginAPI from '@/services/API/login'
-import { SET_USERNAME } from '@/store/mutation-types'
+import { SET_USER } from '@/store/mutation-types'
 
 // state of this module
 const state = {
@@ -19,7 +19,7 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  [SET_USERNAME] (state, payload) {
+  [SET_USER] (state, payload) {
     state.user = payload
   }
 }
