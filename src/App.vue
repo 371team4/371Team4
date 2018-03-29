@@ -44,12 +44,22 @@ export default {
     title () {
       return this.$route.name
     },
-    authenticated () {
-      return this.$store.getters.isAuthenticated
-    },
     tabs () {
       return this.$router.options.routes
-        .filter(route => route.name && route.icon)
+        .filter(route => {
+          if (route.name && route.icon && route.meta && route.meta.requiresAuth) {
+            if (!this.$store.getters.isAuthenticated) {
+              // don't show this route
+              return false
+            }
+            // fall through
+          }
+          // we don't want to show the Sign in router or the catch all
+          if (route.name === 'Sign in' || route.path === '/') {
+            return false
+          }
+          return true
+        })
     },
     isLoading () {
       return this.$store.getters.isLoading
@@ -57,7 +67,6 @@ export default {
   },
   created () {
     this.$store.dispatch('initAllSlides')
-    this.$store.dispatch('initSlide')
   },
   methods: {
     changeVisibilty () {
