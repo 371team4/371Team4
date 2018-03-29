@@ -32,7 +32,6 @@
 <script>
 import NavDrawer from '@/components/LandingPage/MainNavDrawer'
 import MainHeader from '@/components/LandingPage/MainHeader'
-import { slidesDB } from '@/services/firebase.conf'
 
 export default {
   components: { NavDrawer, MainHeader },
@@ -57,7 +56,8 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('setSlidesRef', slidesDB)
+    this.$store.dispatch('initAllSlides')
+    this.$store.dispatch('initSlide')
   },
   methods: {
     changeVisibilty () {

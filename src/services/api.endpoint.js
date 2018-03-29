@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // initialize server
 export const server = axios.create({
-  baseURL: 'http://cmpt371g4.usask.ca:8081'
+  baseURL: 'http://cmpt371g4.usask.ca:8081/'
 })
 
 // set token after login for actions require token

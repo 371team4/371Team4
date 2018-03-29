@@ -1,32 +1,28 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
-import { slidesDB } from '@/services/firebase.conf'
-import { firebaseAction } from 'vuexfire'
-
+import * as server from '@/services/API/slides'
 // This module is used for create-newSlide and saveSlide
-
+const SET_ALL_SLIDES = 'SET_ALL_SLIDES'
 // state of this module
+const newSlide = {
+  // the title of the slide, what it is called by humans, has text, font information and color.
+  title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // similar to title, but generally larger text content.
+  description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // image array of image files (or link to image files?) to be displayed in the slide
+  images: [],
+  // the date of the slides event, has similar font info as title/description, content is date object
+  date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  // the time of the event, same as date but time object instead of date object
+  time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+
+  meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
+}
+
 const state = {
   allSlides: [],
   // currentSlide is the slide which is currently being worked on by user, either because
-  // it is a brand new slide, or an existing one is being edited, this is the working store
-  // of the given slides information, no changes to this currentSlide should be reflected
-  // in the database until the button to save slide changes has been pressed in the
-  // appropriate editing view. When it is, all information in the currentSlide field
-  // should be pushed to the databse
-  currentSlide: {
-    // the title of the slide, what it is called by humans, has text, font information and color.
-    title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // similar to title, but generally larger text content.
-    description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // image array of image files (or link to image files?) to be displayed in the slide
-    images: [],
-    // the date of the slides event, has similar font info as title/description, content is date object
-    date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-    // the time of the event, same as date but time object instead of date object
-    time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-
-    meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
-  },
+  // it is a brand new slide, or an existing one is being edited
+  currentSlide: newSlide,
   // this is true if the user just created a new slide
   // or has edited an existing slide
   isCurrentSlideDirty: false
@@ -36,6 +32,8 @@ const state = {
 const getters = {
   // getter for allSlides
   getAllSlides: state => state.allSlides,
+
+  getCurrentSlide: state => state.currentSlide,
 
   // getter for isCurrentSlideDirty
   getIsCurrentSlideDirty: state => state.isCurrentSlideDirty,
@@ -85,6 +83,10 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
+  //
+  [SET_ALL_SLIDES] (state, payload) {
+    state.allSlides = payload
+  },
   // takes a slide object as payload, sets current slide to it.
   [CURRENT_SLIDE.SET] (state, payload) {
     state.currentSlide = payload
@@ -255,42 +257,51 @@ const mutations = {
   }
 }
 
-const setSlidesRef = firebaseAction(({ bindFirebaseRef }, payload) => {
-  // binding will automatically unbind any previously bound ref so you
-  // don't need to unbind before binding over an existing bound key
-  bindFirebaseRef('allSlides', payload)
-})
-
 // actions can be async and may have side effects
 const actions = {
-  // binds the slidesDB to the allSlides[] field via above const setSlidesRef
-  // when called
-  setSlidesRef,
+  // Gets all the slides in the database
+  initAllSlides ({ commit }) {
+    server.getAllSlides()
+      .then(response => {
+        commit(SET_ALL_SLIDES, response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
+
+  // Takes id as payload and gets the slide with the given id
+  getSlide ({ commit }, id) {
+    server.getSlide(id)
+      .then(response => {
+        commit(CURRENT_SLIDE.SET, response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ commit }) {
-    // trys to assign the database key to id, it will work if slide is from DB
-    const id = state.currentSlide['.key'] // key exists from DB if this slide is already in it
-    // checks if id object exists (it does if already in DB) otherwise it doesn't and will be false.
-    if (id) {
-      delete state.currentSlide['.key'] // don't want to re add key to DB so delete it on our side
-      // use key saved in id to update the edited slide in DB.
-      state.currentSlide = slidesDB.child(id).update(state.currentSlide)
-    } else {
-      // Does not have a key yet, means this is a new slide, so to save we
-      // 'push' to DB instead to create a new entry which automatically returns us a new key
-      state.currentSlide = slidesDB.push(state.currentSlide)
-    }
-
-    // This should not be set to false until it is confirmed that the slide is saved
-    // Because the modifications to the slide have now been saved to database,
-    // both this version, and the database one should be the same, so dirty
-    // state is now false.
-    commit(CURRENT_SLIDE.SET_STATUS, false)
+  saveSlide ({ state, commit, dispatch }) {
+    server.saveSlide(state.currentSlide)
+      .then(response => {
+        commit(CURRENT_SLIDE.SET, response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    dispatch('initAllSlides')
   },
-  // takes in slide database key as payload, uses to find and remove from database.
-  deleteSlide (payload) {
-    slidesDB.child(payload).remove()
+  // takes currentSlide as payload, used for deleting slides from database.
+  deleteSlide ({ commit, dispatch }, id) {
+    server.deleteSlide(id)
+      .then(response => {
+        commit(CURRENT_SLIDE.SET, newSlide)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    dispatch('initAllSlides')
   }
 }
 
