@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// initialize server
 export const server = axios.create({
   baseURL: 'http://cmpt371g4.usask.ca:8081/'
 })
