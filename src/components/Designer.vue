@@ -157,7 +157,6 @@
 </template>
 
 <script>
-
 import moment from 'moment'
 
 import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
