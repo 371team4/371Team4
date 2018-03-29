@@ -12,21 +12,16 @@
     "lint": "eslint --cache --fix --ext .js,.vue src test/unit test/e2e",
     "e2e": "node test/e2e/run-e2e.js",
     "build": "node build/build.js",
-    "deploy": "firebase deploy",
     "precommit": "npm run lint"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "firebase": "^4.12.0",
     "moment": "^2.21.0",
     "vue": "^2.5.2",
     "vue-full-calendar": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuejs-logger": "^1.10.2",
-    "vuelidate": "^0.6.2",
     "vuetify": "^1.0.10",
-    "vuex": "^3.0.1",
-    "vuexfire": "^2.3.0"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
@@ -60,7 +55,6 @@
     "eslint-plugin-vue-libs": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.11",
-    "firebase-tools": "^3.17.7",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
