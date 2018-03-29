@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import NavDrawer from '@/components/LandingPage/MainNavDrawer'
-import MainHeader from '@/components/LandingPage/MainHeader'
+import NavDrawer from '@/components/landingPage/MainNavDrawer'
+import MainHeader from '@/components/landingPage/MainHeader'
 import { slidesDB } from '@/services/firebase.conf'
 
 export default {

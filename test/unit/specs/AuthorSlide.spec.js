@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import AuthorSlide from '@/components/AuthorSlide'
+import AuthorSlide from '@/components/templates/AuthorSlide'
 import sinon from 'sinon'
 
 describe('AuthorSlide.vue', function () {

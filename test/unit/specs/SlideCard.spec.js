@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import SlideCard from '@/components/SlideCard'
+import SlideCard from '@/components/slide/SlideCard'
 
 describe('SlideCard.vue', function () {
   let Constructor, vm
