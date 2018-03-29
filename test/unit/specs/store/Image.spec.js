@@ -47,6 +47,7 @@ var sampleImage
 var sampleImageID
 
 describe('Image APIs', function () {
+  this.timeout(15000)
   before(done => {
     // create mock image
     var b64 = ['data:image/png;base64,nothing crazy here']
@@ -83,7 +84,7 @@ describe('Image APIs', function () {
   })
 
   // test deleteImage
-  describe('index', () => {
+  describe.only('index', () => {
     it('deleteImage', done => {
       testAction(index.actions.deleteImage, [sampleImageID], {}, [
         { type: 'SET_IMAGE_ID', payload: sampleImageID },
