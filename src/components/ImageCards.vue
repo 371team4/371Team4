@@ -18,6 +18,7 @@
                 height="150px">
                 <v-spacer/>
                 <v-btn
+                  data-test-attr="deleteCard"
                   icon
                   flat
                   @click="deleteCard(index)">

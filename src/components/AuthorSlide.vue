@@ -96,6 +96,7 @@
             <v-flex>
               <v-text-field
                 textarea
+                data-test-attr="description"
                 label="Description"
                 v-model="slide.description.content"
                 :rules="descriptionRules"
