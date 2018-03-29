@@ -9,9 +9,8 @@
                 data-test-attr="title"
                 label="Title"
                 v-model="slide.title.content"
-                :error-messages="titleErrors"
+                :rules="titleRules"
                 :counter="30"
-                @blur="$emit('titleBlur')"
                 required/>
                 <!--<v-expansion-panel>
                 <v-expansion-panel-content expand-icon="settings">
@@ -39,7 +38,7 @@
                     <v-text-field
                       slot="activator"
                       label="Date of Event"
-                      v-model="slide.date.content"
+                      v-model.lazy="slide.date.content"
                       prepend-icon="event"
                       readonly/>
                     <v-date-picker
@@ -99,9 +98,8 @@
                 textarea
                 label="Description"
                 v-model="slide.description.content"
-                :error-messages="descriptionErrors"
+                :rules="descriptionRules"
                 :counter="140"
-                @blur="$emit('descBlur')"
                 required/>
                 <!--<v-expansion-panel>
                 <v-expansion-panel-content expand-icon="settings">
@@ -176,20 +174,20 @@ export default {
           endDate: null
         }
       })
-    },
-    titleErrors: {
-      type: Array,
-      default: null
-    },
-    descriptionErrors: {
-      type: Array,
-      default: null
     }
   },
   data: () => {
     return {
       dateMenu: false,
-      timeMenu: false
+      timeMenu: false,
+      descriptionRules: [
+        v => !!v || 'Description is required',
+        v => v.length <= 140 || 'Description must be less than 140 characters'
+      ],
+      titleRules: [
+        v => !!v || 'Title is required',
+        v => v.length <= 30 || 'Title must be less than 30 characters'
+      ]
     }
   },
   computed: {
@@ -214,21 +212,16 @@ export default {
     allowedMinutes (minute) {
       return (minute % 5) === 0
     },
-    submit () {
-      // submit the action packaging all of the fields
-      this.$emit('submit')
-    },
-    clear () {
-      // reset all of the data fields
-      this.$emit('clear')
-      this.dateMenu = false
-      this.timeMenu = false
-    },
     imageSelected (e) {
       this.$emit('imageSelected', e)
     },
     deleteImage (e) {
       this.$emit('deleteImage', e)
+    },
+    propValue (e, eventName, parentObj) {
+      debugger
+      this.slide[parentObj]['content'] = e.value
+      this.$emit(eventName)
     }
   }
 }

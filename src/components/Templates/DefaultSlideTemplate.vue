@@ -1,14 +1,13 @@
 <template>
   <v-container
-    fluid
-    grid-list-sm>
+    class="px-0 py-0"
+    fluid>
     <!-- Event title card -->
     <v-layout
       row
       wrap
       justify-space-between>
       <v-flex
-        d-flex
         xs12
         sm8
         md9
@@ -24,7 +23,7 @@
           <v-card-title
             primary
             class="title">
-            <h2 class="display-2">{{ slide.date.content }}, {{ slide.time.content }} </h2>
+            <h2 class="display-2">{{ formattedDate }}, {{ formattedTime }} </h2>
           </v-card-title>
         </v-card>
       </v-flex>
@@ -49,34 +48,30 @@
       </v-flex>
       <!-- Done the Carousel item -->
 
-      <v-flex xs12>
-        <v-card
-          color="transparent"
-          flat
-          height="45px"/>
+      <!-- Component used as Event Body -->
+      <v-flex>
+        <v-jumbotron
+          class="mt-2"
+          color="grey lighten-3">
+          <v-container fill-height>
+            <v-layout align-center>
+              <v-flex>
+                <v-divider class="my-3"/>
+                <h3 class="headline"> {{ slide.description.content }}</h3>
+                <v-divider class="my-3"/>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-jumbotron>
       </v-flex>
-    </v-layout>
-
-    <!-- Component used as Event Body -->
-    <template>
-      <v-jumbotron color="grey lighten-3">
-        <v-container fill-height>
-          <v-layout align-center>
-            <v-flex>
-              <v-divider class="my-3"/>
-              <h3 class="headline"> {{ slide.description.content }}</h3>
-              <v-divider class="my-3"/>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-jumbotron>
-    </template>
     <!-- Done event body component -->
-
+    </v-layout>
   </v-container>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   props: {
     carousel: {
@@ -135,8 +130,22 @@ export default {
       this.slide.meta && this.slide.meta.timeout && this.slide.meta.timeout > 0) {
         return ((this.slide.meta.timeout * 1000) / this.slide.images.length)
       }
-      /* cannot return 0, Vuetify recognizes 0 as 0 time for carousel */
-      // if the above is false, undefined is returned which Vuetify treats as 'use the default'
+    },
+    formattedTime () {
+      if (this.slide && this.slide.time && this.slide.time.content !== null) {
+        let someDateObj = new Date()
+        let timeFrags = this.slide.time.content.split(':')
+        someDateObj.setHours(timeFrags[0])
+        someDateObj.setMinutes(timeFrags[1])
+        return moment(someDateObj).format('hh:mm A')
+      }
+      return null
+    },
+    formattedDate () {
+      if (this.slide && this.slide.date && this.slide.date.content !== null) {
+        return moment(this.slide.date.content).format('dddd, MMMM D')
+      }
+      return null
     }
   }
 }

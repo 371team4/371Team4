@@ -1,10 +1,5 @@
 package com.reparty.test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.util.concurrent.TimeUnit;
-
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.utils.CommonUtils;
 
@@ -12,9 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver;
 
 
 /**
