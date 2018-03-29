@@ -36,7 +36,6 @@ if (module.hot) {
     const slide = require('./modules/slide').default
     const upload = require('./modules/upload').default
     const login = require('./modules/login').default
-
     // swap in the new actions and mutations
     store.hotUpdate({
       modules: {
