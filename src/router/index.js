@@ -7,8 +7,7 @@ const ShowView = () => import(/* webpackChunkName: "ShowView.vue" */'@/component
 const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Slides')
 const Designer = () => import(/* webpackChunkName: "Designer.vue" */'@/components/Designer')
 const Calendar = () => import(/* webpackChunkName: "Calendar.vue" */'@/components/Calendar')
-/* const Login = () => import(/* webpackChunkName: "login.vue" \*\/ '@/components/Login') */
-const DefaultSlideTemplate = () => import(/* webpackChunkName: "DefaultSlideTemplate.vue" */'@/components/Templates/DefaultSlideTemplate')
+const Login = () => import(/* webpackChunkName: "login.vue" */ '@/components/Login')
 const FoodMenuWidget = () => import(/* webpackChunkName: "FoodMenuWidget.vue" */'@/components/FoodMenuWidget')
 
 Vue.use(Router)
@@ -16,18 +15,23 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
-    /* {
-      // star is for catch all
-      path: '*',
-      name: 'Sign in',
-      icon: 'person',
-      scrollToTop: true,
-      component: Login
-    }, */
     {
       path: '/',
       redirect: {
-        name: 'Slides'
+        name: 'Sign in'
+      },
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/signin',
+      name: 'Sign in',
+      icon: 'account_circle',
+      scrollToTop: true,
+      component: Login,
+      meta: {
+        requiresAuth: false
       }
     },
     {
@@ -37,7 +41,7 @@ const router = new Router({
       component: ShowView,
       scrollToTop: true,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -72,16 +76,6 @@ const router = new Router({
       }
     },
     {
-      path: '/slide',
-      name: 'Slide Template',
-      icon: 'live_tv',
-      component: DefaultSlideTemplate,
-      scrollToTop: true,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: '/foodmenu',
       name: 'Food Menu Widget',
       icon: 'local_dining',
@@ -96,6 +90,9 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   store.commit(SET_LOADING, { loading: true })
+  if (to.matched.some(record => record.meta.requiresAuth && !store.getters.isAuthenticated)) {
+    next({ path: '/signin', query: { redirect: to.fullPath } })
+  }
   next()
 })
 

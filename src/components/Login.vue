@@ -22,18 +22,13 @@
               ref="form"
               lazy-validation
               autocomplete="off">
-              <v-select
-                :items="domains"
-                v-model="selectedDomain"
-                bottom
-                label="Domain"/>
               <v-text-field
                 prepend-icon="person"
                 name="login"
                 label="Username"
                 type="text"
                 v-model="username"
-                :rules="[rules.required, rules.username]"
+                :rules="[rules.required]"
                 required
                 @keyup.enter="submit"/>
               <v-text-field
@@ -54,7 +49,8 @@
             <v-btn
               color="primary"
               @click="submit"
-              :disabled="isLoading">Login</v-btn>
+              :disabled="isLoading"
+              :loading="isLoading">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -68,19 +64,10 @@ export default {
   data () {
     return {
       username: 'test',
-      password: 'test01',
+      password: 'admin001',
       unmask: true,
-      selectedDomain: 'test.com',
       valid: true,
-      domains: ['scc.ca', 'test.com', 'chcc.ca'],
-      rules: {
-        required: (value) => !!value || 'Required.',
-        username: (value) => {
-          // eslint-disable-next-line
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-        }
-      }
+      rules: { required: (value) => !!value || 'Required.' }
     }
   },
   computed: {
@@ -93,16 +80,14 @@ export default {
       if (this.$refs.form.validate()) {
         const loginInfo = {
           username: this.username,
-          password: this.password,
-          domain: this.selectedDomain
+          password: this.password
         }
         if (this.$store.getters.isAuthenticated) {
-          this.$router.push({ name: 'Slides' })
+          this.$router.push(this.$route.query.fullPath)
         } else {
-          this.$store.dispatch('signIn', loginInfo)
-            .then(state => {
-              console.log(state + 'hi hi hi')
-            })
+          this.$store.dispatch('signIn', loginInfo).then(function () {
+            this.$router.push({ name: 'Slides' })
+          }.bind(this))
         }
       }
     }

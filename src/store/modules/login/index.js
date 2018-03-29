@@ -4,23 +4,23 @@ import { SET_USER } from '@/store/mutation-types'
 
 // state of this module
 const state = {
-  username: ''
+  currentUser: null
 }
 
 // getters for this module's state
 const getters = {
-  user1 (state) {
-    return state.user
+  currentUser (state) {
+    return state.currentUser
   },
   isAuthenticated (state) {
-    return state.user !== null && state.user !== undefined
+    return state.currentUser !== null && state.currentUser !== undefined
   }
 }
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
   [SET_USER] (state, payload) {
-    state.user = payload
+    state.currentUser = payload
   }
 }
 
@@ -28,16 +28,19 @@ const mutations = {
 const actions = {
   // payload is username and password
   signIn ({ commit }, { username, password }) {
-    loginAPI.signIn(username, password)
-      .then(response => {
-        // need to change the response on the server side to return the user object
-        commit(SET_USER, response.data.username) // we will use the username for now
-        setToken(response.data.token)// need to set the authentication token on the axios instance
-      })
+    return new Promise((resolve, reject) => {
+      loginAPI.signIn(username, password)
+        .then(response => {
+          // need to change the response on the server side to return the user object
+          commit(SET_USER, response.data.user)
+          setToken(response.data.token)// need to set the authentication token on the axios instance
+          resolve(response)
+        }).catch(err => reject(err))
+    })
   },
 
   signOut ({ commit }) {
-    commit(SET_USER, {}) // empty the user object
+    commit(SET_USER, null) // empty the user object
     removeToken() // need to remove the authentication token from the axios instance
   }
 }
