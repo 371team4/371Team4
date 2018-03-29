@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
+    "target": "ES6",
     "allowSyntheticDefaultImports": false,
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     }
   },
+  "include": [
+    "src/**/*",
+    "test/unit/**/*"
+  ],
   "exclude": ["node_modules", "dist"]
 }

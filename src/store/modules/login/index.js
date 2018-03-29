@@ -1,4 +1,4 @@
-import { setToken } from '@/services/api.endpoint'
+import { setToken, removeToken } from '@/services/api.endpoint'
 import * as loginAPI from '@/services/API/login'
 import { SET_USER } from '@/store/mutation-types'
 
@@ -27,9 +27,18 @@ const mutations = {
 // actions can be async and may have side effects
 const actions = {
   // payload is username and password
-  signIn ({ commit }, payload) {
-    loginAPI.signIn(payload.username, payload.password)
-      .then(response => setToken(response.data.token))
+  signIn ({ commit }, { username, password }) {
+    loginAPI.signIn(username, password)
+      .then(response => {
+        // need to change the response on the server side to return the user object
+        commit(SET_USER, response.data.username) // we will use the username for now
+        setToken(response.data.token)// need to set the authentication token on the axios instance
+      })
+  },
+
+  signOut ({ commit }) {
+    commit(SET_USER, {}) // empty the user object
+    removeToken() // need to remove the authentication token from the axios instance
   }
 }
 
