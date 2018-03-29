@@ -44,7 +44,6 @@ import AuthorSlide from '@/components/templates/AuthorSlide'
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
-
 export default {
   components: { AuthorSlide, DefaultSlideTemplate },
   mixins: [validationMixin],

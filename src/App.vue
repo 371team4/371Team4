@@ -30,9 +30,8 @@
 </template>
 
 <script>
-import NavDrawer from '@/components/landingPage/MainNavDrawer'
-import MainHeader from '@/components/landingPage/MainHeader'
-import { slidesDB } from '@/services/firebase.conf'
+import NavDrawer from '@/components/LandingPage/MainNavDrawer'
+import MainHeader from '@/components/LandingPage/MainHeader'
 
 export default {
   components: { NavDrawer, MainHeader },
@@ -57,7 +56,8 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('setSlidesRef', slidesDB)
+    this.$store.dispatch('initAllSlides')
+    this.$store.dispatch('initSlide')
   },
   methods: {
     changeVisibilty () {
