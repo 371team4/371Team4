@@ -1,4 +1,4 @@
-import { setToken, removeToken } from '@/services/api.endpoint'
+import { setLocalStorage, removeToken } from '@/services/api.endpoint'
 import * as loginAPI from '@/services/API/login'
 import { SET_USER } from '@/store/mutation-types'
 
@@ -33,7 +33,7 @@ const actions = {
         .then(response => {
           // need to change the response on the server side to return the user object
           commit(SET_USER, response.data.user)
-          setToken(response.data.token)// need to set the authentication token on the axios instance
+          setLocalStorage(response.data)// need to set the authentication token on the axios instance
           resolve(response)
         }).catch(err => reject(err))
     })

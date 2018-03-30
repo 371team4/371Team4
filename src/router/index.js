@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from '../store/index'
-import { SET_LOADING } from '../store/mutation-types'
+import { SET_LOADING, SET_USER } from '../store/mutation-types'
+import { checkToken } from '@/services/api.endpoint'
 
 const ShowView = () => import(/* webpackChunkName: "ShowView.vue" */'@/components/ShowView')
 const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Slides')
@@ -90,8 +91,12 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   store.commit(SET_LOADING, { loading: true })
-  if (to.matched.some(record => record.meta.requiresAuth && !store.getters.isAuthenticated)) {
-    next({ path: '/signin', query: { redirect: to.fullPath } })
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!checkToken()) {
+      next({ path: '/signin', query: { redirect: to.fullPath } })
+    } else {
+      store.commit(SET_USER, JSON.parse(localStorage.getItem('user')))
+    }
   }
   next()
 })
