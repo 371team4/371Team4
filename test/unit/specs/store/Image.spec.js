@@ -84,7 +84,7 @@ describe('Image APIs', function () {
   })
 
   // test deleteImage
-  describe.only('index', () => {
+  describe('index', () => {
     it('deleteImage', done => {
       testAction(index.actions.deleteImage, [sampleImageID], {}, [
         { type: 'SET_IMAGE_ID', payload: sampleImageID },
