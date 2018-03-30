@@ -43,9 +43,9 @@ const actions = {
   getImage (state, payload) {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
-      API.getImage(payload).then(function (responce) {
-        resolve(`${server.defaults.baseURL}${responce.data.path}`)
-        state.commit(SET_IMAGE_PATH, responce.data.path)
+      API.getImage(payload).then(function (response) {
+        resolve(`${server.defaults.baseURL}${response.data.path}`)
+        state.commit(SET_IMAGE_PATH, response.data.path)
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
@@ -60,9 +60,9 @@ const actions = {
   uploadImage (state, payload) {
     state.commit(SET_IMAGE_ID, 'new Image')
     return new Promise((resolve, reject) => {
-      API.uploadImage(payload).then(function (responce) {
-        resolve(responce.data)
-        state.commit(SET_IMAGE_ID, responce.data._id)
+      API.uploadImage(payload).then(function (response) {
+        resolve(response.data)
+        state.commit(SET_IMAGE_ID, response.data._id)
         state.commit(SET_TASK_STATUS, true)
       }).catch(function (err) {
         console.error('upload image error: '.concat(util.inspect(err, false, null)))
@@ -76,7 +76,7 @@ const actions = {
   deleteImage (state, payload) {
     state.commit(SET_IMAGE_ID, payload)
     return new Promise((resolve, reject) => {
-      API.deleteImage(payload).then(function (responce) {
+      API.deleteImage(payload).then(function (response) {
         resolve()
         state.commit(SET_IMAGE_ID, '')
         state.commit(SET_TASK_STATUS, true)

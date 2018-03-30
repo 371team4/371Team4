@@ -31,7 +31,7 @@ const mockProps = {
       fontWeight: 'Bolder'
     },
     time: {
-      content: '11:05 AM',
+      content: '11:05',
       fontColor: 'Yellow',
       fontSize: 'Smaller',
       fontStyle: 'Normal',
@@ -79,7 +79,7 @@ describe('DefaultSlideTemplate.vue', function () {
 
       /* testing time */
       const header = vm.$el.querySelector('h2.display-2')
-      expect(vm.$props.slide.time.content).to.equal('11:05 AM')
+      expect(vm.$props.slide.time.content).to.equal('11:05')
       expect(header.textContent).to.contain(vm.$props.slide.time.content)
       // TO DO
       expect(vm.$props.slide.time.fontColor).to.equal('Yellow')
@@ -96,7 +96,7 @@ describe('DefaultSlideTemplate.vue', function () {
       const header = vm.$el.querySelector('h2.display-2')
       /* testing date */
       expect(vm.$props.slide.date.content).to.equal('2018-03-07')
-      expect(header.textContent).to.contain(vm.$props.slide.date.content)
+      expect(header.textContent).to.contain('Wednesday, March 7')
       // TO DO
       expect(vm.$props.slide.date.fontColor).to.equal('Green')
       // TO DO

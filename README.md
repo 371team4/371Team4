@@ -2,7 +2,7 @@
 
 > Event management and creation system
 
-## Project's Website [Repartyed](https://repartyed.firebaseapp.com)
+## Project's Website [Repartyed](http://cmpt371g4.usask.ca:8090)
 
 ## Build Setup
 
@@ -49,9 +49,6 @@ npm run e2e
 
 # run all tests
 npm run test
-
-# deploy prodcution to firebase server, this will build before deploying
-npm run deploy
 ```
 
 ## Extensions for VS Code

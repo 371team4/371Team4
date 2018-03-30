@@ -51,7 +51,7 @@
                         <v-text-field
                           slot="activator"
                           label="Date of Event"
-                          v-model="formattedDate"
+                          v-text="formattedDate"
                           prepend-icon="event"
                           readonly/>
                         <v-date-picker
@@ -84,7 +84,7 @@
                         <v-text-field
                           slot="activator"
                           label="Time of Event"
-                          v-model="formattedTime"
+                          v-text="formattedTime"
                           prepend-icon="access_time"
                           readonly/>
                         <v-time-picker
@@ -160,7 +160,7 @@
 import moment from 'moment'
 
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
-import ImageCards from '@/components/ImageCards'
+import ImageCards from '@/components/slide/ImageCards'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
@@ -218,11 +218,11 @@ export default {
       timeMenu: false,
       descriptionRules: [
         v => !!v || 'Description is required',
-        v => v.length <= 140 || 'Description must be less than 140 characters'
+        v => (v && v.length && v.length <= 140) || 'Description must be less than 140 characters'
       ],
       titleRules: [
         v => !!v || 'Title is required',
-        v => v.length <= 30 || 'Title must be less than 30 characters'
+        v => (v && v.length && v.length <= 30) || 'Title must be less than 30 characters'
       ]
     }
   },
@@ -258,6 +258,7 @@ export default {
     },
     submit () {
       if (this.$refs.form.validate()) {
+        console.log('I cam here')
         this.forceUpdateCarousel()
         this.$store.commit(CURRENT_SLIDE.SET, this.slide)
         this.$store.dispatch('saveSlide')
@@ -266,7 +267,6 @@ export default {
     },
     clear () {
       // reset all of the data fields
-      this.$refs.form.reset()
       this.slide.title.content = ''
       this.slide.description.content = ''
       this.slide.date.content = null
@@ -284,7 +284,7 @@ export default {
     },
     uploadImage (files) {
       const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
+      this.$store.dispatch('uploadImage', tmpArray[0]).then(function () {
         this.addImage({ src: this.$store.getters.getUploadTask })
       }.bind(this))
     },
