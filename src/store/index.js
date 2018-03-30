@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
 
 if (module.hot) {
   // accept actions and mutations as hot modules
-  module.hot.accept(['./root', './modules/user', './modules/slide', './modules/image', './modules/upload','./modules/login'], () => {
+  module.hot.accept(['./root', './modules/user', './modules/slide', './modules/image', './modules/upload', './modules/login'], () => {
     // require the updated modules
     // have to add .default here due to babel 6 module output
     const root = require('./root').default

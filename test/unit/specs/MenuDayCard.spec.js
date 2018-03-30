@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import MenuDayCard from '@/components/MenuDayCard'
+import MenuDayCard from '@/components/widgets/MenuDayCard'
 
 // props object that will be passed down to the menu card component
 const props = {

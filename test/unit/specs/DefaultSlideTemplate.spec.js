@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
+import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 
 /* definition of props to be passed down */
 const mockProps = {

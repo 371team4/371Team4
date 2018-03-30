@@ -47,6 +47,7 @@ var sampleImage
 var sampleImageID
 
 describe('Image APIs', function () {
+  this.timeout(15000)
   before(done => {
     // create mock image
     var b64 = ['data:image/png;base64,nothing crazy here']

@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import SlideCard from './SlideCard'
+import SlideCard from './slide/SlideCard'
 import AddButton from './shared/AddButton'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
