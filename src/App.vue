@@ -66,7 +66,8 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('initAllSlides')
+    this.$store.dispatch('retrieveAllSlides')
+    setInterval(() => this.$store.dispatch('retrieveAllSlides'), 30000)
   },
   methods: {
     changeVisibilty () {
