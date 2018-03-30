@@ -159,7 +159,7 @@
 <script>
 import moment from 'moment'
 
-import DefaultSlideTemplate from '@/components/Templates/DefaultSlideTemplate'
+import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 import ImageCards from '@/components/ImageCards'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'

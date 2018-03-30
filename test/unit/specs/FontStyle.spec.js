@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import FontStyle from '@/components/FontStyle'
+import FontStyle from '@/components/templates/FontStyle'
 
 describe('FontStyle.vue', function () {
   let vm, expectedColors, expectedSizes, expectedStyles, expectedWeights
