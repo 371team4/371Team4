@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import FoodMenuWidget from '@/components/FoodMenuWidget'
+import FoodMenuWidget from '@/components/widgets/FoodMenuWidget'
 
 // This testing will change. Was not able to test the Vue components themselves, so
 // I am testing the data and computed components within this unit test instead.
