@@ -1,6 +1,12 @@
 import * as userAPI from '@/services/API/user'
 import { SET_LOADING, SET_ALL_USERS } from '@/store/mutation-types'
 
+/** BEGIN: PRIVATE MUTATION TYPES **/
+const DELETE_USER = 'DELETE_USER'
+const UPDATE_USER = 'UPDATE_USER'
+const ADD_USER = 'ADD_USER'
+/** END: PRIVATE MUTATION TYPES **/
+
 // state of this module
 const state = {
   users: []
@@ -15,9 +21,21 @@ const getters = {
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
-  SET_ALL_USERS (state, payload) {
+  [SET_ALL_USERS] (state, payload) {
     state.users = payload
+  },
+
+  /** BEGIN: PRIVATE MUTATIONS **/
+  [DELETE_USER] (state, payload) {
+    state.users.splice(payload, 1)
+  },
+  [UPDATE_USER] (state, payload) {
+    state.users[payload.index] = payload.updatedUser
+  },
+  [ADD_USER] (state, payload) {
+    state.users.push(payload)
   }
+  /** BEGIN: PRIVATE MUTATIONS **/
 }
 
 // actions can be async and may have side effects
@@ -55,14 +73,18 @@ const actions = {
     userAPI
       .updateUser(payload)
       .then(response => {
-        // need to update the list of user
+        let index = -1
         for (let i = 0; i < state.users.length; i++) {
-          if (state.users[i]._id === response.data._id) {
-            state.users[i] = response.data
+          if (response.data._id === state.users[i]._id) {
+            index = -1
             break
           }
         }
-        commit(SET_ALL_USERS, state.users)
+        if (index === -1) {
+          commit(ADD_USER, response.data)
+        } else {
+          commit(UPDATE_USER, { index: index, updatedUser: response.data })
+        }
         commit(SET_LOADING, false)
       })
       .catch(e => {
@@ -76,13 +98,13 @@ const actions = {
       .deleteUser(payload)
       .then(response => {
         // need to update the list of user
-        let i
-        for (i = 0; i < state.users.length; i++) {
-          if (state.users[i]._id === response.data._id) {
+        let index
+        for (index = 0; index < state.users.length; index++) {
+          if (response.data._id === state.users[index]._id) {
             break
           }
         }
-        commit(SET_ALL_USERS, state.users.splice(i, 1))
+        commit(DELETE_USER, index)
         commit(SET_LOADING, false)
       })
       .catch(e => {

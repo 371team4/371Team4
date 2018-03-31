@@ -1,6 +1,13 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import * as server from '@/services/API/slides'
 import { SET_ALL_SLIDES, SET_LOADING } from '@/store/mutation-types'
+
+/** BEGIN: PRIVATE MUTATION TYPES **/
+const DELETE_SLIDE = 'DELETE_SLIDE'
+const UPDATE_SLIDE = 'UPDATE_SLIDE'
+const ADD_SLIDE = 'ADD_SLIDE'
+/** END: PRIVATE MUTATION TYPES **/
+
 // This module is used for create-newSlide and saveSlide
 
 // state of this module
@@ -228,7 +235,19 @@ const mutations = {
   [CURRENT_SLIDE.SET_META_ENDDATE] (state, payload) {
     state.currentSlide.meta.endDate = payload
     state.isCurrentSlideDirty = true
+  },
+
+  /** BEGIN: PRIVATE MUTATIONS **/
+  [DELETE_SLIDE] (state, payload) {
+    state.slides.splice(payload, 1)
+  },
+  [UPDATE_SLIDE] (state, payload) {
+    state.slides[payload.index] = payload.updatedSlide
+  },
+  [ADD_SLIDE] (state, payload) {
+    state.slides.push(payload)
   }
+  /** BEGIN: PRIVATE MUTATIONS **/
 }
 
 // actions can be async and may have side effects
@@ -269,14 +288,19 @@ const actions = {
     server
       .saveSlide(state.currentSlide)
       .then(response => {
+        let index = -1
         for (let i = 0; i < state.slides.length; i++) {
           if (response.data._id === state.slides[i]._id) {
-            state.slides[i] = response.data
+            index = -1
             break
           }
         }
         commit(CURRENT_SLIDE.SET, response.data)
-        commit(SET_ALL_SLIDES, state.slides)
+        if (index === -1) {
+          commit(ADD_SLIDE, response.data)
+        } else {
+          commit(UPDATE_SLIDE, { index: index, updatedSlide: response.data })
+        }
         commit(SET_LOADING, false)
       })
       .catch(function (error) {
@@ -290,14 +314,14 @@ const actions = {
     server
       .deleteSlide(id)
       .then(response => {
-        let i
-        for (i = 0; i < state.slides.length; i++) {
-          if (response.data._id === state.slides[i]._id) {
+        let index
+        for (index = 0; index < state.slides.length; index++) {
+          if (response.data._id === state.slides[index]._id) {
             break
           }
         }
         commit(CURRENT_SLIDE.SET, newSlide)
-        commit(SET_ALL_SLIDES, state.slides.splice(i, 1))
+        commit(DELETE_SLIDE, index)
         commit(SET_LOADING, false)
       })
       .catch(function (error) {
