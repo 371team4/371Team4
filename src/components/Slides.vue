@@ -88,17 +88,54 @@ export default {
       snackbarMessage: '',
       showSnackbar: false,
       timeoutFunction: null,
-      searchString: ''
+      searchString: '',
+      deletedSlide: ''
     }
   },
   computed: {
     filteredSlides () {
+      let filteredSlides = this.filterSlidesBySearchString(this.allSlides, this.searchString)
+      filteredSlides = this.filterSlidesByDeleteId(filteredSlides, this.deletedSlide)
+      // return the filtered list of slides
+      return filteredSlides
+    },
+    ...mapGetters([
+      'allSlides'
+    ])
+  },
+  methods: {
+    handleDelete (slide) {
+      // show the snackbar to inform the user about deleting slide
+      this.showSnackbar = true
+      this.snackbarMessage = `Deleted Slide ${slide.title.content}`
+      // if there a slide that has a deletion timeout set on it delete it now
+      if (this.deletedSlide && this.timeoutFunction) {
+        // delete the previous slide right away
+        clearTimeout(this.timeoutFunction)
+        this.$store.dispatch('deleteSlide', this.deletedSlide)
+      }
+      // set up to delete in 30 seconds
+      this.timeoutFunction = setTimeout(() => {
+        this.$store.dispatch('deleteSlide', slide._id)
+        // clear up delete stuff
+        this.handleUndoDelete()
+      }, 30000)
+      this.deletedSlide = slide._id
+    },
+    // this is doing two things, clearing the delete props and undoing the deletion
+    handleUndoDelete () {
+      this.showSnackbar = false
+      this.snackbarMessage = ''
+      this.deletedSlide = ''
+      clearTimeout(this.timeoutFunction)
+    },
+    filterSlidesBySearchString (slides, searchString) {
       // check if something is typed into the search bar
-      if (this.searchString) {
+      if (searchString) {
         // if there is something the in the search bar then filter the array fo current slides
         // search the list of slides
-        let filteredSlides = this.allSlides.filter(
-          (slide) => slide.title.content.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1)
+        let filteredSlides = slides.filter(
+          (slide) => slide.title.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
@@ -115,27 +152,13 @@ export default {
             ]
           })
         }
-        // return the filtered list of slides
         return filteredSlides
       } else {
-        // if the search string is empty then return all the slides
-        return this.allSlides
+        return slides
       }
     },
-    ...mapGetters([
-      'allSlides'
-    ])
-  },
-  methods: {
-    handleDelete (slide) {
-      this.showSnackbar = true
-      this.snackbarMessage = `Deleted Slide ${slide.title.content} `
-      this.timeoutFunction = setTimeout(() => this.$store.dispatch('deleteSlide', slide._id), 30000)
-    },
-    handleUndoDelete () {
-      this.showSnackbar = false
-      this.snackbarMessage = ''
-      clearTimeout(this.timeoutFunction)
+    filterSlidesByDeleteId (slides, deletedId) {
+      return slides.filter((slide) => deletedId !== slide._id)
     },
     goToSlide (slide) {
       this.$store.commit(CURRENT_SLIDE.SET, slide)
