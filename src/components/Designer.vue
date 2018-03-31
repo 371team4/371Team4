@@ -89,8 +89,7 @@
                           readonly/>
                         <v-time-picker
                           v-model="slide.time.content"
-                          :allowed-minutes="allowedMinutes"
-                          @change="$refs.tMenu.save(slide.time.content)"/>
+                          :allowed-minutes="allowedMinutes"/>
                       </v-menu>
                       <!--<v-expansion-panel>
                     <v-expansion-panel-content expand-icon="settings">
@@ -128,9 +127,9 @@
             </v-flex>
             <v-flex
               xs4
-              class="ml-4">
+              :class="`${$vuetify.breakpoint.smAndDown ? '' : 'ml-4'}`">
               <ImageCards
-                :cards="slide.images"
+                :images="slide.images"
                 @imageSelected="uploadImage"
                 @deleteImage="deleteImage"/>
             </v-flex>

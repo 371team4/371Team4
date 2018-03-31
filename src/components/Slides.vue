@@ -76,13 +76,12 @@
 
 <script>
 import SlideCard from './slide/SlideCard'
-import AddButton from './shared/AddButton'
 import { mapGetters } from 'vuex'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 export default {
-  components: { SlideCard, AddButton },
+  components: { SlideCard },
   data () {
     return {
       snackbarMessage: '',

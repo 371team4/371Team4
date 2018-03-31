@@ -41,8 +41,8 @@
           hide-delimiters
           :interval="carouselInterval">
           <v-carousel-item
-            v-for="(item, index) in slide.images"
-            :src="item.src"
+            v-for="(image, index) in slide.images"
+            :src="imageUrl(image)"
             :key="index"/>
         </v-carousel>
       </v-flex>
@@ -71,6 +71,7 @@
 
 <script>
 import moment from 'moment'
+import { server } from '@/services/api.endpoint'
 
 export default {
   props: {
@@ -146,6 +147,16 @@ export default {
         return moment(this.slide.date.content).format('dddd, MMMM D')
       }
       return null
+    }
+  },
+  methods: {
+    imageUrl (image) {
+      if (image && image.path) {
+        // need to trim the leading backslash
+        return `${server.defaults.baseURL}${image.path.substring(1)}`
+      } else {
+        return ''
+      }
     }
   }
 }

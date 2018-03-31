@@ -1,5 +1,6 @@
 <template>
   <v-toolbar
+    v-show="show"
     data-test-attr="appToolBar"
     color="indigo"
     dark
@@ -28,6 +29,10 @@ export default {
     title: {
       type: String,
       default: 'Something didn\'t work'
+    },
+    show: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {

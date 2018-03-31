@@ -2,52 +2,73 @@
   <v-card>
     <v-container
       fluid
-      class="scroll-y"
-      id="scroll-target">
-      <v-container grid-list-sm>
-        <v-layout
-          column
-          align-content-center="true"
-          v-scroll:#scroll-target="onScroll">
-          <v-flex
-            v-for="(card, index) in cards"
-            :key="index">
-            <v-card tile>
-              <v-card-media
-                :src="card.src"
-                height="150px">
-                <v-spacer/>
-                <v-btn
-                  data-test-attr="deleteCard"
-                  icon
-                  flat
-                  @click="deleteCard(index)">
-                  <v-icon>clear</v-icon>
-                </v-btn>
-              </v-card-media>
-            </v-card>
-          </v-flex>
-          <AddButton @cButtonClick="pickFile"/>
-          <input
-            data-test-attr="uploadButton"
-            ref="uploadButton"
-            accept="image/*"
-            type="file"
-            v-show="false"
-            @change="cardSelected">
-        </v-layout>
-      </v-container>
+      grid-list-md>
+      <v-layout
+        row
+        wrap>
+        <v-flex
+          md6
+          sm4
+          xs12
+          v-for="(image, index) in images"
+          :key="index">
+          <v-card
+            flat
+            tile>
+            <v-card-media
+              :src="image.path"
+              height="150px"/>
+            <!-- shift the fab to the top left corner -->
+            <v-btn
+              class="px-0 py-0 mx-0 mt-4"
+              style="margin-right: -10px !important;"
+              fab
+              small
+              absolute
+              top
+              right
+              color="red lighten-1"
+              @click.stop="deleteImage(index)">
+              <v-icon>close</v-icon>
+            </v-btn>
+          </v-card>
+        </v-flex>
+        <v-flex
+          md6
+          sm4
+          xs12>
+          <!-- Add button for the images-->
+          <v-card
+            flat
+            tile
+            :class="`${$vuetify.breakpoint.xs ? 'ml-5' : ''}`">
+            <v-btn
+              fab
+              big
+              color="blue"
+              class="my-5 mx-5"
+              @click.stop="$refs.uploadButton.click()">
+              <!-- click the upload button below -->
+              <v-icon>add</v-icon>
+            </v-btn>
+            <input
+              ref="uploadButton"
+              accept="image/*"
+              type="file"
+              v-show="false"
+              @change="imageSelected">
+          </v-card>
+        </v-flex>
+      </v-layout>
     </v-container>
   </v-card>
 </template>
 
 <script>
-import AddButton from '@/components/shared/AddButton'
 
 export default {
-  components: { AddButton },
   props: {
-    cards: {
+    images: {
       type: [String, Array],
       default: () =>
         // this is the same as a for each object add property `thumbnail` with value URL
@@ -55,7 +76,7 @@ export default {
           // add this src property to the a object and return it
           return {
             ...a,
-            src: `https://picsum.photos/150/300/?image=${Math.floor(
+            path: `https://picsum.photos/150/300/?image=${Math.floor(
               Math.random() * 100 + 1
             )}`
           }
@@ -63,16 +84,10 @@ export default {
     }
   },
   methods: {
-    deleteCard (index) {
+    deleteImage (index) {
       this.$emit('deleteImage', index)
     },
-    onScroll (e) {
-      this.offsetTop = e.target.scrollTop
-    },
-    pickFile () {
-      this.$refs.uploadButton.click()
-    },
-    cardSelected (e) {
+    imageSelected (e) {
       this.$emit('imageSelected', e.target.files)
     }
   }
