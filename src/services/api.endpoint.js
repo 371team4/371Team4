@@ -5,10 +5,16 @@ export const server = axios.create({
   baseURL: 'http://cmpt371g4.usask.ca:8081/'
 })
 
+export function setTokenHeader (token) {
+  if (token) {
+    server.defaults.headers['x-access-token'] = token
+  } else {
+    console.error('Need token for authentication ')
+  }
+}
 // set token after login for actions require token
 export function setLocalStorage (data) {
   if (data && data.token && data.user) {
-    server.defaults.headers['x-access-token'] = data.token
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
   } else {
@@ -27,7 +33,7 @@ export function checkToken () {
   const tokenInLS = localStorage.getItem('token')
   // check that the token in localStorage and headers are the same
   if (tokenInLS && !isExpired(tokenInLS)) {
-    setLocalStorage({ token: tokenInLS, user: localStorage.getItem('user') })
+    setTokenHeader(tokenInLS)
     isValid = true
   }
   return isValid

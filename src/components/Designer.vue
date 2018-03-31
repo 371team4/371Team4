@@ -258,7 +258,6 @@ export default {
     },
     submit () {
       if (this.$refs.form.validate()) {
-        console.log('I cam here')
         this.forceUpdateCarousel()
         this.$store.commit(CURRENT_SLIDE.SET, this.slide)
         this.$store.dispatch('saveSlide')
