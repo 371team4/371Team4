@@ -55,9 +55,3 @@ export const SET_META_TIMEOUT = 'SET_META_TIMEOUT'
 export const SET_META_REPEATABLE = 'SET_META_REPEATABLE'
 export const SET_META_STARTDATE = 'SET_META_STARTDATE'
 export const SET_META_ENDDATE = 'SET_META_ENDDATE'
-
-// for set template
-export const SET_TEMPLATE = 'SET_TEMPLATE'
-
-// for set timeout
-export const SET_TIMEOUT = 'SET_TIMEOUT'

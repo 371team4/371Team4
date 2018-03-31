@@ -52,12 +52,12 @@ describe('index', function () {
   this.timeout(15000)
   before('Setup before slide tests', function (done) {
     vm.$store.dispatch('signIn', { username: 'test', password: 'admin001' })
-    vm.$store.dispatch('initAllSlides')
+    vm.$store.dispatch('retrieveAllSlides')
     waitFor(done, 1000)
   })
 
   it('should getAllSLides', done => {
-    vm.$store.dispatch('initAllSlides')
+    vm.$store.dispatch('retrieveAllSlides')
     waitFor(() => {
       expect(vm.$store.getters.getAllSlides).to.not.deep.equal([])
       done()

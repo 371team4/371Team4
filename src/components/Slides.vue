@@ -85,6 +85,7 @@
 <script>
 import SlideCard from './slide/SlideCard'
 import AddButton from './shared/AddButton'
+import { mapGetters } from 'vuex'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
@@ -92,8 +93,8 @@ export default {
   components: { SlideCard, AddButton },
   data () {
     return {
-      searchString: '',
-      slides: []
+      dialog: false,
+      searchString: ''
     }
   },
   computed: {
@@ -102,7 +103,7 @@ export default {
       if (this.searchString) {
         // if there is something the in the search bar then filter the array fo current slides
         // search the list of slides
-        let filteredSlides = this.slides.filter(
+        let filteredSlides = this.allSlides.filter(
           (slide) => slide.title.content.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1)
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
@@ -124,9 +125,12 @@ export default {
         return filteredSlides
       } else {
         // if the search string is empty then return all the slides
-        return this.slides
+        return this.allSlides
       }
-    }
+    },
+    ...mapGetters([
+      'allSlides'
+    ])
   },
   methods: {
     goToSlide (slide) {

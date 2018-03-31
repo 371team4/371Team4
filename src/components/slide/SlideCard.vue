@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { server } from '@/services/api.endpoint'
 export default {
   props: {
     slide: {
@@ -102,8 +103,9 @@ export default {
       }
     },
     imageUrl () {
-      if (this.slide && this.slide.images && this.slide.images.length > 0 && this.slide.images[0].src) {
-        return this.slide.images[0].src
+      if (this.slide && this.slide.images && this.slide.images.length > 0 && this.slide.images[0].path) {
+        // need to trim the leading backslash
+        return `${server.defaults.baseURL}${this.slide.images[0].path.substring(1)}`
       } else {
         return ''
       }

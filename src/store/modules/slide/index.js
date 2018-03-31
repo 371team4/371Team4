@@ -1,7 +1,8 @@
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 import * as server from '@/services/API/slides'
+import { SET_ALL_SLIDES, SET_LOADING } from '@/store/mutation-types'
 // This module is used for create-newSlide and saveSlide
-const SET_ALL_SLIDES = 'SET_ALL_SLIDES'
+
 // state of this module
 const newSlide = {
   // the title of the slide, what it is called by humans, has text, font information and color.
@@ -19,7 +20,7 @@ const newSlide = {
 }
 
 const state = {
-  allSlides: [],
+  slides: [],
   // currentSlide is the slide which is currently being worked on by user, either because
   // it is a brand new slide, or an existing one is being edited
   currentSlide: newSlide,
@@ -31,61 +32,61 @@ const state = {
 // getters for this module's state
 const getters = {
   // getter for allSlides
-  getAllSlides: state => state.allSlides,
+  allSlides: state => state.slides,
 
-  getCurrentSlide: state => state.currentSlide,
+  currentSlide: state => state.currentSlide,
 
   // getter for isCurrentSlideDirty
-  getIsCurrentSlideDirty: state => state.isCurrentSlideDirty,
+  isCurrentSlideDirty: state => state.isCurrentSlideDirty,
 
   // getters for the current slides title, and for each subfield
-  getCurrentSlideTitle: state => state.currentSlide.title,
-  getCurrentSlideTitleContent: state => state.currentSlide.title.content,
-  getCurrentSlideTitleFontColor: state => state.currentSlide.title.fontColor,
-  getCurrentSlideTitleFontSize: state => state.currentSlide.title.fontSize,
-  getCurrentSlideTitleFontStyle: state => state.currentSlide.title.fontStyle,
-  getCurrentSlideTitleFontWeight: state => state.currentSlide.title.fontWeight,
+  currentSlideTitle: state => state.currentSlide.title,
+  currentSlideTitleContent: state => state.currentSlide.title.content,
+  currentSlideTitleFontColor: state => state.currentSlide.title.fontColor,
+  currentSlideTitleFontSize: state => state.currentSlide.title.fontSize,
+  currentSlideTitleFontStyle: state => state.currentSlide.title.fontStyle,
+  currentSlideTitleFontWeight: state => state.currentSlide.title.fontWeight,
 
   // getters for the current slides description, and for each subfield
-  getCurrentSlideDescription: state => state.currentSlide.description,
-  getCurrentSlideDescriptionContent: state => state.currentSlide.description.content,
-  getCurrentSlideDescriptionFontColor: state => state.currentSlide.description.fontColor,
-  getCurrentSlideDescriptionFontSize: state => state.currentSlide.description.fontSize,
-  getCurrentSlideDescriptionFontStyle: state => state.currentSlide.description.fontStyle,
-  getCurrentSlideDescriptionFontWeight: state => state.currentSlide.description.fontWeight,
+  currentSlideDescription: state => state.currentSlide.description,
+  currentSlideDescriptionContent: state => state.currentSlide.description.content,
+  currentSlideDescriptionFontColor: state => state.currentSlide.description.fontColor,
+  currentSlideDescriptionFontSize: state => state.currentSlide.description.fontSize,
+  currentSlideDescriptionFontStyle: state => state.currentSlide.description.fontStyle,
+  currentSlideDescriptionFontWeight: state => state.currentSlide.description.fontWeight,
 
-  getCurrentSlideImages: state => state.currentSlide.images,
+  currentSlideImages: state => state.currentSlide.images,
 
   // getters for the current slides date, and for each subfield
-  getCurrentSlideDate: state => state.currentSlide.date,
-  getCurrentSlideDateContent: state => state.currentSlide.date.content,
-  getCurrentSlideDateFontColor: state => state.currentSlide.date.fontColor,
-  getCurrentSlideDateFontSize: state => state.currentSlide.date.fontSize,
-  getCurrentSlideDateFontStyle: state => state.currentSlide.date.fontStyle,
-  getCurrentSlideDateFontWeight: state => state.currentSlide.date.fontWeight,
+  currentSlideDate: state => state.currentSlide.date,
+  currentSlideDateContent: state => state.currentSlide.date.content,
+  currentSlideDateFontColor: state => state.currentSlide.date.fontColor,
+  currentSlideDateFontSize: state => state.currentSlide.date.fontSize,
+  currentSlideDateFontStyle: state => state.currentSlide.date.fontStyle,
+  currentSlideDateFontWeight: state => state.currentSlide.date.fontWeight,
 
   // getters for the current slides time, and for each subfield
-  getCurrentSlideTime: state => state.currentSlide.time,
-  getCurrentSlideTimeContent: state => state.currentSlide.time.content,
-  getCurrentSlideTimeFontColor: state => state.currentSlide.time.fontColor,
-  getCurrentSlideTimeFontSize: state => state.currentSlide.time.fontSize,
-  getCurrentSlideTimeFontStyle: state => state.currentSlide.time.fontStyle,
-  getCurrentSlideTimeFontWeight: state => state.currentSlide.time.fontWeight,
+  currentSlideTime: state => state.currentSlide.time,
+  currentSlideTimeContent: state => state.currentSlide.time.content,
+  currentSlideTimeFontColor: state => state.currentSlide.time.fontColor,
+  currentSlideTimeFontSize: state => state.currentSlide.time.fontSize,
+  currentSlideTimeFontStyle: state => state.currentSlide.time.fontStyle,
+  currentSlideTimeFontWeight: state => state.currentSlide.time.fontWeight,
 
   // getters for the current slide meta fields
-  getCurrentSlideMeta: state => state.currentSlide.meta,
-  getCurrentSlideMetaTemplate: state => state.currentSlide.meta.template,
-  getCurrentSlideMetaTimeout: state => state.currentSlide.meta.timeout,
-  getCurrentSlideMetaRepeatable: state => state.currentSlide.meta.repeatable,
-  getCurrentSlideMetaStartDate: state => state.currentSlide.meta.startDate,
-  getCurrentSlideMetaEndDate: state => state.currentSlide.meta.endDate
+  currentSlideMeta: state => state.currentSlide.meta,
+  currentSlideMetaTemplate: state => state.currentSlide.meta.template,
+  currentSlideMetaTimeout: state => state.currentSlide.meta.timeout,
+  currentSlideMetaRepeatable: state => state.currentSlide.meta.repeatable,
+  currentSlideMetaStartDate: state => state.currentSlide.meta.startDate,
+  currentSlideMetaEndDate: state => state.currentSlide.meta.endDate
 }
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
   //
   [SET_ALL_SLIDES] (state, payload) {
-    state.allSlides = payload
+    state.slides = payload
   },
   // takes a slide object as payload, sets current slide to it.
   [CURRENT_SLIDE.SET] (state, payload) {
@@ -97,11 +98,6 @@ const mutations = {
     state.isCurrentSlideDirty = payload
   },
 
-  // takes title object as payload, set currentslide title to it. dirty slide for title and all its sub setters
-  [CURRENT_SLIDE.SET_TITLE] (state, payload) {
-    state.currentSlide.title = payload
-    state.isCurrentSlideDirty = true
-  },
   // takes content as payload (text). sets content for title of currentslide
   [CURRENT_SLIDE.SET_TITLE_CONTENT] (state, payload) {
     state.currentSlide.title.content = payload
@@ -128,12 +124,6 @@ const mutations = {
     state.isCurrentSlideDirty = true
   },
 
-  // takes a description object as payload and sets it for currentslide.
-  // It and all sub setters of description set slide to dirty
-  [CURRENT_SLIDE.SET_DESCRIPTION] (state, payload) {
-    state.currentSlide.description = payload
-    state.isCurrentSlideDirty = true
-  },
   // takes content (text) as payload. sets content of description for currentslide.
   [CURRENT_SLIDE.SET_DESCRIPTION_CONTENT] (state, payload) {
     state.currentSlide.description.content = payload
@@ -167,12 +157,6 @@ const mutations = {
   },
   // here is where DELETE_IMAGE or equivilent will go if used.
 
-  // takes a date object as payload and sets it for currentslide.
-  // It and all sub setters of date set slide to dirty
-  [CURRENT_SLIDE.SET_DATE] (state, payload) {
-    state.currentSlide.date = payload
-    state.isCurrentSlideDirty = true
-  },
   // takes content as payload. sets content of date for currentslide
   [CURRENT_SLIDE.SET_DATE_CONTENT] (state, payload) {
     state.currentSlide.date.content = payload
@@ -199,12 +183,6 @@ const mutations = {
     state.isCurrentSlideDirty = true
   },
 
-  // takes a time object as payload and sets it for currentslide.
-  // It and all sub setters of time set slide to dirty
-  [CURRENT_SLIDE.SET_TIME] (state, payload) {
-    state.currentSlide.time = payload
-    state.isCurrentSlideDirty = true
-  },
   // takes content as payload. sets content of currentslide time to it.
   [CURRENT_SLIDE.SET_TIME_CONTENT] (state, payload) {
     state.currentSlide.time.content = payload
@@ -231,10 +209,6 @@ const mutations = {
     state.isCurrentSlideDirty = true
   },
 
-  [CURRENT_SLIDE.SET_META] (state, payload) {
-    state.currentSlide.meta = payload
-    state.isCurrentSlideDirty = true
-  },
   [CURRENT_SLIDE.SET_META_TEMPLATE] (state, payload) {
     state.currentSlide.meta.template = payload
     state.isCurrentSlideDirty = true
@@ -260,48 +234,76 @@ const mutations = {
 // actions can be async and may have side effects
 const actions = {
   // Gets all the slides in the database
-  initAllSlides ({ commit }) {
-    server.getAllSlides()
+  retrieveAllSlides ({ commit }) {
+    commit(SET_LOADING, true)
+    server
+      .getAllSlides()
       .then(response => {
         commit(SET_ALL_SLIDES, response.data)
+        commit(SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
+        commit(SET_LOADING, false)
       })
   },
 
   // Takes id as payload and gets the slide with the given id
-  getSlide ({ commit }, id) {
-    server.getSlide(id)
+  retrieveSlide ({ commit }, id) {
+    commit(SET_LOADING, true)
+    server
+      .getSlide(id)
       .then(response => {
         commit(CURRENT_SLIDE.SET, response.data)
+        commit(SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
+        commit(SET_LOADING, false)
       })
   },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ state, commit, dispatch }) {
-    server.saveSlide(state.currentSlide)
+  saveSlide ({ state, commit }) {
+    commit(SET_LOADING, true)
+    server
+      .saveSlide(state.currentSlide)
       .then(response => {
+        for (let i = 0; i < state.slides.length; i++) {
+          if (response.data._id === state.slides[i]._id) {
+            state.slides[i] = response.data
+            break
+          }
+        }
         commit(CURRENT_SLIDE.SET, response.data)
+        commit(SET_ALL_SLIDES, state.slides)
+        commit(SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
+        commit(SET_LOADING, false)
       })
-    dispatch('initAllSlides')
   },
   // takes currentSlide as payload, used for deleting slides from database.
-  deleteSlide ({ commit, dispatch }, id) {
-    server.deleteSlide(id)
+  deleteSlide ({ commit, state }, id) {
+    commit(SET_LOADING, true)
+    server
+      .deleteSlide(id)
       .then(response => {
+        let i
+        for (i = 0; i < state.slides.length; i++) {
+          if (response.data._id === state.slides[i]._id) {
+            break
+          }
+        }
         commit(CURRENT_SLIDE.SET, newSlide)
+        commit(SET_ALL_SLIDES, state.slides.splice(i, 1))
+        commit(SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
+        commit(SET_LOADING, false)
       })
-    dispatch('initAllSlides')
   }
 }
 
