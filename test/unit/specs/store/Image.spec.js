@@ -60,10 +60,10 @@ describe('Image APIs', function () {
       })
   })
 
-  // test getImage
+  // test retrieveImage
   describe('index', () => {
-    it('getImage', done => {
-      testAction(index.actions.getImage, ['5a98ada216608d51864ef43c'], {}, [
+    it('retrieveImage', done => {
+      testAction(index.actions.retrieveImage, ['5a98ada216608d51864ef43c'], {}, [
         { type: 'SET_IMAGE_ID', payload: '5a98ada216608d51864ef43c' },
         { type: 'SET_IMAGE_PATH', payload: '/images/google.jpg' },
         { type: 'SET_IMAGE_ID', payload: '' },
