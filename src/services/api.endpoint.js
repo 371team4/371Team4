@@ -1,4 +1,8 @@
 import axios from 'axios'
+import { store } from '@/store'
+import router from '@/router'
+
+let signoutFunction = null
 
 // initialize server
 export const server = axios.create({
@@ -41,9 +45,23 @@ export function checkToken () {
 
 // this is a weak check, the server is much stronger
 function isExpired (token) {
+  debugger
   // xxxxxxx.yyyyyyy.zzzzzzzz
   // yyyyyyy is the token info
   const infoFrag = token.split('.')[1]
   const info = JSON.parse(atob(infoFrag))
-  return info.exp > Date.now()
+  if (info.exp < (Date.now() / 1000)) {
+    store.dispatch('signOut')
+    router.push({ name: 'Sign in' })
+    return true
+  } else {
+    if (!signoutFunction) {
+      signoutFunction = setTimeout(() => {
+        store.dispatch('signOut')
+        router.push({ name: 'Sign in' })
+      }, (info.exp - (Date.now() / 1000) * 1000))
+      console.log((info.exp - (Date.now() / 1000)) * 1000)
+    }
+    return false
+  }
 }

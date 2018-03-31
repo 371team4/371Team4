@@ -91,12 +91,12 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   store.commit(SET_LOADING, { loading: true })
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!checkToken()) {
+  if (!checkToken()) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
       next({ path: '/signin', query: { redirect: to.fullPath } })
-    } else {
-      store.commit(SET_USER, JSON.parse(localStorage.getItem('user')))
     }
+  } else {
+    store.commit(SET_USER, JSON.parse(localStorage.getItem('user')))
   }
   next()
 })
