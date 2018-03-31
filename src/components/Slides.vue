@@ -20,15 +20,14 @@
             card
             color="white"
             prominent>
-            <v-text-field
-              id="search_bar"
-              prepend-icon="search"
-              hide-details
-              single-line
-              v-model="searchString"/>
-            <v-btn icon>
-              <v-icon>more_vert</v-icon>
-            </v-btn>
+            <v-container class="my-2 py-0 px-3">
+              <v-text-field
+                id="search_bar"
+                prepend-icon="search"
+                hide-details
+                single-line
+                v-model="searchString"/>
+            </v-container>
           </v-toolbar>
         </v-card>
       </v-flex>
@@ -47,38 +46,31 @@
         <slide-card
           :data-test-attr="`slideCard_${index}`"
           :slide="slide"
-          @click="goToSlide(slide)"
+          @delete="handleDelete"
+          @edit="goToSlide"
           class="mx-1 px-1 my-1 py-1"/>
       </v-flex>
-      <v-flex xs3>
-        <add-button
-          class="mx-1 px-1 my-1 py-1"
-          :is-disabled="false"
-          :is-visible="true"
-          @cButtonClick="dialog=true"/>
-      </v-flex>
-      <v-dialog
-        v-model="dialog"
-        max-width="1000">
-        <v-card>
-          <v-card-title class="headline">Choose a Template</v-card-title>
-          <v-layout
-            row
-            wrap>
-            <v-flex
-              xs3
-              v-for="i in 4"
-              :key="i">
-              <v-card class="mx-1 px-1 my-1 py-1">
-                <v-card-media
-                  src="http://placehold.it/32x32"
-                  height="200px"/>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-card>
-      </v-dialog>
+      <v-snackbar
+        multi-line
+        right
+        vertical
+        v-model="showSnackbar">
+        {{ snackbarMessage }}
+        <v-btn
+          flat
+          color="blue lighten-3"
+          @click.native="handleUndoDelete">Undo</v-btn>
+      </v-snackbar>
     </v-layout>
+    <v-btn
+      fixed
+      bottom
+      right
+      big
+      color="blue"
+      fab>
+      <v-icon>add</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -93,7 +85,9 @@ export default {
   components: { SlideCard, AddButton },
   data () {
     return {
-      dialog: false,
+      snackbarMessage: '',
+      showSnackbar: false,
+      timeoutFunction: null,
       searchString: ''
     }
   },
@@ -133,6 +127,16 @@ export default {
     ])
   },
   methods: {
+    handleDelete (slide) {
+      this.showSnackbar = true
+      this.snackbarMessage = `Deleted Slide ${slide.title.content} `
+      this.timeoutFunction = setTimeout(() => this.$store.dispatch('deleteSlide', slide._id), 30000)
+    },
+    handleUndoDelete () {
+      this.showSnackbar = false
+      this.snackbarMessage = ''
+      clearTimeout(this.timeoutFunction)
+    },
     goToSlide (slide) {
       this.$store.commit(CURRENT_SLIDE.SET, slide)
       this.$router.push(
