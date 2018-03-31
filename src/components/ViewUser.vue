@@ -60,11 +60,8 @@
         <template
           slot="items"
           slot-scope="props">
-          <td>{{ props.item.name }}</td>
-          <td class="text-xs-left">{{ props.item.calories }}</td>
-          <td class="text-xs-left">{{ props.item.fat }}</td>
-          <td class="text-xs-left">{{ props.item.carbs }}</td>
-          <td class="text-xs-left">{{ props.item.protein }}</td>
+          <td>{{ props.item.username }}</td>
+          <td class="text-xs-left">{{ props.item.password }}</td>
           <td class="justify-left layout px-0">
             <v-btn
               icon
@@ -108,26 +105,17 @@ export default {
         value: 'username'
       },
       { text: 'Password', value: 'password' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
       { text: 'Actions', value: 'name', sortable: false }
     ],
     items: [],
     editedIndex: -1,
     editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      username: '',
+      password: ''
     },
     defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      username: '',
+      password: ''
     }
   }),
 
