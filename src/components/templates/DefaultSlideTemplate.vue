@@ -151,10 +151,10 @@ export default {
       return null
     },
     formattedDate () {
-      if (this.slide && this.slide.date && this.slide.date.content !== null) {
-        return moment(this.slide.date.content).format('dddd, MMMM D')
+      if (this.slide && this.slide.date && this.slide.date.content && this.slide.date.content.length > 0) {
+        return moment(this.slide.date.content[0]).format('dddd, MMMM D')
       }
-      return null
+      return ''
     }
   },
   methods: {

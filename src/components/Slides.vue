@@ -78,7 +78,7 @@
 import SlideCard from './slide/SlideCard'
 import { mapGetters } from 'vuex'
 
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 export default {
   components: { SlideCard },
@@ -160,7 +160,7 @@ export default {
       return slides.filter((slide) => deletedId !== slide._id)
     },
     goToSlide (slide) {
-      this.$store.commit(CURRENT_SLIDE.SET, slide)
+      this.$store.commit(MUTATIONS.SET, slide)
       this.$router.push(
         {
           name: 'Designer',
