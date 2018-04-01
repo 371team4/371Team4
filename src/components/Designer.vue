@@ -692,6 +692,7 @@
                           accept="image/*"
                           type="file"
                           multiple
+                          v-if="uploading"
                           v-show="false"
                           @change="uploadImage($event.target.files)">
                       </v-card>
@@ -739,6 +740,7 @@ export default {
       showTimeSettings: false,
       showDescSettings: false,
       showSlideSettings: false,
+      uploading: true,
       valid: true,
       showPreview: false,
       carousel: -1,
@@ -1076,7 +1078,6 @@ export default {
       this.$nextTick(() => (this.carousel = this.showPreview ? 0 : -1))
     },
     uploadImage (files) {
-      debugger
       const filteredFiles = [...files].filter(
         file => file.type.indexOf('image/') !== -1
       )
@@ -1087,6 +1088,8 @@ export default {
           }.bind(this)
         )
       )
+      this.uploading = false
+      this.$nextTick(() => { this.uploading = true })
     },
     addImage (newImage) {
       this.$store.commit(MUTATIONS.ADD_IMAGE, newImage)
