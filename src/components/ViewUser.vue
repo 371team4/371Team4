@@ -62,7 +62,19 @@
           slot-scope="props">
           <td>{{ props.item.username }}</td>
           <td class="text-xs-left">{{ props.item.password }}</td>
-          <td class="text-xs-left">{{ props.item.role }}</td>
+          <td class="text-xs-left">
+            <v-flex xs6>
+              <v-select
+                :items="states"
+                v-model="e2"
+                label="Select"
+                single-line
+                auto
+                append-icon="map"
+                hide-details
+              />
+            </v-flex>
+          </td>
           <td class="justify-left layout px-0">
             <v-btn
               icon
