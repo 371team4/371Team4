@@ -7,38 +7,139 @@
       <DefaultSlideTemplate
         :carousel="carousel"
         :slide="slide"
-        v-show="showPreview"/>
+        v-show="showPreview" />
       <v-form
         v-model="valid"
         lazy-validation
         v-show="!showPreview"
         ref="form">
         <v-container fluid>
-          <v-layout v-bind="binding">
+          <v-layout :class="`${this.$vuetify.breakpoint.smAndDown ? 'column' : ''}`">
             <v-flex>
               <v-layout column>
                 <v-flex>
-                  <v-text-field
-                    data-test-attr="title"
-                    label="Title"
-                    v-model="slide.title.content"
-                    :rules="titleRules"
-                    :counter="30"
-                    required/>
-                <!--<v-expansion-panel>
-                <v-expansion-panel-content expand-icon="settings">
-                  <div slot="header">Item</div>
-                  <font-style
-                    :font-style="slide.title.fontSytle"
-                    :font-size="slide.title.fontSize"
-                    :font-weight="slide.title.fontWeight"
-                    :font-color="slide.title.fontColor"/>
-                </v-expansion-panel-content>
-              </v-expansion-panel>-->
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-text-field
+                        data-test-attr="title"
+                        label="Title"
+                        v-model="title"
+                        :rules="titleRules"
+                        :counter="30"
+                        required/>
+                      <v-btn
+                        icon
+                        @click.native="showTitleSettings = !showTitleSettings">
+                        <v-icon>{{ showTitleSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        grid-list-xl
+                        v-show="showTitleSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="titleColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="titleSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="titleWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="titleStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
                 </v-flex>
                 <v-flex>
-                  <v-layout v-bind="binding">
-                    <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
                       <v-menu
                         lazy
                         :close-on-content-click="true"
@@ -55,21 +156,122 @@
                           prepend-icon="event"
                           readonly/>
                         <v-date-picker
-                          v-model="slide.date.content"
+                          v-model="date"
                           no-title/>
                       </v-menu>
-                      <!--<v-expansion-panel>
-                    <v-expansion-panel-content expand-icon="settings">
-                      <div slot="header">Item</div>
-                      <font-style
-                        :font-style="slide.date.fontSytle"
-                        :font-size="slide.date.fontSize"
-                        :font-weight="slide.date.fontWeight"
-                        :font-color="slide.date.fontColor"/>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>-->
-                    </v-flex>
-                    <v-flex>
+                      <v-btn
+                        icon
+                        @click.native="showDateSettings = !showDateSettings">
+                        <v-icon>{{ showDateSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        grid-list-xl
+                        v-show="showDateSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="dateColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="dateSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="dateWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="dateStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
                       <v-menu
                         ref="tMenu"
                         lazy
@@ -88,50 +290,249 @@
                           prepend-icon="access_time"
                           readonly/>
                         <v-time-picker
-                          v-model="slide.time.content"
-                          :allowed-minutes="allowedMinutes"/>
+                          v-model="time"
+                          :allowed-minutes="(minute) => (minute % 5) === 0" />
                       </v-menu>
-                      <!--<v-expansion-panel>
-                    <v-expansion-panel-content expand-icon="settings">
-                      <div slot="header">Item</div>
-                      <font-style
-                        :font-style="slide.time.fontSytle"
-                        :font-size="slide.time.fontSize"
-                        :font-weight="slide.time.fontWeight"
-                        :font-color="slide.time.fontColor"/>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>-->
-                    </v-flex>
-                  </v-layout>
+                      <v-btn
+                        icon
+                        @click.native="showTimeSettings = !showTimeSettings">
+                        <v-icon>{{ showTimeSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        grid-list-xl
+                        v-show="showTimeSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="timeColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="timeSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="timeWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="timeStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
                 </v-flex>
                 <v-flex>
-                  <v-text-field
-                    textarea
-                    label="Description"
-                    v-model="slide.description.content"
-                    :rules="descriptionRules"
-                    :counter="140"
-                    required/>
-                <!--<v-expansion-panel>
-                <v-expansion-panel-content expand-icon="settings">
-                  <div slot="header">Item</div>
-                  <font-style
-                    :font-style="slide.description.fontSytle"
-                    :font-size="slide.description.fontSize"
-                    :font-weight="slide.description.fontWeight"
-                    :font-color="slide.description.fontColor"/>
-                </v-expansion-panel-content>
-              </v-expansion-panel>-->
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-text-field
+                        textarea
+                        label="Description"
+                        v-model="desc"
+                        :rules="descriptionRules"
+                        :counter="140"
+                        required/>
+                      <v-btn
+                        icon
+                        @click.native="showDescSettings = !showDescSettings">
+                        <v-icon>{{ showDescSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        grid-list-xl
+                        v-show="showDescSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="descColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="descSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="descWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="descStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
                 </v-flex>
               </v-layout>
             </v-flex>
+
             <v-flex
               xs4
               :class="`${$vuetify.breakpoint.smAndDown ? '' : 'ml-4'}`">
               <ImageCards
-                :images="slide.images"
+                :images="images"
                 @imageSelected="uploadImage"
-                @deleteImage="deleteImage"/>
+                @deleteImage="deleteImage" />
             </v-flex>
           </v-layout>
         </v-container>
@@ -160,56 +561,18 @@ import moment from 'moment'
 
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 import ImageCards from '@/components/slide/ImageCards'
+import FontStyle from '@/components/templates/FontStyle'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 export default {
-  components: { ImageCards, DefaultSlideTemplate },
-  props: {
-    slide: {
-      type: Object,
-      default: () => ({
-        images: [],
-        title: {
-          content: '',
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        description: {
-          content: '',
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        date: {
-          content: null,
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        time: {
-          content: null,
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        meta: {
-          template: '',
-          timeout: '',
-          repeatable: false,
-          startDate: null,
-          endDate: null
-        }
-      })
-    }
-  },
+  components: { ImageCards, DefaultSlideTemplate, FontStyle },
   data: () => {
     return {
+      showTitleSettings: false,
+      showDateSettings: false,
+      showTimeSettings: false,
+      showDescSettings: false,
       valid: true,
       showPreview: false,
       carousel: -1,
@@ -217,81 +580,298 @@ export default {
       timeMenu: false,
       descriptionRules: [
         v => !!v || 'Description is required',
-        v => (v && v.length && v.length <= 140) || 'Description must be less than 140 characters'
+        v =>
+          (v && v.length && v.length <= 140) ||
+          'Description must be less than 140 characters'
       ],
       titleRules: [
         v => !!v || 'Title is required',
-        v => (v && v.length && v.length <= 30) || 'Title must be less than 30 characters'
+        v =>
+          (v && v.length && v.length <= 30) ||
+          'Title must be less than 30 characters'
+      ],
+      fontColors: [
+        'Blue',
+        'Red',
+        'Green',
+        'Yellow',
+        'Purple',
+        'Pink',
+        'Teal',
+        'Lime',
+        'Orange',
+        'Brown',
+        'Grey'
+      ],
+      fontSizes: [
+        'XX-Small',
+        'X-Small',
+        'Smaller',
+        'Small',
+        'Medium',
+        'Large',
+        'Larger',
+        'X-Large',
+        'XX-Large'
+      ],
+      fontStyles: [
+        'Italic',
+        'Normal',
+        'Oblique'
+      ],
+      fontWeights: [
+        'Lighter',
+        'Normal',
+        'Bold',
+        'Bolder'
       ]
     }
   },
   computed: {
-    binding () {
-      // shift images under the form on small screens
-      const binding = {}
-      if (this.$vuetify.breakpoint.smAndDown) {
-        binding.column = true
+    slide: {
+      get () {
+        return this.$store.getters.currentSlide
       }
-      return binding
+    },
+    title: {
+      get () {
+        return this.$store.getters.currentSlideTitleContent
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TITLE_CONTENT, value)
+      }
+    },
+    titleColor: {
+      get () {
+        return this.$store.getters.currentSlideTitleColor
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_COLOR, value)
+      }
+    },
+    titleStyle: {
+      get () {
+        return this.$store.getters.currentSlideTitleStyle
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_STYLE, value)
+      }
+    },
+    titleSize: {
+      get () {
+        return this.$store.getters.currentSlideTitleSize
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_SIZE, value)
+      }
+    },
+    titleWeight: {
+      get () {
+        return this.$store.getters.currentSlideTitleWeight
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT, value)
+      }
+    },
+    desc: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionContent
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_CONTENT, value)
+      }
+    },
+    descColor: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionColor
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR, value)
+      }
+    },
+    descStyle: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionStyle
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE, value)
+      }
+    },
+    descSize: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionSize
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE, value)
+      }
+    },
+    descWeight: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionWeight
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT, value)
+      }
+    },
+    date: {
+      get () {
+        return this.$store.getters.currentSlideDateContent
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DATE_CONTENT, value)
+      }
+    },
+    dateColor: {
+      get () {
+        return this.$store.getters.currentSlideDateColor
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_COLOR, value)
+      }
+    },
+    dateStyle: {
+      get () {
+        return this.$store.getters.currentSlideDateStyle
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_STYLE, value)
+      }
+    },
+    dateSize: {
+      get () {
+        return this.$store.getters.currentSlideDateSize
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_SIZE, value)
+      }
+    },
+    dateWeight: {
+      get () {
+        return this.$store.getters.currentSlideDateWeight
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_WEIGHT, value)
+      }
+    },
+    time: {
+      get () {
+        return this.$store.getters.currentSlideTimeContent
+      },
+      set (value) {
+        let timeFrags = value.split(':')
+        let someDate = new Date(Date.now())
+        someDate.setHours(timeFrags[0])
+        someDate.setMinutes(timeFrags[1])
+        this.$store.commit(CURRENT_SLIDE.SET_TIME_CONTENT, someDate)
+      }
+    },
+    timeColor: {
+      get () {
+        return this.$store.getters.currentSlideTimeColor
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_COLOR, value)
+      }
+    },
+    timeStyle: {
+      get () {
+        return this.$store.getters.currentSlideTimeStyle
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_STYLE, value)
+      }
+    },
+    timeSize: {
+      get () {
+        return this.$store.getters.currentSlideTimeSize
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_SIZE, value)
+      }
+    },
+    timeWeight: {
+      get () {
+        return this.$store.getters.currentSlideTimeWeight
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_WEIGHT, value)
+      }
+    },
+    images: {
+      get () {
+        return this.$store.getters.currentSlideImages
+      }
+    },
+    timeout: {
+      get () {
+        return this.$store.currentSlide.meta.timeout
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TIMEOUT, value)
+      }
+    },
+    template: {
+      get () {
+        return this.$store.currentSlide.meta.template
+      },
+      set (value) {
+        this.$store.commit(CURRENT_SLIDE.SET_TEMPLATE, value)
+      }
     },
     formattedTime () {
-      if (this.slide && this.slide.time && this.slide.time.content !== null) {
-        let someDateObj = new Date()
-        let timeFrags = this.slide.time.content.split(':')
-        someDateObj.setHours(timeFrags[0])
-        someDateObj.setMinutes(timeFrags[1])
-        return moment(someDateObj).format('hh:mm A')
+      if (this.time) {
+        return moment(this.time).format('hh:mm A')
       }
       return null
     },
     formattedDate () {
-      if (this.slide && this.slide.date && this.slide.date.content !== null) {
-        return moment(this.slide.date.content).format('dddd, MMMM D')
+      if (this.date) {
+        return moment(this.date).format('dddd, MMMM D')
       }
       return null
     }
   },
   methods: {
-    allowedMinutes (minute) {
-      return (minute % 5) === 0
-    },
     submit () {
       if (this.$refs.form.validate()) {
         this.forceUpdateCarousel()
-        this.$store.commit(CURRENT_SLIDE.SET, this.slide)
         this.$store.dispatch('saveSlide')
         this.changeViews()
       }
     },
     clear () {
       // reset all of the data fields
-      this.slide.title.content = ''
-      this.slide.description.content = ''
-      this.slide.date.content = null
-      this.slide.time.content = null
-      this.date = null
-      this.time = null
+      this.images.map((image) => {
+        this.$store.dispatch('deleteImage', image._id)
+      })
+      this.$store.commit(CURRENT_SLIDE.CLEAR)
       this.forceUpdateCarousel()
-      this.$store.commit(CURRENT_SLIDE.SET, this.slide)
-      if (this.showPreview) {
-        this.changeViews()
-      }
     },
     forceUpdateCarousel () {
-      this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))
+      this.$nextTick(() => (this.carousel = this.showPreview ? 0 : -1))
     },
     uploadImage (files) {
-      const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadImage', tmpArray[0]).then(function () {
-        this.addImage({ src: this.$store.getters.getUploadTask })
-      }.bind(this))
+      const filteredFiles = [...files].filter(
+        file => file.type.indexOf('image/') !== -1
+      )
+      filteredFiles.map(file =>
+        this.$store.dispatch('uploadImage', file).then(
+          function (data) {
+            this.addImage(data)
+          }.bind(this)
+        )
+      )
     },
-    deleteImage (index) {
-      this.slide.images.splice(index, 1)
-    },
-    addImage (imgObject) {
-      this.slide.images.push(imgObject)
+    addImage (newImage) {
+      debugger
+      this.$store.commit(CURRENT_SLIDE.ADD_IMAGE, newImage)
       this.forceUpdateCarousel()
+    },
+    deleteImage (image) {
+      debugger
+      this.$store
+        .dispatch('deleteImage', image._id)
+        .then(() => this.$store.commit(CURRENT_SLIDE.DELETE_IMAGE, image))
     },
     changeViews () {
       this.showPreview = !this.showPreview
