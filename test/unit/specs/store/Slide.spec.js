@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { store } from '@/store'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 let newSlide = {
   images: [],
@@ -67,7 +67,7 @@ describe('index', function () {
   it('should saveSlide when it is new', done => {
     const ogSlide = vm.$store.getters.getAllSlides[0]
     newSlide.images = [ogSlide.images[0]._id]
-    vm.$store.commit(CURRENT_SLIDE.SET, newSlide)
+    vm.$store.commit(MUTATIONS.SET, newSlide)
     vm.$store.dispatch('saveSlide')
     waitFor(() => {
       newSlide._id = ''
@@ -82,8 +82,8 @@ describe('index', function () {
     const ogSlide = vm.$store.getters.getAllSlides[0]
     vm.$store.dispatch('getSlide', ogSlide._id)
     waitFor(() => {
-      vm.$store.commit(CURRENT_SLIDE.SET_TITLE_CONTENT, 'updatedSlide')
-      vm.$store.commit(CURRENT_SLIDE.SET_IMAGE, [])
+      vm.$store.commit(MUTATIONS.SET_TITLE_CONTENT, 'updatedSlide')
+      vm.$store.commit(MUTATIONS.SET_IMAGE, [])
       vm.$store.dispatch('saveSlide')
       waitFor(() => {
         ogSlide.title.content = 'updatedSlide'

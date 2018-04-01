@@ -1,5 +1,5 @@
 import slide from '@/store/modules/slide/index'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 // actions have not been tested
 
@@ -52,7 +52,7 @@ describe('slide', () => {
         assert(state.currentSlide.title, titleStateBeforeMutation)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE](state, {
+        slide.mutations[MUTATIONS.SET_TITLE](state, {
           content: 'Slide1',
           fontColor: 'Red',
           fontSize: 'Large',
@@ -68,7 +68,7 @@ describe('slide', () => {
         assert(state.currentSlide.title.content, '')
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE_CONTENT](state, 'title')
+        slide.mutations[MUTATIONS.SET_TITLE_CONTENT](state, 'title')
 
         assert(slide.getters.getCurrentSlideTitleContent(state), 'title')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -78,7 +78,7 @@ describe('slide', () => {
         assert(state.currentSlide.title.fontColor, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE_FONT_COLOR](state, 'Red')
+        slide.mutations[MUTATIONS.SET_TITLE_FONT_COLOR](state, 'Red')
 
         assert(slide.getters.getCurrentSlideTitleFontColor(state), 'Red')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -88,7 +88,7 @@ describe('slide', () => {
         assert(state.currentSlide.title.fontSize, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE_FONT_SIZE](state, 'Large')
+        slide.mutations[MUTATIONS.SET_TITLE_FONT_SIZE](state, 'Large')
 
         assert(slide.getters.getCurrentSlideTitleFontSize(state), 'Large')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -98,7 +98,7 @@ describe('slide', () => {
         assert(state.currentSlide.title.fontStyle, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE_FONT_STYLE](state, 'Normal')
+        slide.mutations[MUTATIONS.SET_TITLE_FONT_STYLE](state, 'Normal')
 
         assert(slide.getters.getCurrentSlideTitleFontStyle(state), 'Normal')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -108,7 +108,7 @@ describe('slide', () => {
         assert(state.currentSlide.title.fontWeight, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT](state, 'Bold')
+        slide.mutations[MUTATIONS.SET_TITLE_FONT_WEIGHT](state, 'Bold')
 
         assert(slide.getters.getCurrentSlideTitleFontWeight(state), 'Bold')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -141,7 +141,7 @@ describe('slide', () => {
         assert(state.currentSlide.description, titleStateBeforeMutation)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION](state, {
+        slide.mutations[MUTATIONS.SET_DESCRIPTION](state, {
           content: 'Slide1',
           fontColor: 'Red',
           fontSize: 'Large',
@@ -157,7 +157,7 @@ describe('slide', () => {
         assert(state.currentSlide.description.content, '')
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_CONTENT](state, 'title')
+        slide.mutations[MUTATIONS.SET_DESCRIPTION_CONTENT](state, 'title')
 
         assert(slide.getters.getCurrentSlideDescriptionContent(state), 'title')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -167,7 +167,7 @@ describe('slide', () => {
         assert(state.currentSlide.description.fontColor, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR](state, 'Red')
+        slide.mutations[MUTATIONS.SET_DESCRIPTION_FONT_COLOR](state, 'Red')
 
         assert(slide.getters.getCurrentSlideDescriptionFontColor(state), 'Red')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -177,7 +177,7 @@ describe('slide', () => {
         assert(state.currentSlide.description.fontSize, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE](state, 'Large')
+        slide.mutations[MUTATIONS.SET_DESCRIPTION_FONT_SIZE](state, 'Large')
 
         assert(slide.getters.getCurrentSlideDescriptionFontSize(state), 'Large')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -187,7 +187,7 @@ describe('slide', () => {
         assert(state.currentSlide.description.fontStyle, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE](state, 'Normal')
+        slide.mutations[MUTATIONS.SET_DESCRIPTION_FONT_STYLE](state, 'Normal')
 
         assert(slide.getters.getCurrentSlideDescriptionFontStyle(state), 'Normal')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -197,7 +197,7 @@ describe('slide', () => {
         assert(state.currentSlide.description.fontWeight, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT](state, 'Bold')
+        slide.mutations[MUTATIONS.SET_DESCRIPTION_FONT_WEIGHT](state, 'Bold')
 
         assert(slide.getters.getCurrentSlideDescriptionFontWeight(state), 'Bold')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -215,7 +215,7 @@ describe('slide', () => {
         assert(state.currentSlide.images, [])
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_IMAGE](state, {
+        slide.mutations[MUTATIONS.SET_IMAGE](state, {
           src: 'https://picsum.photos/200/300/?image=92'
         },
         {
@@ -270,7 +270,7 @@ describe('slide', () => {
         assert(state.currentSlide.date, titleStateBeforeMutation)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE](state, {
+        slide.mutations[MUTATIONS.SET_DATE](state, {
           content: 'Slide1',
           fontColor: 'Red',
           fontSize: 'Large',
@@ -286,7 +286,7 @@ describe('slide', () => {
         assert(state.currentSlide.date.content, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE_CONTENT](state, 'title')
+        slide.mutations[MUTATIONS.SET_DATE_CONTENT](state, 'title')
 
         assert(slide.getters.getCurrentSlideDateContent(state), 'title')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -296,7 +296,7 @@ describe('slide', () => {
         assert(state.currentSlide.date.fontColor, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_COLOR](state, 'Red')
+        slide.mutations[MUTATIONS.SET_DATE_FONT_COLOR](state, 'Red')
 
         assert(slide.getters.getCurrentSlideDateFontColor(state), 'Red')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -306,7 +306,7 @@ describe('slide', () => {
         assert(state.currentSlide.date.fontSize, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_SIZE](state, 'Large')
+        slide.mutations[MUTATIONS.SET_DATE_FONT_SIZE](state, 'Large')
 
         assert(slide.getters.getCurrentSlideDateFontSize(state), 'Large')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -316,7 +316,7 @@ describe('slide', () => {
         assert(state.currentSlide.date.fontStyle, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_STYLE](state, 'Normal')
+        slide.mutations[MUTATIONS.SET_DATE_FONT_STYLE](state, 'Normal')
 
         assert(slide.getters.getCurrentSlideDateFontStyle(state), 'Normal')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -326,7 +326,7 @@ describe('slide', () => {
         assert(state.currentSlide.date.fontWeight, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_DATE_FONT_WEIGHT](state, 'Bold')
+        slide.mutations[MUTATIONS.SET_DATE_FONT_WEIGHT](state, 'Bold')
 
         assert(slide.getters.getCurrentSlideDateFontWeight(state), 'Bold')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -359,7 +359,7 @@ describe('slide', () => {
         assert(state.currentSlide.time, titleStateBeforeMutation)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME](state, {
+        slide.mutations[MUTATIONS.SET_TIME](state, {
           content: 'Slide1',
           fontColor: 'Red',
           fontSize: 'Large',
@@ -375,7 +375,7 @@ describe('slide', () => {
         assert(state.currentSlide.time.content, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME_CONTENT](state, 'title')
+        slide.mutations[MUTATIONS.SET_TIME_CONTENT](state, 'title')
 
         assert(slide.getters.getCurrentSlideTimeContent(state), 'title')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -385,7 +385,7 @@ describe('slide', () => {
         assert(state.currentSlide.time.fontColor, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_COLOR](state, 'Red')
+        slide.mutations[MUTATIONS.SET_TIME_FONT_COLOR](state, 'Red')
 
         assert(slide.getters.getCurrentSlideTimeFontColor(state), 'Red')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -395,7 +395,7 @@ describe('slide', () => {
         assert(state.currentSlide.time.fontSize, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_SIZE](state, 'Large')
+        slide.mutations[MUTATIONS.SET_TIME_FONT_SIZE](state, 'Large')
 
         assert(slide.getters.getCurrentSlideTimeFontSize(state), 'Large')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -405,7 +405,7 @@ describe('slide', () => {
         assert(state.currentSlide.time.fontStyle, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_STYLE](state, 'Normal')
+        slide.mutations[MUTATIONS.SET_TIME_FONT_STYLE](state, 'Normal')
 
         assert(slide.getters.getCurrentSlideTimeFontStyle(state), 'Normal')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -415,7 +415,7 @@ describe('slide', () => {
         assert(state.currentSlide.time.fontWeight, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME_FONT_WEIGHT](state, 'Bold')
+        slide.mutations[MUTATIONS.SET_TIME_FONT_WEIGHT](state, 'Bold')
 
         assert(slide.getters.getCurrentSlideTimeFontWeight(state), 'Bold')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -448,7 +448,7 @@ describe('slide', () => {
         assert(slide.getters.getCurrentSlideMeta(state), titleStateBeforeMutation)
         assert(slide.getters.getIsCurrentSlideDirty(state), false)
 
-        slide.mutations[CURRENT_SLIDE.SET_TIME](state, {
+        slide.mutations[MUTATIONS.SET_TIME](state, {
           template: 'DefaultSlideTemplate',
           timeout: '40',
           repeatable: false,
@@ -464,7 +464,7 @@ describe('slide', () => {
         assert(state.currentSlide.meta.template, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_META_TEMPLATE](state, 'DefaultSlideTemplate')
+        slide.mutations[MUTATIONS.SET_META_TEMPLATE](state, 'DefaultSlideTemplate')
 
         assert(slide.getters.getCurrentSlideMetaTemplate(state), 'DefaultSlideTemplate')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -474,7 +474,7 @@ describe('slide', () => {
         assert(state.currentSlide.meta.timeout, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_META_TIMEOUT](state, '40')
+        slide.mutations[MUTATIONS.SET_META_TIMEOUT](state, '40')
 
         assert(slide.getters.getCurrentSlideMetaTimeout(state), '40')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -484,7 +484,7 @@ describe('slide', () => {
         assert(state.currentSlide.meta.repeatable, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_META_REPEATABLE](state, false)
+        slide.mutations[MUTATIONS.SET_META_REPEATABLE](state, false)
 
         assert(slide.getters.getCurrentSlideMetaRepeatable(state), false)
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -494,7 +494,7 @@ describe('slide', () => {
         assert(state.currentSlide.meta.startDate, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_META_STARTDATE](state, '2018-02-16')
+        slide.mutations[MUTATIONS.SET_META_STARTDATE](state, '2018-02-16')
 
         assert(slide.getters.getCurrentSlideMetaStartDate(state), '2018-02-16')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)
@@ -504,7 +504,7 @@ describe('slide', () => {
         assert(state.currentSlide.meta.endDate, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[CURRENT_SLIDE.SET_META_ENDDATE](state, '2018-02-16')
+        slide.mutations[MUTATIONS.SET_META_ENDDATE](state, '2018-02-16')
 
         assert(slide.getters.getCurrentSlideMetaEndDate(state), '2018-02-16')
         assert(slide.getters.getIsCurrentSlideDirty(state), true)

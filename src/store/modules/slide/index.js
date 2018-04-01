@@ -1,6 +1,5 @@
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 import * as server from '@/services/API/slides'
-import { SET_ALL_SLIDES, SET_LOADING } from '@/store/mutation-types'
 
 /** BEGIN: PRIVATE MUTATION TYPES **/
 const DELETE_SLIDE = 'DELETE_SLIDE'
@@ -19,11 +18,11 @@ const newSlide = {
   // image array of image files (or link to image files?) to be displayed in the slide
   images: [],
   // the date of the slides event, has similar font info as title/description, content is date object
-  date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  date: { content: [], fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
   // the time of the event, same as date but time object instead of date object
   time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
 
-  meta: { template: null, timeout: '', repeatable: false, startDate: '', endDate: '' }
+  meta: { template: null, timeout: '', datesOnDisplay: [] }
 }
 
 const state = {
@@ -83,165 +82,166 @@ const getters = {
   // getters for the current slide meta fields
   currentSlideTemplate: state => state.currentSlide.meta.template,
   currentSlideTimeout: state => state.currentSlide.meta.timeout,
-  currentSlideRepeatable: state => state.currentSlide.meta.repeatable,
-  currentSlideStartDate: state => state.currentSlide.meta.startDate,
-  currentSlideEndDate: state => state.currentSlide.meta.endDate
+  currentSlideDatesOnDisplay: state => state.currentSlide.meta.datesOnDisplay
 }
 
 // mutations of this module, mutation must be sync and atomic
 const mutations = {
   //
-  [SET_ALL_SLIDES] (state, payload) {
+  [MUTATIONS.SET_ALL_SLIDES] (state, payload) {
     state.slides = payload
   },
   // takes a slide object as payload, sets current slide to it.
-  [CURRENT_SLIDE.SET] (state, payload) {
+  [MUTATIONS.SET] (state, payload) {
     state.currentSlide = JSON.parse(JSON.stringify(payload))
   },
 
-  [CURRENT_SLIDE.CLEAR] (state) {
+  [MUTATIONS.CLEAR] (state) {
     state.currentSlide = JSON.parse(JSON.stringify(newSlide))
   },
 
   // takes boolean as payload, sets if slide has changes made compared to version in DB.
-  [CURRENT_SLIDE.SET_STATUS] (state, payload) {
+  [MUTATIONS.SET_STATUS] (state, payload) {
     state.isCurrentSlideDirty = payload
   },
 
   // takes content as payload (text). sets content for title of currentslide
-  [CURRENT_SLIDE.SET_TITLE_CONTENT] (state, payload) {
+  [MUTATIONS.SET_TITLE_CONTENT] (state, payload) {
     state.currentSlide.title.content = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontcolor as payload. sets fontcolor for title of currentslide.
-  [CURRENT_SLIDE.SET_TITLE_FONT_COLOR] (state, payload) {
+  [MUTATIONS.SET_TITLE_FONT_COLOR] (state, payload) {
     state.currentSlide.title.fontColor = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontsize as payload. sets fontsize of title for currentslide.
-  [CURRENT_SLIDE.SET_TITLE_FONT_SIZE] (state, payload) {
+  [MUTATIONS.SET_TITLE_FONT_SIZE] (state, payload) {
     state.currentSlide.title.fontSize = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontstyle of title for currentslide.
-  [CURRENT_SLIDE.SET_TITLE_FONT_STYLE] (state, payload) {
+  [MUTATIONS.SET_TITLE_FONT_STYLE] (state, payload) {
     state.currentSlide.title.fontStyle = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontweight for payload. sets fontweight of title for currentslide.
-  [CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT] (state, payload) {
+  [MUTATIONS.SET_TITLE_FONT_WEIGHT] (state, payload) {
     state.currentSlide.title.fontWeight = payload
     state.isCurrentSlideDirty = true
   },
 
   // takes content (text) as payload. sets content of description for currentslide.
-  [CURRENT_SLIDE.SET_DESCRIPTION_CONTENT] (state, payload) {
+  [MUTATIONS.SET_DESCRIPTION_CONTENT] (state, payload) {
     state.currentSlide.description.content = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontcolor as payload. sets fontcolor of description for currentslide.
-  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR] (state, payload) {
+  [MUTATIONS.SET_DESCRIPTION_FONT_COLOR] (state, payload) {
     state.currentSlide.description.fontColor = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontsize as payload. sets fontsize of description for currentslide
-  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE] (state, payload) {
+  [MUTATIONS.SET_DESCRIPTION_FONT_SIZE] (state, payload) {
     state.currentSlide.description.fontSize = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontsize of description for currentslide
-  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE] (state, payload) {
+  [MUTATIONS.SET_DESCRIPTION_FONT_STYLE] (state, payload) {
     state.currentSlide.description.fontStyle = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontweight as payload. sets fontweight of description for currentslide
-  [CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT] (state, payload) {
+  [MUTATIONS.SET_DESCRIPTION_FONT_WEIGHT] (state, payload) {
     state.currentSlide.description.fontWeight = payload
     state.isCurrentSlideDirty = true
   },
 
-  // takes image as payload. set currentslide image to it.
-  [CURRENT_SLIDE.ADD_IMAGE] (state, payload) {
+  // takes image as payload. adds an image to currentslide.
+  [MUTATIONS.ADD_IMAGE] (state, payload) {
     state.currentSlide.images.push(payload)
     state.isCurrentSlideDirty = true
   },
-  // takes image as payload. set currentslide image to it.
-  [CURRENT_SLIDE.DELETE_IMAGE] (state, payload) {
+  // takes image as payload. removes and image from currentslide.
+  [MUTATIONS.DELETE_IMAGE] (state, payload) {
     state.currentSlide.images.splice(state.currentSlide.images.indexOf(payload), 1)
     state.isCurrentSlideDirty = true
   },
-  // here is where DELETE_IMAGE or equivilent will go if used.
 
-  // takes content as payload. sets content of date for currentslide
-  [CURRENT_SLIDE.SET_DATE_CONTENT] (state, payload) {
-    state.currentSlide.date.content = payload
+  // takes content as payload. adds a date to currentslide
+  [MUTATIONS.ADD_DATE] (state, payload) {
+    state.currentSlide.date.content.push(payload)
+    state.isCurrentSlideDirty = true
+  },
+  // takes content as payload. removes a date from currentSlide
+  [MUTATIONS.DELETE_DATE] (state, payload) {
+    state.currentSlide.date.content.splice(payload, 1)
     state.isCurrentSlideDirty = true
   },
   // takes fontcolor as payload. sets fontcolor of date for currentslide
-  [CURRENT_SLIDE.SET_DATE_FONT_COLOR] (state, payload) {
+  [MUTATIONS.SET_DATE_FONT_COLOR] (state, payload) {
     state.currentSlide.date.fontColor = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontsize as payload. sets fontsize of date for currentslide
-  [CURRENT_SLIDE.SET_DATE_FONT_SIZE] (state, payload) {
+  [MUTATIONS.SET_DATE_FONT_SIZE] (state, payload) {
     state.currentSlide.date.fontSize = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontstyle of date for currentslide
-  [CURRENT_SLIDE.SET_DATE_FONT_STYLE] (state, payload) {
+  [MUTATIONS.SET_DATE_FONT_STYLE] (state, payload) {
     state.currentSlide.date.fontStyle = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontweight as payload. sets fontweight of date for currentslide
-  [CURRENT_SLIDE.SET_DATE_FONT_WEIGHT] (state, payload) {
+  [MUTATIONS.SET_DATE_FONT_WEIGHT] (state, payload) {
     state.currentSlide.date.fontWeight = payload
     state.isCurrentSlideDirty = true
   },
 
   // takes content as payload. sets content of currentslide time to it.
-  [CURRENT_SLIDE.SET_TIME_CONTENT] (state, payload) {
+  [MUTATIONS.SET_TIME_CONTENT] (state, payload) {
     state.currentSlide.time.content = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontcolor as payload. sets fontcolor of currentslide time to it.
-  [CURRENT_SLIDE.SET_TIME_FONT_COLOR] (state, payload) {
+  [MUTATIONS.SET_TIME_FONT_COLOR] (state, payload) {
     state.currentSlide.time.fontColor = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontsize as payload. sets fontsize of currentslide time to it.
-  [CURRENT_SLIDE.SET_TIME_FONT_SIZE] (state, payload) {
+  [MUTATIONS.SET_TIME_FONT_SIZE] (state, payload) {
     state.currentSlide.time.fontSize = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontstyle as payload. sets fontstyle of currentslide time to it.
-  [CURRENT_SLIDE.SET_TIME_FONT_STYLE] (state, payload) {
+  [MUTATIONS.SET_TIME_FONT_STYLE] (state, payload) {
     state.currentSlide.time.fontStyle = payload
     state.isCurrentSlideDirty = true
   },
   // takes fontweight as payload. sets fontweight of currentslide to it.
-  [CURRENT_SLIDE.SET_TIME_FONT_WEIGHT] (state, payload) {
+  [MUTATIONS.SET_TIME_FONT_WEIGHT] (state, payload) {
     state.currentSlide.time.fontWeight = payload
     state.isCurrentSlideDirty = true
   },
 
-  [CURRENT_SLIDE.SET_TEMPLATE] (state, payload) {
+  [MUTATIONS.SET_TEMPLATE] (state, payload) {
     state.currentSlide.meta.template = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
+  [MUTATIONS.SET_TIMEOUT] (state, payload) {
     state.currentSlide.meta.timeout = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_REPEATABLE] (state, payload) {
-    state.currentSlide.meta.repeatable = payload
+
+  // takes date as payload. adds a display date to currentslide.
+  [MUTATIONS.ADD_DATE_ON_DISPLAY] (state, payload) {
+    state.currentSlide.meta.datesOnDisplay.push(payload)
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_STARTDATE] (state, payload) {
-    state.currentSlide.meta.startDate = payload
-    state.isCurrentSlideDirty = true
-  },
-  [CURRENT_SLIDE.SET_ENDDATE] (state, payload) {
-    state.currentSlide.meta.endDate = payload
+  // takes date as payload. removes a display date from currentslide.
+  [MUTATIONS.DELETE_DATE_ON_DISPLAY] (state, payload) {
+    state.currentSlide.meta.datesOnDisplay.splice(payload, 1)
     state.isCurrentSlideDirty = true
   },
 
@@ -262,37 +262,37 @@ const mutations = {
 const actions = {
   // Gets all the slides in the database
   retrieveAllSlides ({ commit }) {
-    commit(SET_LOADING, true)
+    commit(MUTATIONS.SET_LOADING, true)
     server
       .getAllSlides()
       .then(response => {
-        commit(SET_ALL_SLIDES, response.data)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_ALL_SLIDES, response.data)
+        commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
   },
 
   // Takes id as payload and gets the slide with the given id
   retrieveSlide ({ commit }, id) {
-    commit(SET_LOADING, true)
+    commit(MUTATIONS.SET_LOADING, true)
     server
       .getSlide(id)
       .then(response => {
-        commit(CURRENT_SLIDE.SET, response.data)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET, response.data)
+        commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
   },
 
   // used for saving both new slides, and edits to existing slides.
   saveSlide ({ state, commit }) {
-    commit(SET_LOADING, true)
+    commit(MUTATIONS.SET_LOADING, true)
     server
       .saveSlide(state.currentSlide)
       .then(response => {
@@ -303,22 +303,22 @@ const actions = {
             break
           }
         }
-        commit(CURRENT_SLIDE.SET, response.data)
+        commit(MUTATIONS.SET, response.data)
         if (index === -1) {
           commit(ADD_SLIDE, response.data)
         } else {
           commit(UPDATE_SLIDE, { index: index, updatedSlide: response.data })
         }
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
   },
   // takes currentSlide as payload, used for deleting slides from database.
   deleteSlide ({ commit, state }, id) {
-    commit(SET_LOADING, true)
+    commit(MUTATIONS.SET_LOADING, true)
     server
       .deleteSlide(id)
       .then(response => {
@@ -328,13 +328,13 @@ const actions = {
             break
           }
         }
-        commit(CURRENT_SLIDE.SET, newSlide)
+        commit(MUTATIONS.SET, newSlide)
         commit(DELETE_SLIDE, index)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
         console.log(error)
-        commit(SET_LOADING, false)
+        commit(MUTATIONS.SET_LOADING, false)
       })
   }
 }

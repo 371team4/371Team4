@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import Slides from '@/components/Slides'
 import { store } from '@/store'
 import router from '@/router'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 const mockSlides = [
   {
@@ -239,7 +239,7 @@ describe('Slides.vue', function () {
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
 
-      expect(vm.$store.commit.firstCall.args).to.deep.equal([CURRENT_SLIDE.SET, mockSlides[1]])
+      expect(vm.$store.commit.firstCall.args).to.deep.equal([MUTATIONS.SET, mockSlides[1]])
     })
 
     it('should navigate to the desginer view', function () {

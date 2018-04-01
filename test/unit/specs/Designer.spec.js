@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Designer from '@/components/Designer'
 import sinon from 'sinon'
 import { store } from '@/store'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 describe('Designer.vue', function () {
   let vm
@@ -245,7 +245,7 @@ describe('Designer.vue', function () {
       vm.clear()
 
       expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
+      expect(spy).to.have.been.calledWith(MUTATIONS.SET, vm.$props.slide)
       spy.restore()
     })
 
@@ -338,7 +338,7 @@ describe('Designer.vue', function () {
       vm.submit()
 
       expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(CURRENT_SLIDE.SET, vm.$props.slide)
+      expect(spy).to.have.been.calledWith(MUTATIONS.SET, vm.$props.slide)
     })
 
     it('should save current slide', function () {

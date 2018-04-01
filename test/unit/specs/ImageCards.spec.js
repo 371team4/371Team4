@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import ImageCards from '@/components/slide/ImageCards'
 import Vuex from 'vuex'
 import slide from '@/store/modules/slide/index'
-import { SET } from '@/store/modules/slide/mutation-types'
+import { SET } from '@/store/mutation-types'
 
 describe('ImageCards.vue', function () {
   let Constructor, vm, mockCurrentSlide
