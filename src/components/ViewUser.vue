@@ -142,19 +142,23 @@ export default {
       this.items = [
         {
           username: 'Yggep',
-          password: 'olympus'
+          password: 'olympus',
+          role: 'Admin'
         },
         {
           username: 'Duomham',
-          password: 'kool'
+          password: 'kool',
+          role: 'Admin'
         },
         {
           username: 'Kire',
-          password: 'physics'
+          password: 'physics',
+          role: 'Admin'
         },
         {
           username: 'Yma',
-          password: 'helloworld'
+          password: 'helloworld',
+          role: 'Staff'
         }
       ]
     },
