@@ -635,10 +635,70 @@
             <v-flex
               xs4
               :class="`${$vuetify.breakpoint.smAndDown ? '' : 'ml-4'}`">
-              <ImageCards
-                :images="images"
-                @imageSelected="uploadImage"
-                @deleteImage="deleteImage" />
+              <v-card>
+                <v-container
+                  fluid
+                  grid-list-md>
+                  <v-layout
+                    row
+                    wrap>
+                    <v-flex
+                      md6
+                      sm4
+                      xs12
+                      v-for="(image, index) in images"
+                      :key="index">
+                      <v-card
+                        flat
+                        tile>
+                        <v-card-media
+                          :src="'http://cmpt371g4.usask.ca:8081' + image.path"
+                          height="150px"/>
+                        <!-- shift the fab to the top left corner -->
+                        <v-btn
+                          class="px-0 py-0 mx-0 mt-4"
+                          style="margin-right: -10px !important;"
+                          fab
+                          small
+                          absolute
+                          top
+                          right
+                          color="red lighten-1"
+                          @click.stop="deleteImage(image)">
+                          <v-icon>close</v-icon>
+                        </v-btn>
+                      </v-card>
+                    </v-flex>
+                    <v-flex
+                      md6
+                      sm4
+                      xs12>
+                      <!-- Add button for the images-->
+                      <v-card
+                        flat
+                        tile
+                        :class="`${$vuetify.breakpoint.xs ? 'ml-5' : ''}`">
+                        <v-btn
+                          fab
+                          big
+                          color="blue"
+                          class="my-5 mx-5"
+                          @click.stop="$refs.uploadButton.click()">
+                          <!-- click the upload button below -->
+                          <v-icon>add</v-icon>
+                        </v-btn>
+                        <input
+                          ref="uploadButton"
+                          accept="image/*"
+                          type="file"
+                          multiple
+                          v-show="false"
+                          @change="uploadImage($event.target.files)">
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
             </v-flex>
           </v-layout>
         </v-container>
@@ -667,12 +727,11 @@
 import moment from 'moment'
 
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
-import ImageCards from '@/components/slide/ImageCards'
 
 import * as MUTATIONS from '@/store/mutation-types'
 
 export default {
-  components: { ImageCards, DefaultSlideTemplate },
+  components: { DefaultSlideTemplate },
   data: () => {
     return {
       showTitleSettings: false,
@@ -1009,7 +1068,7 @@ export default {
       this.images.map((image) => {
         this.$store.dispatch('deleteImage', image._id)
       })
-      this.$store.commit(MUTATIONS.CLEAR)
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       this.$refs.form.reset()
       this.forceUpdateCarousel()
     },
@@ -1017,6 +1076,7 @@ export default {
       this.$nextTick(() => (this.carousel = this.showPreview ? 0 : -1))
     },
     uploadImage (files) {
+      debugger
       const filteredFiles = [...files].filter(
         file => file.type.indexOf('image/') !== -1
       )
