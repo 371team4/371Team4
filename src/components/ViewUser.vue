@@ -62,6 +62,7 @@
           slot-scope="props">
           <td>{{ props.item.username }}</td>
           <td class="text-xs-left">{{ props.item.password }}</td>
+          <td class="text-xs-left">{{ props.item.role }}</td>
           <td class="justify-left layout px-0">
             <v-btn
               icon
@@ -105,6 +106,7 @@ export default {
         value: 'username'
       },
       { text: 'Password', value: 'password' },
+      { text: 'Role', value: 'role' },
       { text: 'Actions', value: 'name', sortable: false }
     ],
     items: [],
