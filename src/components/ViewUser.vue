@@ -65,12 +65,12 @@
           <td class="text-xs-left">
             <v-flex xs6>
               <v-select
-                :items="states"
-                v-model="e2"
+                :items="roleList"
+                v-model="e1"
                 label="Select"
                 single-line
                 auto
-                append-icon="map"
+                prepend-icon="people"
                 hide-details
               />
             </v-flex>
@@ -108,30 +108,34 @@
 
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-    headers: [
-      {
-        text: 'Username',
-        align: 'left',
-        sortable: false,
-        value: 'username'
+  data () {
+    return {
+      e1: null,
+      roleList: ['Admin', 'Staff'],
+      dialog: false,
+      headers: [
+        {
+          text: 'Username',
+          align: 'left',
+          sortable: false,
+          value: 'username'
+        },
+        { text: 'Password', value: 'password' },
+        { text: 'Role', value: 'role' },
+        { text: 'Actions', value: 'name', sortable: false }
+      ],
+      items: [],
+      editedIndex: -1,
+      editedItem: {
+        username: '',
+        password: ''
       },
-      { text: 'Password', value: 'password' },
-      { text: 'Role', value: 'role' },
-      { text: 'Actions', value: 'name', sortable: false }
-    ],
-    items: [],
-    editedIndex: -1,
-    editedItem: {
-      username: '',
-      password: ''
-    },
-    defaultItem: {
-      username: '',
-      password: ''
+      defaultItem: {
+        username: '',
+        password: ''
+      }
     }
-  }),
+  },
 
   computed: {
     formTitle () {
