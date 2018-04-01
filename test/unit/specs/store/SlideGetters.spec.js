@@ -1,4 +1,4 @@
-import slide from '@/store/modules/slide/index'
+import slide from '@/store/modules/slide'
 import * as MUTATIONS from '@/store/mutation-types'
 
 // actions have not been tested

@@ -1,5 +1,5 @@
 import { store } from '@/store'
-import login from '@/store/modules/user/index'
+import login from '@/store/modules/user'
 
 describe('user', () => {
   it('getAllUsers', () => {

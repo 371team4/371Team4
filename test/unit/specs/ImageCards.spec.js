@@ -2,7 +2,7 @@ import Vue from 'vue'
 import sinon from 'sinon'
 import ImageCards from '@/components/slide/ImageCards'
 import Vuex from 'vuex'
-import slide from '@/store/modules/slide/index'
+import slide from '@/store/modules/slide'
 import { SET } from '@/store/mutation-types'
 
 describe('ImageCards.vue', function () {

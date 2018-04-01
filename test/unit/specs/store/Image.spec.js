@@ -1,4 +1,4 @@
-import index from '@/store/modules/image/index'
+import index from '@/store/modules/image'
 import { setToken } from '@/services/api.endpoint'
 import * as loginAPI from '@/services/API/login'
 

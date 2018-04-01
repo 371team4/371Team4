@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { store } from '../store/index'
+import { store } from '../store'
 import { SET_LOADING, SET_USER } from '../store/mutation-types'
 import { checkToken } from '@/services/api.endpoint'
 

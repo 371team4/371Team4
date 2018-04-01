@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Calendar from '@/components/Calendar'
 import Vuex from 'vuex'
-import slides from '@/store/modules/slide/index'
+import slides from '@/store/modules/slide'
 
 describe('Calendar.vue', function () {
   let Constructor, vm

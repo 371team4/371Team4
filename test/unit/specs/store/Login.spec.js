@@ -1,4 +1,4 @@
-import login from '@/store/modules/login/index'
+import login from '@/store/modules/login'
 import { server } from '@/services/api.endpoint'
 
 // helper for testing action with expected mutations
