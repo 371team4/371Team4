@@ -140,25 +140,27 @@
                 <v-flex>
                   <v-card class="my-1">
                     <v-card-actions class="py-0">
-                      <v-menu
-                        lazy
-                        :close-on-content-click="true"
-                        v-model="dateMenu"
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        :nudge-right="40"
-                        min-width="290px">
-                        <v-text-field
-                          slot="activator"
-                          label="Date of Event"
-                          v-model="formattedDate"
-                          prepend-icon="event"
-                          readonly/>
-                        <v-date-picker
-                          v-model="date"
-                          no-title/>
-                      </v-menu>
+                      <v-flex>
+                        <v-menu
+                          lazy
+                          :close-on-content-click="true"
+                          v-model="dateMenu"
+                          transition="slide-y-transition"
+                          offset-y
+                          full-width
+                          :nudge-right="40"
+                          min-width="290px">
+                          <v-text-field
+                            slot="activator"
+                            label="Date of Event"
+                            v-model="formattedDate"
+                            prepend-icon="event"
+                            readonly/>
+                          <v-date-picker
+                            v-model="date"
+                            no-title/>
+                        </v-menu>
+                      </v-flex>
                       <v-btn
                         icon
                         @click.native="showDateSettings = !showDateSettings">
@@ -272,27 +274,29 @@
                 <v-flex>
                   <v-card class="my-1">
                     <v-card-actions class="py-0">
-                      <v-menu
-                        ref="tMenu"
-                        lazy
-                        :close-on-content-click="false"
-                        v-model="timeMenu"
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        :nudge-right="40"
-                        max-width="290px"
-                        min-width="290px">
-                        <v-text-field
-                          slot="activator"
-                          label="Time of Event"
-                          v-model="formattedTime"
-                          prepend-icon="access_time"
-                          readonly/>
-                        <v-time-picker
-                          v-model="time"
-                          :allowed-minutes="(minute) => (minute % 5) === 0" />
-                      </v-menu>
+                      <v-flex>
+                        <v-menu
+                          full-width
+                          ref="tMenu"
+                          lazy
+                          :close-on-content-click="false"
+                          v-model="timeMenu"
+                          transition="slide-y-transition"
+                          offset-y
+                          :nudge-right="40"
+                          max-width="290px"
+                          min-width="290px">
+                          <v-text-field
+                            slot="activator"
+                            label="Time of Event"
+                            v-model="formattedTime"
+                            prepend-icon="access_time"
+                            readonly/>
+                          <v-time-picker
+                            v-model="time"
+                            :allowed-minutes="(minute) => (minute % 5) === 0" />
+                        </v-menu>
+                      </v-flex>
                       <v-btn
                         icon
                         @click.native="showTimeSettings = !showTimeSettings">
@@ -525,7 +529,6 @@
                 </v-flex>
               </v-layout>
             </v-flex>
-
             <v-flex
               xs4
               :class="`${$vuetify.breakpoint.smAndDown ? '' : 'ml-4'}`">
