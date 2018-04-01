@@ -96,7 +96,7 @@ describe('slide', () => {
         }
         assert(state.currentSlide, titleStateBeforeMutation)
 
-        slide.mutations[MUTATIONS.SET](state, {
+        slide.mutations[MUTATIONS.SET_CURRENT_SLIDE](state, {
           images: [
             {
               src: 'https://picsum.photos/200/300/?image=92'
@@ -154,7 +154,7 @@ describe('slide', () => {
       it('SET_STATUS', () => {
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[MUTATIONS.SET_STATUS](state, true)
+        slide.mutations[MUTATIONS.SET_CURRENT_SLIDE_STATUS](state, true)
 
         assert(state.isCurrentSlideDirty, true)
       })

@@ -67,7 +67,7 @@ describe('index', function () {
   it('should saveSlide when it is new', done => {
     const ogSlide = vm.$store.getters.getAllSlides[0]
     newSlide.images = [ogSlide.images[0]._id]
-    vm.$store.commit(MUTATIONS.SET, newSlide)
+    vm.$store.commit(MUTATIONS.SET_CURRENT_SLIDE, newSlide)
     vm.$store.dispatch('saveSlide')
     waitFor(() => {
       newSlide._id = ''

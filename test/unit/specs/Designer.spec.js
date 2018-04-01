@@ -245,7 +245,7 @@ describe('Designer.vue', function () {
       vm.clear()
 
       expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(MUTATIONS.SET, vm.$props.slide)
+      expect(spy).to.have.been.calledWith(MUTATIONS.SET_CURRENT_SLIDE, vm.$props.slide)
       spy.restore()
     })
 
@@ -338,7 +338,7 @@ describe('Designer.vue', function () {
       vm.submit()
 
       expect(spy.calledOnce).to.equal(true)
-      expect(spy).to.have.been.calledWith(MUTATIONS.SET, vm.$props.slide)
+      expect(spy).to.have.been.calledWith(MUTATIONS.SET_CURRENT_SLIDE, vm.$props.slide)
     })
 
     it('should save current slide', function () {

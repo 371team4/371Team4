@@ -13,9 +13,9 @@ export const SET_IMAGE_PATH = 'SET_IMAGE_PATH'
 export const SET_TASK_STATUS = 'SET_TASK_STATUS'
 
 // overall mutations for the slide store module
-export const SET = 'SET'
-export const CLEAR = 'CLEAR'
-export const SET_STATUS = 'SET_STATUS'
+export const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'
+export const CLEAR_CURRENT_SLIDE = 'CLEAR_CURRENT_SLIDE'
+export const SET_CURRENT_SLIDE_STATUS = 'SET_CURRENT_SLIDE_STATUS'
 
 // title mutations
 export const SET_TITLE_CONTENT = 'SET_TITLE_CONTENT'

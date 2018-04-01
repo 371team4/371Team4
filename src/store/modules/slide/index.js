@@ -92,16 +92,16 @@ const mutations = {
     state.slides = payload
   },
   // takes a slide object as payload, sets current slide to it.
-  [MUTATIONS.SET] (state, payload) {
+  [MUTATIONS.SET_CURRENT_SLIDE] (state, payload) {
     state.currentSlide = JSON.parse(JSON.stringify(payload))
   },
 
-  [MUTATIONS.CLEAR] (state) {
+  [MUTATIONS.CLEAR_CURRENT_SLIDE] (state) {
     state.currentSlide = JSON.parse(JSON.stringify(newSlide))
   },
 
   // takes boolean as payload, sets if slide has changes made compared to version in DB.
-  [MUTATIONS.SET_STATUS] (state, payload) {
+  [MUTATIONS.SET_CURRENT_SLIDE_STATUS] (state, payload) {
     state.isCurrentSlideDirty = payload
   },
 
@@ -281,7 +281,7 @@ const actions = {
     server
       .getSlide(id)
       .then(response => {
-        commit(MUTATIONS.SET, response.data)
+        commit(MUTATIONS.SET_CURRENT_SLIDE, response.data)
         commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
@@ -303,7 +303,7 @@ const actions = {
             break
           }
         }
-        commit(MUTATIONS.SET, response.data)
+        commit(MUTATIONS.SET_CURRENT_SLIDE, response.data)
         if (index === -1) {
           commit(ADD_SLIDE, response.data)
         } else {
@@ -328,7 +328,7 @@ const actions = {
             break
           }
         }
-        commit(MUTATIONS.SET, newSlide)
+        commit(MUTATIONS.SET_CURRENT_SLIDE, newSlide)
         commit(DELETE_SLIDE, index)
         commit(MUTATIONS.SET_LOADING, false)
       })

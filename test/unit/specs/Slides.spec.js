@@ -239,7 +239,7 @@ describe('Slides.vue', function () {
       const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
       cardHeader.click()
 
-      expect(vm.$store.commit.firstCall.args).to.deep.equal([MUTATIONS.SET, mockSlides[1]])
+      expect(vm.$store.commit.firstCall.args).to.deep.equal([MUTATIONS.SET_CURRENT_SLIDE, mockSlides[1]])
     })
 
     it('should navigate to the desginer view', function () {
