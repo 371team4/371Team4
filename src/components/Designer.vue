@@ -152,7 +152,7 @@
                         <v-text-field
                           slot="activator"
                           label="Date of Event"
-                          v-text="formattedDate"
+                          v-model="formattedDate"
                           prepend-icon="event"
                           readonly/>
                         <v-date-picker
@@ -286,7 +286,7 @@
                         <v-text-field
                           slot="activator"
                           label="Time of Event"
-                          v-text="formattedTime"
+                          v-model="formattedTime"
                           prepend-icon="access_time"
                           readonly/>
                         <v-time-picker
