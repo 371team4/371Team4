@@ -550,7 +550,8 @@
         <v-btn
           data-test-attr="submitButton"
           color="success"
-          @click="submit">submit</v-btn>
+          @click="submit"
+          :disabled="!valid">submit</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -561,12 +562,11 @@ import moment from 'moment'
 
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 import ImageCards from '@/components/slide/ImageCards'
-import FontStyle from '@/components/templates/FontStyle'
 
 import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
 
 export default {
-  components: { ImageCards, DefaultSlideTemplate, FontStyle },
+  components: { ImageCards, DefaultSlideTemplate },
   data: () => {
     return {
       showTitleSettings: false,
@@ -845,6 +845,7 @@ export default {
         this.$store.dispatch('deleteImage', image._id)
       })
       this.$store.commit(CURRENT_SLIDE.CLEAR)
+      this.$refs.form.reset()
       this.forceUpdateCarousel()
     },
     forceUpdateCarousel () {
@@ -863,12 +864,10 @@ export default {
       )
     },
     addImage (newImage) {
-      debugger
       this.$store.commit(CURRENT_SLIDE.ADD_IMAGE, newImage)
       this.forceUpdateCarousel()
     },
     deleteImage (image) {
-      debugger
       this.$store
         .dispatch('deleteImage', image._id)
         .then(() => this.$store.commit(CURRENT_SLIDE.DELETE_IMAGE, image))

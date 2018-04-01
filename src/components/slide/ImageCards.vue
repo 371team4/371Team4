@@ -55,6 +55,7 @@
               ref="uploadButton"
               accept="image/*"
               type="file"
+              multiple
               v-show="false"
               @change="imageSelected">
           </v-card>
