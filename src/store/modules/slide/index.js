@@ -30,7 +30,7 @@ const state = {
   slides: [],
   // currentSlide is the slide which is currently being worked on by user, either because
   // it is a brand new slide, or an existing one is being edited
-  currentSlide: newSlide,
+  currentSlide: JSON.parse(JSON.stringify(newSlide)),
   // this is true if the user just created a new slide
   // or has edited an existing slide
   isCurrentSlideDirty: false
@@ -49,44 +49,43 @@ const getters = {
   // getters for the current slides title, and for each subfield
   currentSlideTitle: state => state.currentSlide.title,
   currentSlideTitleContent: state => state.currentSlide.title.content,
-  currentSlideTitleFontColor: state => state.currentSlide.title.fontColor,
-  currentSlideTitleFontSize: state => state.currentSlide.title.fontSize,
-  currentSlideTitleFontStyle: state => state.currentSlide.title.fontStyle,
-  currentSlideTitleFontWeight: state => state.currentSlide.title.fontWeight,
+  currentSlideTitleColor: state => state.currentSlide.title.fontColor,
+  currentSlideTitleSize: state => state.currentSlide.title.fontSize,
+  currentSlideTitleStyle: state => state.currentSlide.title.fontStyle,
+  currentSlideTitleWeight: state => state.currentSlide.title.fontWeight,
 
   // getters for the current slides description, and for each subfield
   currentSlideDescription: state => state.currentSlide.description,
   currentSlideDescriptionContent: state => state.currentSlide.description.content,
-  currentSlideDescriptionFontColor: state => state.currentSlide.description.fontColor,
-  currentSlideDescriptionFontSize: state => state.currentSlide.description.fontSize,
-  currentSlideDescriptionFontStyle: state => state.currentSlide.description.fontStyle,
-  currentSlideDescriptionFontWeight: state => state.currentSlide.description.fontWeight,
+  currentSlideDescriptionColor: state => state.currentSlide.description.fontColor,
+  currentSlideDescriptionSize: state => state.currentSlide.description.fontSize,
+  currentSlideDescriptionStyle: state => state.currentSlide.description.fontStyle,
+  currentSlideDescriptionWeight: state => state.currentSlide.description.fontWeight,
 
   currentSlideImages: state => state.currentSlide.images,
 
   // getters for the current slides date, and for each subfield
   currentSlideDate: state => state.currentSlide.date,
   currentSlideDateContent: state => state.currentSlide.date.content,
-  currentSlideDateFontColor: state => state.currentSlide.date.fontColor,
-  currentSlideDateFontSize: state => state.currentSlide.date.fontSize,
-  currentSlideDateFontStyle: state => state.currentSlide.date.fontStyle,
-  currentSlideDateFontWeight: state => state.currentSlide.date.fontWeight,
+  currentSlideDateColor: state => state.currentSlide.date.fontColor,
+  currentSlideDateSize: state => state.currentSlide.date.fontSize,
+  currentSlideDateStyle: state => state.currentSlide.date.fontStyle,
+  currentSlideDateWeight: state => state.currentSlide.date.fontWeight,
 
   // getters for the current slides time, and for each subfield
   currentSlideTime: state => state.currentSlide.time,
   currentSlideTimeContent: state => state.currentSlide.time.content,
-  currentSlideTimeFontColor: state => state.currentSlide.time.fontColor,
-  currentSlideTimeFontSize: state => state.currentSlide.time.fontSize,
-  currentSlideTimeFontStyle: state => state.currentSlide.time.fontStyle,
-  currentSlideTimeFontWeight: state => state.currentSlide.time.fontWeight,
+  currentSlideTimeColor: state => state.currentSlide.time.fontColor,
+  currentSlideTimeSize: state => state.currentSlide.time.fontSize,
+  currentSlideTimeStyle: state => state.currentSlide.time.fontStyle,
+  currentSlideTimeWeight: state => state.currentSlide.time.fontWeight,
 
   // getters for the current slide meta fields
-  currentSlideMeta: state => state.currentSlide.meta,
-  currentSlideMetaTemplate: state => state.currentSlide.meta.template,
-  currentSlideMetaTimeout: state => state.currentSlide.meta.timeout,
-  currentSlideMetaRepeatable: state => state.currentSlide.meta.repeatable,
-  currentSlideMetaStartDate: state => state.currentSlide.meta.startDate,
-  currentSlideMetaEndDate: state => state.currentSlide.meta.endDate
+  currentSlideTemplate: state => state.currentSlide.meta.template,
+  currentSlideTimeout: state => state.currentSlide.meta.timeout,
+  currentSlideRepeatable: state => state.currentSlide.meta.repeatable,
+  currentSlideStartDate: state => state.currentSlide.meta.startDate,
+  currentSlideEndDate: state => state.currentSlide.meta.endDate
 }
 
 // mutations of this module, mutation must be sync and atomic
@@ -97,7 +96,11 @@ const mutations = {
   },
   // takes a slide object as payload, sets current slide to it.
   [CURRENT_SLIDE.SET] (state, payload) {
-    state.currentSlide = payload
+    state.currentSlide = JSON.parse(JSON.stringify(payload))
+  },
+
+  [CURRENT_SLIDE.CLEAR] (state) {
+    state.currentSlide = JSON.parse(JSON.stringify(newSlide))
   },
 
   // takes boolean as payload, sets if slide has changes made compared to version in DB.
@@ -158,8 +161,13 @@ const mutations = {
   },
 
   // takes image as payload. set currentslide image to it.
-  [CURRENT_SLIDE.SET_IMAGE] (state, payload) {
-    state.currentSlide.images = payload
+  [CURRENT_SLIDE.ADD_IMAGE] (state, payload) {
+    state.currentSlide.images.push(payload)
+    state.isCurrentSlideDirty = true
+  },
+  // takes image as payload. set currentslide image to it.
+  [CURRENT_SLIDE.DELETE_IMAGE] (state, payload) {
+    state.currentSlide.images.splice(state.currentSlide.images.indexOf(payload), 1)
     state.isCurrentSlideDirty = true
   },
   // here is where DELETE_IMAGE or equivilent will go if used.
@@ -216,23 +224,23 @@ const mutations = {
     state.isCurrentSlideDirty = true
   },
 
-  [CURRENT_SLIDE.SET_META_TEMPLATE] (state, payload) {
+  [CURRENT_SLIDE.SET_TEMPLATE] (state, payload) {
     state.currentSlide.meta.template = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_TIMEOUT] (state, payload) {
+  [CURRENT_SLIDE.SET_TIMEOUT] (state, payload) {
     state.currentSlide.meta.timeout = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_REPEATABLE] (state, payload) {
+  [CURRENT_SLIDE.SET_REPEATABLE] (state, payload) {
     state.currentSlide.meta.repeatable = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_STARTDATE] (state, payload) {
+  [CURRENT_SLIDE.SET_STARTDATE] (state, payload) {
     state.currentSlide.meta.startDate = payload
     state.isCurrentSlideDirty = true
   },
-  [CURRENT_SLIDE.SET_META_ENDDATE] (state, payload) {
+  [CURRENT_SLIDE.SET_ENDDATE] (state, payload) {
     state.currentSlide.meta.endDate = payload
     state.isCurrentSlideDirty = true
   },

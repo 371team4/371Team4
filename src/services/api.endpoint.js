@@ -45,7 +45,6 @@ export function checkToken () {
 
 // this is a weak check, the server is much stronger
 function isExpired (token) {
-  debugger
   // xxxxxxx.yyyyyyy.zzzzzzzz
   // yyyyyyy is the token info
   const infoFrag = token.split('.')[1]
@@ -59,7 +58,7 @@ function isExpired (token) {
       signoutFunction = setTimeout(() => {
         store.dispatch('signOut')
         router.push({ name: 'Sign in' })
-      }, (info.exp - (Date.now() / 1000) * 1000))
+      }, (info.exp - (Date.now() / 1000)) * 1000)
       console.log((info.exp - (Date.now() / 1000)) * 1000)
     }
     return false
