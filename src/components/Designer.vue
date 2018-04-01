@@ -26,11 +26,12 @@
                         v-model="title"
                         :rules="titleRules"
                         :counter="30"
-                        required/>
+                        required
+                        validate-on-blur/>
                       <v-btn
                         icon
                         @click.native="showTitleSettings = !showTitleSettings">
-                        <v-icon>{{ showTitleSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        <v-icon>{{ showTitleSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
@@ -141,7 +142,14 @@
                   <v-card class="my-1">
                     <v-card-actions class="py-0">
                       <v-flex>
-                        <v-menu
+                        <v-subheader>Date(s) of Event</v-subheader>
+                        <v-date-picker
+                          v-model="slideDate"
+                          no-title
+                          event-color="green lighten-1"
+                          :min="minimumDate"
+                          :events="date"/>
+                          <!-- <v-menu
                           lazy
                           :close-on-content-click="true"
                           v-model="dateMenu"
@@ -155,16 +163,17 @@
                             label="Date of Event"
                             v-model="formattedDate"
                             prepend-icon="event"
-                            readonly/>
+                            readonly
+                            validate-on-blur/>
                           <v-date-picker
                             v-model="date"
                             no-title/>
-                        </v-menu>
+                        </v-menu>-->
                       </v-flex>
                       <v-btn
                         icon
                         @click.native="showDateSettings = !showDateSettings">
-                        <v-icon>{{ showDateSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        <v-icon>{{ showDateSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
@@ -291,16 +300,18 @@
                             label="Time of Event"
                             v-model="formattedTime"
                             prepend-icon="access_time"
-                            readonly/>
+                            readonly
+                            validate-on-blur/>
                           <v-time-picker
                             v-model="time"
-                            :allowed-minutes="(minute) => (minute % 5) === 0" />
+                            :allowed-minutes="(minute) => (minute % 5) === 0"
+                            @change="$refs.tMenu.save(time)"/>
                         </v-menu>
                       </v-flex>
                       <v-btn
                         icon
                         @click.native="showTimeSettings = !showTimeSettings">
-                        <v-icon>{{ showTimeSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        <v-icon>{{ showTimeSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
@@ -416,11 +427,12 @@
                         v-model="desc"
                         :rules="descriptionRules"
                         :counter="140"
-                        required/>
+                        required
+                        validate-on-blur/>
                       <v-btn
                         icon
                         @click.native="showDescSettings = !showDescSettings">
-                        <v-icon>{{ showDescSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        <v-icon>{{ showDescSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
@@ -534,7 +546,7 @@
                       <v-btn
                         icon
                         @click.native="showSlideSettings = !showSlideSettings">
-                        <v-icon>{{ showSlideSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                        <v-icon>{{ showSlideSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
@@ -565,6 +577,53 @@
                                 </v-chip>
                               </template>
                             </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Duration"
+                              :items="templates"
+                              v-model="template">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item.text }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <!-- <v-list subheader>-->
+                            <v-subheader>Days on Display</v-subheader>
+                            <v-date-picker
+                              v-model="dateOnDisplay"
+                              no-title
+                              event-color="green lighten-1"
+                              :min="minimumDate"
+                              :events="datesOnDisplay"/>
+                              <!--<v-list-tile
+                                v-for="(date, index) in datesOnDisplay"
+                                :key="index"
+                                @click="() => {}">
+                                <v-list-tile-content>
+                                  <v-list-tile-title> {{ formatDate(date) }}</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action @click="deleteDateOnDisplay(date)">
+                                  <v-icon color="red">delete</v-icon>
+                                </v-list-tile-action>
+                              </v-list-tile>
+                            </v-list>-->
                           </v-flex>
                         </v-layout>
                       </v-container>
@@ -610,7 +669,7 @@ import moment from 'moment'
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 import ImageCards from '@/components/slide/ImageCards'
 
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 export default {
   components: { ImageCards, DefaultSlideTemplate },
@@ -626,6 +685,7 @@ export default {
       carousel: -1,
       dateMenu: false,
       timeMenu: false,
+      datesOnDisplayMenu: false,
       descriptionRules: [
         v => !!v || 'Description is required',
         v =>
@@ -681,7 +741,10 @@ export default {
         { text: '50 seconds', value: 50 },
         { text: '60 seconds', value: 60 },
         { text: '70 seconds', value: 70 },
-        { text: '80 seconds', value: 80 }]
+        { text: '80 seconds', value: 80 }],
+      templates: [
+        { text: 'Default Template', value: 'DefaultSlideTemplate' }
+      ]
     }
   },
   computed: {
@@ -695,7 +758,7 @@ export default {
         return this.$store.getters.currentSlideTitleContent
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TITLE_CONTENT, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_CONTENT, value)
       }
     },
     titleColor: {
@@ -703,7 +766,7 @@ export default {
         return this.$store.getters.currentSlideTitleColor
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_COLOR, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_COLOR, value)
       }
     },
     titleStyle: {
@@ -711,7 +774,7 @@ export default {
         return this.$store.getters.currentSlideTitleStyle
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_STYLE, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_STYLE, value)
       }
     },
     titleSize: {
@@ -719,7 +782,7 @@ export default {
         return this.$store.getters.currentSlideTitleSize
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_SIZE, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_SIZE, value)
       }
     },
     titleWeight: {
@@ -727,7 +790,7 @@ export default {
         return this.$store.getters.currentSlideTitleWeight
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TITLE_FONT_WEIGHT, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_WEIGHT, value)
       }
     },
     desc: {
@@ -735,7 +798,7 @@ export default {
         return this.$store.getters.currentSlideDescriptionContent
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_CONTENT, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_CONTENT, value)
       }
     },
     descColor: {
@@ -743,7 +806,7 @@ export default {
         return this.$store.getters.currentSlideDescriptionColor
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_COLOR, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_COLOR, value)
       }
     },
     descStyle: {
@@ -751,7 +814,7 @@ export default {
         return this.$store.getters.currentSlideDescriptionStyle
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_STYLE, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_STYLE, value)
       }
     },
     descSize: {
@@ -759,7 +822,7 @@ export default {
         return this.$store.getters.currentSlideDescriptionSize
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_SIZE, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_SIZE, value)
       }
     },
     descWeight: {
@@ -767,15 +830,25 @@ export default {
         return this.$store.getters.currentSlideDescriptionWeight
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DESCRIPTION_FONT_WEIGHT, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_WEIGHT, value)
       }
     },
     date: {
       get () {
         return this.$store.getters.currentSlideDateContent
+      }
+    },
+    slideDate: {
+      get () {
+        return null
       },
-      set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DATE_CONTENT, value)
+      set (val) {
+        let index = this.date.indexOf(val)
+        if (index === -1) {
+          this.$store.commit(MUTATIONS.ADD_DATE, val)
+        } else {
+          this.$store.commit(MUTATIONS.DELETE_DATE, index)
+        }
       }
     },
     dateColor: {
@@ -783,7 +856,7 @@ export default {
         return this.$store.getters.currentSlideDateColor
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_COLOR, value)
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_COLOR, value)
       }
     },
     dateStyle: {
@@ -791,7 +864,7 @@ export default {
         return this.$store.getters.currentSlideDateStyle
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_STYLE, value)
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_STYLE, value)
       }
     },
     dateSize: {
@@ -799,7 +872,7 @@ export default {
         return this.$store.getters.currentSlideDateSize
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_SIZE, value)
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_SIZE, value)
       }
     },
     dateWeight: {
@@ -807,7 +880,7 @@ export default {
         return this.$store.getters.currentSlideDateWeight
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_DATE_FONT_WEIGHT, value)
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_WEIGHT, value)
       }
     },
     time: {
@@ -819,7 +892,7 @@ export default {
         let someDate = new Date(Date.now())
         someDate.setHours(timeFrags[0])
         someDate.setMinutes(timeFrags[1])
-        this.$store.commit(CURRENT_SLIDE.SET_TIME_CONTENT, someDate)
+        this.$store.commit(MUTATIONS.SET_TIME_CONTENT, someDate)
       }
     },
     timeColor: {
@@ -827,7 +900,7 @@ export default {
         return this.$store.getters.currentSlideTimeColor
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_COLOR, value)
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_COLOR, value)
       }
     },
     timeStyle: {
@@ -835,7 +908,7 @@ export default {
         return this.$store.getters.currentSlideTimeStyle
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_STYLE, value)
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_STYLE, value)
       }
     },
     timeSize: {
@@ -843,7 +916,7 @@ export default {
         return this.$store.getters.currentSlideTimeSize
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_SIZE, value)
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_SIZE, value)
       }
     },
     timeWeight: {
@@ -851,7 +924,7 @@ export default {
         return this.$store.getters.currentSlideTimeWeight
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TIME_FONT_WEIGHT, value)
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_WEIGHT, value)
       }
     },
     images: {
@@ -864,28 +937,63 @@ export default {
         return this.$store.getters.currentSlideTimeout
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TIMEOUT, value)
+        this.$store.commit(MUTATIONS.SET_TIMEOUT, value)
       }
     },
     template: {
       get () {
-        return this.$store.getters.currentSlideTemplate
+        if (this.$store.getters.currentSlideTemplate) {
+          return this.$store.getters.currentSlideTemplate
+        } else {
+          return this.templates[0]
+        }
       },
       set (value) {
-        this.$store.commit(CURRENT_SLIDE.SET_TEMPLATE, value)
+        this.$store.commit(MUTATIONS.SET_TEMPLATE, value)
       }
     },
-    formattedTime () {
-      if (this.time) {
-        return moment(this.time).format('hh:mm A')
+    datesOnDisplay: {
+      get () {
+        return this.$store.getters.currentSlideDatesOnDisplay
       }
-      return null
     },
-    formattedDate () {
-      if (this.date) {
-        return moment(this.date).format('dddd, MMMM D')
+    formattedTime: {
+      get () {
+        if (this.time) {
+          return moment(this.time).format('hh:mm A')
+        }
+        return null
+      },
+      set (val) {
+        /* nothing to do here */
       }
-      return null
+    },
+    formattedDate: {
+      get () {
+        if (this.date) {
+          return moment(this.date).format('dddd, MMMM D')
+        }
+        return null
+      },
+      set (val) {
+        /* nothing to do here */
+      }
+    },
+    dateOnDisplay: {
+      get () {
+        return null
+      },
+      set (val) {
+        let index = this.datesOnDisplay.indexOf(val)
+        if (index === -1) {
+          this.$store.commit(MUTATIONS.ADD_DATE_ON_DISPLAY, val)
+        } else {
+          this.$store.commit(MUTATIONS.DELETE_DATE_ON_DISPLAY, index)
+        }
+      }
+    },
+    minimumDate () {
+      return moment().format('YYYY-MM-DD')
     }
   },
   methods: {
@@ -901,7 +1009,7 @@ export default {
       this.images.map((image) => {
         this.$store.dispatch('deleteImage', image._id)
       })
-      this.$store.commit(CURRENT_SLIDE.CLEAR)
+      this.$store.commit(MUTATIONS.CLEAR)
       this.$refs.form.reset()
       this.forceUpdateCarousel()
     },
@@ -921,17 +1029,20 @@ export default {
       )
     },
     addImage (newImage) {
-      this.$store.commit(CURRENT_SLIDE.ADD_IMAGE, newImage)
+      this.$store.commit(MUTATIONS.ADD_IMAGE, newImage)
       this.forceUpdateCarousel()
     },
     deleteImage (image) {
       this.$store
         .dispatch('deleteImage', image._id)
-        .then(() => this.$store.commit(CURRENT_SLIDE.DELETE_IMAGE, image))
+        .then(() => this.$store.commit(MUTATIONS.DELETE_IMAGE, image))
     },
     changeViews () {
       this.showPreview = !this.showPreview
       this.forceUpdateCarousel()
+    },
+    formatDate (dateStr) {
+      return moment(dateStr).format('dddd, MMMM D')
     }
   }
 }
