@@ -527,6 +527,50 @@
                     </v-slide-y-transition>
                   </v-card>
                 </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <h3 class="headline grey--text">Slide Settings</h3>
+                      <v-btn
+                        icon
+                        @click.native="showSlideSettings = !showSlideSettings">
+                        <v-icon>{{ showSlideSettings ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        grid-list-xl
+                        v-show="showSlideSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              chips
+                              label="Duration"
+                              :items="durations"
+                              v-model="timeout">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item.text }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
               </v-layout>
             </v-flex>
             <v-flex
@@ -576,6 +620,7 @@ export default {
       showDateSettings: false,
       showTimeSettings: false,
       showDescSettings: false,
+      showSlideSettings: false,
       valid: true,
       showPreview: false,
       carousel: -1,
@@ -627,7 +672,16 @@ export default {
         'Normal',
         'Bold',
         'Bolder'
-      ]
+      ],
+      durations: [
+        { text: '10 seconds', value: 10 },
+        { text: '20 seconds', value: 20 },
+        { text: '30 seconds', value: 30 },
+        { text: '40 seconds', value: 40 },
+        { text: '50 seconds', value: 50 },
+        { text: '60 seconds', value: 60 },
+        { text: '70 seconds', value: 70 },
+        { text: '80 seconds', value: 80 }]
     }
   },
   computed: {
@@ -807,7 +861,7 @@ export default {
     },
     timeout: {
       get () {
-        return this.$store.currentSlide.meta.timeout
+        return this.$store.getters.currentSlideTimeout
       },
       set (value) {
         this.$store.commit(CURRENT_SLIDE.SET_TIMEOUT, value)
@@ -815,7 +869,7 @@ export default {
     },
     template: {
       get () {
-        return this.$store.currentSlide.meta.template
+        return this.$store.getters.currentSlideTemplate
       },
       set (value) {
         this.$store.commit(CURRENT_SLIDE.SET_TEMPLATE, value)
