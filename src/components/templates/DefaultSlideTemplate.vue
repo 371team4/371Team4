@@ -109,7 +109,7 @@ export default {
           fontWeight: ' '
         },
         time: {
-          content: '07:00 PM',
+          content: '07:00',
           fontColor: ' ',
           fontSize: ' ',
           fontStyle: ' ',
@@ -134,11 +134,7 @@ export default {
     },
     formattedTime () {
       if (this.slide && this.slide.time && this.slide.time.content !== null) {
-        let someDateObj = new Date()
-        let timeFrags = this.slide.time.content.split(':')
-        someDateObj.setHours(timeFrags[0])
-        someDateObj.setMinutes(timeFrags[1])
-        return moment(someDateObj).format('hh:mm A')
+        return moment(this.slide.time.content).format('hh:mm A')
       }
       return null
     },

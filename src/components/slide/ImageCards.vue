@@ -16,7 +16,7 @@
             flat
             tile>
             <v-card-media
-              :src="image.path"
+              :src="'http://cmpt371g4.usask.ca:8081' + image.path"
               height="150px"/>
             <!-- shift the fab to the top left corner -->
             <v-btn
@@ -28,7 +28,7 @@
               top
               right
               color="red lighten-1"
-              @click.stop="deleteImage(index)">
+              @click.stop="deleteImage(image)">
               <v-icon>close</v-icon>
             </v-btn>
           </v-card>
@@ -84,8 +84,8 @@ export default {
     }
   },
   methods: {
-    deleteImage (index) {
-      this.$emit('deleteImage', index)
+    deleteImage (image) {
+      this.$emit('deleteImage', image)
     },
     imageSelected (e) {
       this.$emit('imageSelected', e.target.files)
