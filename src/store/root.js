@@ -38,7 +38,7 @@ const mutations = {
     state.snackbarButton = payload
   },
   [SET_SNACKBAR_HANDLER] (state, payload) {
-    if (state.snackbarHandler) {
+    if (state.snackbarHandler && state.snackbarHandler instanceof Number) {
       clearTimeout(state.snackbarHandler)
     }
     state.snackbarHandler = payload

@@ -46,6 +46,7 @@
 <script>
 import NavDrawer from '@/components/landingPage/MainNavDrawer'
 import MainHeader from '@/components/landingPage/MainHeader'
+import { SET_SNACKBAR_STATUS } from '@/store/mutation-types'
 
 export default {
   components: { NavDrawer, MainHeader },
@@ -58,8 +59,13 @@ export default {
     snackbarTimeout () {
       return this.$store.getters.snackbarTimeout
     },
-    snackbarStatus () {
-      return this.$store.getters.snackbarStatus
+    snackbarStatus: {
+      get () {
+        return this.$store.getters.snackbarStatus
+      },
+      set (val) {
+        this.$store.commit(SET_SNACKBAR_STATUS, false)
+      }
     },
     snackbarMessage () {
       return this.$store.getters.snackbarMessage

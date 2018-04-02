@@ -88,32 +88,17 @@
         <!-- Done Day Cards -->
       </v-tab-item>
     </v-tabs-items>
-
-    <!-- Ensure only 5 weeks get added -->
-    <v-snackbar
-      multi-line
-      right
-      vertical
-      v-model="showSnackbar">
-      {{ snackbarMessage }}
-      <v-btn
-        flat
-        color="blue lighten-3"
-        @click.native="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
     <!-- Done Week Component -->
   </v-container>
 </template>
 
 <script>
 import MenuDayCard from '@/components/widgets/MenuDayCard'
-
+import * as MUTATIONS from '@/store/mutation-types'
 export default {
   components: { MenuDayCard },
   data () {
     return {
-      showSnackbar: false,
-      snackbarMessage: '',
       active: null
     }
   },
@@ -180,8 +165,13 @@ export default {
       // Ensure only 5 weeks are added
       if (this.weeks.length === 5) {
         // Show that too many weeks are currently displayed
-        this.showSnackbar = true
-        this.snackbarMessage = 'Cannot add more than 5 weeks!'
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, 'Cannot add more than 5 weeks!')
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_BUTTON, 'close')
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, function () {
+          this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, false)
+        }.bind(this))
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
       } else {
         // add an empty week to the list of weeks
         const weekTemplate = [
@@ -211,8 +201,13 @@ export default {
         this.active = (parseInt(weekNumber) - 1).toString()
       } else {
         // Set to show a message saying not to delete the first week
-        this.showSnackbar = true
-        this.snackbarMessage = 'Cannot delete the first week!'
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, 'Cannot delete the first week!')
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_BUTTON, 'close')
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, function () {
+          this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, false)
+        }.bind(this))
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
       }
     },
     saveChanges () {

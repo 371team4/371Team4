@@ -198,6 +198,7 @@ export default {
       }
     },
     gotoDesigner (id) {
+      this.slideToOpen = null
       this.$router.push(
         {
           name: 'Designer',
