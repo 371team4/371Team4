@@ -16,7 +16,8 @@ public class Designer extends PageObjBase {
   By ClearButton = By.cssSelector("[data-test-attr='clearButton']");
 
   By AddButton = By.cssSelector("data-test-attr='addButton'");
-  By UploadPath = By.cssSelector("data-test-attr='uploadPath'");
+  By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
+  By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
 
 
   public Designer(WebElement element) {
@@ -52,8 +53,12 @@ public class Designer extends PageObjBase {
   }
 
   public void uploadPicture(String path) {
-    CommonUtils.sleep(5);
     getWebDriver().findElement(UploadPath).sendKeys(path);
+    CommonUtils.sleep(5);
+  }
+
+  public void deletePicture() {
+    getWebDriver().findElement(DeleteImage).click();
     CommonUtils.sleep(5);
   }
 }

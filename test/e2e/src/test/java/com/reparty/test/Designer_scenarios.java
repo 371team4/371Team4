@@ -57,9 +57,7 @@ public class Designer_scenarios extends WebDriverBase {
 
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
 
-    //WebElement deleteCard = getWebDriver().findElement(By.cssSelector("[data-test-attr='deleteCard']"));
-    //deleteCard.click();
-    //CommonUtils.sleep(5);
+    test.deletePicture();
   }
 
   @Test
