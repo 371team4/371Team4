@@ -47,10 +47,11 @@
           :data-test-attr="`slideCard_${index}`"
           :slide="slide"
           @delete="handleDelete"
-          @edit="goToSlide"
+          @edit="openSlide"
           class="mx-1 px-1 my-1 py-1"/>
       </v-flex>
       <v-snackbar
+        :timeout="snackbarTimeout"
         multi-line
         right
         vertical
@@ -68,9 +69,32 @@
       right
       big
       color="blue"
-      fab>
+      fab
+      @click.stop="createNewSlide">
       <v-icon>add</v-icon>
     </v-btn>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290">
+      <v-card>
+        <v-card-title class="headline">Unsaved changes</v-card-title>
+        <v-card-text>
+          You have unsaved slide changes. Click Discard to delete them, or Edit to go back and save them
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn
+            color="green darken-1"
+            flat
+            @click.native="discardDirtySlide">Discard</v-btn>
+          <v-btn
+            color="green darken-1"
+            flat
+            @click.native="editDirtySlide">Edit</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -84,11 +108,14 @@ export default {
   components: { SlideCard },
   data () {
     return {
+      snackbarTimeout: 15000,
+      dialog: false,
       snackbarMessage: '',
       showSnackbar: false,
       timeoutFunction: null,
       searchString: '',
-      deletedSlide: ''
+      deletedSlide: '',
+      slideToOpen: null
     }
   },
   computed: {
@@ -118,7 +145,7 @@ export default {
         this.$store.dispatch('deleteSlide', slide._id)
         // clear up delete stuff
         this.handleUndoDelete()
-      }, 30000)
+      }, this.snackbarTimeout)
       this.deletedSlide = slide._id
     },
     // this is doing two things, clearing the delete props and undoing the deletion
@@ -159,16 +186,50 @@ export default {
     filterSlidesByDeleteId (slides, deletedId) {
       return slides.filter((slide) => deletedId !== slide._id)
     },
-    goToSlide (slide) {
-      this.$store.commit(MUTATIONS.SET_CURRENT_SLIDE, slide)
+    createNewSlide () {
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.dialog = true
+      } else {
+        this.gotoDesigner('new')
+      }
+    },
+    discardDirtySlide () {
+      debugger
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
+      if (this.slideToOpen) {
+        this.openSlide(this.slideToOpen)
+      } else {
+        this.gotoDesigner('new')
+      }
+    },
+    editDirtySlide () {
+      this.dialog = false
+      if (this.$store.getters.currentSlide._id) {
+        this.gotoDesigner(this.$store.getters.currentSlide._id)
+      } else {
+        this.gotoDesigner('new')
+      }
+    },
+    gotoDesigner (id) {
       this.$router.push(
         {
           name: 'Designer',
           params: {
-            slide: slide
+            id: id
           }
         }
       )
+    },
+    openSlide (slide) {
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.slideToOpen = slide
+        this.dialog = true
+      } else {
+        if (slide) {
+          this.$store.commit(MUTATIONS.SET_CURRENT_SLIDE, slide)
+        }
+        this.gotoDesigner(slide._id)
+      }
     }
   }
 }

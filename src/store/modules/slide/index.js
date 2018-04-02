@@ -12,17 +12,17 @@ const ADD_SLIDE = 'ADD_SLIDE'
 // state of this module
 const newSlide = {
   // the title of the slide, what it is called by humans, has text, font information and color.
-  title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  title: { content: '', fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
   // similar to title, but generally larger text content.
-  description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  description: { content: '', fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
   // image array of image files (or link to image files?) to be displayed in the slide
   images: [],
   // the date of the slides event, has similar font info as title/description, content is date object
-  date: { content: [], fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  date: { content: [], fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
   // the time of the event, same as date but time object instead of date object
-  time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+  time: { content: null, fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
 
-  meta: { template: null, timeout: '', datesOnDisplay: [] }
+  meta: { template: '', timeout: '', datesOnDisplay: [] }
 }
 
 const state = {
@@ -46,7 +46,6 @@ const getters = {
   isCurrentSlideDirty: state => state.isCurrentSlideDirty,
 
   // getters for the current slides title, and for each subfield
-  currentSlideTitle: state => state.currentSlide.title,
   currentSlideTitleContent: state => state.currentSlide.title.content,
   currentSlideTitleColor: state => state.currentSlide.title.fontColor,
   currentSlideTitleSize: state => state.currentSlide.title.fontSize,
@@ -54,7 +53,6 @@ const getters = {
   currentSlideTitleWeight: state => state.currentSlide.title.fontWeight,
 
   // getters for the current slides description, and for each subfield
-  currentSlideDescription: state => state.currentSlide.description,
   currentSlideDescriptionContent: state => state.currentSlide.description.content,
   currentSlideDescriptionColor: state => state.currentSlide.description.fontColor,
   currentSlideDescriptionSize: state => state.currentSlide.description.fontSize,
@@ -64,7 +62,6 @@ const getters = {
   currentSlideImages: state => state.currentSlide.images,
 
   // getters for the current slides date, and for each subfield
-  currentSlideDate: state => state.currentSlide.date,
   currentSlideDateContent: state => state.currentSlide.date.content,
   currentSlideDateColor: state => state.currentSlide.date.fontColor,
   currentSlideDateSize: state => state.currentSlide.date.fontSize,
@@ -72,7 +69,6 @@ const getters = {
   currentSlideDateWeight: state => state.currentSlide.date.fontWeight,
 
   // getters for the current slides time, and for each subfield
-  currentSlideTime: state => state.currentSlide.time,
   currentSlideTimeContent: state => state.currentSlide.time.content,
   currentSlideTimeColor: state => state.currentSlide.time.fontColor,
   currentSlideTimeSize: state => state.currentSlide.time.fontSize,
@@ -98,6 +94,7 @@ const mutations = {
 
   [MUTATIONS.CLEAR_CURRENT_SLIDE] (state) {
     state.currentSlide = JSON.parse(JSON.stringify(newSlide))
+    state.isCurrentSlideDirty = false
   },
 
   // takes boolean as payload, sets if slide has changes made compared to version in DB.
@@ -293,8 +290,10 @@ const actions = {
   // used for saving both new slides, and edits to existing slides.
   saveSlide ({ state, commit }) {
     commit(MUTATIONS.SET_LOADING, true)
-    server
-      .saveSlide(state.currentSlide)
+    const slide = JSON.parse(JSON.stringify(state.currentSlide))
+    slide.images = slide.images.map((slide) => slide._id)
+    return server
+      .saveSlide(slide)
       .then(response => {
         let index = -1
         for (let i = 0; i < state.slides.length; i++) {
@@ -309,6 +308,7 @@ const actions = {
         } else {
           commit(UPDATE_SLIDE, { index: index, updatedSlide: response.data })
         }
+        commit(MUTATIONS.SET_CURRENT_SLIDE_STATUS, false)
         commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {

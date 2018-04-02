@@ -340,37 +340,6 @@ describe('slide', () => {
         state = refreshState()
       })
 
-      it('SET_TIME', () => {
-        const titleStateBeforeMutation = {
-          content: null,
-          fontColor: null,
-          fontSize: null,
-          fontStyle: null,
-          fontWeight: null
-        }
-
-        const titleStateAfterMutation = {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        }
-        assert(state.currentSlide.time, titleStateBeforeMutation)
-        assert(state.isCurrentSlideDirty, false)
-
-        slide.mutations[MUTATIONS.SET_TIME](state, {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        })
-
-        assert(slide.getters.currentSlideTime(state), titleStateAfterMutation)
-        assert(slide.getters.isCurrentSlideDirty(state), true)
-      })
-
       it('SET_TIME_CONTENT', () => {
         assert(state.currentSlide.time.content, null)
         assert(state.isCurrentSlideDirty, false)
