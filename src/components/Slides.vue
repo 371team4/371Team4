@@ -181,7 +181,6 @@ export default {
       }
     },
     discardDirtySlide () {
-      debugger
       this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       if (this.slideToOpen) {
         this.openSlide(this.slideToOpen)

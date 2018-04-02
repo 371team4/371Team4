@@ -17,7 +17,7 @@
         fluid
         fill-height
         class="px-0 py-0">
-        <v-layout>
+        <v-layout id="contentWrapper">
           <transition
             name="fade"
             mode="in-out">
@@ -28,6 +28,7 @@
         </v-layout>
       </v-container>
       <v-snackbar
+        data-test-attr="errorWrapper"
         :timeout="snackbarTimeout"
         multi-line
         right
@@ -35,6 +36,7 @@
         v-model="snackbarStatus">
         {{ snackbarMessage }}
         <v-btn
+          data-test-attr="dismissError"
           flat
           color="blue lighten-3"
           @click.native="snackbarHandler">{{ snackbarButton }}</v-btn>
