@@ -50,18 +50,6 @@
           @edit="openSlide"
           class="mx-1 px-1 my-1 py-1"/>
       </v-flex>
-      <v-snackbar
-        :timeout="snackbarTimeout"
-        multi-line
-        right
-        vertical
-        v-model="showSnackbar">
-        {{ snackbarMessage }}
-        <v-btn
-          flat
-          color="blue lighten-3"
-          @click.native="handleUndoDelete">Undo</v-btn>
-      </v-snackbar>
     </v-layout>
     <v-btn
       fixed
@@ -108,11 +96,7 @@ export default {
   components: { SlideCard },
   data () {
     return {
-      snackbarTimeout: 15000,
       dialog: false,
-      snackbarMessage: '',
-      showSnackbar: false,
-      timeoutFunction: null,
       searchString: '',
       deletedSlide: '',
       slideToOpen: null
@@ -132,28 +116,31 @@ export default {
   methods: {
     handleDelete (slide) {
       // show the snackbar to inform the user about deleting slide
-      this.showSnackbar = true
-      this.snackbarMessage = `Deleted Slide ${slide.title.content}`
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, `Deleted Slide ${slide.title.content}`)
       // if there a slide that has a deletion timeout set on it delete it now
-      if (this.deletedSlide && this.timeoutFunction) {
+      if (this.deletedSlide && this.$store.getter.snackbarHandler) {
         // delete the previous slide right away
-        clearTimeout(this.timeoutFunction)
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
         this.$store.dispatch('deleteSlide', this.deletedSlide)
       }
       // set up to delete in 30 seconds
-      this.timeoutFunction = setTimeout(() => {
-        this.$store.dispatch('deleteSlide', slide._id)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
+      const _self = this
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, setTimeout(() => {
+        _self.$store.dispatch('deleteSlide', slide._id)
         // clear up delete stuff
-        this.handleUndoDelete()
-      }, this.snackbarTimeout)
+        _self.handleUndoDelete()
+      }, this.$store.getters.snackbarTimeout))
       this.deletedSlide = slide._id
     },
     // this is doing two things, clearing the delete props and undoing the deletion
     handleUndoDelete () {
-      this.showSnackbar = false
-      this.snackbarMessage = ''
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, false)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, '')
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 0)
       this.deletedSlide = ''
-      clearTimeout(this.timeoutFunction)
     },
     filterSlidesBySearchString (slides, searchString) {
       // check if something is typed into the search bar

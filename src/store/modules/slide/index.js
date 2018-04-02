@@ -12,17 +12,17 @@ const ADD_SLIDE = 'ADD_SLIDE'
 // state of this module
 const newSlide = {
   // the title of the slide, what it is called by humans, has text, font information and color.
-  title: { content: '', fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
+  title: { content: '', fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
   // similar to title, but generally larger text content.
-  description: { content: '', fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
+  description: { content: '', fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
   // image array of image files (or link to image files?) to be displayed in the slide
   images: [],
   // the date of the slides event, has similar font info as title/description, content is date object
-  date: { content: [], fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
+  date: { content: [], fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
   // the time of the event, same as date but time object instead of date object
-  time: { content: null, fontColor: '', fontSize: '', fontStyle: '', fontWeight: '' },
+  time: { content: null, fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
 
-  meta: { template: '', timeout: '', datesOnDisplay: [] }
+  meta: { template: 'DefaultSlideTemplate', timeout: 20, datesOnDisplay: [] }
 }
 
 const state = {
@@ -278,7 +278,6 @@ const actions = {
     server
       .getSlide(id)
       .then(response => {
-        commit(MUTATIONS.SET_CURRENT_SLIDE, response.data)
         commit(MUTATIONS.SET_LOADING, false)
       })
       .catch(function (error) {
@@ -288,7 +287,7 @@ const actions = {
   },
 
   // used for saving both new slides, and edits to existing slides.
-  saveSlide ({ state, commit }) {
+  saveSlide ({ state, dispatch, commit }) {
     commit(MUTATIONS.SET_LOADING, true)
     const slide = JSON.parse(JSON.stringify(state.currentSlide))
     slide.images = slide.images.map((slide) => slide._id)
@@ -298,14 +297,15 @@ const actions = {
         let index = -1
         for (let i = 0; i < state.slides.length; i++) {
           if (response.data._id === state.slides[i]._id) {
-            index = -1
+            index = i
             break
           }
         }
-        commit(MUTATIONS.SET_CURRENT_SLIDE, response.data)
         if (index === -1) {
-          commit(ADD_SLIDE, response.data)
+          dispatch('retrieveSlide', response.data._id).then(
+            () => commit(ADD_SLIDE, response.data))
         } else {
+          response.data.images = state.currentSlide.images
           commit(UPDATE_SLIDE, { index: index, updatedSlide: response.data })
         }
         commit(MUTATIONS.SET_CURRENT_SLIDE_STATUS, false)
@@ -328,7 +328,6 @@ const actions = {
             break
           }
         }
-        commit(MUTATIONS.SET_CURRENT_SLIDE, newSlide)
         commit(DELETE_SLIDE, index)
         commit(MUTATIONS.SET_LOADING, false)
       })
