@@ -18,11 +18,13 @@
           </v-toolbar>
           <v-card-text>
             <v-form
+              data-test-attr="loginForm"
               :v-model="valid"
               ref="form"
               lazy-validation
               autocomplete="off">
               <v-text-field
+                data-test-attr="usernameField"
                 prepend-icon="person"
                 name="login"
                 label="Username"
@@ -32,6 +34,7 @@
                 required
                 @keyup.enter="submit"/>
               <v-text-field
+                data-test-attr="passwordField"
                 prepend-icon="lock"
                 name="password"
                 label="Password"

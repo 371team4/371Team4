@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.pageobjs.Designer;
-import com.reparty.app.pageobjs.Login;
+import com.reparty.app.pageobjs.LoginPage;
 import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
@@ -29,7 +29,7 @@ public class Designer_scenarios extends WebDriverBase {
   @Before
   public void before() {
     getWebDriver().navigate().to("http://localhost:8080/signin");
-    Login logInButton = new Login(getWebDriver().findElement(By.cssSelector("main")));
+    LoginPage logInButton = new LoginPage(getWebDriver().findElement(By.cssSelector("main")));
     logInButton.login();;
     CommonUtils.sleep(5);
 
