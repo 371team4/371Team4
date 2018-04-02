@@ -1,4 +1,4 @@
-package com.reparty.app.pageObjs;
+package com.reparty.app.pageobjs;
 
 import com.reparty.app.core.PageObjBase;
 

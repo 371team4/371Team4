@@ -6,8 +6,8 @@ import static org.junit.Assert.fail;
 import java.util.concurrent.TimeUnit;
 
 import com.reparty.app.core.WebDriverBase;
-import com.reparty.app.pageObjs.Designer;
-import com.reparty.app.pageObjs.Login;
+import com.reparty.app.pageobjs.Designer;
+import com.reparty.app.pageobjs.Login;
 import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
