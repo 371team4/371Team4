@@ -657,7 +657,7 @@
                           height="150px"/>
                         <!-- shift the fab to the top left corner -->
                         <v-btn
-                          data-test-attr='deleteImage'
+                          data-test-attr="deleteImage"
                           class="px-0 py-0 mx-0 mt-4"
                           style="margin-right: -10px !important;"
                           fab

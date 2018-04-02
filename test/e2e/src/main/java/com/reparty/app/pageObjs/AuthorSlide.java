@@ -13,18 +13,15 @@ public class AuthorSlide extends PageObjBase {
 
   By TitleInput = By.cssSelector("[data-test-attr='title']");
   By DescriptionInput = By.cssSelector("[data-test-attr='description']");
+
+
+  
   By ChooseCalendar = By.cssSelector("[data-test-attr='clickCalendar']");
   By selectableDates = By.cssSelector("[data-test-attr='clickDate'] td button");
 
-  private ImageCards image;
 
   public AuthorSlide(WebElement element) {
     super(element);
-    image = new ImageCards(element);
-  }
-
-  public ImageCards imageCards() {
-    return image;
   }
 
   public void enterTitle(String title) {
