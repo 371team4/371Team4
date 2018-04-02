@@ -995,7 +995,12 @@ export default {
     },
     timeout: {
       get () {
-        return this.$store.getters.currentSlideTimeout
+        if (this.$store.getters.currentSlideTimeout) {
+          return this.$store.getters.currentSlideTimeout
+        } else {
+          this.$store.commit(MUTATIONS.SET_TIMEOUT, this.durations[0].value)
+          return this.$store.getters.currentSlideTimeout
+        }
       },
       set (value) {
         this.$store.commit(MUTATIONS.SET_TIMEOUT, value)
@@ -1006,7 +1011,8 @@ export default {
         if (this.$store.getters.currentSlideTemplate) {
           return this.$store.getters.currentSlideTemplate
         } else {
-          return this.templates[0]
+          this.$store.commit(MUTATIONS.SET_TEMPLATE, this.templates[0].value)
+          return this.$store.getters.currentSlideTemplate
         }
       },
       set (value) {
@@ -1061,8 +1067,10 @@ export default {
     submit () {
       if (this.$refs.form.validate()) {
         this.forceUpdateCarousel()
-        this.$store.dispatch('saveSlide')
-        this.changeViews()
+        this.$store.dispatch('saveSlide').then((response) => {
+          this.$router.replace(`/designer/${this.$store.getters.currentSlide._id}`)
+          this.changeViews()
+        })
       }
     },
     clear () {
@@ -1072,6 +1080,7 @@ export default {
       })
       this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       this.$refs.form.reset()
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       this.forceUpdateCarousel()
     },
     forceUpdateCarousel () {
