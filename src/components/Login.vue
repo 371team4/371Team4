@@ -47,6 +47,7 @@
           <v-card-actions>
             <v-spacer/>
             <v-btn
+              data-test-attr="loginButton"
               color="primary"
               @click="submit"
               :disabled="isLoading"

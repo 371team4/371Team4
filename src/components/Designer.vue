@@ -423,6 +423,7 @@
                     <v-card-actions class="py-0">
                       <v-text-field
                         textarea
+                        data-test-attr="description"
                         label="Description"
                         v-model="desc"
                         :rules="descriptionRules"
@@ -679,6 +680,7 @@
                         tile
                         :class="`${$vuetify.breakpoint.xs ? 'ml-5' : ''}`">
                         <v-btn
+                          data-test-attr='addButton'
                           fab
                           big
                           color="blue"
@@ -688,6 +690,7 @@
                           <v-icon>add</v-icon>
                         </v-btn>
                         <input
+                          data-test-attr='uploadPath'
                           ref="uploadButton"
                           accept="image/*"
                           type="file"

@@ -1,13 +1,22 @@
 package com.reparty.test;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import java.util.concurrent.TimeUnit;
+
 import com.reparty.app.core.WebDriverBase;
+import com.reparty.app.pageObjs.Designer;
+import com.reparty.app.pageObjs.Login;
 import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
 
 
 /**
@@ -15,9 +24,17 @@ import org.openqa.selenium.WebElement;
  */
 public class Designer_scenarios extends WebDriverBase {
 
+  private Designer test;
+
   @Before
   public void before() {
-		getWebDriver().navigate().to("http://localhost:8080/designer");
+    getWebDriver().navigate().to("http://localhost:8080/signin");
+    Login logInButton = new Login(getWebDriver().findElement(By.cssSelector("main")));
+    logInButton.login();;
+    CommonUtils.sleep(5);
+
+    getWebDriver().navigate().to("http://localhost:8080/designer/new");
+    test = new Designer(getWebDriver().findElement(By.cssSelector("main")));
   }
 
   @Test
@@ -27,55 +44,51 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
 	public void componentTestTitle() {
-    //WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
-    WebElement elementTitle = getWebDriver().findElement(By.cssSelector("[data-test-attr='title']"));
-    elementTitle.sendKeys("Cheese!");
+    test.enterTitle("Hanoi");
   }
 
   @Test
 	public void componentTestDescription() {
-    //WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
-    WebElement elementDescription = getWebDriver().findElement(By.cssSelector("[data-test-attr='description']"));
-    elementDescription.sendKeys("Cheese!");
+    test.enterDescription("Hanoi");
   }
 
   @Test
 	public void componentTestUploadFile() {
-    WebElement uploadButton = getWebDriver().findElement(By.cssSelector("[data-test-attr='uploadButton']"));
-    uploadButton.sendKeys("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
-    CommonUtils.sleep(5);
 
-    WebElement deleteCard = getWebDriver().findElement(By.cssSelector("[data-test-attr='deleteCard']"));
-    deleteCard.click();
-    CommonUtils.sleep(5);
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
+
+    //WebElement deleteCard = getWebDriver().findElement(By.cssSelector("[data-test-attr='deleteCard']"));
+    //deleteCard.click();
+    //CommonUtils.sleep(5);
   }
 
   @Test
   public void componentTestSubmitButton() {
-    CommonUtils.sleep(10);
-    WebElement submitButton = getWebDriver().findElement(By.cssSelector("[data-test-attr='submitButton']"));
-    submitButton.click();
-    CommonUtils.sleep(5);
+    test.submit();
   }
 
   @Test
   public void componentTestPreviewButton() {
-    CommonUtils.sleep(10);
-    WebElement previewButton = getWebDriver().findElement(By.cssSelector("[data-test-attr='previewButton']"));
-    previewButton.click();
-    CommonUtils.sleep(5);
+    test.PreviewEdit();
   }
 
   @Test
   public void componentTestClearButton() {
-    CommonUtils.sleep(10);
+    this.componentTestTitle();
+    this.componentTestDescription();
 
-    WebElement authorSlide = getWebDriver().findElement(By.cssSelector("[data-test-attr='authorSlide']"));
-    WebElement elementTitle = authorSlide.findElement(By.cssSelector("[data-test-attr='title']"));
-    WebElement clearButton = getWebDriver().findElement(By.cssSelector("[data-test-attr='clearButton']"));
-    elementTitle.sendKeys("Cheese!");
+    test.clear();
+  }
 
-    clearButton.click();
+  @Test
+  public void componentCalendar() {
+
+    CommonUtils.sleep(5);
+
+    AuthorSlide test = new AuthorSlide(getWebDriver().findElement(By.cssSelector("main")));
+    //test.clickCalendar();
+    test.setDate("2018-3-4");
     CommonUtils.sleep(5);
   }
 }
+

@@ -1,41 +1,59 @@
 package com.reparty.app.pageObjs;
 
 import com.reparty.app.core.PageObjBase;
+import com.reparty.app.utils.CommonUtils;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 public class Designer extends PageObjBase {
 
-  @FindBy(css= "[data-test-attr='submitButton']")
-  private WebElement SubmitButton;
+  By TitleInput = By.cssSelector("[data-test-attr='title']");
+  By DescriptionInput = By.cssSelector("[data-test-attr='description']");
 
-  @FindBy(css= "[data-test-attr='previewButton']")
-  private WebElement PreviewButton;
+  By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
+  By PreviewButton = By.cssSelector("[data-test-attr='previewButton']");
+  By ClearButton = By.cssSelector("[data-test-attr='clearButton']");
 
-  @FindBy(css= "[data-test-attr='clearButton']")
-  private WebElement ClearButton;
+  By AddButton = By.cssSelector("data-test-attr='addButton'");
+  By UploadPath = By.cssSelector("data-test-attr='uploadPath'");
 
-
-  private AuthorSlide author;
 
   public Designer(WebElement element) {
     super(element);
-    author = new AuthorSlide(element);
   }
 
-  public AuthorSlide authorSlide() {
-    return author;
+  public void enterTitle(String title) {
+    getWebDriver().findElement(TitleInput).clear();
+    getWebDriver().findElement(TitleInput).sendKeys(title);
+  }
+
+  public void enterDescription(String title) {
+    getWebDriver().findElement(DescriptionInput).clear();
+    getWebDriver().findElement(DescriptionInput).sendKeys(title);
   }
 
   public void submit() {
-    SubmitButton.click();
+    CommonUtils.sleep(5);
+    getWebDriver().findElement(SubmitButton).click();
+    CommonUtils.sleep(5);
   }
 
   public void PreviewEdit() {
-    PreviewButton.click();
+    CommonUtils.sleep(5);
+    getWebDriver().findElement(PreviewButton).click();
+    CommonUtils.sleep(5);
   }
 
   public void clear() {
-    ClearButton.click();
+    CommonUtils.sleep(5);
+    getWebDriver().findElement(ClearButton).click();
+    CommonUtils.sleep(5);
+  }
+
+  public void uploadPicture(String path) {
+    CommonUtils.sleep(5);
+    getWebDriver().findElement(UploadPath).sendKeys(path);
+    CommonUtils.sleep(5);
   }
 }
