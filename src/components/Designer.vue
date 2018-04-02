@@ -144,6 +144,7 @@
                       <v-flex>
                         <v-subheader>Date(s) of Event</v-subheader>
                         <v-date-picker
+                          data-test-attr="clickDate"
                           v-model="slideDate"
                           no-title
                           event-color="green lighten-1"
@@ -304,6 +305,7 @@
                             validate-on-blur/>
                           <v-time-picker
                             v-model="time"
+                            data-test-attr="clickTime"
                             :allowed-minutes="(minute) => (minute % 5) === 0"
                             @change="$refs.tMenu.save(time)"/>
                         </v-menu>

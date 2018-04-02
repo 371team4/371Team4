@@ -1,10 +1,5 @@
 package com.reparty.test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.util.concurrent.TimeUnit;
-
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.pageobjs.Designer;
 import com.reparty.app.pageobjs.Login;
@@ -14,9 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver;
 
 
 /**
@@ -30,7 +22,7 @@ public class Designer_scenarios extends WebDriverBase {
   public void before() {
     getWebDriver().navigate().to("http://localhost:8080/signin");
     Login logInButton = new Login(getWebDriver().findElement(By.cssSelector("main")));
-    logInButton.login();;
+    logInButton.login();
     CommonUtils.sleep(5);
 
     getWebDriver().navigate().to("http://localhost:8080/designer/new");
@@ -54,7 +46,6 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
 	public void componentTestUploadFile() {
-
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
 
     test.deletePicture();
@@ -67,6 +58,11 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
   public void componentTestPreviewButton() {
+    this.componentTestTitle();
+    this.componentTestDescription();
+    this.componentCalendar();
+    this.componentClock();
+
     test.PreviewEdit();
   }
 
@@ -74,19 +70,21 @@ public class Designer_scenarios extends WebDriverBase {
   public void componentTestClearButton() {
     this.componentTestTitle();
     this.componentTestDescription();
+    this.componentCalendar();
+    this.componentTestUploadFile();
 
     test.clear();
+    CommonUtils.sleep(10);
   }
 
   @Test
   public void componentCalendar() {
+    test.setDate("2018-4-4");
+  }
 
-    CommonUtils.sleep(5);
-
-    AuthorSlide test = new AuthorSlide(getWebDriver().findElement(By.cssSelector("main")));
-    //test.clickCalendar();
-    test.setDate("2018-3-4");
-    CommonUtils.sleep(5);
+  @Test
+  public void componentClock() {
+    test.setTime("3:30 AM");
   }
 }
 
