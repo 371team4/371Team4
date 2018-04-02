@@ -20,7 +20,7 @@ const newSlide = {
   // the date of the slides event, has similar font info as title/description, content is date object
   date: { content: [], fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
   // the time of the event, same as date but time object instead of date object
-  time: { content: null, fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
+  time: { content: Date.now(), fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
 
   meta: { template: 'DefaultSlideTemplate', timeout: 20, datesOnDisplay: [] }
 }

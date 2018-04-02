@@ -56,7 +56,7 @@
                                 <v-chip
                                   @input="data.parent.selectItem(data.item)"
                                   :selected="data.selected"
-                                  :color="data.item.toLowerCase()"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
                                   class="chip--select-multi"
                                   :key="JSON.stringify(data.item)">
                                   {{ data.item }}
@@ -198,7 +198,7 @@
                                 <v-chip
                                   @input="data.parent.selectItem(data.item)"
                                   :selected="data.selected"
-                                  :color="data.item.toLowerCase()"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
                                   class="chip--select-multi"
                                   :key="JSON.stringify(data.item)">
                                   {{ data.item }}
@@ -336,7 +336,7 @@
                                 <v-chip
                                   @input="data.parent.selectItem(data.item)"
                                   :selected="data.selected"
-                                  :color="data.item.toLowerCase()"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
                                   class="chip--select-multi"
                                   :key="JSON.stringify(data.item)">
                                   {{ data.item }}
@@ -457,7 +457,7 @@
                                 <v-chip
                                   @input="data.parent.selectItem(data.item)"
                                   :selected="data.selected"
-                                  :color="data.item.toLowerCase()"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
                                   class="chip--select-multi"
                                   :key="JSON.stringify(data.item)">
                                   {{ data.item }}
@@ -947,7 +947,7 @@ export default {
     },
     time: {
       get () {
-        return this.$store.getters.currentSlideTimeContent
+        return new Date(this.$store.getters.currentSlideTimeContent)
       },
       set (value) {
         let timeFrags = value.split(':')
