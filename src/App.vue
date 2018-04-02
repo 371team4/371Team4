@@ -47,18 +47,16 @@ export default {
     tabs () {
       return this.$router.options.routes
         .filter(route => {
-          if (route.name && route.icon && route.meta && route.meta.requiresAuth) {
-            if (!this.$store.getters.isAuthenticated) {
+          if (route.name && route.icon && route.showInTabs) {
+            if (route.meta && route.meta.requiresAuth && !this.$store.getters.isAuthenticated) {
               // don't show this route
               return false
             }
             // fall through
-          }
-          // we don't want to show the Sign in router or the catch all
-          if (route.name === 'Sign in' || route.path === '/') {
+            return true
+          } else {
             return false
           }
-          return true
         })
     },
     isLoading () {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from '../store'
 import { SET_LOADING, SET_USER } from '../store/mutation-types'
-import { checkToken } from '@/services/api.endpoint'
+import { isTokenValid } from '@/services/api.endpoint'
 
 const ShowView = () => import(/* webpackChunkName: "ShowView.vue" */'@/components/ShowView')
 const Slides = () => import(/* webpackChunkName: "Slides.vue" */'@/components/Slides')
@@ -18,27 +18,24 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      showInTabs: false,
       redirect: {
-        name: 'Sign in'
-      },
-      meta: {
-        requiresAuth: false
+        name: 'Slides'
       }
     },
     {
       path: '/signin',
       name: 'Sign in',
+      showInTabs: false,
       icon: 'account_circle',
       scrollToTop: true,
-      component: Login,
-      meta: {
-        requiresAuth: false
-      }
+      component: Login
     },
     {
       path: '/view',
       name: 'Show View',
       icon: 'live_tv',
+      showInTabs: true,
       component: ShowView,
       scrollToTop: true,
       meta: {
@@ -48,6 +45,7 @@ const router = new Router({
     {
       path: '/Slides',
       name: 'Slides',
+      showInTabs: true,
       icon: 'perm_media',
       scrollToTop: true,
       component: Slides,
@@ -57,8 +55,21 @@ const router = new Router({
     },
     {
       path: '/designer',
+      showInTabs: false,
+      redirect: {
+        name: 'Designer',
+        params: {
+          id: 'new'
+        }
+      },
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/designer/:id',
       name: 'Designer',
-      props: true,
+      showInTabs: true,
       icon: 'format_shapes',
       scrollToTop: true,
       component: Designer,
@@ -69,6 +80,7 @@ const router = new Router({
     {
       path: '/calendar',
       name: 'Calendar',
+      showInTabs: true,
       icon: 'event',
       scrollToTop: true,
       component: Calendar,
@@ -79,6 +91,7 @@ const router = new Router({
     {
       path: '/foodmenu',
       name: 'Food Menu Widget',
+      showInTabs: true,
       icon: 'local_dining',
       component: FoodMenuWidget,
       scrollToTop: true,
@@ -91,7 +104,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   store.commit(SET_LOADING, { loading: true })
-  if (!checkToken()) {
+  if (!isTokenValid()) {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       next({ path: '/signin', query: { redirect: to.fullPath } })
     }

@@ -32,7 +32,7 @@ export function removeToken () {
   localStorage.removeItem('user')
 }
 
-export function checkToken () {
+export function isTokenValid () {
   let isValid = false
   const tokenInLS = localStorage.getItem('token')
   // check that the token in localStorage and headers are the same

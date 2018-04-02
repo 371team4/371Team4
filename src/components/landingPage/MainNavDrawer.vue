@@ -16,7 +16,7 @@
       <v-list-tile
         v-for="tab in tabs"
         :key="tab.name"
-        :to="{ name:tab.name }">
+        :to="(tab.name === 'Designer') ? '/designer/new' : { name: tab.name }">
         <v-list-tile-action>
           <v-icon>{{ tab.icon }}</v-icon>
         </v-list-tile-action>
