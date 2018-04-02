@@ -770,7 +770,8 @@ export default {
         'Lime',
         'Orange',
         'Brown',
-        'Grey'
+        'Grey',
+        'Black'
       ],
       fontSizes: [
         'XX-Small',
@@ -995,12 +996,7 @@ export default {
     },
     timeout: {
       get () {
-        if (this.$store.getters.currentSlideTimeout) {
-          return this.$store.getters.currentSlideTimeout
-        } else {
-          this.$store.commit(MUTATIONS.SET_TIMEOUT, this.durations[0].value)
-          return this.$store.getters.currentSlideTimeout
-        }
+        return this.$store.getters.currentSlideTimeout
       },
       set (value) {
         this.$store.commit(MUTATIONS.SET_TIMEOUT, value)
@@ -1008,12 +1004,7 @@ export default {
     },
     template: {
       get () {
-        if (this.$store.getters.currentSlideTemplate) {
-          return this.$store.getters.currentSlideTemplate
-        } else {
-          this.$store.commit(MUTATIONS.SET_TEMPLATE, this.templates[0].value)
-          return this.$store.getters.currentSlideTemplate
-        }
+        return this.$store.getters.currentSlideTemplate
       },
       set (value) {
         this.$store.commit(MUTATIONS.SET_TEMPLATE, value)

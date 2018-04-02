@@ -1,11 +1,21 @@
 // mutation types
 export const SET_LOADING = 'SET_LOADING'
+
 export const SET_USER = 'SET_USER'
+
 export const SET_SLIDE = 'SET_SLIDE'
 export const NEW_SLIDE = 'NEW_SLIDE'
 export const SAVE_SLIDE = 'SET_SLIDE'
+
 export const SET_ALL_USERS = 'SET_ALL_USERS'
+
 export const SET_ALL_SLIDES = 'SET_ALL_SLIDES'
+
+export const SET_SNACKBAR_TIMEOUT = 'SET_SNACKBAR_TIMEOUT'
+export const SET_SNACKBAR_MESSAGE = 'SET_SNACKBAR_MESSAGE'
+export const SET_SNACKBAR_STATUS = 'SET_SNACKBAR_STATUS'
+export const SET_SNACKBAR_HANDLER = 'SET_SNACKBAR_HANDLER'
+export const SET_SNACKBAR_BUTTON = 'SET_SNACKBAR_BUTTON'
 
 // mutation types
 export const SET_IMAGE_ID = 'SET_IMAGE_ID'

@@ -18,13 +18,27 @@
         fill-height
         class="px-0 py-0">
         <v-layout>
-          <transition>
+          <transition
+            name="fade"
+            mode="in-out">
             <keep-alive>
               <router-view/>
             </keep-alive>
           </transition>
         </v-layout>
       </v-container>
+      <v-snackbar
+        :timeout="snackbarTimeout"
+        multi-line
+        right
+        vertical
+        v-model="snackbarStatus">
+        {{ snackbarMessage }}
+        <v-btn
+          flat
+          color="blue lighten-3"
+          @click.native="snackbarHandler">{{ snackbarButton }}</v-btn>
+      </v-snackbar>
     </v-content>
   </v-app>
 </template>
@@ -41,6 +55,21 @@ export default {
     }
   },
   computed: {
+    snackbarTimeout () {
+      return this.$store.getters.snackbarTimeout
+    },
+    snackbarStatus () {
+      return this.$store.getters.snackbarStatus
+    },
+    snackbarMessage () {
+      return this.$store.getters.snackbarMessage
+    },
+    snackbarButton () {
+      return this.$store.getters.snackbarButton
+    },
+    snackbarHandler () {
+      return this.$store.getters.snackbarHandler
+    },
     title () {
       return this.$route.name
     },
