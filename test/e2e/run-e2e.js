@@ -5,7 +5,7 @@ const headless = process.argv[2] === '--headless'
 const defines = {
   'maven.test.failure.ignore': true,
   generateReports: false,
-  test: 'com.reparty.test.**'
+  test: 'com.reparty.test.**' // need this to target all test cases
 }
 
 // add chrome.headless if we were asked to run headless
