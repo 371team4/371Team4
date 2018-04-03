@@ -55,6 +55,14 @@ public class Designer extends PageObjBase {
   private static final By TimeStyle = By.cssSelector("[data-test-attr='timeStyle']");
 
   /**
+   * The  data test for the SLIDE SETTINGS FACTION
+   */
+  By SlideSettingButton = By.cssSelector("[data-test-attr='slideSettings']");
+  By SlideSettingDuration = By.cssSelector("[data-test-attr='duration']");
+  By SlideSettingDurationDefault = By.cssSelector("[data-test-attr='durationDefault']");
+  By SlideSettingDate = By.cssSelector("[data-test-attr='slideSettingsDate']");
+
+  /**
    * The data test for the 3 BUTTONS faction
   */
   private static final By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
@@ -71,6 +79,13 @@ public class Designer extends PageObjBase {
   public static Designer find(WebDriver wd) {
     return new Designer(SeleniumUtils.waitUntilElementVisible(wd, PAGE_LOCATOR));
   }
+
+  /**
+   * The data test for the error Messages
+   */
+  By ERROR_MESSAGE_WRAPPER = By.xpath("./../../*[contains(@class, 'input-group__details')]");
+  By ERROR_MESSAGE = By.cssSelector(".input-group__error");
+
 
   public Designer(WebElement element) {
     super(element);
@@ -90,6 +105,18 @@ public class Designer extends PageObjBase {
   public void enterTitle(String title) {
     getWebDriver().findElement(TitleInput).clear();
     getWebDriver().findElement(TitleInput).sendKeys(title);
+  }
+
+  public boolean isTitleValid() {
+    List<WebElement> errors = this.getTitleTErrorMessagesWE().findElements(By.xpath("./"));
+    return errors.size() == 0;
+  }
+
+  public String getTitleErrorMessage() {
+    if (!isTitleValid()) {
+      return this.getTitleTErrorMessagesWE().findElement(ERROR_MESSAGE).getText().trim();
+    }
+    return "";
   }
 
   public void ClickTitleButton() {
@@ -244,5 +271,34 @@ public class Designer extends PageObjBase {
   public void ChooseTimeStyle(String fontStyle) {
     getWebDriver().findElement(TimeStyle).click();
     this.SelectStyle(fontStyle);
+  }
+
+  public void  ClickSlidesSettingButton() {
+    getWebDriver().findElement(SlideSettingButton).click();
+  }
+
+  public void ChooseSlideDuration(String duration) {
+    getWebDriver().findElement(SlideSettingDuration).click();
+    this.SelectStyle(duration);
+  }
+
+  public void ChooseSlideDefault(String defaults) {
+    getWebDriver().findElement(SlideSettingDurationDefault).click();
+    this.SelectStyle(defaults);
+  }
+
+  // TODO
+  public void ChooseSlideDate() {
+
+  }
+
+  private WebElement getTitleTErrorMessagesWE() {
+    WebElement title = getWebDriver().findElement(TitleInput);
+    return title.findElement(ERROR_MESSAGE_WRAPPER);
+  }
+
+  private WebElement getDescriptionErrorMessagesWE() {
+    WebElement description = getWebDriver().findElement(DescriptionInput);
+    return description.findElement(ERROR_MESSAGE_WRAPPER);
   }
 }
