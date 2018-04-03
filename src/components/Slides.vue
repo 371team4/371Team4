@@ -118,6 +118,7 @@ export default {
       // show the snackbar to inform the user about deleting slide
       this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
       this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, `Deleted Slide ${slide.title.content}`)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_BUTTON, 'Undo')
       // if there a slide that has a deletion timeout set on it delete it now
       if (this.deletedSlide && this.$store.getter.snackbarHandler) {
         // delete the previous slide right away
