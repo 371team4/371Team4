@@ -35,6 +35,8 @@ public class WebDriverBase {
   public static DriverService driverService;
   public static WebDriver webDriver;
 
+  protected String serverPath = CommonUtils.getServerURL();
+
   private static Description description = null;
 
   public WebDriverBase() { }
@@ -46,6 +48,7 @@ public class WebDriverBase {
       driverService = new DriverService();
       // this will get executed before the each test case
       webDriver = driverService.getChromeDriver();
+      webDriver.navigate().to(serverPath);
     };
 
     // teardown webdriver after running a class of tests

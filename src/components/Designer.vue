@@ -1,5 +1,6 @@
 <template>
   <v-container
+    id="designerPage"
     fluid
     class="my-0"
     align-content-start>

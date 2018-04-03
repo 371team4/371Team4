@@ -20,12 +20,11 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Before
   public void before() {
-    getWebDriver().navigate().to("http://localhost:8080/signin");
     LoginPage logInButton = new LoginPage(getWebDriver().findElement(By.cssSelector("main")));
-    logInButton.login();;
+    logInButton.login();
     CommonUtils.sleep(3);
 
-    getWebDriver().navigate().to("http://localhost:8080/designer/new");
+    getWebDriver().navigate().to(serverPath.concat("/designer/new"));
     test = new Designer(getWebDriver().findElement(By.cssSelector("main")));
   }
 
