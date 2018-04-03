@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reparty.app.core.PageObjBase;
 import com.reparty.app.utils.CommonUtils;
+import com.reparty.app.utils.SeleniumUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,8 +12,16 @@ import org.openqa.selenium.WebElement;
 public class Designer extends PageObjBase {
 
   By TitleInput = By.cssSelector("[data-test-attr='title']");
+  By TitleButton = By.cssSelector("[data-test-attr='titleButton']");
+  By TitleColor = By.cssSelector("[data-test-attr='titleColor']");
+  By TitleSize = By.cssSelector("[data-test-attr='titleSize']");
+  By TitleWeight = By.cssSelector("[data-test-attr='titleWeight']");
+  By TitleStyle = By.cssSelector("[data-test-attr='titleStyle']");
+
   By DescriptionInput = By.cssSelector("[data-test-attr='description']");
+
   By selectableDates = By.cssSelector("[data-test-attr='clickDate'] td button");
+
   By selectableTimes = By.cssSelector("[data-test-attr='clickTime'] td button");
 
   By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
@@ -28,10 +37,38 @@ public class Designer extends PageObjBase {
     super(element);
   }
 
+  public void SelectStyle(String style) {
+    WebElement menu = SeleniumUtils.waitUntilElementVisible(getWebDriver(), By.cssSelector(".menuable__content__active"));
+    List<WebElement> items = menu.findElements(By.cssSelector(".list__tile__title"));
+    for (WebElement item : items) {
+      if (item.getText().trim().equals(style)){
+        item.click();
+        break;
+      }
+    }
+  }
+
   public void enterTitle(String title) {
     getWebDriver().findElement(TitleInput).clear();
     getWebDriver().findElement(TitleInput).sendKeys(title);
   }
+
+  public void titleStyle(String coloString, String fontSize, String fontWeight, String fontStyle) {
+    getWebDriver().findElement(TitleButton).click();
+
+    getWebDriver().findElement(TitleColor).click();
+    this.SelectStyle(coloString);
+
+    getWebDriver().findElement(TitleSize).click();
+    this.SelectStyle(fontSize);
+
+    getWebDriver().findElement(TitleWeight).click();
+    this.SelectStyle(fontWeight);
+
+    getWebDriver().findElement(TitleStyle).click();
+    this.SelectStyle(fontStyle);
+  }
+
 
   public void enterDescription(String title) {
     getWebDriver().findElement(DescriptionInput).clear();

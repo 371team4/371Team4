@@ -40,6 +40,12 @@ public class Designer_scenarios extends WebDriverBase {
   }
 
   @Test
+  public void componentTitleStyle() {
+    test.enterTitle("Hanoi");
+    test.titleStyle("Blue", "Small", "Bold", "Italic");
+  }
+
+  @Test
 	public void componentTestDescription() {
     test.enterDescription("Hanoi");
   }
@@ -58,20 +64,16 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
   public void componentTestPreviewButton() {
-    this.componentTestTitle();
-    this.componentTestDescription();
-    this.componentCalendar();
-    this.componentClock();
+    test.enterTitle("Hanoi");
+    test.enterDescription("Hanoi");
 
     test.PreviewEdit();
   }
 
   @Test
   public void componentTestClearButton() {
-    this.componentTestTitle();
-    this.componentTestDescription();
-    this.componentCalendar();
-    this.componentTestUploadFile();
+    test.enterTitle("Hanoi");
+    test.enterDescription("Hanoi");
 
     test.clear();
     CommonUtils.sleep(10);

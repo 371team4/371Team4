@@ -30,6 +30,7 @@
                         validate-on-blur/>
                       <v-btn
                         icon
+                        data-test-attr="titleButton"
                         @click.native="showTitleSettings = !showTitleSettings">
                         <v-icon>{{ showTitleSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
@@ -46,6 +47,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="titleColor"
                               chips
                               label="Color"
                               :items="fontColors"
@@ -69,6 +71,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="titleSize"
                               chips
                               label="Font Size"
                               :items="fontSizes"
@@ -92,6 +95,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="titleWeight"
                               chips
                               label="Font Weight"
                               :items="fontWeights"
@@ -115,6 +119,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="titleStyle"
                               chips
                               label="Font Style"
                               :items="fontStyles"
