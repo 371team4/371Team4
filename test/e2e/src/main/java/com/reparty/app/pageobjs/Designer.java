@@ -7,64 +7,70 @@ import com.reparty.app.utils.CommonUtils;
 import com.reparty.app.utils.SeleniumUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class Designer extends PageObjBase {
 
+  private static final By PAGE_LOCATOR = By.id("designerPage");
+
   /**
    * The data test for the TITLE faction
    */
-  By TitleInput = By.cssSelector("[data-test-attr='title']");
-  By TitleButton = By.cssSelector("[data-test-attr='titleButton']");
-  By TitleColor = By.cssSelector("[data-test-attr='titleColor']");
-  By TitleSize = By.cssSelector("[data-test-attr='titleSize']");
-  By TitleWeight = By.cssSelector("[data-test-attr='titleWeight']");
-  By TitleStyle = By.cssSelector("[data-test-attr='titleStyle']");
+  private static final By TitleInput = By.cssSelector("[data-test-attr='title']");
+  private static final By TitleButton = By.cssSelector("[data-test-attr='titleButton']");
+  private static final By TitleColor = By.cssSelector("[data-test-attr='titleColor']");
+  private static final By TitleSize = By.cssSelector("[data-test-attr='titleSize']");
+  private static final By TitleWeight = By.cssSelector("[data-test-attr='titleWeight']");
+  private static final By TitleStyle = By.cssSelector("[data-test-attr='titleStyle']");
 
   /**
    * The data test for the DESCRIPTION faction
    */
-  By DescriptionInput = By.cssSelector("[data-test-attr='description']");
-  By DescriptionButton = By.cssSelector("[data-test-attr='descriptionButton']");
-  By DescriptionColor = By.cssSelector("[data-test-attr='descriptionColor']");
-  By DescriptionSize = By.cssSelector("[data-test-attr='descriptionSize']");
-  By DescriptionWeight = By.cssSelector("[data-test-attr='descriptionWeight']");
-  By DescriptionStyle = By.cssSelector("[data-test-attr='descriptionStyle']");
+  private static final By DescriptionInput = By.cssSelector("[data-test-attr='description']");
+  private static final By DescriptionButton = By.cssSelector("[data-test-attr='descriptionButton']");
+  private static final By DescriptionColor = By.cssSelector("[data-test-attr='descriptionColor']");
+  private static final By DescriptionSize = By.cssSelector("[data-test-attr='descriptionSize']");
+  private static final By DescriptionWeight = By.cssSelector("[data-test-attr='descriptionWeight']");
+  private static final By DescriptionStyle = By.cssSelector("[data-test-attr='descriptionStyle']");
 
   /**
    * The data test for the CALENDAR faction
    */
-  By selectableDates = By.cssSelector("[data-test-attr='clickDate'] td button");
-  By DateButton = By.cssSelector("[data-test-attr='dateButton']");
-  By DateColor = By.cssSelector("[data-test-attr='dateColor']");
-  By DateSize = By.cssSelector("[data-test-attr='dateSize']");
-  By DateWeight = By.cssSelector("[data-test-attr='dateWeight']");
-  By DateStyle = By.cssSelector("[data-test-attr='dateStyle']");
+  private static final By selectableDates = By.cssSelector("[data-test-attr='clickDate'] td button");
+  private static final By DateButton = By.cssSelector("[data-test-attr='dateButton']");
+  private static final By DateColor = By.cssSelector("[data-test-attr='dateColor']");
+  private static final By DateSize = By.cssSelector("[data-test-attr='dateSize']");
+  private static final By DateWeight = By.cssSelector("[data-test-attr='dateWeight']");
+  private static final By DateStyle = By.cssSelector("[data-test-attr='dateStyle']");
 
   /**
    * The data test for the CLOCK faction
    */
-  By selectableTimes = By.cssSelector("[data-test-attr='clickTime'] td button");
-  By TimeButton = By.cssSelector("[data-test-attr='timeButton']");
-  By TimeColor = By.cssSelector("[data-test-attr='timeColor']");
-  By TimeSize = By.cssSelector("[data-test-attr='timeSize']");
-  By TimeWeight = By.cssSelector("[data-test-attr='timeWeight']");
-  By TimeStyle = By.cssSelector("[data-test-attr='timeStyle']");
+  private static final By selectableTimes = By.cssSelector("[data-test-attr='clickTime'] td button");
+  private static final By TimeButton = By.cssSelector("[data-test-attr='timeButton']");
+  private static final By TimeColor = By.cssSelector("[data-test-attr='timeColor']");
+  private static final By TimeSize = By.cssSelector("[data-test-attr='timeSize']");
+  private static final By TimeWeight = By.cssSelector("[data-test-attr='timeWeight']");
+  private static final By TimeStyle = By.cssSelector("[data-test-attr='timeStyle']");
 
   /**
    * The data test for the 3 BUTTONS faction
   */
-  By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
-  By PreviewButton = By.cssSelector("[data-test-attr='previewButton']");
-  By ClearButton = By.cssSelector("[data-test-attr='clearButton']");
+  private static final By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
+  private static final By PreviewButton = By.cssSelector("[data-test-attr='previewButton']");
+  private static final By ClearButton = By.cssSelector("[data-test-attr='clearButton']");
 
   /**
    * The data test for the IMAGE CARD faction
   */
-  By AddButton = By.cssSelector("data-test-attr='addButton'");
-  By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
-  By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
+  private static final By AddButton = By.cssSelector("data-test-attr='addButton'");
+  private static final By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
+  private static final By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
 
+  public static Designer find(WebDriver wd) {
+    return new Designer(SeleniumUtils.waitUntilElementVisible(wd, PAGE_LOCATOR));
+  }
 
   public Designer(WebElement element) {
     super(element);
