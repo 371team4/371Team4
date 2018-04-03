@@ -6,7 +6,6 @@
 var webpackConfig = require('../../build/webpack.test.conf')
 
 module.exports = function (config) {
-  debugger
   config.set({
     // to run in additional browsers:
     // 1. install corresponding karma launcher
