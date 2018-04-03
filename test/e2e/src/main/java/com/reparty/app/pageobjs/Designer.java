@@ -66,6 +66,13 @@ public class Designer extends PageObjBase {
   By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
 
 
+  /**
+   * The data test for the error Messages
+   */
+  By ERROR_MESSAGE_WRAPPER = By.xpath("./../../*[contains(@class, 'input-group__details')]");
+  By ERROR_MESSAGE = By.cssSelector(".input-group__error");
+
+
   public Designer(WebElement element) {
     super(element);
   }
@@ -84,6 +91,18 @@ public class Designer extends PageObjBase {
   public void enterTitle(String title) {
     getWebDriver().findElement(TitleInput).clear();
     getWebDriver().findElement(TitleInput).sendKeys(title);
+  }
+
+  public boolean isTitleValid() {
+    List<WebElement> errors = this.getTitleTErrorMessagesWE().findElements(By.xpath("./"));
+    return errors.size() == 0;
+  }
+
+  public String getTitleErrorMessage() {
+    if (!isTitleValid()) {
+      return this.getTitleTErrorMessagesWE().findElement(ERROR_MESSAGE).getText().trim();
+    }
+    return "";
   }
 
   public void ClickTitleButton() {
@@ -238,5 +257,20 @@ public class Designer extends PageObjBase {
   public void ChooseTimeStyle(String fontStyle) {
     getWebDriver().findElement(TimeStyle).click();
     this.SelectStyle(fontStyle);
+  }
+
+
+
+
+
+
+  private WebElement getTitleTErrorMessagesWE() {
+    WebElement title = getWebDriver().findElement(TitleInput);
+    return title.findElement(ERROR_MESSAGE_WRAPPER);
+  }
+
+  private WebElement getDescriptionErrorMessagesWE() {
+    WebElement description = getWebDriver().findElement(DescriptionInput);
+    return description.findElement(ERROR_MESSAGE_WRAPPER);
   }
 }

@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
+import static org.junit.Assert.fail;
+
 
 /**
  * Unit test for simple App.
@@ -37,6 +39,20 @@ public class Designer_scenarios extends WebDriverBase {
   @Test
 	public void componentTestTitle() {
     test.enterTitle("Hanoi");
+  }
+
+  @Test
+  public void checkTitleError() {
+
+    test.enterTitle("");
+    test.submit();
+
+    String error = test.getTitleErrorMessage();
+    // if (!error.equals("Title is required")) {
+    //   fail();
+    // }
+    System.out.println(error);
+    CommonUtils.sleep(5);
   }
 
   @Test
