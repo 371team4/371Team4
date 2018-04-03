@@ -1,5 +1,7 @@
 package com.reparty.test;
 
+import static org.junit.Assert.fail;
+
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.pageobjs.Designer;
 import com.reparty.app.pageobjs.LoginPage;
@@ -9,9 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-
-import static org.junit.Assert.fail;
-
 
 /**
  * Unit test for simple App.
@@ -31,12 +30,12 @@ public class Designer_scenarios extends WebDriverBase {
   }
 
   @Test
-	public void test0() {
-		Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
+  public void test0() {
+    Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
   }
 
   @Test
-	public void componentTestTitle() {
+  public void componentTestTitle() {
     test.enterTitle("Hanoi");
   }
 
@@ -47,9 +46,9 @@ public class Designer_scenarios extends WebDriverBase {
     test.submit();
 
     String error = test.getTitleErrorMessage();
-    // if (!error.equals("Title is required")) {
-    //   fail();
-    // }
+    if (!error.equals("Title is required")) {
+      fail();
+    }
     System.out.println(error);
     CommonUtils.sleep(5);
   }
@@ -79,9 +78,8 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseDescriptionWeight("Bold");
   }
 
-
   @Test
-	public void componentTestUploadFile() {
+  public void componentTestUploadFile() {
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
 
     test.deletePicture();
@@ -145,4 +143,3 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseSlideDate();
   }
 }
-

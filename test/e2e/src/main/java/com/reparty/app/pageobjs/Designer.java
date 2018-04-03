@@ -108,13 +108,13 @@ public class Designer extends PageObjBase {
   }
 
   public boolean isTitleValid() {
-    List<WebElement> errors = this.getTitleTErrorMessagesWE().findElements(By.xpath("./"));
-    return errors.size() == 0;
+    List<WebElement> errors = this.getTitleErrorMessagesWE().findElements(By.xpath(".//*"));
+    return errors.size() == 1;
   }
 
   public String getTitleErrorMessage() {
     if (!isTitleValid()) {
-      return this.getTitleTErrorMessagesWE().findElement(ERROR_MESSAGE).getText().trim();
+      return this.getTitleErrorMessagesWE().findElement(ERROR_MESSAGE).getText().trim();
     }
     return "";
   }
@@ -292,7 +292,7 @@ public class Designer extends PageObjBase {
 
   }
 
-  private WebElement getTitleTErrorMessagesWE() {
+  private WebElement getTitleErrorMessagesWE() {
     WebElement title = getWebDriver().findElement(TitleInput);
     return title.findElement(ERROR_MESSAGE_WRAPPER);
   }
