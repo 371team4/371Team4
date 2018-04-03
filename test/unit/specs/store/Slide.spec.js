@@ -41,16 +41,17 @@ let newSlide = {
   }
 }
 
-const Constructor = Vue.extend()
-const vm = new Constructor({ store }).$mount()
-
 function waitFor (func, timeout) {
   setTimeout(() => func(), timeout)
 }
 
 describe('index', function () {
+  // const Constructor = Vue.extend()
+  let vm
+
   this.timeout(15000)
   before('Setup before slide tests', function (done) {
+    vm = Vue({ store }).$mount()
     vm.$store.dispatch('signIn', { username: 'test', password: 'admin001' })
     vm.$store.dispatch('retrieveAllSlides')
     waitFor(done, 1000)

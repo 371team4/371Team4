@@ -6,6 +6,7 @@
 var webpackConfig = require('../../build/webpack.test.conf')
 
 module.exports = function (config) {
+  debugger
   config.set({
     // to run in additional browsers:
     // 1. install corresponding karma launcher
@@ -25,6 +26,13 @@ module.exports = function (config) {
     webpack: webpackConfig,
     webpackMiddleware: {
       noInfo: true
+    },
+
+    // level of logging
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    logLevel: config.LOG_ERROR,
+    client: {
+      captureConsole: false
     },
     coverageReporter: {
       dir: './coverage',
