@@ -177,6 +177,7 @@
                         </v-menu>-->
                       </v-flex>
                       <v-btn
+                        data-test-attr="dateButton"
                         icon
                         @click.native="showDateSettings = !showDateSettings">
                         <v-icon>{{ showDateSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -194,6 +195,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="dateColor"
                               chips
                               label="Color"
                               :items="fontColors"
@@ -217,6 +219,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="dateSize"
                               chips
                               label="Font Size"
                               :items="fontSizes"
@@ -240,6 +243,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="dateWeight"
                               chips
                               label="Font Weight"
                               :items="fontWeights"
@@ -263,6 +267,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="dateStyle"
                               chips
                               label="Font Style"
                               :items="fontStyles"
@@ -316,6 +321,7 @@
                         </v-menu>
                       </v-flex>
                       <v-btn
+                        data-test-attr="timeButton"
                         icon
                         @click.native="showTimeSettings = !showTimeSettings">
                         <v-icon>{{ showTimeSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -333,6 +339,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="timeColor"
                               chips
                               label="Color"
                               :items="fontColors"
@@ -356,6 +363,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="timeSize"
                               chips
                               label="Font Size"
                               :items="fontSizes"
@@ -379,6 +387,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="timeWeight"
                               chips
                               label="Font Weight"
                               :items="fontWeights"
@@ -402,6 +411,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="timeStyle"
                               chips
                               label="Font Style"
                               :items="fontStyles"
@@ -438,6 +448,7 @@
                         required
                         validate-on-blur/>
                       <v-btn
+                        data-test-attr="descriptionButton"
                         icon
                         @click.native="showDescSettings = !showDescSettings">
                         <v-icon>{{ showDescSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -455,6 +466,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="descriptionColor"
                               chips
                               label="Color"
                               :items="fontColors"
@@ -478,6 +490,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="descriptionSize"
                               chips
                               label="Font Size"
                               :items="fontSizes"
@@ -501,6 +514,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="descriptionWeight"
                               chips
                               label="Font Weight"
                               :items="fontWeights"
@@ -524,6 +538,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="descriptionStyle"
                               chips
                               label="Font Style"
                               :items="fontStyles"
