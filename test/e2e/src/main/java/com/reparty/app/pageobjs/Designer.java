@@ -1,5 +1,7 @@
 package com.reparty.app.pageobjs;
 
+import java.util.List;
+
 import com.reparty.app.core.PageObjBase;
 import com.reparty.app.utils.CommonUtils;
 
@@ -10,6 +12,8 @@ public class Designer extends PageObjBase {
 
   By TitleInput = By.cssSelector("[data-test-attr='title']");
   By DescriptionInput = By.cssSelector("[data-test-attr='description']");
+  By selectableDates = By.cssSelector("[data-test-attr='clickDate'] td button");
+  By selectableTimes = By.cssSelector("[data-test-attr='clickTime'] td button");
 
   By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
   By PreviewButton = By.cssSelector("[data-test-attr='previewButton']");
@@ -59,6 +63,30 @@ public class Designer extends PageObjBase {
 
   public void deletePicture() {
     getWebDriver().findElement(DeleteImage).click();
+    CommonUtils.sleep(5);
+  }
+
+  public void setDate(String day){
+
+    List<WebElement> dates = getWebDriver().findElements(selectableDates);
+    for (WebElement we : dates){
+      if (we.getText().trim().equals(day)){
+        we.click();
+        return;
+      }
+    }
+    CommonUtils.sleep(5);
+  }
+
+  public void setTime(String time){
+
+    List<WebElement> times = getWebDriver().findElements(selectableDates);
+    for (WebElement we : times){
+      if (we.getText().trim().equals(time)){
+        we.click();
+        return;
+      }
+    }
     CommonUtils.sleep(5);
   }
 }
