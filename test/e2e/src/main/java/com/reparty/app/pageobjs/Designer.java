@@ -52,6 +52,14 @@ public class Designer extends PageObjBase {
   By TimeStyle = By.cssSelector("[data-test-attr='timeStyle']");
 
   /**
+   * The  data test for the SLIDE SETTINGS FACTION
+   */
+  By SlideSettingButton = By.cssSelector("[data-test-attr='slideSettings']");
+  By SlideSettingDuration = By.cssSelector("[data-test-attr='duration']");
+  By SlideSettingDurationDefault = By.cssSelector("[data-test-attr='durationDefault']");
+  By SlideSettingDate = By.cssSelector("[data-test-attr='slideSettingsDate']");
+
+  /**
    * The data test for the 3 BUTTONS faction
   */
   By SubmitButton = By.cssSelector("[data-test-attr='submitButton']");
@@ -259,10 +267,24 @@ public class Designer extends PageObjBase {
     this.SelectStyle(fontStyle);
   }
 
+  public void  ClickSlidesSettingButton() {
+    getWebDriver().findElement(SlideSettingButton).click();
+  }
 
+  public void ChooseSlideDuration(String duration) {
+    getWebDriver().findElement(SlideSettingDuration).click();
+    this.SelectStyle(duration);
+  }
 
+  public void ChooseSlideDefault(String defaults) {
+    getWebDriver().findElement(SlideSettingDurationDefault).click();
+    this.SelectStyle(defaults);
+  }
 
+  // TODO
+  public void ChooseSlideDate() {
 
+  }
 
   private WebElement getTitleTErrorMessagesWE() {
     WebElement title = getWebDriver().findElement(TitleInput);

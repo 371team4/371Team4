@@ -137,5 +137,13 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseTimeStyle("Italic");
     test.ChooseTimeWeight("Bold");
   }
+
+  @Test
+  public void slideSetting() {
+    test.ClickSlidesSettingButton();
+    test.ChooseSlideDuration("30 seconds");
+    test.ChooseSlideDefault("Default Template");
+    test.ChooseSlideDate();
+  }
 }
 

@@ -567,6 +567,7 @@
                     <v-card-actions class="py-0">
                       <h3 class="headline grey--text">Slide Settings</h3>
                       <v-btn
+                        data-test-attr="slideSettings"
                         icon
                         @click.native="showSlideSettings = !showSlideSettings">
                         <v-icon>{{ showSlideSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -584,6 +585,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="duration"
                               chips
                               label="Duration"
                               :items="durations"
@@ -606,6 +608,7 @@
                             md6
                             lg6>
                             <v-select
+                              data-test-attr="durationDefault"
                               chips
                               label="Duration"
                               :items="templates"
@@ -630,6 +633,7 @@
                             <!-- <v-list subheader>-->
                             <v-subheader>Days on Display</v-subheader>
                             <v-date-picker
+                              data-test-attr="slideSettingsDate"
                               v-model="dateOnDisplay"
                               no-title
                               event-color="green lighten-1"
