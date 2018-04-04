@@ -153,6 +153,7 @@ export default {
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
+            noTouch: true,
             title: {
               content: 'None Found'
             },
@@ -161,7 +162,7 @@ export default {
             },
             images: [
               {
-                src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+                src: '/images/error-image.png'
               }
             ]
           })

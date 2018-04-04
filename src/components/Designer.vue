@@ -936,9 +936,9 @@ export default {
         return null
       },
       set (val) {
-        let index = this.date.indexOf(val + 'GMT-0600')
+        let index = this.date.indexOf(val)
         if (index === -1) {
-          this.$store.commit(MUTATIONS.ADD_DATE, val + 'GMT-0600')
+          this.$store.commit(MUTATIONS.ADD_DATE, val)
         } else {
           this.$store.commit(MUTATIONS.DELETE_DATE, index)
         }

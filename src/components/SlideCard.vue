@@ -14,10 +14,12 @@
     <v-card-actions class="py-0 px-0">
       <v-spacer/>
       <v-btn
+        v-show="slide && !slide.hasOwnProperty('noTouch')"
         flat
         color="blue"
         @click="$emit('edit', slide)">Edit</v-btn>
       <v-btn
+        v-show="slide && !slide.hasOwnProperty('noTouch')"
         flat
         color="red"
         @click="$emit('delete', slide)">Delete</v-btn>
