@@ -237,20 +237,14 @@ describe('Slides.vue', function () {
     })
   })
 
-  describe.only('Test goToSlide() method', function () {
-    beforeEach(() => {
-      sinon.spy(vm.$store, 'commit')
-    })
-
-    afterEach(() => {
-      sinon.restore()
-    })
-
+  describe('Test goToSlide() method', function () {
     it('should commit current when a slide is clicked', function () {
+      let spy = sinon.spy(vm.$store, 'commit')
       const editButton = vm.$el.querySelector('[data-test-attr="editSlideButton"]')
       editButton.click()
 
       expect(vm.$store.commit.firstCall.args).to.deep.equal([MUTATIONS.SET_CURRENT_SLIDE, mockSlides[1]])
+      spy.restore()
     })
 
     it('should navigate to the desginer view', function () {
