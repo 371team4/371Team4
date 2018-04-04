@@ -14,7 +14,20 @@
           <td>{{ props.item.username }}</td>
           <td class="text-xs-left">{{ props.item.password }}</td>
           <td class="text-xs-left">
-            {{ props.item.role }}
+
+            <v-flex xs6>
+              <v-select
+                auto
+                hide-details
+                v-model="props.item.role"
+                :items="roleList"
+                label="Select"
+                single-line
+                prepend-icon="people">
+                {{ props.item.role }}
+              </v-select>
+            </v-flex>
+
           </td>
           <td class="justify-left layout px-0">
             <v-btn
