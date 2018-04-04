@@ -1,6 +1,11 @@
 <template>
   <v-container>
     <div>
+      <v-card>
+        <v-card-title>
+          <h2 class="headline">All Users</h2>
+        </v-card-title>
+      </v-card>
 
       <v-data-table
         :headers="headers"
