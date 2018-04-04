@@ -11,13 +11,12 @@ const refreshState = () => {
       title: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
       description: { content: '', fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
       images: [],
-      date: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
+      date: { content: [], fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
       time: { content: null, fontColor: null, fontSize: null, fontStyle: null, fontWeight: null },
-      meta: { template: null, timeout: null, repeatable: null, startDate: null, endDate: null }
+      meta: { template: null, timeout: null, datesOnDisplay: [] }
     },
 
     isCurrentSlideDirty: false
-
   }
 }
 

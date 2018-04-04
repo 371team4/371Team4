@@ -14,10 +14,12 @@
     <v-card-actions class="py-0 px-0">
       <v-spacer/>
       <v-btn
+        data-test-attr="editSlideButton"
         flat
         color="blue"
         @click="$emit('edit', slide)">Edit</v-btn>
       <v-btn
+        data-test-attr="deleteSlideButton"
         flat
         color="red"
         @click="$emit('delete', slide)">Delete</v-btn>

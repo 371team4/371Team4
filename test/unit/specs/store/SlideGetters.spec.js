@@ -17,7 +17,6 @@ const refreshState = () => {
     },
 
     isCurrentSlideDirty: false
-
   }
 }
 
@@ -31,37 +30,6 @@ describe('slide', () => {
 
       beforeEach(() => {
         state = refreshState()
-      })
-
-      it('SET_TITLE', () => {
-        const titleStateBeforeMutation = {
-          content: '',
-          fontColor: null,
-          fontSize: null,
-          fontStyle: null,
-          fontWeight: null
-        }
-
-        const titleStateAfterMutation = {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        }
-        assert(state.currentSlide.title, titleStateBeforeMutation)
-        assert(state.isCurrentSlideDirty, false)
-
-        slide.mutations[MUTATIONS.SET_TITLE](state, {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        })
-
-        assert(slide.getters.currentSlideTitle(state), titleStateAfterMutation)
-        assert(slide.getters.isCurrentSlideDirty(state), true)
       })
 
       it('SET_TITLE_CONTENT', () => {
@@ -122,37 +90,6 @@ describe('slide', () => {
         state = refreshState()
       })
 
-      it('SET_DESCRIPTION', () => {
-        const titleStateBeforeMutation = {
-          content: '',
-          fontColor: null,
-          fontSize: null,
-          fontStyle: null,
-          fontWeight: null
-        }
-
-        const titleStateAfterMutation = {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        }
-        assert(state.currentSlide.description, titleStateBeforeMutation)
-        assert(state.isCurrentSlideDirty, false)
-
-        slide.mutations[MUTATIONS.SET_DESCRIPTION](state, {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        })
-
-        assert(slide.getters.currentSlideDescription(state), titleStateAfterMutation)
-        assert(slide.getters.isCurrentSlideDirty(state), true)
-      })
-
       it('SET_DESCRIPTION_CONTENT', () => {
         assert(state.currentSlide.description.content, '')
         assert(state.isCurrentSlideDirty, false)
@@ -211,35 +148,24 @@ describe('slide', () => {
         state = refreshState()
       })
 
-      it('SET_IMAGE', () => {
+      it('ADD_IMAGE', () => {
         assert(state.currentSlide.images, [])
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[MUTATIONS.SET_IMAGE](state, {
-          src: 'https://picsum.photos/200/300/?image=92'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=19'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=14'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=94'
-        })
+        slide.mutations[MUTATIONS.ADD_IMAGE](state, { src: 'https://picsum.photos/200/300/?image=92' })
 
-        assert(slide.getters.currentSlideImages(state), {
-          src: 'https://picsum.photos/200/300/?image=92'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=19'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=14'
-        },
-        {
-          src: 'https://picsum.photos/200/300/?image=94'
-        })
+        assert(slide.getters.currentSlideImages(state), [{ src: 'https://picsum.photos/200/300/?image=92' }])
+        assert(slide.getters.isCurrentSlideDirty(state), true)
+      })
+
+      it('DELETE_IMAGE', () => {
+        assert(state.currentSlide.images, [])
+        assert(state.isCurrentSlideDirty, false)
+
+        state.currentSlide.images = [{ src: 'https://picsum.photos/200/300/?image=92' }]
+        slide.mutations[MUTATIONS.DELETE_IMAGE](state, 0)
+
+        assert(slide.getters.currentSlideImages(state), [])
         assert(slide.getters.isCurrentSlideDirty(state), true)
       })
     })
@@ -251,44 +177,24 @@ describe('slide', () => {
         state = refreshState()
       })
 
-      it('SET_DATE', () => {
-        const titleStateBeforeMutation = {
-          content: null,
-          fontColor: null,
-          fontSize: null,
-          fontStyle: null,
-          fontWeight: null
-        }
-
-        const titleStateAfterMutation = {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        }
-        assert(state.currentSlide.date, titleStateBeforeMutation)
+      it('ADD_DATE', () => {
+        assert(state.currentSlide.date.content, [])
         assert(state.isCurrentSlideDirty, false)
+        let dateObj = new Date(Date.now())
+        slide.mutations[MUTATIONS.ADD_DATE](state, dateObj)
 
-        slide.mutations[MUTATIONS.SET_DATE](state, {
-          content: 'Slide1',
-          fontColor: 'Red',
-          fontSize: 'Large',
-          fontStyle: 'Normal',
-          fontWeight: 'Bold'
-        })
-
-        assert(slide.getters.currentSlideDate(state), titleStateAfterMutation)
+        assert(slide.getters.currentSlideDateContent(state), [dateObj])
         assert(slide.getters.isCurrentSlideDirty(state), true)
       })
 
-      it('SET_DATE_CONTENT', () => {
-        assert(state.currentSlide.date.content, null)
-        assert(state.isCurrentSlideDirty, false)
+      it('DELETE_DATE', () => {
+        let dateObj = new Date(Date.now())
+        state.currentSlide.date.content = [dateObj]
+        assert(state.currentSlide.date.content, [dateObj])
 
-        slide.mutations[MUTATIONS.SET_DATE_CONTENT](state, 'title')
+        slide.mutations[MUTATIONS.DELETE_DATE](state, 0)
 
-        assert(slide.getters.currentSlideDateContent(state), 'title')
+        assert(slide.getters.currentSlideDateContent(state), [])
         assert(slide.getters.isCurrentSlideDirty(state), true)
       })
 
@@ -398,44 +304,13 @@ describe('slide', () => {
         state = refreshState()
       })
 
-      it('SET_META', () => {
-        const titleStateBeforeMutation = {
-          template: null,
-          timeout: null,
-          repeatable: null,
-          startDate: null,
-          endDate: null
-        }
-
-        const titleStateAfterMutation = {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
-        }
-        assert(slide.getters.currentSlideMeta(state), titleStateBeforeMutation)
-        assert(slide.getters.isCurrentSlideDirty(state), false)
-
-        slide.mutations[MUTATIONS.SET_TIME](state, {
-          template: 'DefaultSlideTemplate',
-          timeout: '40',
-          repeatable: false,
-          startDate: '2018-02-16',
-          endDate: '2018-03-01'
-        })
-
-        assert(state.currentSlide.time, titleStateAfterMutation)
-        assert(state.isCurrentSlideDirty, true)
-      })
-
       it('SET_META_TEMPLATE', () => {
         assert(state.currentSlide.meta.template, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[MUTATIONS.SET_META_TEMPLATE](state, 'DefaultSlideTemplate')
+        slide.mutations[MUTATIONS.SET_TEMPLATE](state, 'DefaultSlideTemplate')
 
-        assert(slide.getters.currentSlideMetaTemplate(state), 'DefaultSlideTemplate')
+        assert(slide.getters.currentSlideTemplate(state), 'DefaultSlideTemplate')
         assert(slide.getters.isCurrentSlideDirty(state), true)
       })
 
@@ -443,9 +318,33 @@ describe('slide', () => {
         assert(state.currentSlide.meta.timeout, null)
         assert(state.isCurrentSlideDirty, false)
 
-        slide.mutations[MUTATIONS.SET_META_TIMEOUT](state, '40')
+        slide.mutations[MUTATIONS.SET_TIMEOUT](state, '40')
 
-        assert(slide.getters.currentSlideMetaTimeout(state), '40')
+        assert(slide.getters.currentSlideTimeout(state), '40')
+        assert(slide.getters.isCurrentSlideDirty(state), true)
+      })
+
+      it('ADD_DATE_ON_DISPLAY', () => {
+        assert(state.currentSlide.meta.datesOnDisplay, [])
+        assert(state.isCurrentSlideDirty, false)
+
+        let dateObj = new Date(Date.now())
+        slide.mutations[MUTATIONS.ADD_DATE_ON_DISPLAY](state, dateObj)
+
+        assert(slide.getters.currentSlideDatesOnDisplay(state), [dateObj])
+        assert(slide.getters.isCurrentSlideDirty(state), true)
+      })
+
+      it('DELETE_DATE_ON_DISPLAY', () => {
+        assert(state.currentSlide.meta.datesOnDisplay, [])
+        assert(state.isCurrentSlideDirty, false)
+
+        let dateObj = new Date(Date.now())
+        state.currentSlide.meta.datesOnDisplay = [dateObj]
+
+        slide.mutations[MUTATIONS.DELETE_DATE_ON_DISPLAY](state, 0)
+
+        assert(slide.getters.currentSlideDatesOnDisplay(state), [])
         assert(slide.getters.isCurrentSlideDirty(state), true)
       })
     })
