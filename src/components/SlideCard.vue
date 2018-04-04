@@ -15,11 +15,13 @@
       <v-spacer/>
       <v-btn
         v-show="slide && !slide.hasOwnProperty('noTouch')"
+        data-test-attr="editSlideButton"
         flat
         color="blue"
         @click="$emit('edit', slide)">Edit</v-btn>
       <v-btn
         v-show="slide && !slide.hasOwnProperty('noTouch')"
+        data-test-attr="deleteSlideButton"
         flat
         color="red"
         @click="$emit('delete', slide)">Delete</v-btn>
