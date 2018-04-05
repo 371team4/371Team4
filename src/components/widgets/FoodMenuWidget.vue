@@ -123,6 +123,13 @@ export default {
       return [
         [
           {
+            name: 'Sunday',
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
+          },
+          {
             name: 'Monday',
             meals: {
               Lunch: ['', '', '', '', ''],
@@ -163,13 +170,6 @@ export default {
               Lunch: ['', '', '', '', ''],
               Supper: ['', '', '', '', '']
             }
-          },
-          {
-            name: 'Sunday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
           }
         ]
       ]
@@ -185,13 +185,13 @@ export default {
       } else {
         // add an empty week to the list of weeks
         const weekTemplate = [
-          { name: 'Monday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Tuesday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Wednesday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Thursday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Friday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Saturday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Sunday', meals: { Lunch: [], Supper: [] } }
+          { name: 'Sunday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Monday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Tuesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Wednesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Thursday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Friday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Saturday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } }
         ]
         this.weeks.push(weekTemplate)
         // switch the tab view to the last week added to the list of weeks
