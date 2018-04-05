@@ -38,6 +38,13 @@ describe('FoodMenuWidget.vue', function () {
       const weeks = [
         [
           {
+            name: 'Sunday',
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
+          },
+          {
             name: 'Monday',
             meals: {
               Lunch: ['', '', '', '', ''],
@@ -74,13 +81,6 @@ describe('FoodMenuWidget.vue', function () {
           },
           {
             name: 'Saturday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Sunday',
             meals: {
               Lunch: ['', '', '', '', ''],
               Supper: ['', '', '', '', '']
