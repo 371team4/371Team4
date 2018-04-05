@@ -169,7 +169,7 @@ export default {
     },
 
     saveItem (item) {
-      console.log(item)
+      console.log(item.password)
       console.log('Button was clicked!')
     },
 
@@ -184,8 +184,10 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
+        console.log('hi')
         Object.assign(this.items[this.editedIndex], this.editedItem)
       } else {
+        console.log('hello')
         this.items.push(this.editedItem)
       }
       this.close()
