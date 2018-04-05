@@ -2,7 +2,7 @@
   <v-container
     id="designerPage"
     fluid
-    class="my-0"
+    class="my-2 mx-1 px-0 py-0"
     align-content-start>
     <v-layout column>
       <DefaultSlideTemplate
@@ -14,7 +14,9 @@
         lazy-validation
         v-show="!showPreview"
         ref="form">
-        <v-container fluid>
+        <v-container
+          fluid
+          class="my-0 px-1 py-0">
           <v-layout :class="`${this.$vuetify.breakpoint.smAndDown ? 'column' : ''}`">
             <v-flex>
               <v-layout column>
@@ -31,6 +33,7 @@
                         validate-on-blur/>
                       <v-btn
                         icon
+                        class="mx-0 my-0"
                         data-test-attr="titleButton"
                         @click.native="showTitleSettings = !showTitleSettings">
                         <v-icon>{{ showTitleSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -38,7 +41,7 @@
                     </v-card-actions>
                     <v-slide-y-transition>
                       <v-container
-                        grid-list-xl
+                        class="px-1 py-1"
                         v-show="showTitleSettings">
                         <v-layout
                           :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
@@ -155,7 +158,8 @@
                           no-title
                           event-color="green lighten-1"
                           :min="minimumDate"
-                          :events="date"/>
+                          :events="date"
+                          :width="$vuetify.breakpoint.xs ? 255 : 290"/>
                           <!-- <v-menu
                           lazy
                           :close-on-content-click="true"
@@ -178,15 +182,16 @@
                         </v-menu>-->
                       </v-flex>
                       <v-btn
-                        data-test-attr="dateButton"
                         icon
+                        class="mx-0 my-0"
+                        data-test-attr="dateButton"
                         @click.native="showDateSettings = !showDateSettings">
                         <v-icon>{{ showDateSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
                       <v-container
-                        grid-list-xl
+                        class="px-1 py-1"
                         v-show="showDateSettings">
                         <v-layout
                           :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
@@ -322,15 +327,16 @@
                         </v-menu>
                       </v-flex>
                       <v-btn
-                        data-test-attr="timeButton"
                         icon
+                        class="mx-0 my-0"
+                        data-test-attr="timeButton"
                         @click.native="showTimeSettings = !showTimeSettings">
                         <v-icon>{{ showTimeSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
                       <v-container
-                        grid-list-xl
+                        class="px-1 py-1"
                         v-show="showTimeSettings">
                         <v-layout
                           :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
@@ -449,15 +455,16 @@
                         required
                         validate-on-blur/>
                       <v-btn
-                        data-test-attr="descriptionButton"
                         icon
+                        class="mx-0 my-0"
+                        data-test-attr="descriptionButton"
                         @click.native="showDescSettings = !showDescSettings">
                         <v-icon>{{ showDescSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
                       <v-container
-                        grid-list-xl
+                        class="px-1 py-1"
                         v-show="showDescSettings">
                         <v-layout
                           :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
@@ -568,15 +575,16 @@
                     <v-card-actions class="py-0">
                       <h3 class="headline grey--text">Slide Settings</h3>
                       <v-btn
-                        data-test-attr="slideSettings"
                         icon
+                        class="mx-0 my-0"
+                        data-test-attr="slideSettings"
                         @click.native="showSlideSettings = !showSlideSettings">
                         <v-icon>{{ showSlideSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
                     <v-slide-y-transition>
                       <v-container
-                        grid-list-xl
+                        class="px-1 py-1"
                         v-show="showSlideSettings">
                         <v-layout
                           :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
@@ -673,7 +681,7 @@
                     <v-flex
                       md6
                       sm4
-                      xs12
+                      xs10
                       v-for="(image, index) in images"
                       :key="index">
                       <v-card
@@ -701,7 +709,7 @@
                     <v-flex
                       md6
                       sm4
-                      xs12>
+                      xs10>
                       <!-- Add button for the images-->
                       <v-card
                         flat
@@ -737,19 +745,22 @@
       </v-form>
       <v-flex>
         <v-btn
-          data-test-attr="clearButton"
           color="error"
+          v-show="!showPreview"
+          data-test-attr="clearButton"
           @click="clear">clear</v-btn>
         <v-btn
+          color="success"
+          @click="submit"
+          v-show="!showPreview"
+          data-test-attr="submitButton"
+          :disabled="!valid">submit</v-btn>
+        <v-btn
           @click="changeViews"
+          color="blue lighten-2"
           data-test-attr="previewButton">
           {{ showPreview ? 'Edit' : 'Preview' }}
         </v-btn>
-        <v-btn
-          data-test-attr="submitButton"
-          color="success"
-          @click="submit"
-          :disabled="!valid">submit</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -1091,7 +1102,6 @@ export default {
         this.forceUpdateCarousel()
         this.$store.dispatch('saveSlide').then((response) => {
           this.$router.replace(`/designer/${this.$store.getters.currentSlide._id}`)
-          this.changeViews()
         })
       }
     },

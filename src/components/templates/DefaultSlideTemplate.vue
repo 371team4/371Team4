@@ -1,76 +1,55 @@
 <template>
   <v-container
-    class="px-0 py-0"
-    fluid>
-    <!-- Event title card -->
-    <v-layout
-      row
-      wrap
-      justify-space-between>
+    fluid
+    grid-list-lg
+    fill-height>
+    <v-layout v-bind="$vuetify.breakpoint.smAndDown ? { column: true } : { row: true }">
+      <v-flex
+        d-flex
+        xs12
+        sm6
+        md4>
+        <v-layout
+          row
+          wrap>
+          <v-flex
+            xs12
+            sm12>
+            <v-card-title :style="genFontStylingFor(slide.title)">{{ slide.title.content }}</v-card-title>
+            <v-card-title>
+              <h2>
+                <span :style="genFontStylingFor(slide.date)">{{ formattedDate }},</span>
+                <span :style="genFontStylingFor(slide.time)">{{ formattedTime }}</span>
+              </h2>
+            </v-card-title>
+            <v-card-title class="grey lighten-3 d-block">
+              <v-divider class="my-3" />
+              <br>
+              <div :style="genFontStylingFor(slide.description)">
+                {{ slide.description.content }}
+              </div>
+              <br>
+              <v-divider class="my-3" />
+            </v-card-title>
+          </v-flex>
+        </v-layout>
+      </v-flex>
       <v-flex
         xs12
         sm8
-        md9
-        lg6>
-        <v-card
-          color="transparent"
-          flat>
-          <v-card-title
-            primary
-            class="title">
-            <h2
-              class="display-3"
-              :style="genFontStylingFor(slide.title)">{{ slide.title.content }}</h2>
-          </v-card-title>
-          <v-card-title
-            primary
-            class="title">
-            <h2 class="display-2">
-              <span :style="genFontStylingFor(slide.date)">{{ formattedDate }}</span>,
-              <span :style="genFontStylingFor(slide.time)">{{ formattedTime }}</span>
-            </h2>
-          </v-card-title>
-        </v-card>
-      </v-flex>
-      <!-- Done Event title card -->
-
-      <!-- Carousel Component -->
-      <v-flex
-        xs12
-        sm12
-        md12
-        lg6>
+        md8>
         <v-carousel
           :value="carousel"
           hide-controls
-          :interval="carouselInterval">
+          hide-delimiters
+          :interval="carouselInterval"
+          class="fill-height">
           <v-carousel-item
             v-for="(image, index) in slide.images"
             :src="imageUrl(image)"
             :key="index" />
         </v-carousel>
       </v-flex>
-      <!-- Done the Carousel item -->
-
-      <!-- Component used as Event Body -->
-      <v-flex>
-        <v-jumbotron
-          class="mt-2"
-          color="grey lighten-3">
-          <v-container fill-height>
-            <v-layout align-center>
-              <v-flex>
-                <v-divider class="my-3" />
-                <h3
-                  class="headline"
-                  :style="genFontStylingFor(slide.description)"> {{ slide.description.content }}</h3>
-                <v-divider class="my-3" />
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-jumbotron>
-      </v-flex>
-      <!-- Done event body component -->
     </v-layout>
   </v-container>
 </template>
@@ -189,8 +168,8 @@ export default {
 </script>
 
 <style>
-.jumbotron__image {
+/* .jumbotron__image {
   max-width: 100%;
   max-height: 100%;
-}
+} */
 </style>
