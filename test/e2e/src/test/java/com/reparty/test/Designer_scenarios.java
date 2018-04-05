@@ -1,5 +1,7 @@
 package com.reparty.test;
 
+import static org.junit.Assert.fail;
+
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.pageobjs.Designer;
 import com.reparty.app.pageobjs.LoginPage;
@@ -10,9 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static org.junit.Assert.fail;
-
-
 /**
  * Unit test for simple App.
  */
@@ -22,22 +21,21 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Before
   public void before() {
-    getWebDriver().navigate().to("http://localhost:8080/signin");
     LoginPage logInButton = new LoginPage(getWebDriver().findElement(By.cssSelector("main")));
-    logInButton.login();;
+    logInButton.login();
     CommonUtils.sleep(3);
 
-    getWebDriver().navigate().to("http://localhost:8080/designer/new");
+    getWebDriver().navigate().to(serverPath.concat("/designer/new"));
     test = new Designer(getWebDriver().findElement(By.cssSelector("main")));
   }
 
   @Test
-	public void test0() {
-		Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
+  public void test0() {
+    Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
   }
 
   @Test
-	public void componentTestTitle() {
+  public void componentTestTitle() {
     test.enterTitle("Hanoi");
   }
 
@@ -48,9 +46,9 @@ public class Designer_scenarios extends WebDriverBase {
     test.submit();
 
     String error = test.getTitleErrorMessage();
-    // if (!error.equals("Title is required")) {
-    //   fail();
-    // }
+    if (!error.equals("Title is required")) {
+      fail();
+    }
     System.out.println(error);
     CommonUtils.sleep(5);
   }
@@ -79,7 +77,6 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseDescriptionStyle("Italic");
     test.ChooseDescriptionWeight("Bold");
   }
-
 
   @Test
 	public void componentTestUploadFile() {
@@ -149,4 +146,3 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseSlideDate();
   }
 }
-

@@ -1,20 +1,22 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    class="px-2 py-2">
     <!-- Food Menu Widget Toolbar -->
     <v-toolbar
       extended
       dark
       tabs
       color="light-blue darken-3">
-      <v-icon>restaurant</v-icon>
+      <v-icon class="ml-1">restaurant</v-icon>
       <v-toolbar-title>Food Menu</v-toolbar-title>
       <v-spacer/>
       <v-btn
         icon
         small
+        class="mx-1"
         color="red darken-3"
         @click.native="addWeek">
-
         <v-icon dark>add</v-icon>
       </v-btn>
 
@@ -23,26 +25,45 @@
       <v-btn
         small
         icon
+        class="mx-1"
         @click.native="saveChanges">
         <v-icon>save</v-icon>
       </v-btn>
-      <v-btn
-        small
-        icon
-        @click.native="scheduleMenu">
-        <v-icon>event</v-icon>
-      </v-btn>
-
+      <v-menu
+        ref="menu"
+        lazy
+        :close-on-content-click="true"
+        v-model="menu"
+        transition="slide-x-reverse-transition"
+        offset-x
+        full-width
+        :nudge-right="40"
+        min-width="290px">
+        <v-btn
+          small
+          icon
+          class="mx-1"
+          slot="activator"
+          @click.native="scheduleMenu">
+          <v-icon>event</v-icon>
+        </v-btn>
+        <v-date-picker
+          v-model="date"
+          no-title
+          scrollable
+          event-color="green"
+          :events="[date]"/>
+      </v-menu>
       <!-- Week Component begins here -->
       <v-tabs
-        hide-slider
         v-model="active"
         color="light-blue darken-3"
         slot="extension"
         slider-color="amber lighten-3">
         <v-tab
           v-for="(week, index) in weeks"
-          :key="index">
+          :key="index"
+          class="px-0 py-0">
 
           <!-- Delete week button -->
           <v-btn
@@ -57,19 +78,18 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
-    <v-tabs-items v-model="active">
+    <v-tabs-items
+      touchless
+      v-model="active">
       <v-tab-item
         v-for="(week, index) in weeks"
         :key="index">
-
-        <!-- Temporary solution: Day Cards in Week Component -->
-        <!-- Need Day Cards component in here. Not testing this portion
-          extensively because will be replaced soon with Day Cards; integrated after-->
         <v-container
           justify-center
           justify-space-around
           grid-list-md
-          text-xs-center>
+          text-xs-center
+          class="px-0 py-1">
           <v-layout
             row
             wrap>
@@ -82,7 +102,6 @@
               :key="i">
               <menu-day-card :day="day"/>
             </v-flex>
-
           </v-layout>
         </v-container>
         <!-- Done Day Cards -->
@@ -99,7 +118,9 @@ export default {
   components: { MenuDayCard },
   data () {
     return {
-      active: null
+      active: null,
+      menu: false,
+      date: null
     }
   },
   computed: {
@@ -107,6 +128,13 @@ export default {
     weeks () {
       return [
         [
+          {
+            name: 'Sunday',
+            meals: {
+              Lunch: ['', '', '', '', ''],
+              Supper: ['', '', '', '', '']
+            }
+          },
           {
             name: 'Monday',
             meals: {
@@ -148,13 +176,6 @@ export default {
               Lunch: ['', '', '', '', ''],
               Supper: ['', '', '', '', '']
             }
-          },
-          {
-            name: 'Sunday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
           }
         ]
       ]
@@ -175,13 +196,13 @@ export default {
       } else {
         // add an empty week to the list of weeks
         const weekTemplate = [
-          { name: 'Monday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Tuesday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Wednesday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Thursday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Friday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Saturday', meals: { Lunch: [], Supper: [] } },
-          { name: 'Sunday', meals: { Lunch: [], Supper: [] } }
+          { name: 'Sunday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Monday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Tuesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Wednesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Thursday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Friday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+          { name: 'Saturday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } }
         ]
         this.weeks.push(weekTemplate)
         // switch the tab view to the last week added to the list of weeks
@@ -198,7 +219,7 @@ export default {
         this.weeks.splice(weekNumber, 1)
         // switch the tab view to the week before the deleted one
         // vuetify tabs don't understand anything but strings
-        this.active = (parseInt(weekNumber) - 1).toString()
+        this.$nextTick(() => { this.active = (parseInt(weekNumber) - 1).toString() })
       } else {
         // Set to show a message saying not to delete the first week
         this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)

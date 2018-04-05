@@ -64,12 +64,12 @@ public class LoginPage extends PageObjBase {
   }
 
   public boolean isPasswordValid() {
-    List<WebElement> errors = getPasswordErrorMessagesWE().findElements(By.xpath("./"));
+    List<WebElement> errors = getPasswordErrorMessagesWE().findElements(By.xpath(".//*"));
     return errors.size() == 0;
   }
 
   public boolean isUsernameValid() {
-    List<WebElement> errors = getUsernameErrorMessagesWE().findElements(By.xpath("./"));
+    List<WebElement> errors = getUsernameErrorMessagesWE().findElements(By.xpath(".//*"));
     return errors.size() == 0;
   }
 

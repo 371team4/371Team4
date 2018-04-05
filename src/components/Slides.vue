@@ -99,7 +99,8 @@ export default {
       dialog: false,
       searchString: '',
       deletedSlide: '',
-      slideToOpen: null
+      slideToOpen: null,
+      timeoutFunction: null
     }
   },
   computed: {
@@ -118,24 +119,28 @@ export default {
       // show the snackbar to inform the user about deleting slide
       this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
       this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, `Deleted Slide ${slide.title.content}`)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_BUTTON, 'Undo')
       // if there a slide that has a deletion timeout set on it delete it now
-      if (this.deletedSlide && this.$store.getter.snackbarHandler) {
+      if (this.deletedSlide && this.timeoutFunction) {
         // delete the previous slide right away
         this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
         this.$store.dispatch('deleteSlide', this.deletedSlide)
       }
       // set up to delete in 30 seconds
       this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
-      const _self = this
-      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, setTimeout(() => {
-        _self.$store.dispatch('deleteSlide', slide._id)
+      this.timeoutFunction = setTimeout(function () {
+        this.$store.dispatch('deleteSlide', slide._id)
         // clear up delete stuff
-        _self.handleUndoDelete()
-      }, this.$store.getters.snackbarTimeout))
+        this.handleUndoDelete()
+      }.bind(this), this.$store.getters.snackbarTimeout)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, function () {
+        this.handleUndoDelete()
+      }.bind(this))
       this.deletedSlide = slide._id
     },
     // this is doing two things, clearing the delete props and undoing the deletion
     handleUndoDelete () {
+      clearTimeout(this.timeoutFunction)
       this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, false)
       this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, '')
       this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
@@ -152,6 +157,7 @@ export default {
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
+            noTouch: true,
             title: {
               content: 'None Found'
             },
@@ -160,7 +166,7 @@ export default {
             },
             images: [
               {
-                src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+                path: '/images/error-image.png'
               }
             ]
           })

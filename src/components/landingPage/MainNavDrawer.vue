@@ -8,6 +8,7 @@
     dark
     hide-overlay
     stateless
+    touchless
     disable-resize-watcher>
     <v-list
       two-line

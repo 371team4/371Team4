@@ -134,8 +134,12 @@ public class DriverService {
     //mobileEmulation.put("deviceName", "iPhone 6 Plus");
     //options.setExperimentalOption("mobileEmulation", mobileEmulation);
     //END TODO
-    options.addArguments("start-maximized");
+    options.addArguments("--start-maximized");
     options.addArguments("--disable-infobars");
+    if (CommonUtils.shouldRunHeadless()){
+      options.addArguments("--headless");
+      options.addArguments("--window-size=\"1920,1080\"");
+    }
     return logger.traceExit(options);
   }
 

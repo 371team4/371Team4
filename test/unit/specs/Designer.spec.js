@@ -425,7 +425,7 @@ describe('Designer.vue', function () {
     let spy
 
     beforeEach(function () {
-      vm = new Constructor().$mount()
+      vm = new Constructor({ store }).$mount()
     })
 
     it('should update carousel', function (done) {
