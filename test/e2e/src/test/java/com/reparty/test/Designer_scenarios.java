@@ -79,10 +79,13 @@ public class Designer_scenarios extends WebDriverBase {
   }
 
   @Test
-  public void componentTestUploadFile() {
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt408/slides/pic.png");
+	public void componentTestUploadFile() {
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dino.jpg");
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/laugh.jpeg");
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
 
-    test.deletePicture();
+    test.deletePicture("laugh.jpeg");
   }
 
   @Test
