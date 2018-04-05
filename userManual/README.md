@@ -10,11 +10,9 @@ This WebApp can be access via a mobile device (such as a cell phone, tablet), a 
 
 When opening the WebApp on a computer/mobile device the default page you will be directed to is the Slides page. Whereas, with the ChromeBit it will be set to only view the Show View page. <i>What are these pages?! Have no fear, we will get there!</i>
 
-Explains:
-* <s>The differences between these views</s>
-* How to set up the ChromeBit
-    * So it can load on the Show View Page on boot
-    * Updating the ChromeBit
+
+On the ChromeBits a 3rd Party App will need to be installed and setup so that whenever the ChromeBit is turned on it will load the proper webpage. 
+
 ## ChromeBit
 As previously stated, the default page for the ChromeBit is the Show View page.
 This page will flip/rotate/carousel through all of the events that you have saved in the system to display to your residents.
@@ -25,9 +23,13 @@ Each slide will be shown for 20 seconds by default, unless set to a different in
 ## Mobile
 Reminder, a mobile device in this document (for this system) is any device that is not a ChromeBit.
 
-Before anything happens in the WebApp on mobile view, we need to log in!
+Before anything happens in the WebApp on mobile view, we need to log in! Once you are logged in, the system will keep you logged in for an hour before you need to log in again.
 
 ![Log In](signInOutSnapshots/signIn.PNG)
+
+To logout, click the signout option on the navigation bar.
+
+![Sign Out](signInOutSnapshots/signOut.PNG)
 
 ### Show View Page
 This page is the main page for the ChromeBit, well, this is the only page for the ChromeBit... 
@@ -146,7 +148,10 @@ Have no fear! There is an undo option, but it's only available for a limited tim
 ![Undo Option](slidesSnapshots/undoDelete.PNG)
 
 ### Calendar Page
+This page is purely just for looks! You can get a calendar view of all of your events in a monthly view.
+It is also really nice to print off.
 
+![Calendar View](calendarScreenshots/calendar.PNG)
 
 ### Food Menu Widget
 This is where you can display all of the food items you will be providing at Sherbrooke Community Centre on a weekly basis.
