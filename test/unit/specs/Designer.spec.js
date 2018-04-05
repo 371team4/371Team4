@@ -34,7 +34,7 @@ const durations = [
 
 const templates = [{ text: 'Default Template', value: 'DefaultSlideTemplate' }]
 
-describe('Designer.vue', function () {
+describe.only('Designer.vue', function () {
   let vm
   const Constructor = Vue.extend(Designer)
 
@@ -425,7 +425,7 @@ describe('Designer.vue', function () {
     let spy
 
     beforeEach(function () {
-      vm = new Constructor().$mount()
+      vm = new Constructor({ store }).$mount()
     })
 
     it('should update carousel', function (done) {
