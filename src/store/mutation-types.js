@@ -67,3 +67,7 @@ export const SET_TIMEOUT = 'SET_META_TIMEOUT'
 // Display dates mutations
 export const ADD_DATE_ON_DISPLAY = 'ADD_DATE_ON_DISPLAY'
 export const DELETE_DATE_ON_DISPLAY = 'DELETE_DATE_ON_DISPLAY'
+
+export const ADD_WEEK = 'ADD_WEEK'
+export const DELETE_WEEK = 'DELETE_WEEK'
+export const UPDATE_MENU_ITEM = 'UPDATE_MENU_ITEM'
