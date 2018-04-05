@@ -34,7 +34,7 @@ const durations = [
 
 const templates = [{ text: 'Default Template', value: 'DefaultSlideTemplate' }]
 
-describe.only('Designer.vue', function () {
+describe('Designer.vue', function () {
   let vm
   const Constructor = Vue.extend(Designer)
 
