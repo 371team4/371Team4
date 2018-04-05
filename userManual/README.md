@@ -24,7 +24,16 @@ Each slide will be shown for 20 seconds by default, unless set to a different in
 
 ## Mobile
 Reminder, a mobile device in this document (for this system) is any device that is not a ChromeBit.
+
+Before anything happens in the WebApp on mobile view, we need to log in!
+
+![Log In](signInOutSnapshots/signIn.PNG)
+
 ### Show View Page
+This page is the main page for the ChromeBit, well, this is the only page for the ChromeBit... 
+But it's not the only page for mobile! If you want to see what it is going to look liko on the ChromeBit, but on a smaller scale, look here!
+
+![Show View](showViewSnapshots/showView.PNG)
 ### Designer Page
 Just one place you can go to create a new slide to be saved into your Slides list! Where each slide is it's own event.
 
@@ -67,8 +76,10 @@ Select your new time and voila! To differentiate between AM and PM, click which 
 Adding a photo to this application is much like any other application. 
 Click the plus button and find the photo you wish to show!
 Removing them is just as easy! Click the red 'X'.
+Remember, at most one Slide can have five photos!
 
 ![Remove Photo](designerSnapshots/removePhoto.PNG)
+![Multiple Photos](designerSnapshots/multPhotos.PNG)
 
 ##### *I'm Finished Editing a Slide, Now What?*
 From this point on you can do a couple of things, click:
@@ -119,6 +130,20 @@ The options range from 10seconds to 80seconds, in 10second intervals.
 ![Days on Display](designerSnapshots/daysOnDisplay.PNG)
 
 ### Slides Page
+The Slides Page allows you to view all of your slides that you currently have made. 
+From here you can search for a specific slide, edit a slide and delete a slide!
+
+Clicking 'Edit' will take you back to the Designer Page.
+
+![Slides Page](slidesSnapshots/slidesPage.PNG)
+
+![Search For a Slide](slidesSnapshots/search.PNG)
+
+#### *Oh no! I accidentally deleted a slide!!*
+Have no fear! There is an undo option, but it's only available for a limited time.
+
+![Undo Option](slidesSnapshots/undoDelete.PNG)
+
 ### Calendar Page
 ### Food Menu Widget
 This is where you can display all of the food items you will be providing at Sherbrooke Community Centre on a weekly basis.
