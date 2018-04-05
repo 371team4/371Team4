@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <div>
       <v-card>
         <v-card-title>
@@ -17,10 +17,16 @@
           slot="items"
           slot-scope="props">
           <td>{{ props.item.username }}</td>
-          <td class="text-xs-left">{{ props.item.password }}</td>
+          <td class="text-xs-left">
+            {{ props.item.password }}
+          </td>
           <td class="text-xs-left">
 
-            <v-flex xs6>
+            <v-flex
+              xs6
+              sm6
+              md6
+              lg6>
               <v-select
                 auto
                 hide-details
@@ -35,17 +41,17 @@
 
           </td>
           <td class="justify-left layout px-0">
-            <v-btn
+            <!-- <v-btn
               icon
               class="mx-0"
               @click="editItem(props.item)">
               <v-icon color="blue lighten-2">edit</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn
               icon
               class="mx-0"
               @click="saveItem(props.item)">
-              <v-icon color="green lighten-1">save</v-icon>
+              <v-icon color="blue lighten-1">save</v-icon>
             </v-btn>
             <v-btn
               icon
