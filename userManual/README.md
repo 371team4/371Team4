@@ -90,12 +90,12 @@ From this point on you can do a couple of things, click:
 * Preview, see what this does below
 
 ![Preview](designerSnapshots/previow.PNG)
-* Submit, this option will bring you to the Preview page so you can see your slide. From here you will need to click submit again to make your Slide to be added to the Show View Page.
+* Submit, this option will submit your Slide and make it be added to the Show View Page
 
 ![Submit](designerSnapshots/submit.PNG)
 
 ###### Preview
-The Preview button will open up a preview so you can see what your Slide will look like when it is submitted.
+The Preview button will open up a preview so you can see what your Slide will look like when it is submitted
 
 ![Preview of Slide](designerSnapshots/preview.PNG)
 
@@ -146,6 +146,8 @@ Have no fear! There is an undo option, but it's only available for a limited tim
 ![Undo Option](slidesSnapshots/undoDelete.PNG)
 
 ### Calendar Page
+
+
 ### Food Menu Widget
 This is where you can display all of the food items you will be providing at Sherbrooke Community Centre on a weekly basis.
 #### Adding and Removing Weeks
