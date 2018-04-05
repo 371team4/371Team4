@@ -2,33 +2,6 @@
   <v-container>
     <div>
 
-      <!-- Edit Password -->
-      <v-dialog
-        v-model="dialog"
-        max-width="500px">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Edit Password</span>
-          </v-card-title>
-          <v-card-text>
-            <v-text-field
-              label="New Password"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn
-              color="blue darken-1"
-              flat
-              @click.native="close">Cancel</v-btn>
-            <v-btn
-              color="blue darken-1"
-              flat
-              @click.native="save">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
       <v-card>
         <v-card-title>
           <h2 class="headline">All Users</h2>
@@ -60,7 +33,36 @@
               </v-icon>
             </v-btn>
             <!-- {{ props.item.password }} -->
+
+            <!-- Edit Password -->
+            <v-dialog
+              v-model="dialog"
+              max-width="500px">
+              <v-card>
+                <v-card-title>
+                  <span class="headline">Edit Password</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-text-field
+                    label="New Password"
+                  />
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer/>
+                  <v-btn
+                    color="blue darken-1"
+                    flat
+                    @click.native="close">Cancel</v-btn>
+                  <v-btn
+                    color="blue darken-1"
+                    flat
+                    @click.native="save">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
           </td>
+
           <td class="text-xs-left">
 
             <v-flex
