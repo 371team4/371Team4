@@ -79,6 +79,7 @@ Removing them is just as easy! Click the red 'X'.
 Remember, at most one Slide can have five photos!
 
 ![Remove Photo](designerSnapshots/removePhoto.PNG)
+
 ![Multiple Photos](designerSnapshots/multPhotos.PNG)
 
 ##### *I'm Finished Editing a Slide, Now What?*
@@ -140,7 +141,7 @@ Clicking 'Edit' will take you back to the Designer Page.
 ![Search For a Slide](slidesSnapshots/search.PNG)
 
 #### *Oh no! I accidentally deleted a slide!!*
-Have no fear! There is an undo option, but it's only available for a limited time.
+Have no fear! There is an undo option, but it's only available for a limited time near the bottom right corner of the browser's window.
 
 ![Undo Option](slidesSnapshots/undoDelete.PNG)
 
