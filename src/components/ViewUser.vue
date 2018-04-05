@@ -3,7 +3,7 @@
     <div>
 
       <!-- Edit Password -->
-      <v-dialog
+      <!-- <v-dialog
         v-model="dialog"
         max-width="500px">
         <v-card>
@@ -27,7 +27,7 @@
               @click.native="save">Save</v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
       <!-- Done Edit Password -->
 
       <v-card>
@@ -82,12 +82,6 @@
 
           </td>
           <td class="justify-left layout px-0">
-            <!-- <v-btn
-              icon
-              class="mx-0"
-              @click="editItem(props.item)">
-              <v-icon color="blue lighten-2">edit</v-icon>
-            </v-btn> -->
             <v-btn
               icon
               class="mx-0"
@@ -101,11 +95,6 @@
               <v-icon color="red lighten-2">delete</v-icon>
             </v-btn>
           </td>
-        </template>
-        <template slot="no-data">
-          <v-btn
-            color="primary"
-            @click="initialize">Reset</v-btn>
         </template>
       </v-data-table>
     </div>
@@ -130,28 +119,7 @@ export default {
         { text: 'Role', value: 'role', sortable: false },
         { text: 'Actions', value: 'name', sortable: false }
       ],
-      items: [],
-      editedIndex: -1,
-      editedItem: {
-        username: '',
-        password: ''
-      },
-      defaultItem: {
-        username: '',
-        password: ''
-      }
-    }
-  },
-
-  watch: {
-    dialog (val) {
-      val || this.close()
-    }
-  },
-
-  methods: {
-    initialize () {
-      this.items = [
+      items: [
         {
           username: 'Yggep',
           password: 'olympus',
@@ -172,9 +140,26 @@ export default {
           password: 'helloworld',
           role: 'Staff'
         }
-      ]
-    },
+      ],
+      editedIndex: -1,
+      editedItem: {
+        username: '',
+        password: ''
+      },
+      defaultItem: {
+        username: '',
+        password: ''
+      }
+    }
+  },
 
+  watch: {
+    dialog (val) {
+      val || this.close()
+    }
+  },
+
+  methods: {
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
