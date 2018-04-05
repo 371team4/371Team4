@@ -676,9 +676,11 @@
                       v-for="(image, index) in images"
                       :key="index">
                       <v-card
+                        data-test-attr="imageWhole"
                         flat
                         tile>
                         <v-card-media
+                          data-test-attr="image"
                           :src="'http://cmpt371g4.usask.ca:8081' + image.path"
                           height="150px"/>
                         <!-- shift the fab to the top left corner -->

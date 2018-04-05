@@ -71,8 +71,9 @@ public class Designer extends PageObjBase {
   */
   By AddButton = By.cssSelector("data-test-attr='addButton'");
   By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
+  By ImageWhole = By.cssSelector("[data-test-attr='imageWhole']");
   By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
-
+  By Image = By.cssSelector("[data-test-attr='image']");
 
   /**
    * The data test for the error Messages
@@ -93,6 +94,19 @@ public class Designer extends PageObjBase {
         item.click();
         break;
       }
+    }
+  }
+
+  public void SelectPicture(String picPath) {
+    List<WebElement> pictures= getWebDriver().findElements(ImageWhole);
+    for (WebElement item : pictures) {
+      //WebElement content = item.findElement(Image);
+      //WebElement backgound = content.findElement(By.cssSelector(".card__media__background"));
+      //String path = content.getCssValue("background");
+      //if (path.equals(picPath)){
+        item.findElement(DeleteImage).click();
+        //break;
+      //}
     }
   }
 
@@ -190,8 +204,9 @@ public class Designer extends PageObjBase {
     CommonUtils.sleep(5);
   }
 
-  public void deletePicture() {
-    getWebDriver().findElement(DeleteImage).click();
+  public void deletePicture(String picName) {
+    //getWebDriver().findElement(ImageWhole).findElement(DeleteImage).click();
+    this.SelectPicture("http://cmpt371g4.usask.ca:8081/images/1522783461062-laugh.jpeg");
     CommonUtils.sleep(5);
   }
 
