@@ -694,7 +694,7 @@
                         <v-btn
                           data-test-attr="deleteImage"
                           class="px-0 py-0 mx-0 mt-4"
-                          style="margin-right: -10px !important;"
+                          style="margin-right: -10px !important; z-index: 2 !important;"
                           fab
                           small
                           absolute
@@ -1102,14 +1102,17 @@ export default {
         this.forceUpdateCarousel()
         this.$store.dispatch('saveSlide').then((response) => {
           this.$router.replace(`/designer/${this.$store.getters.currentSlide._id}`)
+          this.showPreview = true
         })
       }
     },
     clear () {
       // reset all of the data fields
-      this.images.map((image) => {
-        this.$store.dispatch('deleteImage', image._id)
-      })
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.images.map((image) => {
+          this.$store.dispatch('deleteImage', image._id)
+        })
+      }
       this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       this.$refs.form.reset()
       this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
@@ -1142,7 +1145,9 @@ export default {
         .then(() => this.$store.commit(MUTATIONS.DELETE_IMAGE, image))
     },
     changeViews () {
-      this.showPreview = !this.showPreview
+      if (this.$refs.form.validate()) {
+        this.showPreview = !this.showPreview
+      }
       this.forceUpdateCarousel()
     },
     formatDate (dateStr) {

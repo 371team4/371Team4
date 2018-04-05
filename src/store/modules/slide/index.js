@@ -20,7 +20,8 @@ const newSlide = {
   // the date of the slides event, has similar font info as title/description, content is date object
   date: { content: [], fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
   // the time of the event, same as date but time object instead of date object
-  time: { content: Date.now(), fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
+  // content of time will default to top of the hour
+  time: { content: Math.ceil((Date.now() + 1) / 3600000) * 3600000, fontColor: 'Black', fontSize: 'Medium', fontStyle: 'Normal', fontWeight: 'Normal' },
 
   meta: { template: 'DefaultSlideTemplate', timeout: 20, datesOnDisplay: [] }
 }

@@ -166,7 +166,7 @@ export default {
             },
             images: [
               {
-                path: '/images/error-image.png'
+                path: '/images/error_image.png'
               }
             ]
           })

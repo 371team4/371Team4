@@ -85,11 +85,10 @@
         v-for="(week, index) in weeks"
         :key="index">
         <v-container
-          justify-center
-          justify-space-around
+          fluid
           grid-list-md
           text-xs-center
-          class="px-0 py-1">
+          class="py-1">
           <v-layout
             row
             wrap>
