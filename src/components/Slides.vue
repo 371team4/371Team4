@@ -183,6 +183,7 @@ export default {
       if (this.$store.getters.isCurrentSlideDirty) {
         this.dialog = true
       } else {
+        this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
         this.gotoDesigner('new')
       }
     },
