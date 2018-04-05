@@ -1,6 +1,35 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <div>
+
+      <!-- Edit Password -->
+      <v-dialog
+        v-model="dialog"
+        max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Edit Password</span>
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              label="New Password"
+              v-model="props.item.password"/>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click.native="close">Cancel</v-btn>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click.native="save">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!-- Done Edit Password -->
+
       <v-card>
         <v-card-title>
           <h2 class="headline">All Users</h2>
@@ -18,7 +47,19 @@
           slot-scope="props">
           <td>{{ props.item.username }}</td>
           <td class="text-xs-left">
-            {{ props.item.password }}
+            <v-btn
+              small
+              @click.native="editItem(props.item)"
+              color="blue-grey"
+              class="white--text"
+            >
+              Update Password
+              <v-icon
+                right
+                dark>edit
+              </v-icon>
+            </v-btn>
+            <!-- {{ props.item.password }} -->
           </td>
           <td class="text-xs-left">
 
@@ -85,8 +126,8 @@ export default {
           sortable: false,
           value: 'username'
         },
-        { text: 'Password', value: 'password' },
-        { text: 'Role', value: 'role' },
+        { text: 'Password', value: 'password', sortable: false },
+        { text: 'Role', value: 'role', sortable: false },
         { text: 'Actions', value: 'name', sortable: false }
       ],
       items: [],
@@ -102,20 +143,10 @@ export default {
     }
   },
 
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
-  },
-
   watch: {
     dialog (val) {
       val || this.close()
     }
-  },
-
-  created () {
-    this.initialize()
   },
 
   methods: {
