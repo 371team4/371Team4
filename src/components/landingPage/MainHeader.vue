@@ -7,7 +7,7 @@
     fixed
     app
     clipped-left
-    v-if="!inFullScreenMode">
+    v-if="!isChromeBit()">
     <v-toolbar-side-icon
       v-show="!isVisible"
       @click="updateVisibility"/>
@@ -36,27 +36,9 @@ export default {
       default: true
     }
   },
-  data () {
-    return {
-      inFullScreenMode: false
-    }
-  },
-  mounted () {
-    this.$nextTick(function () {
-      window.addEventListener('resize', this.isInFullScreenMode)
-    })
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.isInFullScreenMode)
-  },
   methods: {
-    isInFullScreenMode () {
-      if (!this.$vuetify.breakpoint.smAndDown) { // weak check for phone
-        let windowIsFullScreen = (window.width === screen.width && window.height === screen.height)
-        let clientIsFullScreen = (document.documentElement.clientWidth === screen.width &&
-                                  document.documentElement.clientHeight === screen.height)
-        this.inFullScreenMode = windowIsFullScreen || clientIsFullScreen
-      }
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
     },
     updateVisibility () {
       this.$emit('updateVisFromHeader')

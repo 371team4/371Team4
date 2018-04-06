@@ -10,7 +10,7 @@
     stateless
     touchless
     disable-resize-watcher
-    v-if="!inFullScreenMode">
+    v-if="!isChromeBit()">
     <v-list
       two-line
       dense
@@ -55,11 +55,6 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      inFullScreenMode: false
-    }
-  },
   computed: {
     authTab () {
       if (this.$store.getters.isAuthenticated) {
@@ -77,22 +72,9 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$nextTick(function () {
-      window.addEventListener('resize', this.isInFullScreenMode)
-    })
-  },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.isInFullScreenMode)
-  },
   methods: {
-    isInFullScreenMode () {
-      if (!this.$vuetify.breakpoint.smAndDown) { // weak check for phone
-        let windowIsFullScreen = (window.width === screen.width && window.height === screen.height)
-        let clientIsFullScreen = (document.documentElement.clientWidth === screen.width &&
-                                  document.documentElement.clientHeight === screen.height)
-        this.inFullScreenMode = windowIsFullScreen || clientIsFullScreen
-      }
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
     },
     changeRoute (event) {
       if (this.authTab.name === 'Sign out') {
