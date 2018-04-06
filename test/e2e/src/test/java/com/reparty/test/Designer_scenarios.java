@@ -79,13 +79,21 @@ public class Designer_scenarios extends WebDriverBase {
   }
 
   @Test
-	public void componentTestUploadFile() {
+	public void componentTestUploadOnePic() {
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
+
+    test.deleteOnePicture();
+  }
+
+  @Test
+	public void componentTestUploadMultiplePics() {
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dino.jpg");
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/laugh.jpeg");
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
 
-    test.deletePicture("laugh.jpeg");
+    test.deletePictureAt(3);
+    CommonUtils.sleep(2);
   }
 
   @Test
@@ -98,7 +106,7 @@ public class Designer_scenarios extends WebDriverBase {
     test.enterTitle("Hanoi");
     test.enterDescription("Hanoi");
 
-    test.PreviewEdit();
+    test.Preview_Edit();
   }
 
   @Test
@@ -145,4 +153,36 @@ public class Designer_scenarios extends WebDriverBase {
     test.ChooseSlideDefault("Default Template");
     test.ChooseSlideDate();
   }
+
+
+  /**
+   * The next test is the combination of the Designer.vue and the DefaultSlideTemplate.vue
+   */
+  @Test
+  public void previewTest() {
+    // Fill the box
+    test.enterTitle("This is the title");
+    test.enterDescription("My name is the description");
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
+    test.setDate("2018-4-4");
+
+    // Go to the preview page
+    test.Preview_Edit();
+    Assert.assertEquals("This is the title", test.getPreviewTitle());
+    Assert.assertEquals("My name is the description", test.getPreviewDescription());
+
+    if (test.checkSlidePreview() != 1) {
+      fail();
+    }
+
+    CommonUtils.sleep(2);
+  }
+
+
+
+
+
+
+
+
 }

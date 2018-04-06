@@ -1,5 +1,6 @@
 <template>
   <v-container
+    id="slidePreviewPage"
     fluid
     grid-list-lg
     fill-height>
@@ -15,7 +16,9 @@
           <v-flex
             xs12
             sm12>
-            <v-card-title :style="genFontStylingFor(slide.title)">{{ slide.title.content }}</v-card-title>
+            <v-card-title
+              data-test-attr="previewTitle"
+              :style="genFontStylingFor(slide.title)">{{ slide.title.content }}</v-card-title>
             <v-card-title>
               <h2>
                 <span :style="genFontStylingFor(slide.date)">{{ formattedDate }},</span>
@@ -25,8 +28,9 @@
             <v-card-title class="grey lighten-3 d-block">
               <v-divider class="my-3" />
               <br>
-              <div :style="genFontStylingFor(slide.description)">
-                {{ slide.description.content }}
+              <div
+                data-test-attr="previewDescription"
+                :style="genFontStylingFor(slide.description)">{{ slide.description.content }}
               </div>
               <br>
               <v-divider class="my-3" />

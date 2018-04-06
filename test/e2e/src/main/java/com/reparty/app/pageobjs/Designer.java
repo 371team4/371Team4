@@ -3,7 +3,6 @@ package com.reparty.app.pageobjs;
 import java.util.List;
 
 import com.reparty.app.core.PageObjBase;
-import com.reparty.app.utils.CommonUtils;
 import com.reparty.app.utils.SeleniumUtils;
 
 import org.openqa.selenium.By;
@@ -12,6 +11,9 @@ import org.openqa.selenium.WebElement;
 
 public class Designer extends PageObjBase {
 
+  /**
+   * Header of the page
+   */
   private static final By PAGE_LOCATOR = By.id("designerPage");
 
   /**
@@ -57,10 +59,10 @@ public class Designer extends PageObjBase {
   /**
    * The  data test for the SLIDE SETTINGS FACTION
    */
-  By SlideSettingButton = By.cssSelector("[data-test-attr='slideSettings']");
-  By SlideSettingDuration = By.cssSelector("[data-test-attr='duration']");
-  By SlideSettingDurationDefault = By.cssSelector("[data-test-attr='durationDefault']");
-  By SlideSettingDate = By.cssSelector("[data-test-attr='slideSettingsDate']");
+  private static final By SlideSettingButton = By.cssSelector("[data-test-attr='slideSettings']");
+  private static final By SlideSettingDuration = By.cssSelector("[data-test-attr='duration']");
+  private static final By SlideSettingDurationDefault = By.cssSelector("[data-test-attr='durationDefault']");
+  private static final By SlideSettingDate = By.cssSelector("[data-test-attr='slideSettingsDate']");
 
   /**
    * The data test for the 3 BUTTONS faction
@@ -72,18 +74,33 @@ public class Designer extends PageObjBase {
   /**
    * The data test for the IMAGE CARD faction
   */
-  By AddButton = By.cssSelector("data-test-attr='addButton'");
-  By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
-  By ImageWhole = By.cssSelector("[data-test-attr='imageWhole']");
-  By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
-  By Image = By.cssSelector("[data-test-attr='image']");
+  private static final By AddButton = By.cssSelector("data-test-attr='addButton'");
+  private static final By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
+  private static final By ImageWhole = By.cssSelector("[data-test-attr='imageWhole']");
+  private static final By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
+  private static final By Image = By.cssSelector("[data-test-attr='image']");
 
+  /**
+   * Header of the page
+   */
+  private static final By PAGE_PREVIEW = By.id("slidePreviewPage");
+
+  /**
+   * Test attributes for the title, description, date and time
+   */
+  private static final By TitlePreview = By.cssSelector("[data-test-attr='previewTitle']");
+  private static final By DescriptionPreview = By.cssSelector("[data-test-attr='previewDescription']");
+  private static final By SlidePreview = By.cssSelector(".jumbotron");
   /**
    * The data test for the error Messages
    */
   By ERROR_MESSAGE_WRAPPER = By.xpath("./../../*[contains(@class, 'input-group__details')]");
   By ERROR_MESSAGE = By.cssSelector(".input-group__error");
 
+
+  public static Designer find(WebDriver wd) {
+    return new Designer(SeleniumUtils.waitUntilElementVisible(wd, PAGE_LOCATOR));
+  }
 
   public Designer(WebElement element) {
     super(element);
@@ -97,19 +114,6 @@ public class Designer extends PageObjBase {
         item.click();
         break;
       }
-    }
-  }
-
-  public void SelectPicture(String picPath) {
-    List<WebElement> pictures= getWebDriver().findElements(ImageWhole);
-    for (WebElement item : pictures) {
-      //WebElement content = item.findElement(Image);
-      //WebElement backgound = content.findElement(By.cssSelector(".card__media__background"));
-      //String path = content.getCssValue("background");
-      //if (path.equals(picPath)){
-        item.findElement(DeleteImage).click();
-        //break;
-      //}
     }
   }
 
@@ -185,32 +189,28 @@ public class Designer extends PageObjBase {
   }
 
   public void submit() {
-    CommonUtils.sleep(5);
     getWebDriver().findElement(SubmitButton).click();
-    CommonUtils.sleep(5);
   }
 
-  public void PreviewEdit() {
-    CommonUtils.sleep(5);
+  public void Preview_Edit() {
     getWebDriver().findElement(PreviewButton).click();
-    CommonUtils.sleep(5);
   }
 
   public void clear() {
-    CommonUtils.sleep(5);
     getWebDriver().findElement(ClearButton).click();
-    CommonUtils.sleep(5);
   }
 
   public void uploadPicture(String path) {
     getWebDriver().findElement(UploadPath).sendKeys(path);
-    CommonUtils.sleep(5);
   }
 
-  public void deletePicture(String picName) {
-    //getWebDriver().findElement(ImageWhole).findElement(DeleteImage).click();
-    this.SelectPicture("http://cmpt371g4.usask.ca:8081/images/1522783461062-laugh.jpeg");
-    CommonUtils.sleep(5);
+  public void deleteOnePicture(){
+    getWebDriver().findElement(DeleteImage).click();
+  }
+
+  public void deletePictureAt(int pos) {
+    List<WebElement> deleteButton= getWebDriver().findElements(DeleteImage);
+    deleteButton.get(pos).click();
   }
 
   public void setDate(String day){
@@ -222,7 +222,6 @@ public class Designer extends PageObjBase {
         return;
       }
     }
-    CommonUtils.sleep(5);
   }
 
   public void ClickDateButton() {
@@ -258,7 +257,6 @@ public class Designer extends PageObjBase {
         return;
       }
     }
-    CommonUtils.sleep(5);
   }
 
   public void ClickTimeButton() {
@@ -304,6 +302,26 @@ public class Designer extends PageObjBase {
 
   }
 
+
+  /**
+   *The methods for preview slide
+   */
+  public String getPreviewTitle(){
+    return getWebDriver().findElement(TitlePreview).getText().trim();
+  }
+
+  public String getPreviewDescription(){
+    return getWebDriver().findElement(DescriptionPreview).getText().trim();
+  }
+
+  public int checkSlidePreview() {
+    List<WebElement> pictures = getWebDriver().findElements(SlidePreview);
+    return pictures.size();
+  }
+
+  /**
+   * The methods to check the error messages
+   */
   private WebElement getTitleErrorMessagesWE() {
     WebElement title = getWebDriver().findElement(TitleInput);
     return title.findElement(ERROR_MESSAGE_WRAPPER);
