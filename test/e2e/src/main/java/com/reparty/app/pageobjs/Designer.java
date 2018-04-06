@@ -6,6 +6,7 @@ import com.reparty.app.core.PageObjBase;
 import com.reparty.app.utils.SeleniumUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -76,9 +77,7 @@ public class Designer extends PageObjBase {
   */
   private static final By AddButton = By.cssSelector("data-test-attr='addButton'");
   private static final By UploadPath = By.cssSelector("[data-test-attr='uploadPath']");
-  private static final By ImageWhole = By.cssSelector("[data-test-attr='imageWhole']");
   private static final By DeleteImage = By.cssSelector("[data-test-attr='deleteImage']");
-  private static final By Image = By.cssSelector("[data-test-attr='image']");
 
   /**
    * Header of the page
@@ -120,6 +119,8 @@ public class Designer extends PageObjBase {
   public void enterTitle(String title) {
     getWebDriver().findElement(TitleInput).clear();
     getWebDriver().findElement(TitleInput).sendKeys(title);
+    //getWebDriver().findElement(TitleInput).sendKeys(Keys.CONTROL+"a");
+    //getWebDriver().findElement(TitleInput).sendKeys(Keys.BACK_SPACE);
   }
 
   public boolean isTitleValid() {

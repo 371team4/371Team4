@@ -7,7 +7,9 @@
       class="pt-1 pb-0"
       primary-title>
       <div>
-        <h3 class="headline mb-0">{{ title }}</h3>
+        <h3
+          data-test-attr="cardTitle"
+          class="headline mb-0">{{ title }}</h3>
         <div>{{ description }}</div>
       </div>
     </v-card-title>
