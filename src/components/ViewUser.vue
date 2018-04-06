@@ -46,7 +46,21 @@
           slot="items"
           slot-scope="props">
           <td>{{ props.item.name }}</td>
-          <td class="text-xs-left">{{ props.item.password }}</td>
+
+          <td class="text-xs-left">
+            <!-- {{ props.item.password }} -->
+            <v-btn
+              class="mx-0"
+              @click="editItem(props.item)"
+              color="blue-grey"
+              small
+            > Edit Password
+              <v-icon
+                right
+                dark>edit
+              </v-icon>
+            </v-btn>
+          </td>
           <td class="text-xs-left">
 
             <v-select
@@ -61,13 +75,13 @@
             </v-select>
 
           </td>
-          <td class="justify-left layout px-0">
-            <v-btn
+          <td class="justify-center layout px-0">
+            <!-- <v-btn
               icon
               class="mx-0"
               @click="editItem(props.item)">
               <v-icon color="teal">edit</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn
               icon
               class="mx-0"
