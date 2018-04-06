@@ -174,7 +174,6 @@ export default {
     removeWeek (weekNumber) {
       // Don't delete the first week
       if (this.weeks.length > 1) {
-        debugger
         // Show alert dialog to warn users that they are deleting
         // this.dialog = true
         // Remove the week

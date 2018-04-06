@@ -22,7 +22,6 @@ const mutations = {
     state.weeks = payload
   },
   [UPDATE_MENU_ITEM] (state, payload) {
-    debugger
     if (payload.weekIndex && payload.dayIndex && payload.mealName && payload.itemIndex && payload.value) {
       state.weeks[payload.weekIndex].days[payload.dayIndex].meals[payload.mealName][payload.itemIndex] = payload.value
     }

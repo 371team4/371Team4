@@ -174,7 +174,6 @@ describe('Slides.vue', function () {
 
   describe('Test saved slides', function () {
     it('should render correct contents', function (done) {
-      debugger
       Vue.nextTick(() => {
         expect(vm.filteredSlides).to.equal(mockSlides)
         done()

@@ -1,6 +1,8 @@
 // mutation types
 export const SET_LOADING = 'SET_LOADING'
 
+export const SET_SHOW_PREVIEW = 'SET_SHOW_PREVIEW'
+
 export const SET_USER = 'SET_USER'
 
 export const SET_SLIDE = 'SET_SLIDE'

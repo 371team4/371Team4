@@ -1,8 +1,9 @@
-import { SET_LOADING, SET_SNACKBAR_BUTTON, SET_SNACKBAR_HANDLER, SET_SNACKBAR_STATUS, SET_SNACKBAR_MESSAGE, SET_SNACKBAR_TIMEOUT } from './mutation-types'
+import { SET_LOADING, SET_SNACKBAR_BUTTON, SET_SNACKBAR_HANDLER, SET_SNACKBAR_STATUS, SET_SNACKBAR_MESSAGE, SET_SNACKBAR_TIMEOUT, SET_SHOW_PREVIEW } from './mutation-types'
 
 // state of this module
 const state = {
   isLoading: false,
+  showPreview: false,
   snackbarMessage: '',
   snackbarStatus: false,
   snackbarTimeout: 10000,
@@ -13,6 +14,7 @@ const state = {
 // getters for this module's state
 const getters = {
   isLoading: state => state.isLoading,
+  showPreview: state => state.showPreview,
   snackbarMessage: state => state.snackbarMessage,
   snackbarStatus: state => state.snackbarStatus,
   snackbarTimeout: state => state.snackbarTimeout,
@@ -24,6 +26,9 @@ const getters = {
 const mutations = {
   [SET_LOADING] (state, payload) {
     state.isLoading = payload.isLoading
+  },
+  [SET_SHOW_PREVIEW] (state, payload) {
+    state.showPreview = payload
   },
   [SET_SNACKBAR_MESSAGE] (state, payload) {
     state.snackbarMessage = payload
