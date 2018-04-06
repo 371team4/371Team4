@@ -9,7 +9,8 @@
     hide-overlay
     stateless
     touchless
-    disable-resize-watcher>
+    disable-resize-watcher
+    v-if="!inFullScreenMode">
     <v-list
       two-line
       dense
@@ -54,6 +55,11 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      inFullScreenMode: false
+    }
+  },
   computed: {
     authTab () {
       if (this.$store.getters.isAuthenticated) {
@@ -71,7 +77,21 @@ export default {
       }
     }
   },
+  mounted () {
+    this.$nextTick(function () {
+      window.addEventListener('resize', this.isInFullScreenMode)
+    })
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.isInFullScreenMode)
+  },
   methods: {
+    isInFullScreenMode () {
+      let windowIsFullScreen = (window.width === screen.width && window.height === screen.height)
+      let clientIsFullScreen = (document.documentElement.clientWidth === screen.width &&
+                                document.documentElement.clientHeight === screen.height)
+      this.inFullScreenMode = windowIsFullScreen || clientIsFullScreen
+    },
     changeRoute (event) {
       if (this.authTab.name === 'Sign out') {
         this.$store.dispatch('signOut')
