@@ -19,6 +19,14 @@
         @click.native="addWeek">
         <v-icon dark>add</v-icon>
       </v-btn>
+      <v-btn
+        icon
+        small
+        class="mx-1"
+        color="blue lighten-3"
+        @click.native="reload">
+        <v-icon dark>autorenew</v-icon>
+      </v-btn>
 
       <!-- buttons to save changes and schedule the menu -->
       <!-- NOT YET IMPLEMENTED YET. -->
@@ -97,9 +105,11 @@
               sm12
               md6
               lg4
-              v-for="(day, i) in week"
-              :key="i">
-              <menu-day-card :day="day"/>
+              v-for="(day, dayIndex) in week.days"
+              :key="dayIndex">
+              <menu-day-card
+                :day="day"
+                @updateMenuItem="hendleItemUpdate(Object.assign({},{weekIndex:index,dayIndex:dayIndex},$event))"/>
             </v-flex>
           </v-layout>
         </v-container>
@@ -117,7 +127,7 @@ export default {
   components: { MenuDayCard },
   data () {
     return {
-      active: null,
+      active: '0',
       menu: false,
       date: null
     }
@@ -125,60 +135,11 @@ export default {
   computed: {
     // weeks as a computed property returns an empty array
     weeks () {
-      return [
-        [
-          {
-            name: 'Sunday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Monday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Tuesday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Wednesday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Thursday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Friday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          },
-          {
-            name: 'Saturday',
-            meals: {
-              Lunch: ['', '', '', '', ''],
-              Supper: ['', '', '', '', '']
-            }
-          }
-        ]
-      ]
+      return this.$store.getters.weeks
     }
+  },
+  created () {
+    this.reload()
   },
   methods: {
     addWeek () {
@@ -194,16 +155,17 @@ export default {
         this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
       } else {
         // add an empty week to the list of weeks
-        const weekTemplate = [
-          { name: 'Sunday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Monday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Tuesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Wednesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Thursday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Friday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
-          { name: 'Saturday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } }
-        ]
-        this.weeks.push(weekTemplate)
+        const weekTemplate = { startDate: null,
+          days: [
+            { name: 'Sunday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Monday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Tuesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Wednesday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Thursday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Friday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } },
+            { name: 'Saturday', meals: { Lunch: ['', '', '', '', ''], Supper: ['', '', '', '', ''] } }
+          ] }
+        this.$store.commit(MUTATIONS.ADD_WEEK, weekTemplate)
         // switch the tab view to the last week added to the list of weeks
         // vuetify tabs don't understand anything but strings
         this.active = (parseInt(this.weeks.length) - 1).toString()
@@ -212,6 +174,7 @@ export default {
     removeWeek (weekNumber) {
       // Don't delete the first week
       if (this.weeks.length > 1) {
+        debugger
         // Show alert dialog to warn users that they are deleting
         // this.dialog = true
         // Remove the week
@@ -229,6 +192,12 @@ export default {
         }.bind(this))
         this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
       }
+    },
+    reload () {
+      this.$store.dispatch('retrieveAllWeeks')
+    },
+    hendleItemUpdate (updatePackage) {
+      this.$store.commit(MUTATIONS.UPDATE_MENU_ITEM, updatePackage)
     },
     saveChanges () {
       // Not yet implemented

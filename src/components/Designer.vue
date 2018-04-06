@@ -619,7 +619,7 @@
                             <v-select
                               data-test-attr="durationDefault"
                               chips
-                              label="Duration"
+                              label="Template"
                               :items="templates"
                               v-model="template">
                               <template
