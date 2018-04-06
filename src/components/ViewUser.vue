@@ -54,6 +54,7 @@
               @click="editItem(props.item)"
               color="blue-grey"
               small
+              dark
             > Edit Password
               <v-icon
                 right
