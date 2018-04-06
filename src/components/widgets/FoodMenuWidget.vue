@@ -109,7 +109,7 @@
               :key="dayIndex">
               <menu-day-card
                 :day="day"
-                @updateMenuItem="hendleItemUpdate(Object.assign({},{weekIndex:index,dayIndex:dayIndex},$event))"/>
+                @updateMenuItem="handleItemUpdate(Object.assign({},{weekIndex:index,dayIndex:dayIndex},$event))"/>
             </v-flex>
           </v-layout>
         </v-container>
@@ -195,7 +195,7 @@ export default {
     reload () {
       this.$store.dispatch('retrieveAllWeeks')
     },
-    hendleItemUpdate (updatePackage) {
+    handleItemUpdate (updatePackage) {
       this.$store.commit(MUTATIONS.UPDATE_MENU_ITEM, updatePackage)
     },
     saveChanges () {

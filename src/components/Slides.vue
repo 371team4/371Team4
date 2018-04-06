@@ -153,7 +153,9 @@ export default {
         // if there is something the in the search bar then filter the array fo current slides
         // search the list of slides
         let filteredSlides = slides.filter(
-          (slide) => slide.title.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
+          (slide) =>
+            slide.title.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1 ||
+            slide.description.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
@@ -204,6 +206,7 @@ export default {
       }
     },
     gotoDesigner (id) {
+      this.$store.commit(MUTATIONS.SET_SHOW_PREVIEW, false)
       this.slideToOpen = null
       this.$router.push(
         {
