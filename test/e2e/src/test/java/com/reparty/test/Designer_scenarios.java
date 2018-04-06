@@ -42,7 +42,12 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
   public void test0() {
-    Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
+    //Assert.assertEquals("Retirement Party", getWebDriver().getTitle());
+
+    MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
+    if (!header.checkToolBarTitle("Designer")) {
+      fail();
+    }
   }
 
   @Test

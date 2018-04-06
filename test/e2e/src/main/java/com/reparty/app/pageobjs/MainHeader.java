@@ -18,6 +18,8 @@ public class MainHeader extends PageObjBase {
   private static final By barButton1 = By.cssSelector("[data-test-attr='firstTool']");
   private static final By barButton2 = By.cssSelector("[data-test-attr='secondTool']");
 
+  private static final By toolBarTitle = By.cssSelector(".toolbar__title");
+
   public MainHeader(WebElement element) {
     super(element);
   }
@@ -28,6 +30,13 @@ public class MainHeader extends PageObjBase {
 
   public void close() {
     getWebDriver().findElement(barButton2).click();
+  }
+
+  public boolean checkToolBarTitle (String title) {
+
+    WebElement barTitleBar = getWebDriver().findElement(toolBarTitle);
+    System.out.println(barTitleBar.getText().trim());
+    return barTitleBar.getText().trim().equals(title);
   }
 
 }
