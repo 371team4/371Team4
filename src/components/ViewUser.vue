@@ -18,6 +18,7 @@
                   md12>
                   <v-text-field
                     label="Password"
+                    :type="'password'"
                     v-model="editedItem.password"/>
                 </v-flex>
               </v-layout>
@@ -134,7 +135,8 @@ export default {
       name: '',
       password: '',
       role: ''
-    }
+    },
+    dale: 'password'
   }),
 
   watch: {
@@ -151,27 +153,27 @@ export default {
     initialize () {
       this.items = [
         {
-          name: 'Amy',
+          name: ' Yma',
           password: 'hello',
           role: 'Staff'
         },
         {
-          name: 'Mahmoud',
+          name: 'Doumham',
           password: 'kool',
           role: 'Admin'
         },
         {
-          name: 'Peggy',
+          name: 'Yggep',
           password: 'olympus',
           role: 'Admin'
         },
         {
-          name: 'Li',
+          name: 'Il',
           password: 'cmpt',
           role: 'Staff'
         },
         {
-          name: 'Erik',
+          name: 'Kire',
           password: 'physics',
           role: 'Admin'
         }
