@@ -87,10 +87,12 @@ export default {
   },
   methods: {
     isInFullScreenMode () {
-      let windowIsFullScreen = (window.width === screen.width && window.height === screen.height)
-      let clientIsFullScreen = (document.documentElement.clientWidth === screen.width &&
-                                document.documentElement.clientHeight === screen.height)
-      this.inFullScreenMode = windowIsFullScreen || clientIsFullScreen
+      if (!this.$vuetify.breakpoint.smAndDown) { // weak check for phone
+        let windowIsFullScreen = (window.width === screen.width && window.height === screen.height)
+        let clientIsFullScreen = (document.documentElement.clientWidth === screen.width &&
+                                  document.documentElement.clientHeight === screen.height)
+        this.inFullScreenMode = windowIsFullScreen || clientIsFullScreen
+      }
     },
     changeRoute (event) {
       if (this.authTab.name === 'Sign out') {
