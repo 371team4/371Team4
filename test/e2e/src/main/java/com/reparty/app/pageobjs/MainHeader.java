@@ -22,11 +22,11 @@ public class MainHeader extends PageObjBase {
     super(element);
   }
 
-  public void clickBar1() {
+  public void open() {
     getWebDriver().findElement(barButton1).click();
   }
 
-  public void clickBar2() {
+  public void close() {
     getWebDriver().findElement(barButton2).click();
   }
 

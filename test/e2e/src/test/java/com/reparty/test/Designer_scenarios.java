@@ -28,12 +28,12 @@ public class Designer_scenarios extends WebDriverBase {
     CommonUtils.sleep(3);
 
     MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
-    header.clickBar1();
+    header.open();
 
     NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
     navigation.goTo("Designer");
 
-    header.clickBar2();
+    header.close();
     //getWebDriver().navigate().to(serverPath.concat("/designer/new"));
     test = new Designer(getWebDriver().findElement(By.cssSelector("main")));
 
