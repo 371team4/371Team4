@@ -163,6 +163,10 @@ export default {
       ]
     },
 
+    saveItem (item) {
+      console.log('Button was pressed')
+    },
+
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
