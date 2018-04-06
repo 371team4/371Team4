@@ -1,11 +1,13 @@
 package com.reparty.app.pageobjs;
 
+import java.awt.RenderingHints.Key;
 import java.util.List;
 
 import com.reparty.app.core.PageObjBase;
 import com.reparty.app.utils.SeleniumUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -44,11 +46,13 @@ public class LoginPage extends PageObjBase {
   }
 
   public void clearPassword() {
-    setPassword("");
+    getPasswordWE().sendKeys(Keys.CONTROL + "a");
+    getPasswordWE().sendKeys(Keys.BACK_SPACE);
   }
 
   public void clearUsername() {
-    setUsername("");
+    getUsernameWE().sendKeys(Keys.CONTROL + "a");
+    getUsernameWE().sendKeys(Keys.BACK_SPACE);
   }
 
   public void maskPassword() {
