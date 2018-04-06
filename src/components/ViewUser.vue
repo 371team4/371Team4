@@ -1,13 +1,41 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <div>
-
-      <v-card>
-        <v-card-title>
-          <h2 class="headline">All Users</h2>
-        </v-card-title>
-      </v-card>
-
+      <v-dialog
+        v-model="dialog"
+        max-width="500px">
+        <v-card>
+          <v-card-title>
+            <span class="headline">Edit Password</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex
+                  xs12
+                  sm12
+                  lg12
+                  md12>
+                  <v-text-field
+                    label="Password"
+                    v-model="editedItem.password"/>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer/>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click.native="close">Cancel</v-btn>
+            <v-btn
+              color="blue darken-1"
+              flat
+              @click.native="save">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <v-data-table
         :headers="headers"
         :items="items"
@@ -17,87 +45,28 @@
         <template
           slot="items"
           slot-scope="props">
-          <td>{{ props.item.username }}</td>
-
-          <td class="text-xs-left">
-            <v-btn
-              small
-              @click.native="editItem(props.item)"
-              color="blue-grey"
-              class="white--text"
-            >
-              Update Password
-              <v-icon
-                right
-                dark>edit
-              </v-icon>
-            </v-btn>
-            <!-- {{ props.item.password }} -->
-
-            <!-- Edit Password -->
-            <v-dialog
-              v-model="dialog"
-              max-width="500px">
-              <v-card>
-                <v-card-title>
-                  <span class="headline">Edit Password</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-text-field
-                    label="New Password"
-                  />
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer/>
-                  <v-btn
-                    color="blue darken-1"
-                    flat
-                    @click.native="close">Cancel</v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    flat
-                    @click.native="save">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-          </td>
-
-          <td class="text-xs-left">
-
-            <v-flex
-              xs6
-              sm6
-              md6
-              lg6>
-              <v-select
-                auto
-                hide-details
-                v-model="props.item.role"
-                :items="roleList"
-                label="Select"
-                single-line
-                prepend-icon="people">
-                {{ props.item.role }}
-              </v-select>
-            </v-flex>
-
-          </td>
-          <td class="justify-left layout px-0">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-left">{{ props.item.password }}</td>
+          <td class="text-xs-left">{{ props.item.role }}</td>
+          <td class="justify-center layout px-0">
             <v-btn
               icon
               class="mx-0"
-              @click="saveItem(props.item)">
-              <v-icon color="blue lighten-1">save</v-icon>
+              @click="editItem(props.item)">
+              <v-icon color="teal">edit</v-icon>
             </v-btn>
             <v-btn
               icon
               class="mx-0"
               @click="deleteItem(props.item)">
-              <v-icon color="red lighten-2">delete</v-icon>
+              <v-icon color="pink">delete</v-icon>
             </v-btn>
           </td>
-          <!-- Done Edit Password -->
+        </template>
+        <template slot="no-data">
+          <v-btn
+            color="primary"
+            @click="initialize">Reset</v-btn>
         </template>
       </v-data-table>
     </div>
@@ -106,61 +75,78 @@
 
 <script>
 export default {
-  data () {
-    return {
-      roleList: ['Admin', 'Staff'],
-      dialog: false,
-      headers: [
+  data: () => ({
+    dialog: false,
+    headers: [
+      {
+        text: 'Username',
+        align: 'left',
+        sortable: false,
+        value: 'name'
+      },
+      { text: 'Password', value: 'password', sortable: false },
+      { text: 'Role', value: 'role', sortable: false },
+      { text: 'Actions', value: 'name', sortable: false }
+    ],
+    items: [],
+    editedIndex: -1,
+    editedItem: {
+      name: '',
+      password: '',
+      role: ''
+    },
+    defaultItem: {
+      name: '',
+      password: '',
+      role: ''
+    }
+  }),
+
+  watch: {
+    dialog (val) {
+      val || this.close()
+    }
+  },
+
+  created () {
+    this.initialize()
+  },
+
+  methods: {
+    initialize () {
+      this.items = [
         {
-          text: 'Username',
-          align: 'left',
-          sortable: false,
-          value: 'username'
+          name: 'Amy',
+          password: 'hello',
+          role: 'Staff'
         },
-        { text: 'Password', value: 'password', sortable: false },
-        { text: 'Role', value: 'role', sortable: false },
-        { text: 'Actions', value: 'name', sortable: false }
-      ],
-      items: [
         {
-          username: 'Yggep',
-          password: 'olympus',
-          role: 'Admin'
-        },
-        {
-          username: 'Duomham',
+          name: 'Mahmoud',
           password: 'kool',
           role: 'Admin'
         },
         {
-          username: 'Kire',
-          password: 'physics',
+          name: 'Peggy',
+          password: 'olympus',
           role: 'Admin'
         },
         {
-          username: 'Yma',
-          password: 'helloworld',
+          name: 'Li',
+          password: 'cmpt',
           role: 'Staff'
+        },
+        {
+          name: 'Erik',
+          password: 'physics',
+          role: 'Admin'
         }
-      ],
-      editedIndex: -1,
-      editedItem: {
-        username: '',
-        password: ''
-      },
-      defaultItem: {
-        username: '',
-        password: ''
-      }
-    }
-  },
+      ]
+    },
 
-  methods: {
     editItem (item) {
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
-      console.log(this.editedIndex, this.editedItem)
     },
 
     deleteItem (item) {
@@ -168,12 +154,6 @@ export default {
       confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
     },
 
-    saveItem (item) {
-      console.log(item.password)
-      console.log('Button was clicked!')
-    },
-
-    /* methods for the alert dialog of changing the password */
     close () {
       this.dialog = false
       setTimeout(() => {
@@ -184,10 +164,8 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        console.log('hi')
         Object.assign(this.items[this.editedIndex], this.editedItem)
       } else {
-        console.log('hello')
         this.items.push(this.editedItem)
       }
       this.close()
