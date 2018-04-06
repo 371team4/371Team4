@@ -36,8 +36,8 @@ public class SlidesPage extends PageObjBase {
     getWebDriver().findElement(SearchBar).sendKeys(search);
   }
 
-  public String getCardTitle () {
-    return getWebDriver().findElement(CardTitle).getText().trim();
+  public String getFirstCardTitle () {
+    return getTheSlideList().get(0).findElement(CardTitle).getText().trim();
   }
 
   public int getListSlidesSize () {
