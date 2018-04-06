@@ -30,7 +30,7 @@
                 label="Username"
                 type="text"
                 v-model="username"
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.username, rules.usernameLength]"
                 required
                 @keyup.enter="submit"/>
               <v-text-field
@@ -42,9 +42,10 @@
                 v-model="password"
                 :append-icon="unmask ? 'visibility_off' : 'visibility'"
                 :append-icon-cb="() => (unmask = !unmask)"
-                required
                 :rules="[rules.required]"
+                required
                 @keyup.enter="submit"/>
+                <!--, rules.password]"-->
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -67,11 +68,16 @@ export default {
   name: 'Login',
   data () {
     return {
-      username: 'test',
+      username: 'admin',
       password: 'admin001',
-      unmask: true,
+      unmask: false,
       valid: true,
-      rules: { required: (value) => !!value || 'Required.' }
+      rules: {
+        required: value => (!!value && !!value.trim()) || 'Required',
+        username: value => /(?=[A-Za-z]{4})([A-Za-z0-9_]+)/.test(value) || 'Username must be alphanumeric',
+        password: value => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(value) || 'Password doesn\'t meet password standards',
+        usernameLength: value => (!!value && value.length >= 5) || 'Username must be at least 5 characters long'
+      }
     }
   },
   computed: {
