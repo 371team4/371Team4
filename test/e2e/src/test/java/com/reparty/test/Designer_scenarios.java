@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 import com.reparty.app.core.WebDriverBase;
 import com.reparty.app.pageobjs.Designer;
 import com.reparty.app.pageobjs.LoginPage;
+import com.reparty.app.pageobjs.MainHeader;
+import com.reparty.app.pageobjs.NavDrawer;
 import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
@@ -25,8 +27,17 @@ public class Designer_scenarios extends WebDriverBase {
     logInButton.login();
     CommonUtils.sleep(3);
 
-    getWebDriver().navigate().to(serverPath.concat("/designer/new"));
+    MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
+    header.clickBar1();
+
+    NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
+    navigation.goTo("Designer");
+
+    header.clickBar2();
+    //getWebDriver().navigate().to(serverPath.concat("/designer/new"));
     test = new Designer(getWebDriver().findElement(By.cssSelector("main")));
+
+    CommonUtils.sleep(3);
   }
 
   @Test
@@ -164,6 +175,7 @@ public class Designer_scenarios extends WebDriverBase {
     test.enterTitle("This is the title");
     test.enterDescription("My name is the description");
     test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
+    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
     test.setDate("2018-4-4");
 
     // Go to the preview page
@@ -171,18 +183,11 @@ public class Designer_scenarios extends WebDriverBase {
     Assert.assertEquals("This is the title", test.getPreviewTitle());
     Assert.assertEquals("My name is the description", test.getPreviewDescription());
 
-    if (test.checkSlidePreview() != 1) {
+    if (test.checkSlidePreview() != 2) {
       fail();
     }
 
     CommonUtils.sleep(2);
   }
-
-
-
-
-
-
-
 
 }

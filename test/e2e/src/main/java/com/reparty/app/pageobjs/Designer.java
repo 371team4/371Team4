@@ -134,6 +134,18 @@ public class Designer extends PageObjBase {
     return "";
   }
 
+  public boolean isDescriptionValid() {
+    List<WebElement> errors = this.getTitleErrorMessagesWE().findElements(By.xpath(".//*"));
+    return errors.size() == 1;
+  }
+
+  public String getDescriptionErrorMessage() {
+    if (!isDescriptionValid()) {
+      return this.getDescriptionErrorMessagesWE().findElement(ERROR_MESSAGE).getText().trim();
+    }
+    return "";
+  }
+
   public void ClickTitleButton() {
     getWebDriver().findElement(TitleButton).click();
   }

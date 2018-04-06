@@ -8,9 +8,11 @@
     app
     clipped-left>
     <v-toolbar-side-icon
+      data-test-attr="firstTool"
       v-show="!isVisible"
       @click="updateVisibility"/>
     <v-toolbar-side-icon
+      data-test-attr="secondTool"
       v-show="isVisible"
       @click="updateVisibility">
       <v-icon>keyboard_arrow_left</v-icon>
