@@ -47,13 +47,32 @@
           slot-scope="props">
           <td>{{ props.item.name }}</td>
           <td class="text-xs-left">{{ props.item.password }}</td>
-          <td class="text-xs-left">{{ props.item.role }}</td>
-          <td class="justify-center layout px-0">
+          <td class="text-xs-left">
+
+            <v-select
+              auto
+              hide-details
+              v-model="props.item.role"
+              :items="roleList"
+              label="Select"
+              single-line
+              prepend-icon="people">
+              {{ props.item.role }}
+            </v-select>
+
+          </td>
+          <td class="justify-left layout px-0">
             <v-btn
               icon
               class="mx-0"
               @click="editItem(props.item)">
               <v-icon color="teal">edit</v-icon>
+            </v-btn>
+            <v-btn
+              icon
+              class="mx-0"
+              @click="saveItem(props.item)">
+              <v-icon color="blue">save</v-icon>
             </v-btn>
             <v-btn
               icon
@@ -76,6 +95,7 @@
 <script>
 export default {
   data: () => ({
+    roleList: ['Admin', 'Staff'],
     dialog: false,
     headers: [
       {
