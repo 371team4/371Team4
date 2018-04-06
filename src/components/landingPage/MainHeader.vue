@@ -6,7 +6,8 @@
     dark
     fixed
     app
-    clipped-left>
+    clipped-left
+    v-if="!isChromeBit()">
     <v-toolbar-side-icon
       data-test-attr="firstTool"
       v-show="!isVisible"
@@ -38,6 +39,9 @@ export default {
     }
   },
   methods: {
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
+    },
     updateVisibility () {
       this.$emit('updateVisFromHeader')
     }

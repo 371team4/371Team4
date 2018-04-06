@@ -8,10 +8,9 @@
       <DefaultSlideTemplate
         :carousel="carousel"
         :slide="slide"
-        v-show="showPreview" />
+        v-show="showPreview"/>
       <v-form
         v-model="valid"
-        lazy-validation
         v-show="!showPreview"
         ref="form">
         <v-container
@@ -786,7 +785,6 @@ export default {
       showSlideSettings: false,
       uploading: true,
       valid: true,
-      showPreview: false,
       carousel: -1,
       dateMenu: false,
       timeMenu: false,
@@ -854,6 +852,14 @@ export default {
     }
   },
   computed: {
+    showPreview: {
+      get () {
+        return this.$store.getters.showPreview
+      },
+      set (val) {
+        this.$store.commit(MUTATIONS.SET_SHOW_PREVIEW, val)
+      }
+    },
     slide: {
       get () {
         return this.$store.getters.currentSlide
@@ -864,7 +870,7 @@ export default {
         return this.$store.getters.currentSlideTitleContent
       },
       set (value) {
-        this.$store.commit(MUTATIONS.SET_TITLE_CONTENT, value)
+        this.$store.commit(MUTATIONS.SET_TITLE_CONTENT, value.trim())
       }
     },
     titleColor: {
@@ -904,7 +910,7 @@ export default {
         return this.$store.getters.currentSlideDescriptionContent
       },
       set (value) {
-        this.$store.commit(MUTATIONS.SET_DESCRIPTION_CONTENT, value)
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_CONTENT, value.trim())
       }
     },
     descColor: {

@@ -9,7 +9,8 @@
     hide-overlay
     stateless
     touchless
-    disable-resize-watcher>
+    disable-resize-watcher
+    v-if="!isChromeBit()">
     <v-list
       two-line
       dense
@@ -72,6 +73,9 @@ export default {
     }
   },
   methods: {
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
+    },
     changeRoute (event) {
       if (this.authTab.name === 'Sign out') {
         this.$store.dispatch('signOut')
