@@ -205,6 +205,14 @@ public class Designer extends PageObjBase {
     this.SelectStyle(fontStyle);
   }
 
+  public String GetTitle() {
+    return getWebDriver().findElement(TitleInput).getAttribute("value");
+  }
+
+  public String GetDescription() {
+    return getWebDriver().findElement(DescriptionInput).getAttribute("value");
+  }
+  
   public void submit() {
     getWebDriver().findElement(SubmitButton).click();
   }

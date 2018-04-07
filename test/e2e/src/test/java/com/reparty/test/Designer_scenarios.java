@@ -7,6 +7,7 @@ import com.reparty.app.pageobjs.Designer;
 import com.reparty.app.pageobjs.LoginPage;
 import com.reparty.app.pageobjs.MainHeader;
 import com.reparty.app.pageobjs.NavDrawer;
+import com.reparty.app.pageobjs.SlidesPage;
 import com.reparty.app.utils.CommonUtils;
 
 import org.junit.Assert;
@@ -29,6 +30,7 @@ public class Designer_scenarios extends WebDriverBase {
 
     MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
     header.open();
+    CommonUtils.sleep(1);
 
     NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
     navigation.goTo("Designer");
@@ -59,7 +61,7 @@ public class Designer_scenarios extends WebDriverBase {
   public void checkTitleError() {
 
     test.enterTitle("");
-    test.submit();
+    test.ClickTitleButton();
 
     String error = test.getTitleErrorMessage();
     if (!error.equals("Title is required")) {
@@ -96,25 +98,20 @@ public class Designer_scenarios extends WebDriverBase {
 
   @Test
 	public void componentTestUploadOnePic() {
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
-
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    CommonUtils.sleep(3);
     test.deleteOnePicture();
   }
 
   @Test
 	public void componentTestUploadMultiplePics() {
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dino.jpg");
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/laugh.jpeg");
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    CommonUtils.sleep(3);
 
     test.deletePictureAt(3);
-    CommonUtils.sleep(2);
-  }
-
-  @Test
-  public void componentTestSubmitButton() {
-    test.submit();
   }
 
   @Test
@@ -179,8 +176,8 @@ public class Designer_scenarios extends WebDriverBase {
     // Fill the box
     test.enterTitle("This is the title");
     test.enterDescription("My name is the description");
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/polices.jpg");
-    test.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
     test.setDate("2018-4-4");
 
     // Go to the preview page
@@ -195,4 +192,139 @@ public class Designer_scenarios extends WebDriverBase {
     CommonUtils.sleep(2);
   }
 
+  @Test
+  public void submitSlide() {
+    test.enterTitle("This is a title");
+    test.enterDescription("This is a description");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.ClickTitleButton();
+    test.submit();
+    CommonUtils.sleep(3);
+    Assert.assertEquals("This is a title", test.getPreviewTitle());
+    Assert.assertEquals("This is a description", test.getPreviewDescription());
+
+    MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
+    header.open();
+
+    NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
+    navigation.goTo("Slides");
+    header.close();
+
+    SlidesPage slides = new SlidesPage(getWebDriver().findElement(By.cssSelector("main")));
+    CommonUtils.sleep(4);
+    Assert.assertEquals("This is a title", slides.getFirstCardTitle());
+  }
+
+  @Test
+  public void previewFullSlide() {
+    test.enterTitle("This is another title");
+    test.enterDescription("This is another description");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+
+    test.ClickDateButton();
+    test.ChooseDateColor("Orange");
+    test.ChooseDateSize("X-Small");
+    test.ChooseDateWeight("Bold");
+    test.ChooseDateStyle("Italic");
+
+    test.ClickTimeButton();
+    test.ChooseTimeColor("Orange");
+    test.ChooseTimeSize("X-Small");
+    test.ChooseTimeWeight("Bold");
+    test.ChooseTimeStyle("Italic");
+
+    test.ClickDescriptionButton();
+    test.ChooseDescriptionColor("Orange");
+    test.ChooseDescriptionSize("X-Small");
+    test.ChooseDescriptionWeight("Bold");
+    test.ChooseDescriptionStyle("Italic");
+
+
+    test.Preview_Edit();
+    CommonUtils.sleep(3);
+    Assert.assertEquals("This is another title", test.getPreviewTitle());
+    Assert.assertEquals("This is another description", test.getPreviewDescription());
+    Assert.assertEquals(3, test.checkSlidePreview());
+  }
+
+  @Test
+  public void submitFullSlide() {
+    test.enterTitle("another title");
+    test.enterDescription("This is another description");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+
+    test.ClickDateButton();
+    test.ChooseDateColor("Orange");
+    test.ChooseDateSize("X-Small");
+    test.ChooseDateWeight("Bold");
+    test.ChooseDateStyle("Italic");
+
+    test.ClickTimeButton();
+    test.ChooseTimeColor("Orange");
+    test.ChooseTimeSize("X-Small");
+    test.ChooseTimeWeight("Bold");
+    test.ChooseTimeStyle("Italic");
+
+    test.ClickDescriptionButton();
+    test.ChooseDescriptionColor("Orange");
+    test.ChooseDescriptionSize("X-Small");
+    test.ChooseDescriptionWeight("Bold");
+    test.ChooseDescriptionStyle("Italic");
+
+
+    test.submit();
+    CommonUtils.sleep(3);
+    Assert.assertEquals("another title", test.getPreviewTitle());
+    Assert.assertEquals("This is another description", test.getPreviewDescription());
+    Assert.assertEquals(3, test.checkSlidePreview());
+
+
+    MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
+    header.open();
+
+    NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
+    navigation.goTo("Slides");
+    header.close();
+
+    SlidesPage slides = new SlidesPage(getWebDriver().findElement(By.cssSelector("main")));
+    CommonUtils.sleep(10);
+    Assert.assertEquals("another title", slides.getFirstCardTitle());
+  }
+
+  @Test
+  public void clearSlide() {
+    test.enterTitle("This is another title");
+    test.enterDescription("This is another description");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+
+    test.clear();
+    CommonUtils.sleep(3);
+    Assert.assertEquals("", test.GetTitle());
+    Assert.assertEquals("", test.GetDescription());
+    Assert.assertEquals(0, test.checkSlidePreview());
+  }
+
+  @Test
+  public void editSlideFromPreview() {
+    test.enterTitle("This is another title");
+    test.enterDescription("This is another description");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+    test.uploadPicture("C:/Users/Ehtasham/Desktop/300.jpg");
+
+    test.Preview_Edit();
+    CommonUtils.sleep(1);
+    test.Preview_Edit();
+    CommonUtils.sleep(1);
+
+    Assert.assertEquals("This is another title", test.GetTitle());
+    Assert.assertEquals("This is another description", test.GetDescription());
+    Assert.assertEquals(3, test.checkSlidePreview());
+  }
 }
