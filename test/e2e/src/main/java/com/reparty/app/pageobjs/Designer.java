@@ -117,7 +117,9 @@ public class Designer extends PageObjBase {
   }
 
   public void enterTitle(String title) {
-    getWebDriver().findElement(TitleInput).clear();
+    //getWebDriver().findElement(TitleInput).clear();
+    getWebDriver().findElement(TitleInput).sendKeys(Keys.CONTROL+"a");
+    getWebDriver().findElement(TitleInput).sendKeys(Keys.BACK_SPACE);
     getWebDriver().findElement(TitleInput).sendKeys(title);
     //getWebDriver().findElement(TitleInput).sendKeys(Keys.CONTROL+"a");
     //getWebDriver().findElement(TitleInput).sendKeys(Keys.BACK_SPACE);
@@ -173,7 +175,9 @@ public class Designer extends PageObjBase {
 
 
   public void enterDescription(String title) {
-    getWebDriver().findElement(DescriptionInput).clear();
+    //getWebDriver().findElement(DescriptionInput).clear();
+    getWebDriver().findElement(DescriptionInput).sendKeys(Keys.CONTROL+"a");
+    getWebDriver().findElement(DescriptionInput).sendKeys(Keys.BACK_SPACE);
     getWebDriver().findElement(DescriptionInput).sendKeys(title);
   }
 
