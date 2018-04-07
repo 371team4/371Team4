@@ -87,6 +87,43 @@ public class Slides_scenarios extends WebDriverBase {
   }
 
   @Test
+  public void testComponentNewSlide() {
+    test.createNewSlide();
+    CommonUtils.sleep(4);
+
+    Designer designerPage = new Designer(getWebDriver().findElement(By.cssSelector("main")));
+    designerPage.enterTitle("Hanoi");
+    designerPage.enterDescription("This is the description");
+
+    designerPage.ClickTitleButton();
+    designerPage.ChooseTitleColor("Blue");
+    designerPage.ChooseTitleSize("Small");
+    designerPage.ChooseTitleStyle("Italic");
+    designerPage.ChooseTitleWeight("Bold");
+
+    designerPage.ClickDescriptionButton();
+    designerPage.ChooseDescriptionColor("Blue");
+    designerPage.ChooseDescriptionSize("Small");
+    designerPage.ChooseDescriptionStyle("Italic");
+    designerPage.ChooseDescriptionWeight("Bold");
+
+    designerPage.uploadPicture("C:/individual/subject/Term2017-20182/cmpt371/project/dap.jpg");
+
+    designerPage.Preview_Edit();
+    designerPage.Preview_Edit();
+    CommonUtils.sleep(2);
+    designerPage.submit();
+
+    MainHeader header = new MainHeader(getWebDriver().findElement(By.cssSelector("main")));
+    header.open();
+    NavDrawer navigation = new NavDrawer(getWebDriver().findElement(By.cssSelector("main")));
+    navigation.goTo("Slides");
+    header.close();
+
+    CommonUtils.sleep(5);
+  }
+
+  @Test
   public void testNoSlideFound() {
     test.enterSearch("My searching continue");
 

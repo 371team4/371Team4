@@ -52,6 +52,7 @@
       </v-flex>
     </v-layout>
     <v-btn
+      data-test-attr="newSlide"
       fixed
       bottom
       right

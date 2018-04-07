@@ -25,10 +25,15 @@ public class SlidesPage extends PageObjBase {
   private static final By editSlide = By.cssSelector("[data-test-attr='editSlideButton']");
   private static final By deleteSlide = By.cssSelector("[data-test-attr='deleteSlideButton']");
   private static final By CardTitle = By.cssSelector("[data-test-attr='cardTitle']");
+  private static final By addButton = By.cssSelector("[data-test-attr='newSlide']");
 
 
   public SlidesPage(WebElement element) {
     super(element);
+  }
+
+  public void createNewSlide() {
+    getWebDriver().findElement(addButton).click();
   }
 
   public void enterSearch (String search) {
