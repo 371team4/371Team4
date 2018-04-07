@@ -62,4 +62,14 @@ public class SlidesPage extends PageObjBase {
   public List<WebElement> getTheSlideList() {
     return getWebDriver().findElements(SlideCards);
   }
+
+  public boolean hasSlideWithTitle(String title) {
+    List<WebElement> slides = getTheSlideList();
+    for (WebElement slide : slides) {
+      if (slide.findElement(CardTitle).getText().trim().equals(title)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

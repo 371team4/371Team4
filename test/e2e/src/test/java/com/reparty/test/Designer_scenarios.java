@@ -211,8 +211,8 @@ public class Designer_scenarios extends WebDriverBase {
     header.close();
 
     SlidesPage slides = new SlidesPage(getWebDriver().findElement(By.cssSelector("main")));
-    CommonUtils.sleep(4);
-    Assert.assertEquals("This is a title", slides.getFirstCardTitle());
+    CommonUtils.sleep(3);
+    Assert.assertTrue(slides.hasSlideWithTitle("This is a title"));
   }
 
   @Test
@@ -291,8 +291,8 @@ public class Designer_scenarios extends WebDriverBase {
     header.close();
 
     SlidesPage slides = new SlidesPage(getWebDriver().findElement(By.cssSelector("main")));
-    CommonUtils.sleep(10);
-    Assert.assertEquals("another title", slides.getFirstCardTitle());
+    CommonUtils.sleep(3);
+    Assert.assertTrue(slides.hasSlideWithTitle("another title"));
   }
 
   @Test
