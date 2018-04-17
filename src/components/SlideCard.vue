@@ -1,39 +1,38 @@
 <template>
-  <v-card class="clickable">
-    <v-container
-      fluid
-      align-center
-      @click.stop="$emit('click')">
-      <v-layout row>
-        <v-layout column>
-          <v-flex xs6>
-            <div
-              class="headline"
-              @click.stop="$emit('click')">
-              {{ title }}
-            </div>
-          </v-flex>
-          <v-flex xs6>
-            <div
-              class="mt-2"
-              @click.stop="$emit('click')">
-              {{ description }}
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-flex xs8>
-          <v-card-media
-            :src="imageUrl"
-            height="150px"
-            contain
-            @click.stop="$emit('click')"/>
-        </v-flex>
-      </v-layout>
-    </v-container>
+  <v-card>
+    <v-card-media
+      :src="imageUrl"
+      height="150px"/>
+    <v-card-title
+      class="pt-1 pb-0"
+      primary-title>
+      <div>
+        <h3
+          data-test-attr="cardTitle"
+          class="headline mb-0">{{ title }}</h3>
+        <div>{{ description }}</div>
+      </div>
+    </v-card-title>
+    <v-card-actions class="py-0 px-0">
+      <v-spacer/>
+      <v-btn
+        v-show="slide && !slide.hasOwnProperty('noTouch')"
+        data-test-attr="editSlideButton"
+        flat
+        color="blue"
+        @click="$emit('edit', slide)">Edit</v-btn>
+      <v-btn
+        v-show="slide && !slide.hasOwnProperty('noTouch')"
+        data-test-attr="deleteSlideButton"
+        flat
+        color="red"
+        @click="$emit('delete', slide)">Delete</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { server } from '@/services/api.endpoint'
 export default {
   props: {
     slide: {
@@ -102,8 +101,9 @@ export default {
       }
     },
     imageUrl () {
-      if (this.slide && this.slide.images && this.slide.images.length > 0 && this.slide.images[0].src) {
-        return this.slide.images[0].src
+      if (this.slide && this.slide.images && this.slide.images.length > 0 && this.slide.images[0].path) {
+        // need to trim the leading backslash
+        return `${server.defaults.baseURL}${this.slide.images[0].path.substring(1)}`
       } else {
         return ''
       }

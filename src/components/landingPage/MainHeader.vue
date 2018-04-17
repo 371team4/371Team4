@@ -1,15 +1,19 @@
 <template>
   <v-toolbar
+    v-show="show"
     data-test-attr="appToolBar"
     color="indigo"
     dark
     fixed
     app
-    clipped-left>
+    clipped-left
+    v-if="!isChromeBit()">
     <v-toolbar-side-icon
+      data-test-attr="firstTool"
       v-show="!isVisible"
       @click="updateVisibility"/>
     <v-toolbar-side-icon
+      data-test-attr="secondTool"
       v-show="isVisible"
       @click="updateVisibility">
       <v-icon>keyboard_arrow_left</v-icon>
@@ -28,9 +32,16 @@ export default {
     title: {
       type: String,
       default: 'Something didn\'t work'
+    },
+    show: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
+    },
     updateVisibility () {
       this.$emit('updateVisFromHeader')
     }

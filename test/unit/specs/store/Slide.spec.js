@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { store } from '@/store'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 let newSlide = {
   images: [],
@@ -41,23 +41,24 @@ let newSlide = {
   }
 }
 
-const Constructor = Vue.extend()
-const vm = new Constructor({ store }).$mount()
-
 function waitFor (func, timeout) {
   setTimeout(() => func(), timeout)
 }
 
 describe('index', function () {
+  // const Constructor = Vue.extend()
+  let vm
+
   this.timeout(15000)
   before('Setup before slide tests', function (done) {
+    vm = Vue({ store }).$mount()
     vm.$store.dispatch('signIn', { username: 'test', password: 'admin001' })
-    vm.$store.dispatch('initAllSlides')
+    vm.$store.dispatch('retrieveAllSlides')
     waitFor(done, 1000)
   })
 
   it('should getAllSLides', done => {
-    vm.$store.dispatch('initAllSlides')
+    vm.$store.dispatch('retrieveAllSlides')
     waitFor(() => {
       expect(vm.$store.getters.getAllSlides).to.not.deep.equal([])
       done()
@@ -67,7 +68,7 @@ describe('index', function () {
   it('should saveSlide when it is new', done => {
     const ogSlide = vm.$store.getters.getAllSlides[0]
     newSlide.images = [ogSlide.images[0]._id]
-    vm.$store.commit(CURRENT_SLIDE.SET, newSlide)
+    vm.$store.commit(MUTATIONS.SET_CURRENT_SLIDE, newSlide)
     vm.$store.dispatch('saveSlide')
     waitFor(() => {
       newSlide._id = ''
@@ -82,8 +83,8 @@ describe('index', function () {
     const ogSlide = vm.$store.getters.getAllSlides[0]
     vm.$store.dispatch('getSlide', ogSlide._id)
     waitFor(() => {
-      vm.$store.commit(CURRENT_SLIDE.SET_TITLE_CONTENT, 'updatedSlide')
-      vm.$store.commit(CURRENT_SLIDE.SET_IMAGE, [])
+      vm.$store.commit(MUTATIONS.SET_TITLE_CONTENT, 'updatedSlide')
+      vm.$store.commit(MUTATIONS.SET_IMAGE, [])
       vm.$store.dispatch('saveSlide')
       waitFor(() => {
         ogSlide.title.content = 'updatedSlide'

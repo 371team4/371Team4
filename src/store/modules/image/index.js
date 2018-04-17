@@ -1,90 +1,58 @@
-import { server } from '@/services/api.endpoint'
-import * as API from '@/services/API/images'
 import util from 'util'
 
-// mutation types
-const SET_IMAGE_ID = 'SET_IMAGE_ID'
-const SET_IMAGE_PATH = 'SET_IMAGE_PATH'
-const SET_TASK_STATUS = 'SET_TASK_STATUS'
+import * as API from '@/services/API/images'
+import { SET_LOADING } from '@/store/mutation-types'
 
 // state of this module
-const state = {
-  currentImageId: '',
-  currentImagePath: '',
-  currentTaskStatus: false
-}
+const state = { }
 
 // getters for this module's state
-const getters = {
-  getCurrentImageId: state => state.currentImageId,
-  getCurrentImagePath: state => state.currentImagePath,
-  getCurrentTaskStatus: state => state.currentTaskStatus
-}
+const getters = { }
 
 // mutations of this module, mutation must be sync and atomic
-const mutations = {
-  // takes a id string as payload, sets currentImageId to it.
-  [SET_IMAGE_ID] (state, payload) {
-    state.currentImageId = payload
-  },
-  // takes a path string as payload, sets currentImagePath to it.
-  [SET_IMAGE_PATH] (state, payload) {
-    state.currentImagePath = payload
-  },
-  // takes a boolean as payload, sets currentTaskStatus to it.
-  [SET_TASK_STATUS] (state, payload) {
-    state.currentTaskStatus = payload
-  }
-}
+const mutations = { }
 
 // actions of this module, actions is async and may have side effects
 const actions = {
   // action for get Imgae
-  getImage (state, payload) {
-    state.commit(SET_IMAGE_ID, payload)
+  retrieveImage ({ commit }, payload) {
+    commit(SET_LOADING, true)
     return new Promise((resolve, reject) => {
-      API.getImage(payload).then(function (responce) {
-        resolve(`${server.defaults.baseURL}${responce.data.path}`)
-        state.commit(SET_IMAGE_PATH, responce.data.path)
-        state.commit(SET_IMAGE_ID, '')
-        state.commit(SET_TASK_STATUS, true)
+      API.getImage(payload).then(function (response) {
+        resolve(response.data)
+        commit(SET_LOADING, false)
       }).catch(function (err) {
         console.error('get image error: '.concat(util.inspect(err, false, null)))
         reject(err)
-        state.commit(SET_IMAGE_ID, '')
-        state.commit(SET_TASK_STATUS, false)
+        commit(SET_LOADING, false)
       })
     })
   },
   // action fro upload image
-  uploadImage (state, payload) {
-    state.commit(SET_IMAGE_ID, 'new Image')
+  uploadImage ({ commit }, payload) {
+    commit(SET_LOADING, true)
     return new Promise((resolve, reject) => {
-      API.uploadImage(payload).then(function (responce) {
-        resolve(responce.data)
-        state.commit(SET_IMAGE_ID, responce.data._id)
-        state.commit(SET_TASK_STATUS, true)
+      API.uploadImage(payload).then(function (response) {
+        resolve(response.data)
+        commit(SET_LOADING, false)
       }).catch(function (err) {
         console.error('upload image error: '.concat(util.inspect(err, false, null)))
         reject(err)
-        state.commit(SET_IMAGE_ID, '')
-        state.commit(SET_TASK_STATUS, false)
+        commit(SET_LOADING, false)
       })
     })
   },
   // action for delete image
-  deleteImage (state, payload) {
-    state.commit(SET_IMAGE_ID, payload)
+  deleteImage ({ commit }, payload) {
+    commit(SET_LOADING, true)
     return new Promise((resolve, reject) => {
-      API.deleteImage(payload).then(function (responce) {
-        resolve()
-        state.commit(SET_IMAGE_ID, '')
-        state.commit(SET_TASK_STATUS, true)
+      API.deleteImage(payload).then(function (response) {
+        resolve(response.data)
+        commit(SET_LOADING, false)
       }).catch(function (err) {
         console.error('delete image error: '.concat(util.inspect(err, false, null)))
         reject(err)
-        state.commit(SET_IMAGE_ID, '')
-        state.commit(SET_TASK_STATUS, false)
+        commit(SET_LOADING, false)
       })
     })
   }

@@ -1,5 +1,4 @@
-import login from '@/store/modules/login/index'
-import * as CURRENT_USER from '@/store/mutation-types'
+import login from '@/store/modules/login'
 import { server } from '@/services/api.endpoint'
 
 // helper for testing action with expected mutations
@@ -10,23 +9,17 @@ const testAction = (action, args, state, expectedMutations, done) => {
   const commit = (type, payload) => {
     const mutation = expectedMutations[count]
 
-    // need extra case for SET_TOKEN since cannot know token beforehand and must get it from state after set by another
-    if (mutation.type === CURRENT_USER.SET_TOKEN) {
-      try {
-        expect(mutation.type).to.equal(type)
-        expect(mutation.payload.token).to.not.equal('')
-      } catch (error) {
-        done(error)
-      }
-    } else {
-      try {
-        expect(mutation.type).to.equal(type)
-        if (payload) {
+    try {
+      expect(mutation.type).to.equal(type)
+      if (payload) {
+        if (typeof payload === 'object') {
+          expect(mutation.payload).to.deep.equal(payload.username)
+        } else {
           expect(mutation.payload).to.deep.equal(payload)
         }
-      } catch (error) {
-        done(error)
       }
+    } catch (error) {
+      done(error)
     }
 
     count++

@@ -8,7 +8,9 @@
     dark
     hide-overlay
     stateless
-    disable-resize-watcher>
+    touchless
+    disable-resize-watcher
+    v-if="!isChromeBit()">
     <v-list
       two-line
       dense
@@ -16,7 +18,7 @@
       <v-list-tile
         v-for="tab in tabs"
         :key="tab.name"
-        :to="{ name:tab.name }">
+        :to="(tab.name === 'Designer') ? '/designer/new' : { name: tab.name }">
         <v-list-tile-action>
           <v-icon>{{ tab.icon }}</v-icon>
         </v-list-tile-action>
@@ -25,6 +27,16 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-divider/>
+      <v-list-tile
+        :to="authTab.path"
+        @click.native="changeRoute">
+        <v-list-tile-action>
+          <v-icon>{{ authTab.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>{{ authTab.name }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -40,6 +52,36 @@ export default {
       type: Array,
       default () {
         return []
+      }
+    }
+  },
+  computed: {
+    authTab () {
+      if (this.$store.getters.isAuthenticated) {
+        return { // return the signout route
+          path: '/signout',
+          name: 'Sign out',
+          icon: 'exit_to_app'
+        }
+      } else {
+        return { // return the sign in route
+          path: '/signin',
+          name: 'Sign in',
+          icon: 'account_circle'
+        }
+      }
+    }
+  },
+  methods: {
+    isChromeBit () {
+      return window.navigator.userAgent.indexOf('Sherbrooke') !== -1
+    },
+    changeRoute (event) {
+      if (this.authTab.name === 'Sign out') {
+        this.$store.dispatch('signOut')
+        this.$router.push({ name: 'Sign in' })
+      } else {
+        this.$router.push({ name: this.authTab.name })
       }
     }
   }

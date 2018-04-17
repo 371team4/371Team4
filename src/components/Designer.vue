@@ -1,185 +1,1165 @@
 <template>
   <v-container
+    id="designerPage"
     fluid
-    class="my-0"
+    class="my-2 mx-1 px-0 py-0"
     align-content-start>
     <v-layout column>
       <DefaultSlideTemplate
         :carousel="carousel"
         :slide="slide"
         v-show="showPreview"/>
-      <AuthorSlide
+      <v-form
+        v-model="valid"
         v-show="!showPreview"
-        ref="form"
-        :slide="slide"
-        :title-errors="titleErrors"
-        :description-errors="descriptionErrors"
-        @titleBlur="$v.slide.title.content.$touch()"
-        @descBlur="$v.slide.description.content.$touch()"
-        @imageSelected="uploadImage"
-        @deleteImage="deleteImage"
-        @clear="clear"
-        @submit="submit"/>
-    </v-layout>
-    <v-layout horizontal>
-      <v-btn
-        color="error"
-        @click="clear">clear</v-btn>
-      <v-spacer/>
-      <v-btn @click.stop="changeViews">
-        {{ showPreview ? 'Edit' : 'Preview' }}
-      </v-btn>
-      <v-btn
-        color="success"
-        @click="submit">submit</v-btn>
+        ref="form">
+        <v-container
+          fluid
+          class="my-0 px-1 py-0">
+          <v-layout :class="`${this.$vuetify.breakpoint.smAndDown ? 'column' : ''}`">
+            <v-flex>
+              <v-layout column>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-text-field
+                        data-test-attr="title"
+                        label="Title"
+                        v-model="title"
+                        :rules="titleRules"
+                        :counter="30"
+                        required
+                        validate-on-blur/>
+                      <v-btn
+                        icon
+                        class="mx-0 my-0"
+                        data-test-attr="titleButton"
+                        @click.native="showTitleSettings = !showTitleSettings">
+                        <v-icon>{{ showTitleSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        class="px-1 py-1"
+                        v-show="showTitleSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="titleColor"
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="titleColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="titleSize"
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="titleSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="titleWeight"
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="titleWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="titleStyle"
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="titleStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-flex>
+                        <v-subheader>Date(s) of Event</v-subheader>
+                        <v-date-picker
+                          data-test-attr="clickDate"
+                          v-model="slideDate"
+                          no-title
+                          event-color="green lighten-1"
+                          :min="minimumDate"
+                          :events="date"
+                          :width="$vuetify.breakpoint.xs ? 255 : 290"/>
+                          <!-- <v-menu
+                          lazy
+                          :close-on-content-click="true"
+                          v-model="dateMenu"
+                          transition="slide-y-transition"
+                          offset-y
+                          full-width
+                          :nudge-right="40"
+                          min-width="290px">
+                          <v-text-field
+                            slot="activator"
+                            label="Date of Event"
+                            v-model="formattedDate"
+                            prepend-icon="event"
+                            readonly
+                            validate-on-blur/>
+                          <v-date-picker
+                            v-model="date"
+                            no-title/>
+                        </v-menu>-->
+                      </v-flex>
+                      <v-btn
+                        icon
+                        class="mx-0 my-0"
+                        data-test-attr="dateButton"
+                        @click.native="showDateSettings = !showDateSettings">
+                        <v-icon>{{ showDateSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        class="px-1 py-1"
+                        v-show="showDateSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="dateColor"
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="dateColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="dateSize"
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="dateSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="dateWeight"
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="dateWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="dateStyle"
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="dateStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-flex>
+                        <v-menu
+                          full-width
+                          ref="tMenu"
+                          lazy
+                          :close-on-content-click="false"
+                          v-model="timeMenu"
+                          transition="slide-y-transition"
+                          offset-y
+                          :nudge-right="40"
+                          max-width="290px"
+                          min-width="290px">
+                          <v-text-field
+                            slot="activator"
+                            label="Time of Event"
+                            v-model="formattedTime"
+                            prepend-icon="access_time"
+                            readonly
+                            validate-on-blur/>
+                          <v-time-picker
+                            v-model="time"
+                            data-test-attr="clickTime"
+                            :allowed-minutes="(minute) => (minute % 5) === 0"
+                            @change="$refs.tMenu.save(time)"/>
+                        </v-menu>
+                      </v-flex>
+                      <v-btn
+                        icon
+                        class="mx-0 my-0"
+                        data-test-attr="timeButton"
+                        @click.native="showTimeSettings = !showTimeSettings">
+                        <v-icon>{{ showTimeSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        class="px-1 py-1"
+                        v-show="showTimeSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="timeColor"
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="timeColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="timeSize"
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="timeSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="timeWeight"
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="timeWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="timeStyle"
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="timeStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <v-text-field
+                        textarea
+                        data-test-attr="description"
+                        label="Description"
+                        v-model="desc"
+                        :rules="descriptionRules"
+                        :counter="140"
+                        required
+                        validate-on-blur/>
+                      <v-btn
+                        icon
+                        class="mx-0 my-0"
+                        data-test-attr="descriptionButton"
+                        @click.native="showDescSettings = !showDescSettings">
+                        <v-icon>{{ showDescSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        class="px-1 py-1"
+                        v-show="showDescSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="descriptionColor"
+                              chips
+                              label="Color"
+                              :items="fontColors"
+                              v-model="descColor">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :color="data.item.toLowerCase() === 'black' ? '' : data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="descriptionSize"
+                              chips
+                              label="Font Size"
+                              :items="fontSizes"
+                              v-model="descSize">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :style="'font-size: ' + data.item.toLowerCase()"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="descriptionWeight"
+                              chips
+                              label="Font Weight"
+                              :items="fontWeights"
+                              v-model="descWeight">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-weight: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="descriptionStyle"
+                              chips
+                              label="Font Style"
+                              :items="fontStyles"
+                              v-model="descStyle">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  :style="'font-style: ' + data.item.toLowerCase()"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+                <v-flex>
+                  <v-card class="my-1">
+                    <v-card-actions class="py-0">
+                      <h3 class="headline grey--text">Slide Settings</h3>
+                      <v-btn
+                        icon
+                        class="mx-0 my-0"
+                        data-test-attr="slideSettings"
+                        @click.native="showSlideSettings = !showSlideSettings">
+                        <v-icon>{{ showSlideSettings ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                    <v-slide-y-transition>
+                      <v-container
+                        class="px-1 py-1"
+                        v-show="showSlideSettings">
+                        <v-layout
+                          :class="`${$vuetify.breakpoint.mdAndUp ? 'row' : 'column'}`"
+                          wrap>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="duration"
+                              chips
+                              label="Duration"
+                              :items="durations"
+                              v-model="timeout">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item.text }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <v-select
+                              data-test-attr="durationDefault"
+                              chips
+                              label="Template"
+                              :items="templates"
+                              v-model="template">
+                              <template
+                                slot="selection"
+                                slot-scope="data">
+                                <v-chip
+                                  @input="data.parent.selectItem(data.item)"
+                                  :selected="data.selected"
+                                  class="chip--select-multi"
+                                  :key="JSON.stringify(data.item)">
+                                  {{ data.item.text }}
+                                </v-chip>
+                              </template>
+                            </v-select>
+                          </v-flex>
+                          <v-flex
+                            xs6
+                            md6
+                            lg6>
+                            <!-- <v-list subheader>-->
+                            <v-subheader>Days on Display</v-subheader>
+                            <v-date-picker
+                              data-test-attr="slideSettingsDate"
+                              v-model="dateOnDisplay"
+                              no-title
+                              event-color="green lighten-1"
+                              :min="minimumDate"
+                              :events="datesOnDisplay"/>
+                              <!--<v-list-tile
+                                v-for="(date, index) in datesOnDisplay"
+                                :key="index"
+                                @click="() => {}">
+                                <v-list-tile-content>
+                                  <v-list-tile-title> {{ formatDate(date) }}</v-list-tile-title>
+                                </v-list-tile-content>
+                                <v-list-tile-action @click="deleteDateOnDisplay(date)">
+                                  <v-icon color="red">delete</v-icon>
+                                </v-list-tile-action>
+                              </v-list-tile>
+                            </v-list>-->
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+                    </v-slide-y-transition>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex
+              xs4
+              :class="`${$vuetify.breakpoint.smAndDown ? '' : 'ml-4'}`">
+              <v-card>
+                <v-container
+                  fluid
+                  grid-list-md>
+                  <v-layout
+                    row
+                    wrap>
+                    <v-flex
+                      md6
+                      sm4
+                      xs10
+                      v-for="(image, index) in images"
+                      :key="index">
+                      <v-card
+                        data-test-attr="imageWhole"
+                        flat
+                        tile>
+                        <v-card-media
+                          data-test-attr="image"
+                          :src="'http://cmpt371g4.usask.ca:8081' + image.path"
+                          height="150px"/>
+                        <!-- shift the fab to the top left corner -->
+                        <v-btn
+                          data-test-attr="deleteImage"
+                          class="px-0 py-0 mx-0 mt-4"
+                          style="margin-right: -10px !important; z-index: 2 !important;"
+                          fab
+                          small
+                          absolute
+                          top
+                          right
+                          color="red lighten-1"
+                          @click.stop="deleteImage(image)">
+                          <v-icon>close</v-icon>
+                        </v-btn>
+                      </v-card>
+                    </v-flex>
+                    <v-flex
+                      md6
+                      sm4
+                      xs10>
+                      <!-- Add button for the images-->
+                      <v-card
+                        flat
+                        tile
+                        :class="`${$vuetify.breakpoint.xs ? 'ml-5' : ''}`">
+                        <v-btn
+                          data-test-attr="addButton"
+                          fab
+                          big
+                          color="blue"
+                          class="my-5 mx-5"
+                          @click.stop="$refs.uploadButton.click()">
+                          <!-- click the upload button below -->
+                          <v-icon>add</v-icon>
+                        </v-btn>
+                        <input
+                          data-test-attr="uploadPath"
+                          ref="uploadButton"
+                          accept="image/*"
+                          type="file"
+                          multiple
+                          v-if="uploading"
+                          v-show="false"
+                          @change="uploadImage($event.target.files)">
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-form>
+      <v-flex>
+        <v-btn
+          color="error"
+          v-show="!showPreview"
+          data-test-attr="clearButton"
+          @click="clear">clear</v-btn>
+        <v-btn
+          color="success"
+          @click="submit"
+          v-show="!showPreview"
+          data-test-attr="submitButton"
+          :disabled="!valid">submit</v-btn>
+        <v-btn
+          @click="changeViews"
+          color="blue lighten-2"
+          data-test-attr="previewButton">
+          {{ showPreview ? 'Edit' : 'Preview' }}
+        </v-btn>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength } from 'vuelidate/lib/validators'
+import moment from 'moment'
 
-import AuthorSlide from '@/components/templates/AuthorSlide'
 import DefaultSlideTemplate from '@/components/templates/DefaultSlideTemplate'
 
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
+
 export default {
-  components: { AuthorSlide, DefaultSlideTemplate },
-  mixins: [validationMixin],
-  props: {
-    slide: {
-      type: Object,
-      default: () => ({
-        images: [],
-        title: {
-          content: '',
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        description: {
-          content: '',
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        date: {
-          content: null,
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        time: {
-          content: null,
-          fontColor: '',
-          fontSize: '',
-          fontStyle: '',
-          fontWeight: ''
-        },
-        meta: {
-          template: '',
-          timeout: '',
-          repeatable: false,
-          startDate: null,
-          endDate: null
-        }
-      })
-    }
-  },
+  components: { DefaultSlideTemplate },
   data: () => {
     return {
-      showPreview: false,
-      carousel: -1
-    }
-  },
-  validations: {
-    slide: {
-      title: {
-        content: {
-          required,
-          maxLength: maxLength(30)
-        }
-      },
-      description: {
-        content: {
-          required,
-          maxLength: maxLength(140)
-        }
-      }
+      showTitleSettings: false,
+      showDateSettings: false,
+      showTimeSettings: false,
+      showDescSettings: false,
+      showSlideSettings: false,
+      uploading: true,
+      valid: true,
+      carousel: -1,
+      dateMenu: false,
+      timeMenu: false,
+      datesOnDisplayMenu: false,
+      descriptionRules: [
+        v => !!v || 'Description is required',
+        v =>
+          (v && v.length && v.length <= 140) ||
+          'Description must be less than 140 characters'
+      ],
+      titleRules: [
+        v => !!v || 'Title is required',
+        v =>
+          (v && v.length && v.length <= 30) ||
+          'Title must be less than 30 characters'
+      ],
+      fontColors: [
+        'Blue',
+        'Red',
+        'Green',
+        'Yellow',
+        'Purple',
+        'Pink',
+        'Teal',
+        'Lime',
+        'Orange',
+        'Brown',
+        'Grey',
+        'Black'
+      ],
+      fontSizes: [
+        'XX-Small',
+        'X-Small',
+        'Smaller',
+        'Small',
+        'Medium',
+        'Large',
+        'Larger',
+        'X-Large',
+        'XX-Large'
+      ],
+      fontStyles: [
+        'Italic',
+        'Normal',
+        'Oblique'
+      ],
+      fontWeights: [
+        'Lighter',
+        'Normal',
+        'Bold',
+        'Bolder'
+      ],
+      durations: [
+        { text: '10 seconds', value: 10 },
+        { text: '20 seconds', value: 20 },
+        { text: '30 seconds', value: 30 },
+        { text: '40 seconds', value: 40 },
+        { text: '50 seconds', value: 50 },
+        { text: '60 seconds', value: 60 },
+        { text: '70 seconds', value: 70 },
+        { text: '80 seconds', value: 80 }],
+      templates: [
+        { text: 'Default Template', value: 'DefaultSlideTemplate' }
+      ]
     }
   },
   computed: {
-    titleErrors () {
-      const errors = []
-      if (!this.$v.slide.title.content.$dirty) {
-        return errors
+    showPreview: {
+      get () {
+        return this.$store.getters.showPreview
+      },
+      set (val) {
+        this.$store.commit(MUTATIONS.SET_SHOW_PREVIEW, val)
       }
-      if (!this.$v.slide.title.content.maxLength) {
-        errors.push('Title must be at most 30 characters long')
-      }
-      if (!this.$v.slide.title.content.required) {
-        errors.push('Title is required')
-      }
-      return errors
     },
-    descriptionErrors () {
-      const errors = []
-      if (!this.$v.slide.description.content.$dirty) {
-        return errors
+    slide: {
+      get () {
+        return this.$store.getters.currentSlide
       }
-      if (!this.$v.slide.description.content.maxLength) {
-        errors.push('Description must be at most 140 characters long')
+    },
+    title: {
+      get () {
+        return this.$store.getters.currentSlideTitleContent
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TITLE_CONTENT, value.trim())
       }
-      if (!this.$v.slide.description.content.required) {
-        errors.push('Description is required')
+    },
+    titleColor: {
+      get () {
+        return this.$store.getters.currentSlideTitleColor
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_COLOR, value)
       }
-      return errors
+    },
+    titleStyle: {
+      get () {
+        return this.$store.getters.currentSlideTitleStyle
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_STYLE, value)
+      }
+    },
+    titleSize: {
+      get () {
+        return this.$store.getters.currentSlideTitleSize
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_SIZE, value)
+      }
+    },
+    titleWeight: {
+      get () {
+        return this.$store.getters.currentSlideTitleWeight
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TITLE_FONT_WEIGHT, value)
+      }
+    },
+    desc: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionContent
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_CONTENT, value.trim())
+      }
+    },
+    descColor: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionColor
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_COLOR, value)
+      }
+    },
+    descStyle: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionStyle
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_STYLE, value)
+      }
+    },
+    descSize: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionSize
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_SIZE, value)
+      }
+    },
+    descWeight: {
+      get () {
+        return this.$store.getters.currentSlideDescriptionWeight
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DESCRIPTION_FONT_WEIGHT, value)
+      }
+    },
+    date: {
+      get () {
+        return this.$store.getters.currentSlideDateContent
+      }
+    },
+    slideDate: {
+      get () {
+        return null
+      },
+      set (val) {
+        let index = this.date.indexOf(val)
+        if (index === -1) {
+          this.$store.commit(MUTATIONS.ADD_DATE, val)
+        } else {
+          this.$store.commit(MUTATIONS.DELETE_DATE, index)
+        }
+      }
+    },
+    dateColor: {
+      get () {
+        return this.$store.getters.currentSlideDateColor
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_COLOR, value)
+      }
+    },
+    dateStyle: {
+      get () {
+        return this.$store.getters.currentSlideDateStyle
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_STYLE, value)
+      }
+    },
+    dateSize: {
+      get () {
+        return this.$store.getters.currentSlideDateSize
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_SIZE, value)
+      }
+    },
+    dateWeight: {
+      get () {
+        return this.$store.getters.currentSlideDateWeight
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_DATE_FONT_WEIGHT, value)
+      }
+    },
+    time: {
+      get () {
+        return new Date(this.$store.getters.currentSlideTimeContent)
+      },
+      set (value) {
+        let timeFrags = value.split(':')
+        let someDate = new Date(Date.now())
+        someDate.setHours(timeFrags[0])
+        someDate.setMinutes(timeFrags[1])
+        this.$store.commit(MUTATIONS.SET_TIME_CONTENT, someDate)
+      }
+    },
+    timeColor: {
+      get () {
+        return this.$store.getters.currentSlideTimeColor
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_COLOR, value)
+      }
+    },
+    timeStyle: {
+      get () {
+        return this.$store.getters.currentSlideTimeStyle
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_STYLE, value)
+      }
+    },
+    timeSize: {
+      get () {
+        return this.$store.getters.currentSlideTimeSize
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_SIZE, value)
+      }
+    },
+    timeWeight: {
+      get () {
+        return this.$store.getters.currentSlideTimeWeight
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TIME_FONT_WEIGHT, value)
+      }
+    },
+    images: {
+      get () {
+        return this.$store.getters.currentSlideImages
+      }
+    },
+    timeout: {
+      get () {
+        return this.$store.getters.currentSlideTimeout
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TIMEOUT, value)
+      }
+    },
+    template: {
+      get () {
+        return this.$store.getters.currentSlideTemplate
+      },
+      set (value) {
+        this.$store.commit(MUTATIONS.SET_TEMPLATE, value)
+      }
+    },
+    datesOnDisplay: {
+      get () {
+        return this.$store.getters.currentSlideDatesOnDisplay
+      }
+    },
+    formattedTime: {
+      get () {
+        if (this.time) {
+          return moment(this.time).format('hh:mm A')
+        }
+        return null
+      },
+      set (val) {
+        /* nothing to do here */
+      }
+    },
+    formattedDate: {
+      get () {
+        if (this.date) {
+          return moment(this.date).format('dddd, MMMM D')
+        }
+        return null
+      },
+      set (val) {
+        /* nothing to do here */
+      }
+    },
+    dateOnDisplay: {
+      get () {
+        return null
+      },
+      set (val) {
+        let index = this.datesOnDisplay.indexOf(val)
+        if (index === -1) {
+          this.$store.commit(MUTATIONS.ADD_DATE_ON_DISPLAY, val)
+        } else {
+          this.$store.commit(MUTATIONS.DELETE_DATE_ON_DISPLAY, index)
+        }
+      }
+    },
+    minimumDate () {
+      return moment().format('YYYY-MM-DD')
     }
   },
   methods: {
     submit () {
-      // submit the action packaging all of the fields
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
+      if (this.$refs.form.validate()) {
         this.forceUpdateCarousel()
-        this.$store.commit(CURRENT_SLIDE.SET, this.slide)
-        this.$store.dispatch('saveSlide')
-        this.changeViews()
+        this.$store.dispatch('saveSlide').then((response) => {
+          this.$router.replace(`/designer/${this.$store.getters.currentSlide._id}`)
+          this.showPreview = true
+        })
       }
     },
     clear () {
       // reset all of the data fields
-      this.$v.$reset()
-      this.slide.title.content = ''
-      this.slide.description.content = ''
-      this.slide.date.content = null
-      this.slide.time.content = null
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.images.map((image) => {
+          this.$store.dispatch('deleteImage', image._id)
+        })
+      }
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
+      this.$refs.form.reset()
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
       this.forceUpdateCarousel()
-      this.$store.commit(CURRENT_SLIDE.SET, this.slide)
     },
     forceUpdateCarousel () {
-      this.$nextTick(() => (this.carousel = (this.showPreview ? 0 : -1)))
+      this.$nextTick(() => (this.carousel = this.showPreview ? 0 : -1))
     },
     uploadImage (files) {
-      const tmpArray = [...files].filter(file => file.type.indexOf('image/') !== -1)
-      this.$store.dispatch('uploadSingleFile', tmpArray[0]).then(function () {
-        this.addImage({ src: this.$store.getters.getUploadTask })
-      }.bind(this))
+      const filteredFiles = [...files].filter(
+        file => file.type.indexOf('image/') !== -1
+      )
+      filteredFiles.map(file =>
+        this.$store.dispatch('uploadImage', file).then(
+          function (data) {
+            this.addImage(data)
+          }.bind(this)
+        )
+      )
+      this.uploading = false
+      this.$nextTick(() => { this.uploading = true })
     },
-    deleteImage (index) {
-      this.slide.images.splice(index, 1)
-    },
-    addImage (imgObject) {
-      this.slide.images.push(imgObject)
+    addImage (newImage) {
+      this.$store.commit(MUTATIONS.ADD_IMAGE, newImage)
       this.forceUpdateCarousel()
+    },
+    deleteImage (image) {
+      this.$store
+        .dispatch('deleteImage', image._id)
+        .then(() => this.$store.commit(MUTATIONS.DELETE_IMAGE, image))
     },
     changeViews () {
-      this.showPreview = !this.showPreview
+      if (this.$refs.form.validate()) {
+        this.showPreview = !this.showPreview
+      }
       this.forceUpdateCarousel()
+    },
+    formatDate (dateStr) {
+      return moment(dateStr).format('dddd, MMMM D')
     }
   }
 }

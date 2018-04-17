@@ -2,14 +2,14 @@
   <v-container fluid>
     <full-calendar
       :config="config"
-      :events="events"/>
+      :events="events" />
   </v-container>
 </template>
 
 <script>
 // Import calendar as a plugin
 import { FullCalendar } from 'vue-full-calendar'
-import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -27,37 +27,39 @@ export default {
           right: ''
         },
         height: 'auto',
-        contentHeight: 'auto'
+        contentHeight: 'auto',
+        timeFormat: 'hh:mm a'
       }
     }
   },
   computed: {
+    ...mapGetters(['allSlides']),
     events () {
-      return this.$store.getters.getAllSlides.map((slide) => {
-        const newSlide = {}
+      return this.allSlides.map(slide => {
+        const retVal = {}
         // Events at least need title and date information
-        if (slide &&
+        if (
+          slide &&
           slide.title &&
           slide.title.content &&
           slide.date &&
-          slide.date.content) {
-        // Copy the title and start time
-          newSlide.title = slide.title.content
-          newSlide.start = slide.date.content
-          // Now if the event also has time or description, add it into the slide as well
-          if (slide.description &&
-            slide.description.content) {
-            newSlide.description = slide.description.content
+          slide.date.content
+        ) {
+          let eventStart = new Date(slide.date.content)
+          eventStart.setHours(0)
+          eventStart.setMinutes(0)
+          eventStart.setMilliseconds(0)
+          retVal.start = eventStart
+          if (slide.time && slide.time.content) {
+            let eventTime = new Date(slide.time.content)
+            // Since the event cannot show correctly with the time from "0 AM" to "10 AM",
+            // We have to make a new Date
+            retVal.start.setHours(eventTime.getHours())
+            retVal.start.setMinutes(eventTime.getMinutes())
           }
-          if (slide.time &&
-            slide.time.content) {
-          // Since the event cannot show correctly with the time from "0 AM" to "10 AM",
-          // We have to make a new Date
-          // If we use ' ' instead of 'T', data cannot show on the safari!
-            newSlide.start = moment(newSlide.start + ' ' + slide.time.content, 'YYYY-MM-DD hh:mm a')
-          }
+          retVal.title = slide.title.content
         }
-        return newSlide
+        return retVal
       })
     }
   }
@@ -65,19 +67,34 @@ export default {
 </script>
 
 <style>
-  @import 'fullcalendar/dist/fullcalendar.css';
-  @media print {
-    @page {
-      size: landscape; -moz-transform: rotate(-90deg) scale(.58,.58)
-    }
-    /* main html content */
-    main.content[data-booted] { margin: 0px; padding: 0px;}
-    .container.fluid { margin: 0px; }
-    /* fullCalendar */
-    #calendar { margin: 0px; padding: 0px; }
-    .fc-left { display: none; }
-    /* App shell */
-    [data-test-attr='appToolBar'] { display: none; }
-    [data-test-attr='appNav'] { display: none; }
+@import 'fullcalendar/dist/fullcalendar.css';
+@media print {
+  @page {
+    size: landscape;
+    -moz-transform: rotate(-90deg) scale(0.58, 0.58);
   }
+  /* main html content */
+  main.content[data-booted] {
+    margin: 0px;
+    padding: 0px;
+  }
+  .container.fluid {
+    margin: 0px;
+  }
+  /* fullCalendar */
+  #calendar {
+    margin: 0px;
+    padding: 0px;
+  }
+  .fc-left {
+    display: none;
+  }
+  /* App shell */
+  [data-test-attr='appToolBar'] {
+    display: none;
+  }
+  [data-test-attr='appNav'] {
+    display: none;
+  }
+}
 </style>

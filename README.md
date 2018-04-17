@@ -2,7 +2,7 @@
 
 > Event management and creation system
 
-## Project's Website [Repartyed](https://repartyed.firebaseapp.com)
+## Project's Website [Repartyed](http://cmpt371g4.usask.ca:8090)
 
 ## Build Setup
 
@@ -12,19 +12,20 @@
       curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
       sudo apt-get install -y nodejs
       ```
-2. Install VSCode from here https://code.visualstudio.com/Download
+2. Install maven from here https://maven.apache.org/install.html
+3. Install VSCode from here https://code.visualstudio.com/Download
    * If you are using a MacOS machine, you will need to follow the instructions on the this page before installing the VSCode extensions
    https://code.visualstudio.com/docs/setup/mac
-3. Install the extensions from the extensions section below
+4. Install the extensions from the extensions section below
    * Install Vue dev tools from
    https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en
-4. Clone the repo into your desired folder
+5. Clone the repo into your desired folder
    * Make sure to switch to the development branch and create your own branch from there
-5. While you are in VSCode, open the folder where you cloned the repo
-6. Hit CTRL+\` and the embedded terminal will come up
-7. Type `npm install`, go get a drink...
-8. Type `npm start`, and the server will be launched and your default browser will show the App
-9. The list of the all commands is provided below
+6. While you are in VSCode, open the folder where you cloned the repo
+7. Hit CTRL+\` and the embedded terminal will come up
+8. Type `npm install`, go get a drink...
+9. Type `npm start`, and the server will be launched and your default browser will show the App
+10. The list of the all commands is provided below
 
 ##
 
@@ -44,14 +45,17 @@ npm run build --report
 # run unit tests
 npm run unit
 
+# to run unit tests in headless mode
+npm run unit -- --browsers=ChromeHeadless
+
 # run end-2-end tests
 npm run e2e
 
+# to run E2E tests in headless mode
+npm run e2e -- --headless
+
 # run all tests
 npm run test
-
-# deploy prodcution to firebase server, this will build before deploying
-npm run deploy
 ```
 
 ## Extensions for VS Code

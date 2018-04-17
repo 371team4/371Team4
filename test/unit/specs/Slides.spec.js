@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import Slides from '@/components/Slides'
 import { store } from '@/store'
 import router from '@/router'
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 const mockSlides = [
   {
@@ -167,16 +167,17 @@ describe('Slides.vue', function () {
   before(function (done) {
     const Constructor = Vue.extend(Slides)
     vm = new Constructor({ store, router }).$mount()
-    vm.slides = mockSlides
+    vm.$store.state.slides = mockSlides
     // need to wait for next tick so slides can be created
-    Vue.nextTick(() => {
-      done()
-    })
+    Vue.nextTick(() => done())
   })
 
   describe('Test saved slides', function () {
-    it('should render correct contents', function () {
-      expect(vm.slides).to.equal(mockSlides)
+    it('should render correct contents', function (done) {
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.equal(mockSlides)
+        done()
+      })
     })
   })
 
@@ -187,73 +188,78 @@ describe('Slides.vue', function () {
       images: [{ src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png' }]
     }
 
-    it('should return a no results found slide given "hello"', function () {
+    it('should return a no results found slide given "hello"', function (done) {
       vm.searchString = 'hello'
-      let searchResult = vm.filteredSlides
-
-      expect(searchResult.length).to.equal(1)
-
-      expect(searchResult[0]).to.eql(notFound)
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.have.lengthOf(1)
+        expect(vm.filteredSlides[0]).to.deep.equal(notFound)
+        done()
+      })
     })
 
-    it('should return all saved slides', function () {
+    it('should return all saved slides', function (done) {
       vm.searchString = ''
-      let searchResults = vm.filteredSlides
-
-      expect(searchResults).to.equal(vm.slides)
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.deep.equal(mockSlides)
+        done()
+      })
     })
 
-    it('should return slides containing "Slide"', function () {
+    it('should return slides containing "Slide"', function (done) {
       vm.searchString = 'Slide'
-      let searchResults = vm.filteredSlides
-
-      expect(searchResults.length).to.equal(2)
-
-      expect(searchResults[0]).to.equal(vm.slides[0])
-      expect(searchResults[1]).to.equal(vm.slides[1])
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.have.lengthOf(2)
+        expect(vm.filteredSlides[0]).to.equal(mockSlides[0])
+        expect(vm.filteredSlides[1]).to.equal(mockSlides[1])
+        done()
+      })
     })
 
-    it('should return slides containing "sliDe"', function () {
+    it('should return slides containing "sliDe"', function (done) {
       vm.searchString = 'sliDe'
-      let searchResults = vm.filteredSlides
-
-      expect(searchResults.length).to.equal(2)
-
-      expect(searchResults[0]).to.equal(vm.slides[0])
-      expect(searchResults[1]).to.equal(vm.slides[1])
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.have.lengthOf(2)
+        expect(vm.filteredSlides[0]).to.equal(mockSlides[0])
+        expect(vm.filteredSlides[1]).to.equal(mockSlides[1])
+        done()
+      })
     })
 
-    it('should return a no results found slide given "description"', function () {
+    it('should return a no results found slide given "description"', function (done) {
       vm.searchString = 'description'
-      let searchResult = vm.filteredSlides
-
-      expect(searchResult.length).to.equal(1)
-
-      expect(searchResult[0]).to.eql(notFound)
+      Vue.nextTick(() => {
+        expect(vm.filteredSlides).to.have.lengthOf(1)
+        expect(vm.filteredSlides[0]).to.deep.equal(notFound)
+        vm.searchString = ''
+        done()
+      })
     })
   })
 
   describe('Test goToSlide() method', function () {
     it('should commit current when a slide is clicked', function () {
-      sinon.spy(vm.$store, 'commit')
-      const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
-      cardHeader.click()
+      let spy = sinon.spy(vm.$store, 'commit')
+      const editButton = vm.$el.querySelector('[data-test-attr="editSlideButton"]')
+      editButton.click()
 
-      expect(vm.$store.commit.firstCall.args).to.deep.equal([CURRENT_SLIDE.SET, mockSlides[1]])
+      expect(vm.$store.commit.firstCall.args).to.deep.equal([MUTATIONS.SET_CURRENT_SLIDE, mockSlides[1]])
+      spy.restore()
     })
 
     it('should navigate to the desginer view', function () {
       sinon.spy(vm.$router, 'push')
-      const cardHeader = vm.$el.querySelector('[data-test-attr=\'slideCard_1\'] .headline')
+      const cardHeader = vm.$el.querySelector("[data-test-attr='slideCard_1'] .headline")
       cardHeader.click()
 
-      expect(vm.$router.push.firstCall.args).to.deep.equal([{
-        path: '/designer', // the router injects this into the param
-        name: 'Designer',
-        params: {
-          slide: mockSlides[1]
+      expect(vm.$router.push.firstCall.args).to.deep.equal([
+        {
+          path: '/designer', // the router injects this into the param
+          name: 'Designer',
+          params: {
+            slide: mockSlides[1]
+          }
         }
-      }])
+      ])
     })
   })
 })
