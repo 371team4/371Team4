@@ -17,21 +17,22 @@ const mockProps = {
       fontWeight: 'Oblique'
     },
     description: {
-      content: 'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
+      content:
+        'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.',
       fontColor: 'Red',
       fontSize: 'Small',
       fontStyle: 'Normal',
       fontWeight: 'Lighter'
     },
     date: {
-      content: '2018-03-07',
+      content: ['2018-03-07'],
       fontColor: 'Green',
       fontSize: 'Medium',
       fontStyle: 'Italic',
       fontWeight: 'Bolder'
     },
     time: {
-      content: '11:05 AM',
+      content: '2018-03-07 11:05',
       fontColor: 'Yellow',
       fontSize: 'Smaller',
       fontStyle: 'Normal',
@@ -79,8 +80,8 @@ describe('DefaultSlideTemplate.vue', function () {
 
       /* testing time */
       const header = vm.$el.querySelector('h2.display-2')
-      expect(vm.$props.slide.time.content).to.equal('11:05 AM')
-      expect(header.textContent).to.contain(vm.$props.slide.time.content)
+      expect(vm.$props.slide.time.content).to.equal(mockProps.slide.time.content)
+      expect(header.textContent).to.contain('11:05 AM')
       // TO DO
       expect(vm.$props.slide.time.fontColor).to.equal('Yellow')
       // TO DO
@@ -95,8 +96,8 @@ describe('DefaultSlideTemplate.vue', function () {
     it('Date content should be rendered corrctly', function () {
       const header = vm.$el.querySelector('h2.display-2')
       /* testing date */
-      expect(vm.$props.slide.date.content).to.equal('2018-03-07')
-      expect(header.textContent).to.contain(vm.$props.slide.date.content)
+      expect(vm.$props.slide.date.content).to.equal(mockProps.slide.date.content)
+      expect(header.textContent).to.contain('Wednesday, March 7')
       // TO DO
       expect(vm.$props.slide.date.fontColor).to.equal('Green')
       // TO DO
@@ -112,7 +113,9 @@ describe('DefaultSlideTemplate.vue', function () {
     it('Event description contents should be rendered correctly', function () {
       /* test contents in the title */
       const desc = vm.$el.querySelector('h3.headline')
-      expect(vm.$props.slide.description.content).to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
+      expect(vm.$props.slide.description.content).to.equal(
+        'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.'
+      )
       expect(desc.textContent).to.contain(vm.$props.slide.description.content)
       // TO DO
       expect(vm.$props.slide.description.fontColor).to.equal('Red')
@@ -162,7 +165,9 @@ describe('DefaultSlideTemplate.vue', function () {
     })
 
     it('Event body data contents should be correct', function () {
-      expect(vm.$props.slide.description.content).to.equal('Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.')
+      expect(vm.$props.slide.description.content).to.equal(
+        'Sherbrooke event slide body. Lorem ipsum dolor sit amet, pri veniam forensibus id. Vis maluisset molestiae id ad semper lobortis cum. At impetus detraxit incorrupte usu, repudiare assueverit ex eum, ne nam essent vocent admodum.'
+      )
       /* test additional event body attributes */
       expect(vm.$props.slide.description.fontColor).to.equal(' ')
       expect(vm.$props.slide.description.fontSize).to.equal(' ')
@@ -185,7 +190,7 @@ describe('DefaultSlideTemplate.vue', function () {
     })
 
     it('The correct time should be displayed on the slide', function () {
-      expect(vm.$props.slide.time.content).to.equal('07:00 PM')
+      expect(vm.$props.slide.time.content).to.equal('07:00')
       /* test additional time attributes */
       expect(vm.$props.slide.time.fontColor).to.equal(' ')
       expect(vm.$props.slide.time.fontSize).to.equal(' ')

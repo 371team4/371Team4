@@ -18,25 +18,23 @@
           </v-toolbar>
           <v-card-text>
             <v-form
+              data-test-attr="loginForm"
               :v-model="valid"
               ref="form"
               lazy-validation
               autocomplete="off">
-              <v-select
-                :items="domains"
-                v-model="selectedDomain"
-                bottom
-                label="Domain"/>
               <v-text-field
+                data-test-attr="usernameField"
                 prepend-icon="person"
                 name="login"
                 label="Username"
                 type="text"
                 v-model="username"
-                :rules="[rules.required, rules.username]"
+                :rules="[rules.required, rules.username, rules.usernameLength]"
                 required
                 @keyup.enter="submit"/>
               <v-text-field
+                data-test-attr="passwordField"
                 prepend-icon="lock"
                 name="password"
                 label="Password"
@@ -44,17 +42,20 @@
                 v-model="password"
                 :append-icon="unmask ? 'visibility_off' : 'visibility'"
                 :append-icon-cb="() => (unmask = !unmask)"
-                required
                 :rules="[rules.required]"
+                required
                 @keyup.enter="submit"/>
+                <!--, rules.password]"-->
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
             <v-btn
+              data-test-attr="loginButton"
               color="primary"
               @click="submit"
-              :disabled="isLoading">Login</v-btn>
+              :disabled="isLoading"
+              :loading="isLoading">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -67,19 +68,15 @@ export default {
   name: 'Login',
   data () {
     return {
-      username: 'test',
-      password: 'test01',
-      unmask: true,
-      selectedDomain: 'test.com',
+      username: 'admin',
+      password: 'admin001',
+      unmask: false,
       valid: true,
-      domains: ['scc.ca', 'test.com', 'chcc.ca'],
       rules: {
-        required: (value) => !!value || 'Required.',
-        username: (value) => {
-          // eslint-disable-next-line
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-        }
+        required: value => (!!value && !!value.trim()) || 'Required',
+        username: value => /(?=[A-Za-z]{4})([A-Za-z0-9_]+)/.test(value) || 'Username must be alphanumeric',
+        password: value => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(value) || 'Password doesn\'t meet password standards',
+        usernameLength: value => (!!value && value.length >= 5) || 'Username must be at least 5 characters long'
       }
     }
   },
@@ -93,16 +90,14 @@ export default {
       if (this.$refs.form.validate()) {
         const loginInfo = {
           username: this.username,
-          password: this.password,
-          domain: this.selectedDomain
+          password: this.password
         }
         if (this.$store.getters.isAuthenticated) {
-          this.$router.push({ name: 'Slides' })
+          this.$router.push(this.$route.query.fullPath)
         } else {
-          this.$store.dispatch('signIn', loginInfo)
-            .then(state => {
-              console.log(state + 'hi hi hi')
-            })
+          this.$store.dispatch('signIn', loginInfo).then(function () {
+            this.$router.push({ name: 'Slides' })
+          }.bind(this))
         }
       }
     }

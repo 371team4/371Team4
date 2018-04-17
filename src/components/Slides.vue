@@ -20,15 +20,14 @@
             card
             color="white"
             prominent>
-            <v-text-field
-              id="search_bar"
-              prepend-icon="search"
-              hide-details
-              single-line
-              v-model="searchString"/>
-            <v-btn icon>
-              <v-icon>more_vert</v-icon>
-            </v-btn>
+            <v-container class="my-2 py-0 px-3">
+              <v-text-field
+                id="search_bar"
+                prepend-icon="search"
+                hide-details
+                single-line
+                v-model="searchString"/>
+            </v-container>
           </v-toolbar>
         </v-card>
       </v-flex>
@@ -47,66 +46,121 @@
         <slide-card
           :data-test-attr="`slideCard_${index}`"
           :slide="slide"
-          @click="goToSlide(slide)"
+          @delete="handleDelete"
+          @edit="openSlide"
           class="mx-1 px-1 my-1 py-1"/>
       </v-flex>
-      <v-flex xs3>
-        <add-button
-          class="mx-1 px-1 my-1 py-1"
-          :is-disabled="false"
-          :is-visible="true"
-          @cButtonClick="dialog=true"/>
-      </v-flex>
-      <v-dialog
-        v-model="dialog"
-        max-width="1000">
-        <v-card>
-          <v-card-title class="headline">Choose a Template</v-card-title>
-          <v-layout
-            row
-            wrap>
-            <v-flex
-              xs3
-              v-for="i in 4"
-              :key="i">
-              <v-card class="mx-1 px-1 my-1 py-1">
-                <v-card-media
-                  src="http://placehold.it/32x32"
-                  height="200px"/>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-card>
-      </v-dialog>
     </v-layout>
+    <v-btn
+      data-test-attr="newSlide"
+      fixed
+      bottom
+      right
+      big
+      color="blue"
+      fab
+      @click.stop="createNewSlide">
+      <v-icon>add</v-icon>
+    </v-btn>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="290">
+      <v-card>
+        <v-card-title class="headline">Unsaved changes</v-card-title>
+        <v-card-text>
+          You have unsaved slide changes. Click Discard to delete them, or Edit to go back and save them
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn
+            color="green darken-1"
+            flat
+            @click.native="discardDirtySlide">Discard</v-btn>
+          <v-btn
+            color="green darken-1"
+            flat
+            @click.native="editDirtySlide">Edit</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
-import SlideCard from './slide/SlideCard'
-import AddButton from './shared/AddButton'
+import SlideCard from '@/components/SlideCard'
+import { mapGetters } from 'vuex'
 
-import * as CURRENT_SLIDE from '@/store/modules/slide/mutation-types'
+import * as MUTATIONS from '@/store/mutation-types'
 
 export default {
-  components: { SlideCard, AddButton },
+  components: { SlideCard },
   data () {
     return {
+      dialog: false,
       searchString: '',
-      slides: []
+      deletedSlide: '',
+      slideToOpen: null,
+      timeoutFunction: null
     }
   },
   computed: {
     filteredSlides () {
+      let filteredSlides = this.filterSlidesBySearchString(this.allSlides, this.searchString)
+      filteredSlides = this.filterSlidesByDeleteId(filteredSlides, this.deletedSlide)
+      // return the filtered list of slides
+      return filteredSlides
+    },
+    ...mapGetters([
+      'allSlides'
+    ])
+  },
+  methods: {
+    handleDelete (slide) {
+      // show the snackbar to inform the user about deleting slide
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, true)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, `Deleted Slide ${slide.title.content}`)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_BUTTON, 'Undo')
+      // if there a slide that has a deletion timeout set on it delete it now
+      if (this.deletedSlide && this.timeoutFunction) {
+        // delete the previous slide right away
+        this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
+        this.$store.dispatch('deleteSlide', this.deletedSlide)
+      }
+      // set up to delete in 30 seconds
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 10000)
+      this.timeoutFunction = setTimeout(function () {
+        this.$store.dispatch('deleteSlide', slide._id)
+        // clear up delete stuff
+        this.handleUndoDelete()
+      }.bind(this), this.$store.getters.snackbarTimeout)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, function () {
+        this.handleUndoDelete()
+      }.bind(this))
+      this.deletedSlide = slide._id
+    },
+    // this is doing two things, clearing the delete props and undoing the deletion
+    handleUndoDelete () {
+      clearTimeout(this.timeoutFunction)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_STATUS, false)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_MESSAGE, '')
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_HANDLER, null)
+      this.$store.commit(MUTATIONS.SET_SNACKBAR_TIMEOUT, 0)
+      this.deletedSlide = ''
+    },
+    filterSlidesBySearchString (slides, searchString) {
       // check if something is typed into the search bar
-      if (this.searchString) {
+      if (searchString) {
         // if there is something the in the search bar then filter the array fo current slides
         // search the list of slides
-        let filteredSlides = this.slides.filter(
-          (slide) => slide.title.content.toLowerCase().indexOf(this.searchString.toLowerCase()) !== -1)
+        let filteredSlides = slides.filter(
+          (slide) =>
+            slide.title.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1 ||
+            slide.description.content.toLowerCase().indexOf(searchString.toLowerCase()) !== -1)
         // if there are no slides to show, then show something funny. An error message
         if (filteredSlides.length === 0) {
           filteredSlides.push({
+            noTouch: true,
             title: {
               content: 'None Found'
             },
@@ -115,30 +169,65 @@ export default {
             },
             images: [
               {
-                src: 'https://cdn.dribbble.com/users/634336/screenshots/2246883/_____.png'
+                path: '/images/error_image.png'
               }
             ]
           })
         }
-        // return the filtered list of slides
         return filteredSlides
       } else {
-        // if the search string is empty then return all the slides
-        return this.slides
+        return slides
       }
-    }
-  },
-  methods: {
-    goToSlide (slide) {
-      this.$store.commit(CURRENT_SLIDE.SET, slide)
+    },
+    filterSlidesByDeleteId (slides, deletedId) {
+      return slides.filter((slide) => deletedId !== slide._id)
+    },
+    createNewSlide () {
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.dialog = true
+      } else {
+        this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
+        this.gotoDesigner('new')
+      }
+    },
+    discardDirtySlide () {
+      this.$store.commit(MUTATIONS.CLEAR_CURRENT_SLIDE)
+      if (this.slideToOpen) {
+        this.openSlide(this.slideToOpen)
+      } else {
+        this.gotoDesigner('new')
+      }
+    },
+    editDirtySlide () {
+      this.dialog = false
+      if (this.$store.getters.currentSlide._id) {
+        this.gotoDesigner(this.$store.getters.currentSlide._id)
+      } else {
+        this.gotoDesigner('new')
+      }
+    },
+    gotoDesigner (id) {
+      this.$store.commit(MUTATIONS.SET_SHOW_PREVIEW, false)
+      this.slideToOpen = null
       this.$router.push(
         {
           name: 'Designer',
           params: {
-            slide: slide
+            id: id
           }
         }
       )
+    },
+    openSlide (slide) {
+      if (this.$store.getters.isCurrentSlideDirty) {
+        this.slideToOpen = slide
+        this.dialog = true
+      } else {
+        if (slide) {
+          this.$store.commit(MUTATIONS.SET_CURRENT_SLIDE, slide)
+        }
+        this.gotoDesigner(slide._id)
+      }
     }
   }
 }
